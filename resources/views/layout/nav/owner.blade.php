@@ -47,19 +47,13 @@
         
     </li> --}}
     <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'><i class="bi bi-person-bounding-box"></i><span>{{__('Employee')}}</span>
+        <a href="#" class='sidebar-link'><i class="bi bi-gear-fill"></i><span>{{__('Employee Settings')}}</span>
         </a>
         <ul class="submenu">
+            <li class="py-1"><a href="{{route(currentUser().'.designation.index')}}" >{{__('Designation list')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.employee.index')}}" >{{__('Employee list')}}</a></li>
-		</ul>
-        
-    </li>
-    <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'><i class="bi bi-file-earmark-fill"></i><span>{{__('Employee Leave')}}</span>
-        </a>
-        <ul class="submenu">
             <li class="py-1"><a href="{{route(currentUser().'.emLeave.index')}}" >{{__('Employee Leave list')}}</a></li>
 		</ul>
-        
     </li>
+    
 </ul>

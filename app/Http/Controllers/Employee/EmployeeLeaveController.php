@@ -32,7 +32,7 @@ class EmployeeLeaveController extends Controller
      */
     public function create()
     {
-        $employee = employee::where(company())->all();
+        $employee = employee::where(company())->get();
         return view('employeeLeave.create',compact('employee'));
     }
 
@@ -51,9 +51,9 @@ class EmployeeLeaveController extends Controller
             $data->leave_date_end = $request->leave_date_end;
             $data->leave_reason = $request->leave_reason;
             $data->application_details = $request->application_details;
-
+            
             if($request->has('application_image'))
-                $data->application_image=$this->resizeImage($request->application_image,'uploads/LeaveImage',true,200,200,false);
+                $data->application_image=$this->resizeImage($request->application_image,'uploads/LeaveImage/'.company()['company_id'],true,200,200,false);
 
             $data->approve_by = currentUserId();
             $data->company_id=company()['company_id'];
@@ -94,7 +94,7 @@ class EmployeeLeaveController extends Controller
      */
     public function edit($id)
     {
-        $employee = employee::where(company())->all();
+        $employee = employee::where(company())->get();
         $emdata = employee_leave::findOrFail(encryptor('decrypt',$id));
         return view('employeeLeave.edit',compact('employee','emdata'));
     }
@@ -116,10 +116,15 @@ class EmployeeLeaveController extends Controller
             $data->leave_reason = $request->leave_reason;
             $data->application_details = $request->application_details;
 
-            $path='uploads/LeaveImage';
-            if($request->has('application_image') && $request->application_image)
-            if($this->deleteImage($data->application_image,$path))
-                $data->application_image=$this->resizeImage($request->application_image,$path,true,200,200,false);
+            if($request->has('application_image')){
+                if($data->application_image){
+                    if($this->deleteImage($data->application_image,'uploads/LeaveImage/'.company()['company_id'])){
+                        $data->application_image=$this->resizeImage($request->application_image,'uploads/LeaveImage/'.company()['company_id'],true,200,200,false);
+                    }
+                }else{
+                    $data->application_image=$this->resizeImage($request->application_image,'uploads/LeaveImage/'.company()['company_id'],true,200,200,false);
+                }
+            }
 
             $data->approve_by = currentUserId();
             $data->company_id=company()['company_id'];

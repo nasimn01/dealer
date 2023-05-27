@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Employee\designation;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
+use App\Http\Traits\ImageHandleTraits;
+use Exception;
+
 
 class DesignationController extends Controller
 {
@@ -16,7 +20,8 @@ class DesignationController extends Controller
      */
     public function index()
     {
-        //
+        $data = designation::where(company())->paginate(10);
+        return view('designation.index',compact('data'));
     }
 
     /**
@@ -26,7 +31,7 @@ class DesignationController extends Controller
      */
     public function create()
     {
-        //
+        return view('designation.create');
     }
 
     /**
@@ -37,7 +42,28 @@ class DesignationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $data=new designation;
+            $data->name = $request->designation;
+
+            
+            $data->company_id=company()['company_id'];
+            $data->created_by= currentUserId();
+
+            if($data->save()){
+            Toastr::success('Create Successfully!');
+            return redirect()->route(currentUser().'.designation.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            // dd($e);
+            return back()->withInput();
+
+        }
     }
 
     /**
@@ -57,9 +83,10 @@ class DesignationController extends Controller
      * @param  \App\Models\Employee\designation  $designation
      * @return \Illuminate\Http\Response
      */
-    public function edit(designation $designation)
+    public function edit($id)
     {
-        //
+        $designation = designation::findOrFail(encryptor('decrypt',$id));
+        return view('designation.edit',compact('designation'));
     }
 
     /**
@@ -69,9 +96,30 @@ class DesignationController extends Controller
      * @param  \App\Models\Employee\designation  $designation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, designation $designation)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+            $data= designation::findOrFail(encryptor('decrypt',$id));
+            $data->name = $request->designation;
+
+            
+            $data->company_id=company()['company_id'];
+            $data->updated_by= currentUserId();
+
+            if($data->save()){
+            Toastr::success('Update Successfully!');
+            return redirect()->route(currentUser().'.designation.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            // dd($e);
+            return back()->withInput();
+
+        }
     }
 
     /**
@@ -80,8 +128,10 @@ class DesignationController extends Controller
      * @param  \App\Models\Employee\designation  $designation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(designation $designation)
+    public function destroy($id)
     {
-        //
+        $data= designation::findOrFail(encryptor('decrypt',$id));
+        $data->delete();
+        return redirect()->back();
     }
 }

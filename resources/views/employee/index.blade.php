@@ -33,7 +33,7 @@
                                 <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$p->employee_code}}</td>
-                                    <td>{{$p->designa?->designation}}</td>
+                                    <td>{{$p->designa?->name}}</td>
                                     <td>{{$p->name}}</td>
                                     <td>{{$p->father_name}}</td>
                                     <td>{{$p->mother_name}}</td>

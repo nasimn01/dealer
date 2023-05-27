@@ -31,7 +31,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $designation = designation::where(company())->all();
+        $designation = designation::where(company())->get();
         return view('employee.create',compact('designation'));
     }
 
@@ -93,7 +93,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $designation = designation::where(company())->all();
+        $designation = designation::where(company())->get();
         $emdata = employee::findOrFail(encryptor('decrypt',$id));
         return view('employee.edit',compact('designation','emdata'));
     }

@@ -29,7 +29,7 @@
                                             <select required name="designation" class="form-control form-select" >
                                                 <option value="">Select</option>
                                                 @forelse($designation as $d)
-                                                    <option value="{{$d->id}}" {{ old('designation')==$d->id?"selected":""}}> {{ $d->designation}}</option>
+                                                    <option value="{{$d->id}}" {{ old('designation')==$d->id?"selected":""}}> {{ $d->name}}</option>
                                                 @empty
                                                     <option value="">No data found</option>
                                                 @endforelse

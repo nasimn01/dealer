@@ -12,6 +12,7 @@ use App\Http\Controllers\Settings\Location\DistrictController as district;
 use App\Http\Controllers\Settings\Location\UpazilaController as upazila;
 use App\Http\Controllers\Settings\Location\ThanaController as thana;
 use App\Http\Controllers\Products\UnitController as unit;
+use App\Http\Controllers\Employee\DesignationController as designation;
 use App\Http\Controllers\Employee\EmployeeController as employee;
 use App\Http\Controllers\Employee\EmployeeLeaveController as emLeave;
 use App\Http\Controllers\Currency\CurrencyController as currency;
@@ -81,6 +82,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('/dashboard', [dash::class,'ownerDashboard'])->name('owner.dashboard');
         Route::resource('company',company::class,['as'=>'owner']);
         Route::resource('users',user::class,['as'=>'owner']);
+        Route::resource('designation',designation::class,['as'=>'owner']);
         Route::resource('employee',employee::class,['as'=>'owner']);
         Route::resource('emLeave',emLeave::class,['as'=>'owner']);
 

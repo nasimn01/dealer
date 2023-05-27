@@ -18,9 +18,9 @@
                                         <div class="form-group">
                                             <label for="designation">{{__('Employee')}}<span class="text-danger">*</span></label>
                                             <select required name="employee_id" class="form-control form-select" >
-                                                <option value="">Select</option>
+                                                <option value="">Select Employee</option>
                                                 @forelse($employee as $d)
-                                                    <option value="{{$d->id}}" {{ old('employee_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                                    <option value="{{$d->id}}" {{ old('employee_id')==$d->id?"selected":""}}> {{ $d->name}} [{{ $d->employee_code}}]</option>
                                                 @empty
                                                     <option value="">No data found</option>
                                                 @endforelse
