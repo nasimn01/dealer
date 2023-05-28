@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController as auth;
 use App\Http\Controllers\DashboardController as dash;
 use App\Http\Controllers\Settings\CompanyController as company;
+use App\Http\Controllers\Settings\WerehouseController as werehouse;
+use App\Http\Controllers\Settings\UnitStyleController as unitstyle;
 use App\Http\Controllers\Settings\UserController as user;
 use App\Http\Controllers\Settings\AdminUserController as admin;
 use App\Http\Controllers\Settings\Location\CountryController as country;
@@ -81,6 +83,8 @@ Route::group(['middleware'=>isOwner::class],function(){
     Route::prefix('owner')->group(function(){
         Route::get('/dashboard', [dash::class,'ownerDashboard'])->name('owner.dashboard');
         Route::resource('company',company::class,['as'=>'owner']);
+        Route::resource('unitstyle',unitstyle::class,['as'=>'owner']);
+        Route::resource('werehouse',werehouse::class,['as'=>'owner']);
         Route::resource('users',user::class,['as'=>'owner']);
         Route::resource('designation',designation::class,['as'=>'owner']);
         Route::resource('employee',employee::class,['as'=>'owner']);

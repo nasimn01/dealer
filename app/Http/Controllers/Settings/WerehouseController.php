@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Employee;
+namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\Employee\designation;
+use App\Models\Settings\Werehouse;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 
-
-class DesignationController extends Controller
+class WerehouseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +19,8 @@ class DesignationController extends Controller
      */
     public function index()
     {
-        $data = designation::where(company())->paginate(10);
-        return view('employeeSettings.designation.index',compact('data'));
+        $data = Werehouse::where(company())->paginate(10);
+        return view('settings.werehouse.index',compact('data'));
     }
 
     /**
@@ -31,7 +30,7 @@ class DesignationController extends Controller
      */
     public function create()
     {
-        return view('employeeSettings.designation.create');
+        return view('settings.werehouse.create');
     }
 
     /**
@@ -43,8 +42,12 @@ class DesignationController extends Controller
     public function store(Request $request)
     {
         try{
-            $data=new designation;
-            $data->name = $request->designation;
+            $data=new Werehouse;
+            $data->name = $request->werehouse;
+            $data->contact = $request->contact;
+            $data->email = $request->email;
+            $data->location = $request->location;
+            $data->address = $request->address;
 
             
             $data->company_id=company()['company_id'];
@@ -52,7 +55,7 @@ class DesignationController extends Controller
 
             if($data->save()){
             Toastr::success('Create Successfully!');
-            return redirect()->route(currentUser().'.designation.index');
+            return redirect()->route(currentUser().'.werehouse.index');
             } else{
             Toastr::warning('Please try Again!');
              return redirect()->back();
@@ -69,10 +72,10 @@ class DesignationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Employee\designation  $designation
+     * @param  \App\Models\Settings\Werehouse  $werehouse
      * @return \Illuminate\Http\Response
      */
-    public function show(designation $designation)
+    public function show(Werehouse $werehouse)
     {
         //
     }
@@ -80,27 +83,31 @@ class DesignationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Employee\designation  $designation
+     * @param  \App\Models\Settings\Werehouse  $werehouse
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $designation = designation::findOrFail(encryptor('decrypt',$id));
-        return view('employeeSettings.designation.edit',compact('designation'));
+        $werehouse = Werehouse::findOrFail(encryptor('decrypt',$id));
+        return view('settings.werehouse.edit',compact('werehouse'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee\designation  $designation
+     * @param  \App\Models\Settings\Werehouse  $werehouse
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         try{
-            $data= designation::findOrFail(encryptor('decrypt',$id));
-            $data->name = $request->designation;
+            $data= Werehouse::findOrFail(encryptor('decrypt',$id));
+            $data->name = $request->werehouse;
+            $data->contact = $request->contact;
+            $data->email = $request->email;
+            $data->location = $request->location;
+            $data->address = $request->address;
 
             
             $data->company_id=company()['company_id'];
@@ -108,7 +115,7 @@ class DesignationController extends Controller
 
             if($data->save()){
             Toastr::success('Update Successfully!');
-            return redirect()->route(currentUser().'.designation.index');
+            return redirect()->route(currentUser().'.werehouse.index');
             } else{
             Toastr::warning('Please try Again!');
              return redirect()->back();
@@ -125,12 +132,12 @@ class DesignationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Employee\designation  $designation
+     * @param  \App\Models\Settings\Werehouse  $werehouse
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $data= designation::findOrFail(encryptor('decrypt',$id));
+        $data= Werehouse::findOrFail(encryptor('decrypt',$id));
         $data->delete();
         return redirect()->back();
     }

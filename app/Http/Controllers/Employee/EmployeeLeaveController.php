@@ -22,7 +22,7 @@ class EmployeeLeaveController extends Controller
     public function index()
     {
         $data = employee_leave::where(company())->paginate(10);
-        return view('employeeLeave.index',compact('data'));
+        return view('employeeSettings.employeeLeave.index',compact('data'));
     }
 
     /**
@@ -33,7 +33,7 @@ class EmployeeLeaveController extends Controller
     public function create()
     {
         $employee = employee::where(company())->get();
-        return view('employeeLeave.create',compact('employee'));
+        return view('employeeSettings.employeeLeave.create',compact('employee'));
     }
 
     /**
@@ -96,7 +96,7 @@ class EmployeeLeaveController extends Controller
     {
         $employee = employee::where(company())->get();
         $emdata = employee_leave::findOrFail(encryptor('decrypt',$id));
-        return view('employeeLeave.edit',compact('employee','emdata'));
+        return view('employeeSettings.employeeLeave.edit',compact('employee','emdata'));
     }
 
     /**

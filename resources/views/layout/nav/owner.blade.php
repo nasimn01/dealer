@@ -13,10 +13,13 @@
         </a>
         <ul class="submenu">
             <li class="py-1"><a href="{{route(currentUser().'.company.index')}}">{{__('Company Details')}}</a></li>
-            <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('User')}}</a>
+            <li class="py-1"><a href="{{route(currentUser().'.users.index')}}">{{__('Users')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.werehouse.index')}}">{{__('Werehouse')}}</a></li>
+            
+            <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
                 <ul class="submenu">
-                    <li class="py-1"><a href="{{route(currentUser().'.users.index')}}">{{__('List')}}</a></li>
-                    <li class="py-1"><a href="{{route(currentUser().'.users.create')}}">{{__('Add New')}}</a></li>
+                    <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
+                    <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit')}}</a></li>
                 </ul>
             </li>
 

@@ -21,7 +21,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $data = employee::where(company())->paginate(10);
-        return view('employee.index',compact('data'));
+        return view('employeeSettings.employee.index',compact('data'));
     }
 
     /**
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $designation = designation::where(company())->get();
-        return view('employee.create',compact('designation'));
+        return view('employeeSettings.employee.create',compact('designation'));
     }
 
     /**
@@ -95,7 +95,7 @@ class EmployeeController extends Controller
     {
         $designation = designation::where(company())->get();
         $emdata = employee::findOrFail(encryptor('decrypt',$id));
-        return view('employee.edit',compact('designation','emdata'));
+        return view('employeeSettings.employee.edit',compact('designation','emdata'));
     }
 
     /**
