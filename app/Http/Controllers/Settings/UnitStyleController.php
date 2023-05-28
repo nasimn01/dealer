@@ -48,6 +48,7 @@ class UnitStyleController extends Controller
         try{
             $data=new Unit_style;
             $data->name = $request->name;
+            $data->status=1;
         
             $data->created_by= currentUserId();
 

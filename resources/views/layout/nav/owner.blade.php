@@ -19,7 +19,7 @@
             <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
                 <ul class="submenu">
                     <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
-                    <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit')}}</a></li>
+                    <li class="py-1"><a href="{{route(currentUser().'.unit.index')}}">{{__('Unit')}}</a></li>
                 </ul>
             </li>
 
