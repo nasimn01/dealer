@@ -8,6 +8,7 @@ use App\Http\Controllers\Settings\WerehouseController as werehouse;
 use App\Http\Controllers\Settings\UnitStyleController as unitstyle;
 use App\Http\Controllers\Settings\UnitController as unit;
 use App\Http\Controllers\Settings\SupplierController as supplier;
+use App\Http\Controllers\Settings\CustomerController as customer;
 use App\Http\Controllers\Settings\UserController as user;
 use App\Http\Controllers\Settings\AdminUserController as admin;
 use App\Http\Controllers\Settings\Location\CountryController as country;
@@ -92,6 +93,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('employee',employee::class,['as'=>'owner']);
         Route::resource('emLeave',emLeave::class,['as'=>'owner']);
         Route::resource('supplier',supplier::class,['as'=>'owner']);
+        Route::resource('customer',customer::class,['as'=>'owner']);
 
         
 

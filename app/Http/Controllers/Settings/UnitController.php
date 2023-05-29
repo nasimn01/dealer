@@ -24,7 +24,7 @@ class UnitController extends Controller
         if($request->name)
             $units=$units->where('name','like','%'.$request->name.'%');
 
-        $units=$units->paginate(15);
+        $units=$units->paginate(12);
         return view('settings.unit.index',compact('units'));
     }
 

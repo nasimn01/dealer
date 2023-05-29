@@ -24,11 +24,10 @@ class SupplierController extends Controller
         $suppliers= Supplier::where(company())->orderBy('id','DESC');
         if($request->name)
             $suppliers=$suppliers->where('name','like','%'.$request->name.'%');
-
         if($request->supplier_code)
             $suppliers=$suppliers->where('supplier_code','like','%'.$request->supplier_code.'%');
 
-        $suppliers=$suppliers->paginate(15);
+        $suppliers=$suppliers->paginate(12);
         
         return view('settings.supplier.index',compact('suppliers'));
     }
@@ -145,7 +144,11 @@ class SupplierController extends Controller
         
             if ($data->save()) {
                 // Update supplier balance if the balance is greater than 0
-                if ($request->balance > 0) {
+                if ($request->balance == 0 || $request->balance == null) {
+                    //$supb = Supplier_balance::where('supplier_id', $data->id)->first();
+                    $supb= Supplier_balance::where('supplier_id',$data->id)->delete();
+                }
+                elseif ($request->balance > 0) {
                     $supb = Supplier_balance::where('supplier_id', $data->id)->first();
         
                     if (!$supb) {

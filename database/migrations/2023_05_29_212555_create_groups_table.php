@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customer_balances', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id')->nullable();
-            $table->string('customer_id')->nullable();
-            $table->string('balance_date')->nullable();
-            $table->decimal('balance_amount',10,2)->nullable();
-            $table->string('status')->comment('0=>in 1=>out')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_balances');
+        Schema::dropIfExists('groups');
     }
 };
