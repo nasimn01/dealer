@@ -1,7 +1,7 @@
 @extends('layout.app')
 
-@section('pageTitle','Edit Unit Style')
-@section('pageSubTitle','Create')
+@section('pageTitle','Update Unit Style')
+@section('pageSubTitle','Update')
 
 @section('content')
 <section id="multiple-column-form">
