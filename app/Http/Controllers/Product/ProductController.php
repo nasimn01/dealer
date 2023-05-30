@@ -170,8 +170,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $data= Product::findOrFail(encryptor('decrypt',$id));
+        $data->delete();
+        Toastr::error('Opps!! You Delete Permanently!!');
+        return redirect()->back();
     }
 }

@@ -43,13 +43,12 @@
                                         <a href="{{route(currentUser().'.product.edit',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
-                                            <i class="bi bi-trash"></i>
+                                        <a href="javascript:void()" onclick="showConfirmation({{$p->id}})">
+                                            <i class="bi bi-trash" style='color:red'></i>
                                         </a>
-                                        <form id="form{{$p->id}}" action="{{route(currentUser().'.product.destroy',encryptor('encrypt',$p->id))}}" method="post">
+                                        <form id="form{{$p->id}}" action="{{route(currentUser().'.product.destroy', encryptor('encrypt', $p->id))}}" method="post">
                                             @csrf
                                             @method('delete')
-
                                         </form>
                                     </td>
                                 </tr>
@@ -70,5 +69,15 @@
 </section>
 <!-- Bordered table end -->
 
+<script>
+    function showConfirmation(productId) {
+        if (confirm("Are you sure you want to delete this Product?")) {
+            // User confirmed, submit the form
+            $('#form' + productId).submit();
+        } else {
+            // User canceled, do nothing
+        }
+    }
+</script>
 
 @endsection

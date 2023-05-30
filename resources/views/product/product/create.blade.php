@@ -71,7 +71,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="unit_style_id">{{__('Unit Style')}}</label>
-                                            <select name="unit_style_id" class="form-control form-select" >
+                                            <select onchange="show_unit(this.value)" name="unit_style_id" class="form-control form-select" >
                                                 <option value="">Select</option>
                                                 @forelse($unit_style as $d)
                                                     <option value="{{$d->id}}" {{ old('unit_style_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
@@ -87,7 +87,7 @@
                                             <select name="base_unit" class="form-control form-select" >
                                                 <option value="">Select</option>
                                                 @forelse($base_unit as $d)
-                                                    <option value="{{$d->id}}" {{ old('base_unit')==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                                    <option class="unit unit{{$d->unit_style_id}}" value="{{$d->id}}" {{ old('base_unit')==$d->id?"selected":""}}> {{ $d->name}}</option>
                                                 @empty
                                                     <option value="">No data found</option>
                                                 @endforelse
@@ -135,3 +135,16 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+<script>
+    /* call on load page */
+    $(document).ready(function(){
+        $('.unit').hide();
+    });
+
+    function show_unit(e){
+        $('.unit').hide();
+        $('.unit'+e).show()
+    }
+</script>
+@endpush
