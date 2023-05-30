@@ -70,7 +70,7 @@ class CustomerController extends Controller
                     $supb->customer_id = $data->id;
                     $supb->balance_date = now();
                     $supb->balance_amount = $request->balance;
-                    $supb->status = 1;
+                    $supb->status = 0;
                     $supb->company_id=company()['company_id'];
                     $supb->save();
                 }
@@ -140,7 +140,7 @@ class CustomerController extends Controller
             $data->balance = $request->balance;
         
             $data->company_id = company()['company_id'];
-            $data->created_by = currentUserId();
+            $data->updated_by = currentUserId();
         
             if ($data->save()) {
                 // Update customer balance if the balance is greater than 0
@@ -174,7 +174,7 @@ class CustomerController extends Controller
         
                     $supb->balance_date = now();
                     $supb->balance_amount = $request->balance;
-                    $supb->status = 1;
+                    $supb->status = 0;
         
                     $supb->save();
                 }

@@ -140,7 +140,7 @@ class SupplierController extends Controller
             $data->balance = $request->balance;
         
             $data->company_id = company()['company_id'];
-            $data->created_by = currentUserId();
+            $data->updated_by = currentUserId();
         
             if ($data->save()) {
                 // Update supplier balance if the balance is greater than 0

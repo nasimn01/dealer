@@ -19,7 +19,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $data = Group::where(company())->paginate(10);
+        return view('product.group.index',compact('data'));
     }
 
     /**
@@ -29,7 +30,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.group.create');
     }
 
     /**
@@ -40,7 +41,28 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $data=new Group;
+            $data->name = $request->name;
+
+            
+            $data->company_id=company()['company_id'];
+            $data->created_by= currentUserId();
+
+            if($data->save()){
+            Toastr::success('Create Successfully!');
+            return redirect()->route(currentUser().'.group.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            // dd($e);
+            return back()->withInput();
+
+        }
     }
 
     /**
@@ -60,9 +82,10 @@ class GroupController extends Controller
      * @param  \App\Models\Product\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function edit(Group $group)
+    public function edit($id)
     {
-        //
+        $group = Group::findOrFail(encryptor('decrypt',$id));
+        return view('product.group.edit',compact('group'));
     }
 
     /**
@@ -72,9 +95,30 @@ class GroupController extends Controller
      * @param  \App\Models\Product\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+            $data= Group::findOrFail(encryptor('decrypt',$id));
+            $data->name = $request->name;
+
+            
+            $data->company_id=company()['company_id'];
+            $data->updated_by= currentUserId();
+
+            if($data->save()){
+            Toastr::success('Update Successfully!');
+            return redirect()->route(currentUser().'.group.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            // dd($e);
+            return back()->withInput();
+
+        }
     }
 
     /**
