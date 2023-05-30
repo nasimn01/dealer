@@ -60,5 +60,15 @@
             <li class="py-1"><a href="{{route(currentUser().'.emLeave.index')}}" >{{__('Employee Leave list')}}</a></li>
 		</ul>
     </li>
+
+    <li class="sidebar-item has-sub">
+        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Products')}}</span>
+        </a>
+        <ul class="submenu">
+            <li class="py-1"><a href="{{route(currentUser().'.category.index')}}" >{{__('Category')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.group.index')}}" >{{__('Group')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.emLeave.index')}}" >{{__('Product')}}</a></li>
+		</ul>
+    </li>
     
 </ul>

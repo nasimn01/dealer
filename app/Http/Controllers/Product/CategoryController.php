@@ -19,7 +19,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = Category::where(company())->paginate(10);
+        return view('product.category.index',compact('data'));
     }
 
     /**
@@ -29,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.category.create');
     }
 
     /**
@@ -40,7 +41,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $data=new Category;
+            $data->name = $request->name;
+
+            
+            $data->company_id=company()['company_id'];
+            $data->created_by= currentUserId();
+
+            if($data->save()){
+            Toastr::success('Create Successfully!');
+            return redirect()->route(currentUser().'.category.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            // dd($e);
+            return back()->withInput();
+
+        }
     }
 
     /**
@@ -60,9 +82,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Product\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::findOrFail(encryptor('decrypt',$id));
+        return view('product.category.edit',compact('category'));
     }
 
     /**
@@ -72,9 +95,30 @@ class CategoryController extends Controller
      * @param  \App\Models\Product\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+            $data= Category::findOrFail(encryptor('decrypt',$id));
+            $data->name = $request->name;
+
+            
+            $data->company_id=company()['company_id'];
+            $data->updated_by= currentUserId();
+
+            if($data->save()){
+            Toastr::success('Update Successfully!');
+            return redirect()->route(currentUser().'.category.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            // dd($e);
+            return back()->withInput();
+
+        }
     }
 
     /**

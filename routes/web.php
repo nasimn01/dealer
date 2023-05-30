@@ -21,6 +21,9 @@ use App\Http\Controllers\Employee\EmployeeController as employee;
 use App\Http\Controllers\Employee\EmployeeLeaveController as emLeave;
 use App\Http\Controllers\Currency\CurrencyController as currency;
 
+use App\Http\Controllers\Product\CategoryController as category;
+use App\Http\Controllers\Product\GroupController as group;
+
 
 use App\Http\Controllers\Accounts\MasterAccountController as master;
 use App\Http\Controllers\Accounts\SubHeadController as sub_head;
@@ -84,16 +87,24 @@ Route::group(['middleware'=>isAdmin::class],function(){
 Route::group(['middleware'=>isOwner::class],function(){
     Route::prefix('owner')->group(function(){
         Route::get('/dashboard', [dash::class,'ownerDashboard'])->name('owner.dashboard');
+
+        // settings
         Route::resource('company',company::class,['as'=>'owner']);
         Route::resource('unitstyle',unitstyle::class,['as'=>'owner']);
         Route::resource('unit',unit::class,['as'=>'owner']);
         Route::resource('werehouse',werehouse::class,['as'=>'owner']);
         Route::resource('users',user::class,['as'=>'owner']);
+        Route::resource('supplier',supplier::class,['as'=>'owner']);
+        Route::resource('customer',customer::class,['as'=>'owner']);
+
+        // employee settings
         Route::resource('designation',designation::class,['as'=>'owner']);
         Route::resource('employee',employee::class,['as'=>'owner']);
         Route::resource('emLeave',emLeave::class,['as'=>'owner']);
-        Route::resource('supplier',supplier::class,['as'=>'owner']);
-        Route::resource('customer',customer::class,['as'=>'owner']);
+
+        // Product
+        Route::resource('category',category::class,['as'=>'owner']);
+        Route::resource('group',group::class,['as'=>'owner']);
 
         
 
