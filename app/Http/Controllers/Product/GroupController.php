@@ -1,9 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Product\Group;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
+use App\Http\Traits\ImageHandleTraits;
+use Exception;
 
 class GroupController extends Controller
 {

@@ -1,9 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Product\Category;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
+use App\Http\Traits\ImageHandleTraits;
+use Exception;
 
 class CategoryController extends Controller
 {
