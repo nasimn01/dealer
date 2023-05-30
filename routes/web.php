@@ -23,6 +23,7 @@ use App\Http\Controllers\Currency\CurrencyController as currency;
 
 use App\Http\Controllers\Product\CategoryController as category;
 use App\Http\Controllers\Product\GroupController as group;
+use App\Http\Controllers\Product\ProductController as product;
 
 
 use App\Http\Controllers\Accounts\MasterAccountController as master;
@@ -80,7 +81,7 @@ Route::group(['middleware'=>isAdmin::class],function(){
         Route::resource('thana',thana::class,['as'=>'admin']);
         Route::resource('unit',unit::class,['as'=>'admin']);
         Route::resource('currency',currency::class,['as'=>'admin']);
-        
+
     });
 });
 
@@ -105,10 +106,11 @@ Route::group(['middleware'=>isOwner::class],function(){
         // Product
         Route::resource('category',category::class,['as'=>'owner']);
         Route::resource('group',group::class,['as'=>'owner']);
+        Route::resource('product',product::class,['as'=>'owner']);
 
-        
 
-        
+
+
 
         //Accounts
         Route::resource('master',master::class,['as'=>'owner']);
@@ -133,28 +135,28 @@ Route::group(['middleware'=>isOwner::class],function(){
 Route::group(['middleware'=>isManager::class],function(){
     Route::prefix('manager')->group(function(){
         Route::get('/dashboard', [dash::class,'managerDashboard'])->name('manager.dashboard');
-        
+
     });
 });
 
 Route::group(['middleware'=>isJso::class],function(){
     Route::prefix('JSO')->group(function(){
         Route::get('/dashboard', [dash::class,'jsoDashboard'])->name('JSO.dashboard');
-        
+
     });
 });
 
 Route::group(['middleware'=>isSalesrepresentative::class],function(){
     Route::prefix('SR')->group(function(){
         Route::get('/dashboard', [dash::class,'salesrepresentativeDashboard'])->name('SR.dashboard');
-        
+
     });
 });
 
 Route::group(['middleware'=>isAccountant::class],function(){
     Route::prefix('accountant')->group(function(){
         Route::get('/dashboard', [dash::class,'accountantDashboard'])->name('accountant.dashboard');
-        
+
     });
 });
 
