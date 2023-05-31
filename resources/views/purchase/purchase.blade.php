@@ -17,7 +17,10 @@
                                 <div class="col-lg-8 col-md-6 col-sm-12">
                                     <div class="d-flex justify-content-between">
                                         <label class="py-2" for="cat">{{__('Supplier')}}<span class="text-danger">*</span></label>
-                                        <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"><span class="text-primary"><i class="bi bi-plus-square-fill" style="font-size:1.5rem;"></i></span></button>
+                                        <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;" data-bs-toggle="modal"
+                                        data-bs-target="#supplier">
+                                            <span class="text-primary"><i class="bi bi-plus-square-fill" style="font-size:1.5rem;"></i></span>
+                                        </button>
                                     </div>
                                     <div class="form-group mb-3">
                                         <select class=" choices form-select" name="supplier">
@@ -77,7 +80,10 @@
                                 <div class="col-lg-3">
                                     <div class="d-flex justify-content-between">
                                         <label class="py-2" for="cat">{{__('Batch')}}<span class="text-danger">*</span></label>
-                                        <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"><span class="text-primary"><i class="bi bi-plus-square-fill" style="font-size:1.5rem;"></i></span></button>
+                                        <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;" data-bs-toggle="modal"
+                                        data-bs-target="#batch">
+                                            <span class="text-primary"><i class="bi bi-plus-square-fill" style="font-size:1.5rem;"></i></span>
+                                        </button>
                                     </div>
                                     <div class="form-group mb-3">
                                         <select class=" choices form-select" name="batch">
@@ -242,6 +248,124 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+            <div class="modal fade" id="supplier" tabindex="-1" role="dialog"
+                aria-labelledby="supplierTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                    role="document">
+                    <form action="">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="supplierTitle">Add New Supplier
+                                </h5>
+                                <button type="button" class="close text-danger" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i data-feather="x"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="code">Supplier Code<span class="text-danger">*</span></label>
+                                            <input type="text" value="{{old('supplier_code')}}" class="form-control" name="supplier_code" required>
+                                        </div>
+                                        {{-- @if($errors->has('name'))
+                                            <span class="text-danger"> {{ $errors->first('name') }}</span>
+                                        @endif --}}
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="name">Supplier Name<span class="text-danger">*</span></label>
+                                            <input type="text" value="{{old('name')}}" class="form-control" name="name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="contact">Contact No</label>
+                                            <input type="text" value="{{old('contact')}}" class="form-control" name="contact">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" value="{{old('email')}}" class="form-control" name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="balance">Opening Balance</label>
+                                            <input type="number" value="{{old('balance')}}" class="form-control" name="balance">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="country">Country</label>
+                                            <input type="text" value="{{old('country')}}" class="form-control" name="country">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <input type="text" value="{{old('city')}}" class="form-control" name="city">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="address">Address</label>
+                                            <textarea class="form-control" name="address" rows="2">{{old('address')}}</textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger"
+                                    data-bs-dismiss="modal">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Close</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Submit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal fade" id="batch" tabindex="-1" role="dialog"
+                aria-labelledby="batchTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                    role="document">
+                    <form action="">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="batchTitle">Add New Batch
+                                </h5>
+                                <button type="button" class="close text-danger" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i data-feather="x"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus voluptatum, similique eos, dolore, pariatur amet reiciendis voluptate veniam maxime perferendis tempore ullam quibusdam. Recusandae alias, necessitatibus quo laboriosam vel fuga excepturi minima. Sunt debitis nobis animi aspernatur reiciendis inventore eveniet odio. Aliquid distinctio aliquam consequuntur, minus doloremque quasi fugit porro.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger"
+                                    data-bs-dismiss="modal">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Close</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Submit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

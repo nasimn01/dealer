@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthenticationController as auth;
 use App\Http\Controllers\DashboardController as dash;
 use App\Http\Controllers\Settings\CompanyController as company;
 use App\Http\Controllers\Settings\WerehouseController as werehouse;
+use App\Http\Controllers\Settings\BillTermController as bill;
 use App\Http\Controllers\Settings\UnitStyleController as unitstyle;
 use App\Http\Controllers\Settings\UnitController as unit;
 use App\Http\Controllers\Settings\SupplierController as supplier;
@@ -94,6 +95,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('unitstyle',unitstyle::class,['as'=>'owner']);
         Route::resource('unit',unit::class,['as'=>'owner']);
         Route::resource('werehouse',werehouse::class,['as'=>'owner']);
+        Route::resource('bill',bill::class,['as'=>'owner']);
         Route::resource('users',user::class,['as'=>'owner']);
         Route::resource('supplier',supplier::class,['as'=>'owner']);
         Route::resource('customer',customer::class,['as'=>'owner']);

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Product;
+namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\Product\Group;
+use App\Models\Settings\Bill_term;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Http\Traits\ImageHandleTraits;
 use Exception;
 
-class GroupController extends Controller
+class BillTermController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +18,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $data = Group::where(company())->paginate(10);
-        return view('product.group.index',compact('data'));
+        $data = Bill_term::where(company())->paginate(10);
+        return view('settings.bill.index',compact('data'));
     }
 
     /**
@@ -30,8 +29,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //return view('product.group.create');
-        return view('purchase.do');
+        return view('settings.bill.create');
     }
 
     /**
@@ -43,16 +41,15 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         try{
-            $data=new Group;
-            $data->name = $request->name;
+            $data=new Bill_term;
+            $data->name = $request->bill;
 
             
             $data->company_id=company()['company_id'];
-            $data->created_by= currentUserId();
 
             if($data->save()){
             Toastr::success('Create Successfully!');
-            return redirect()->route(currentUser().'.group.index');
+            return redirect()->route(currentUser().'.bill.index');
             } else{
             Toastr::warning('Please try Again!');
              return redirect()->back();
@@ -69,10 +66,10 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product\Group  $group
+     * @param  \App\Models\Settings\Bill_term  $bill_term
      * @return \Illuminate\Http\Response
      */
-    public function show(Group $group)
+    public function show(Bill_term $bill_term)
     {
         //
     }
@@ -80,35 +77,33 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product\Group  $group
+     * @param  \App\Models\Settings\Bill_term  $bill_term
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $group = Group::findOrFail(encryptor('decrypt',$id));
-        return view('product.group.edit',compact('group'));
+        $bill = Bill_term::findOrFail(encryptor('decrypt',$id));
+        return view('settings.bill.edit',compact('bill'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product\Group  $group
+     * @param  \App\Models\Settings\Bill_term  $bill_term
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         try{
-            $data= Group::findOrFail(encryptor('decrypt',$id));
-            $data->name = $request->name;
-
+            $data= Bill_term::findOrFail(encryptor('decrypt',$id));
+            $data->name = $request->bill;
             
             $data->company_id=company()['company_id'];
-            $data->updated_by= currentUserId();
 
             if($data->save()){
             Toastr::success('Update Successfully!');
-            return redirect()->route(currentUser().'.group.index');
+            return redirect()->route(currentUser().'.bill.index');
             } else{
             Toastr::warning('Please try Again!');
              return redirect()->back();
@@ -125,10 +120,10 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product\Group  $group
+     * @param  \App\Models\Settings\Bill_term  $bill_term
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Group $group)
+    public function destroy(Bill_term $bill_term)
     {
         //
     }
