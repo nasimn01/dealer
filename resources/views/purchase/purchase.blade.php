@@ -129,19 +129,20 @@
                                         <input type="text" class="form-control" name="tax">
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group mb-3">
-                                        <label class="py-2" for="amount">{{__('Amount')}}</label><br>
-                                        <input type="text" class="form-control" name="amount" readonly style="width:75%;display:inline-block">
-                                        <a class="btn" href=""><i class="bi bi-trash-fill"></i></a>
+                                <div class="col-lg-2 ps-0">
+                                    <label class="py-2" for="amount"><b>{{__('Amount')}}</b></label><br>
+                                    <div class="form-group mb-3 d-flex justify-content-between">
+                                        <input type="text" class="form-control p-0" name="amount" readonly style="width:82%;display:inline-block">
+                                        <a  href=""><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></a>
+                                       
                                     </div>
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end">
-                                    <a class="btn btn-primary" href="">Add</a>
+                                    <a  href=""><i class="bi bi-plus-square-fill" style="font-size:2rem;"></i></a>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <h4 class="header-title">Total Bill</h4>
                                     <div class="total-payment">
                                         <table class="table table-sm table-borderless ">
@@ -184,11 +185,59 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row my-2">
-                                <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
+                                <div class="col-lg-6 mt-4">
+                                    <div class="total">
+                                        <table class="table table-sm table-borderless ">
+                                            <tbody>
+                                                <tr>
+                                                    <td><h4>Total</h4></td>
+                                                    <td><input type="text" class="form-control" name="" value="0"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><h4>In Word</h4></td>
+                                                    <td><input type="text" class="form-control" name="" value="0"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-4">
+                                            <div class="form-group mb-3">
+                                                <label for="" class="py-2">Pin Code</label>
+                                                <input type="text" class="form-control" name="" placeholder="pin code">
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="form-group mb-3">
+                                                <label for="" class="py-2">Delivery Address</label>
+                                                <input type="text" class="form-control" name="" placeholder="delivery address">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group mb-3">
+                                                <label for="" class="py-2">Checque No</label>
+                                                <input type="text" class="form-control" name="" placeholder="checque no">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group mb-3">
+                                                <label for="" class="py-2">Checque No</label>
+                                                <input type="text" class="form-control" name="" placeholder="checque no">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group mb-3">
+                                                <label for="" class="py-2">Checque No</label>
+                                                <input type="text" class="form-control" name="" placeholder="checque no">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group mb-3">
+                                                <label for="" class="py-2">Checque No</label>
+                                                <textarea class="form-control" name="" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
