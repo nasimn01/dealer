@@ -25,6 +25,7 @@ use App\Http\Controllers\Currency\CurrencyController as currency;
 use App\Http\Controllers\Product\CategoryController as category;
 use App\Http\Controllers\Product\GroupController as group;
 use App\Http\Controllers\Product\ProductController as product;
+use App\Http\Controllers\Do\DOController as docon;
 
 
 use App\Http\Controllers\Accounts\MasterAccountController as master;
@@ -109,6 +110,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('category',category::class,['as'=>'owner']);
         Route::resource('group',group::class,['as'=>'owner']);
         Route::resource('product',product::class,['as'=>'owner']);
+        Route::resource('docon',docon::class,['as'=>'owner']);
 
 
 

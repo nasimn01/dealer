@@ -29,7 +29,7 @@ class DOController extends Controller
      */
     public function create()
     {
-        //
+        return view('do.create');
     }
 
     /**
@@ -40,7 +40,35 @@ class DOController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $data=new D_o;
+            $data->supplier_id = $request->supplier_id;
+            $data->bill_id = $request->bill_id;
+            $data->do_date = $request->do_date;
+            $data->sub_total = $request->sub_total;
+            $data->vat_amount = $request->vat_amount;
+            $data->discount_amount = $request->discount_amount;
+            $data->other_charge = $request->other_charge;
+            $data->paid = $request->paid;
+            $data->total = $request->total;
+
+            $data->company_id=company()['company_id'];
+            $data->created_by= currentUserId();
+
+            if($data->save()){
+            Toastr::success('Create Successfully!');
+            return redirect()->route(currentUser().'.docon.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            // dd($e);
+            return back()->withInput();
+
+        }
     }
 
     /**

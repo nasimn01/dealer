@@ -31,7 +31,11 @@ class GroupController extends Controller
     public function create()
     {
         //return view('product.group.create');
+<<<<<<< HEAD
         return view('product.group.purchase');
+=======
+        return view('product.group.create');
+>>>>>>> acc84d133b33e8555797a1f32f639b4a52c93f2d
     }
 
     /**
@@ -46,7 +50,7 @@ class GroupController extends Controller
             $data=new Group;
             $data->name = $request->name;
 
-            
+
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
 
@@ -102,7 +106,7 @@ class GroupController extends Controller
             $data= Group::findOrFail(encryptor('decrypt',$id));
             $data->name = $request->name;
 
-            
+
             $data->company_id=company()['company_id'];
             $data->updated_by= currentUserId();
 

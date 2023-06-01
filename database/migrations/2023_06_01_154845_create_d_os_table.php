@@ -23,9 +23,8 @@ return new class extends Migration
             $table->decimal('discount_amount',10,2)->nullable();
             $table->decimal('other_charge',14,2)->nullable();
             $table->decimal('paid',14,2)->nullable();
-            $table->decimal('change_due',14,2)->nullable();
             $table->decimal('total',14,2)->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
