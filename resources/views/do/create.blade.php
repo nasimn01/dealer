@@ -10,17 +10,21 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post" action="{{route(currentUser().'.category.store')}}">
+                        <form class="form" method="post" action="{{route(currentUser().'.docon.store')}}">
                             @csrf
                             <div class="row">
                                 <h5>Details</h5>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group mb-3">
                                         <label class="py-2" for="cat">{{__('Supplier')}}<span class="text-danger">*</span></label>
-                                        <select class=" choices form-select" name="supplier">
+                                        <select class=" choices form-select" name="supplier_id">
                                             <option value="">Select Suppliers</option>
-                                            <option value="1">common supplier</option>
-                                            <option value="1">regular</option>
+                                            @forelse (App\Models\Settings\Supplier::where(company())->get();  as $sup)
+                                            <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+
+                                            @empty
+                                            <option value="">No Data Found</option>
+                                            @endforelse
                                         </select>
                                     </div>
                                 </div>
@@ -28,19 +32,20 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="py-2" for="cat">{{__('Bill Terms')}}<span class="text-danger">*</span></label>
-                                        <select class="form-control form-select" name="name">
-                                            <option value="0">Cash</option>
-                                            <option value="1">Credit</option>
-                                            <option value="2">Card</option>
-                                            <option value="3">Bkash</option>
-                                            <option value="4">Rocket</option>
+                                        <select class="form-control form-select" name="bill_id">
+                                            <option value="">Bill Terms</option>
+                                            @forelse(App\Models\Settings\Bill_term::where(company())->get(); as $bill)
+                                            <option value="{{ $bill->id }}">{{ $bill->name }}</option>
+                                            @empty
+                                            <option value="">No Data Found</option>
+                                            @endforelse
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="py-2" for="cat">{{__('Do Date')}}<span class="text-danger">*</span></label>
-                                        <input type="date" class="form-control" name="do_date" required>
+                                        <input type="date" class="form-control" name="do_date"placeholder="Day-Month-Year" required>
                                     </div>
                                 </div>
                             </div>
@@ -50,10 +55,12 @@
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="product">{{__('Product')}}<span class="text-danger">*</span></label>
-                                                <select class=" choices form-select" name="product">
+                                                <select class=" choices form-select" name="product_id">
                                                     <option value="">Select Product</option>
-                                                    <option value="1">common supplier</option>
-                                                    <option value="1">regular</option>
+                                                    @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                                                    <option value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                    @empty
+                                                    @endforelse
                                                 </select>
                                             </div>
                                         </div>
@@ -90,13 +97,13 @@
                                         <div class="col-lg-1">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="discount">{{__('Dis%')}}</label>
-                                                <input type="text" class="form-control" name="discount">
+                                                <input type="text" class="form-control" name="discount_percent">
                                             </div>
                                         </div>
                                         <div class="col-lg-1">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="tax">{{__('Tax%')}}</label>
-                                                <input type="text" class="form-control" name="tax">
+                                                <input type="text" class="form-control" name="vat_percent">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 ps-0">
@@ -128,12 +135,12 @@
                                                 <tr>
                                                     <td width="20%">Vat/Tax</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="sub_total"></td>
+                                                    <td width="78%"><input type="text" class="form-control" name="vat_amount"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Discount</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="discount"></td>
+                                                    <td width="78%"><input type="text" class="form-control" name="discount_amount"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -150,7 +157,7 @@
                                                 <tr>
                                                     <td width="20%">Other Charge</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="chagre"></td>
+                                                    <td width="78%"><input type="text" class="form-control" name="other_charge"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Paid</td>
@@ -160,7 +167,7 @@
                                                 <tr>
                                                     <td width="20%">Change/Due</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="paid"></td>
+                                                    <td width="78%"><input type="text" class="form-control" name="due"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -171,7 +178,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-end"><h4>Total</h4></td>
-                                                <td><input type="text" class="form-control" name="" value="0"></td>
+                                                <td><input type="text" class="form-control" name="total" value="0"></td>
                                             </tr>
 
                                         </tbody>
@@ -260,9 +267,6 @@ var row=`<main>
 
                 <span onClick='remove_row();' class="delete-row text-danger"><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></span>
             </div>
-        </div>
-        <div class="col-lg-12 d-flex justify-content-end">
-            <span onClick='add_row();' class="add-row text-primary"><i class="bi bi-plus-square-fill" style="font-size:2rem;"></i></span>
         </div>
     </div>
 </main>`;
