@@ -17,7 +17,7 @@
                                 <div class="col-4">
                                     <input type="text" name="customer_code" value="{{isset($_GET['customer_code'])?$_GET['customer_code']:''}}" placeholder="Customer Code" class="form-control">
                                 </div>
-                                
+
                                 <div class="col-2 ps-0">
                                     <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
                                 </div>
@@ -31,11 +31,11 @@
                         <a class="float-end" href="{{route(currentUser().'.customer.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                     </div>
                 </div>
-                
+
                 <!-- table bordered -->
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
-                        
+
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
@@ -82,7 +82,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    
+
                     <div class="pt-2">
                         {{$customers->links()}}
                     </div>
