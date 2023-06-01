@@ -31,11 +31,7 @@ class GroupController extends Controller
     public function create()
     {
         //return view('product.group.create');
-<<<<<<< HEAD
-        return view('product.group.purchase');
-=======
         return view('product.group.create');
->>>>>>> acc84d133b33e8555797a1f32f639b4a52c93f2d
     }
 
     /**
