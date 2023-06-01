@@ -110,7 +110,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('category',category::class,['as'=>'owner']);
         Route::resource('group',group::class,['as'=>'owner']);
         Route::resource('product',product::class,['as'=>'owner']);
-        Route::resource('docon',docon::class,['as'=>'owner']);
+        Route::resource('docontroll',docon::class,['as'=>'owner']);
 
 
 

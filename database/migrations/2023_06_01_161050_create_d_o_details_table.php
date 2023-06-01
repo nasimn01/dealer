@@ -25,8 +25,8 @@ return new class extends Migration
             $table->decimal('discount_percent',14,2)->nullable();
             $table->decimal('vat_percent',14,2)->nullable();
             $table->decimal('amount',14,2)->nullable();
-            
-            $table->string('status')->nullable();
+
+            $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->timestamps();
         });

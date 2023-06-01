@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Do;
 use App\Http\Controllers\Controller;
 
 use App\Models\Do\D_o;
+use App\Models\Do\D_o_detail;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
@@ -40,6 +41,7 @@ class DOController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         try{
             $data=new D_o;
             $data->supplier_id = $request->supplier_id;
@@ -51,13 +53,32 @@ class DOController extends Controller
             $data->other_charge = $request->other_charge;
             $data->paid = $request->paid;
             $data->total = $request->total;
-
+            $data->status = 0;
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
 
             if($data->save()){
+                if($request->product_id){
+                    foreach($request->product_id as $key => $value){
+                        // dd($request->all());
+                        if($value){
+                            $details = new D_o_detail;
+                            $details->do_id=$data->id;
+                            $details->product_id=$request->product_id[$key];
+                            $details->qty=$request->qty[$key];
+                            $details->total_price=$request->total_price[$key];
+                            $details->free=$request->free[$key];
+                            $details->price=$request->price[$key];
+                            $details->basic=$request->basic[$key];
+                            $details->discount_percent=$request->discount_percent[$key];
+                            $details->vat_percent=$request->vat_percent[$key];
+                            $details->amount=$request->amount[$key];
+                            $details->save();
+                        }
+                    }
+                }
             Toastr::success('Create Successfully!');
-            return redirect()->route(currentUser().'.docon.index');
+            return redirect()->route(currentUser().'.docontroll.index');
             } else{
             Toastr::warning('Please try Again!');
              return redirect()->back();
@@ -65,7 +86,7 @@ class DOController extends Controller
 
         }
         catch (Exception $e){
-            // dd($e);
+            dd($e);
             return back()->withInput();
 
         }

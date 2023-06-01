@@ -4,13 +4,22 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post" action="{{route(currentUser().'.docon.store')}}">
+                        <form class="form" method="post" action="{{route(currentUser().'.docontroll.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <h5>Details</h5>
@@ -55,7 +64,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="product">{{__('Product')}}<span class="text-danger">*</span></label>
-                                                <select class=" choices form-select" name="product_id">
+                                                <select class=" choices form-select" name="product_id[]">
                                                     <option value="">Select Product</option>
                                                     @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                     <option value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -64,59 +73,43 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group mb-3">
-                                                <label class="py-2" for="qty">{{__('Quantity')}}<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="qty">
-                                            </div>
+                                        <div class="col-lg-2 qty">
+                                            <label class="py-2" for="qty">{{__('Quantity')}}<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="qty[]" onkeyup="get_price(this)">
                                         </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group mb-3">
-                                                <label class="py-2" for="price">{{__('Total Price')}}<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="total_price">
-                                            </div>
+                                        <div class="col-lg-2 totalPrice">
+                                            <label class="py-2" for="price">{{__('Total Price')}}<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="total_price[]" onkeyup="get_price(this)">
                                         </div>
                                         <div class="col-lg-1">
-                                            <div class="form-group mb-3">
-                                                <label class="py-2" for="free">{{__('Free')}}</label>
-                                                <input type="text" class="form-control" name="free">
-                                            </div>
+                                            <label class="py-2" for="free">{{__('Free')}}</label>
+                                            <input type="number" class="form-control" name="free[]">
                                         </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group mb-3">
-                                                <label class="py-2" for="price">{{__('Price')}}<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="price" placeholder="price">
-                                            </div>
+                                        <div class="col-lg-2 buyPrice">
+                                            <label class="py-2" for="price">{{__('Price')}}<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="price[]" placeholder="price" onkeyup="get_price(this)">
                                         </div>
-                                        <div class="col-lg-1">
-                                            <div class="form-group mb-3">
-                                                <label class="py-2" for="basic">{{__('Basic')}}<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="basic">
-                                            </div>
+                                        <div class="col-lg-1 basic">
+                                            <label class="py-2" for="basic">{{__('Basic')}}<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="basic[]" value="" readonly="readonly">
                                         </div>
-                                        <div class="col-lg-1">
-                                            <div class="form-group mb-3">
-                                                <label class="py-2" for="discount">{{__('Dis%')}}</label>
-                                                <input type="text" class="form-control" name="discount_percent">
-                                            </div>
+                                        <div class="col-lg-1 dis">
+                                            <label class="py-2" for="discount">{{__('Dis%')}}</label>
+                                            <input type="number" class="form-control" name="discount_percent[]" onkeyup="get_price(this)">
+                                            <input name="discount_percent[]" type="hidden" value="" class="form-control pdisamt"/>
                                         </div>
-                                        <div class="col-lg-1">
-                                            <div class="form-group mb-3">
-                                                <label class="py-2" for="tax">{{__('Tax%')}}</label>
-                                                <input type="text" class="form-control" name="vat_percent">
-                                            </div>
+                                        <div class="col-lg-1 tax">
+                                            <label class="py-2" for="tax">{{__('Tax%')}}</label>
+                                            <input type="number" class="form-control" name="vat_percent[]" onkeyup="get_price(this)">
+                                            <input name="vat_percent[]" type="hidden" value="" class="form-control ptaxamt"/>
                                         </div>
-                                        <div class="col-lg-2 ps-0">
+                                        <div class="col-lg-2 ps-0 tamount">
                                             <label class="py-2" for="amount"><b>{{__('Amount')}}</b></label><br>
-                                            <div class="form-group mb-3 d-flex justify-content-between">
-                                                <input type="text" class="form-control p-0" name="amount" readonly style="width:82%;display:inline-block">
-                                                {{-- <a  href=""><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></a> --}}
-
-                                                <span onClick='remove_row();' class="delete-row text-danger"><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></span>
+                                                <input type="number" class="form-control" name="amount[]" readonly="readonly">
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12 d-flex justify-content-end">
-                                            <span onClick='add_row();' class="add-row text-primary"><i class="bi bi-plus-square-fill" style="font-size:2rem;"></i></span>
+                                            <div class="col-lg-12 d-flex justify-content-end">
+                                            <span onClick='remove_row();' class="delete-row text-danger"><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></span>
+                                            <span onClick='add_row();' class="add-row text-primary"><i class="bi bi-plus-square-fill" style="font-size:1.5rem;"></i></span>
                                         </div>
                                     </div>
                                 </main>
@@ -130,17 +123,17 @@
                                                 <tr>
                                                     <td width="20%">Subtotal</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="sub_total"></td>
+                                                    <td width="78%"><input type="number" class="form-control" name="sub_total"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Vat/Tax</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="vat_amount"></td>
+                                                    <td width="78%"><input type="number" class="form-control" name="vat_amount"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Discount</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="discount_amount"></td>
+                                                    <td width="78%"><input type="number" class="form-control" name="discount_amount"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -157,17 +150,17 @@
                                                 <tr>
                                                     <td width="20%">Other Charge</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="other_charge"></td>
+                                                    <td width="78%"><input type="number" class="form-control" name="other_charge"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Paid</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="paid"></td>
+                                                    <td width="78%"><input type="number" class="form-control" name="paid"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Change/Due</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="text" class="form-control" name="due"></td>
+                                                    <td width="78%"><input type="number" class="form-control" name="due"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -178,7 +171,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-end"><h4>Total</h4></td>
-                                                <td><input type="text" class="form-control" name="total" value="0"></td>
+                                                <td><input type="number" class="form-control" name="total" value="0"></td>
                                             </tr>
 
                                         </tbody>
@@ -186,8 +179,8 @@
                                 </div>
                                 <div>
                                     <div class="col-lg-6 offset-3 d-flex justify-content-between">
-                                        <a class="btn btn-primary btn-block m-2" href="">Save</a>
-                                        <a class="btn btn-info btn-block m-2" href="">Save & Print</a>
+                                        <button type="submit" class="btn btn-primary btn-block m-2">Save</button>
+                                        <a class="btn btn-info btn-block m-2">Save & Print</a>
                                     </div>
                                 </div>
                             </div>
@@ -210,63 +203,52 @@ var row=`<main>
         <div class="col-lg-12">
             <div class="form-group mb-3">
                 <label class="py-2" for="product">{{__('Product')}}<span class="text-danger">*</span></label>
-                <select class=" choices form-select" name="product">
+                <select class=" choices form-select" name="product_id[]">
                     <option value="">Select Product</option>
-                    <option value="1">common supplier</option>
-                    <option value="1">regular</option>
+                    @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                    <option value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                    @empty
+                    @endforelse
                 </select>
             </div>
         </div>
-        <div class="col-lg-2">
-            <div class="form-group mb-3">
-                <label class="py-2" for="qty">{{__('Quantity')}}<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="qty">
-            </div>
+        <div class="col-lg-2 qty">
+            <label class="py-2" for="qty">{{__('Quantity')}}<span class="text-danger">*</span></label>
+            <input type="number" class="form-control" name="qty[]" onkeyup="get_price(this)">
         </div>
-        <div class="col-lg-2">
-            <div class="form-group mb-3">
-                <label class="py-2" for="price">{{__('Total Price')}}<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="total_price">
-            </div>
+        <div class="col-lg-2 totalPrice">
+            <label class="py-2" for="price">{{__('Total Price')}}<span class="text-danger">*</span></label>
+            <input type="number" class="form-control" name="total_price[]" onkeyup="get_price(this)">
         </div>
         <div class="col-lg-1">
-            <div class="form-group mb-3">
-                <label class="py-2" for="free">{{__('Free')}}</label>
-                <input type="text" class="form-control" name="free">
-            </div>
+            <label class="py-2" for="free">{{__('Free')}}</label>
+            <input type="number" class="form-control" name="free[]">
         </div>
-        <div class="col-lg-2">
-            <div class="form-group mb-3">
-                <label class="py-2" for="price">{{__('Price')}}<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="price" placeholder="price">
-            </div>
+        <div class="col-lg-2 buyPrice">
+            <label class="py-2" for="price">{{__('Price')}}<span class="text-danger">*</span></label>
+            <input type="number" class="form-control" name="price[]" placeholder="price" onkeyup="get_price(this)">
         </div>
-        <div class="col-lg-1">
-            <div class="form-group mb-3">
-                <label class="py-2" for="basic">{{__('Basic')}}<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="basic">
-            </div>
+        <div class="col-lg-1 basic">
+            <label class="py-2" for="basic">{{__('Basic')}}<span class="text-danger">*</span></label>
+            <input type="number" class="form-control" name="basic[]" value="" readonly="readonly">
         </div>
-        <div class="col-lg-1">
-            <div class="form-group mb-3">
-                <label class="py-2" for="discount">{{__('Dis%')}}</label>
-                <input type="text" class="form-control" name="discount">
-            </div>
+        <div class="col-lg-1 dis">
+            <label class="py-2" for="discount">{{__('Dis%')}}</label>
+            <input type="number" class="form-control" name="discount_percent[]" onkeyup="get_price(this)">
+            <input name="discount_percent[]" type="hidden" value="" class="form-control pdisamt"/>
         </div>
-        <div class="col-lg-1">
-            <div class="form-group mb-3">
-                <label class="py-2" for="tax">{{__('Tax%')}}</label>
-                <input type="text" class="form-control" name="tax">
-            </div>
+        <div class="col-lg-1 tax">
+            <label class="py-2" for="tax">{{__('Tax%')}}</label>
+            <input type="number" class="form-control" name="vat_percent[]" onkeyup="get_price(this)">
+            <input name="vat_percent[]" type="hidden" value="" class="form-control ptaxamt"/>
         </div>
-        <div class="col-lg-2 ps-0">
+        <div class="col-lg-2 ps-0 tamount">
             <label class="py-2" for="amount"><b>{{__('Amount')}}</b></label><br>
-            <div class="form-group mb-3 d-flex justify-content-between">
-                <input type="text" class="form-control p-0" name="amount" readonly style="width:82%;display:inline-block">
-                {{-- <a  href=""><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></a> --}}
-
-                <span onClick='remove_row();' class="delete-row text-danger"><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></span>
+                <input type="number" class="form-control" name="amount[]" readonly="readonly">
             </div>
+            <div class="col-lg-12 d-flex justify-content-end">
+            <span onClick='remove_row();' class="delete-row text-danger"><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></span>
+            <span onClick='add_row();' class="add-row text-primary"><i class="bi bi-plus-square-fill" style="font-size:1.5rem;"></i></span>
         </div>
     </div>
 </main>`;
@@ -276,6 +258,78 @@ var row=`<main>
 function remove_row(){
     $('#product main').last().remove();
 }
+</script>
+
+<script>
+	function get_price(e){
+		//get sub total
+
+		if($(e).parent().hasClass('totalPrice')){
+			totalPrice=parseFloat($(e).val());
+			sqty=parseFloat($(e).parents().siblings('.qty').children("input").val());
+			if($(e).parent().siblings().hasClass('buyPrice')){
+				let perItemPrice = parseFloat(totalPrice / sqty).toFixed(2)
+				$(e).parents().siblings('.buyPrice').children("input").val(perItemPrice)
+				sprice = $(e).parents().siblings('.buyPrice').children("input").val()
+			}
+			sdiscountd=parseFloat($(e).parents().siblings('.dis').children("input").val());
+			stax=parseFloat($(e).parents().siblings('.tax').children("input").val());
+		}
+		else if($(e).parent().hasClass('buyPrice')){
+			sprice=parseFloat($(e).val());
+			sqty=parseFloat($(e).parents().siblings('.qty').children("input").val());
+			sdiscountd=parseFloat($(e).parents().siblings('.dis').children("input").val());
+			stax=parseFloat($(e).parents().siblings('.tax').children("input").val());
+		}
+		else if($(e).parent().hasClass('qty')){
+			sqty=parseFloat($(e).val());
+			sprice=parseFloat($(e).parents().siblings('.buyPrice').children("input").val());
+			sdiscountd=parseFloat($(e).parents().siblings('.dis').children("input").val());
+			stax=parseFloat($(e).parents().siblings('.tax').children("input").val());
+		}
+		else if($(e).parent().hasClass('dis')){
+			sdiscountd=parseFloat($(e).val());
+			sprice=parseFloat($(e).parents().siblings('.buyPrice').children("input").val());
+			sqty=parseFloat($(e).parents().siblings('.qty').children("input").val());
+			stax=parseFloat($(e).parents().siblings('.tax').children("input").val());
+		}
+		else if($(e).parent().hasClass('tax')){
+			stax=parseFloat($(e).val());
+			sprice=parseFloat($(e).parents().siblings('.buyPrice').children("input").val());
+			sqty=parseFloat($(e).parents().siblings('.qty').children("input").val());
+			sdiscountd=parseFloat($(e).parents().siblings('.dis').children("input").val());
+		}
+
+		var stax=stax?stax:0;
+		var sprice=sprice?sprice:0;
+		var sqty=sqty?sqty:0;
+		var sdiscountd=sdiscountd?sdiscountd:0;
+		var basic=sprice*sqty;
+		var disamt=(basic*(sdiscountd/100));
+		var taxamt=(basic*(stax/100));
+
+		if(disamt)
+			if($(e).parent().hasClass('dis'))
+				$(e).siblings('.pdisamt').val(disamt);
+			else
+				$(e).parents().siblings('.dis').children(".pdisamt").val(disamt);
+
+		if(taxamt)
+			if($(e).parent().hasClass('tax'))
+				$(e).siblings('.ptaxamt').val(taxamt);
+			else
+				$(e).parents().siblings('.tax').children(".ptaxamt").val(taxamt);
+
+
+			total=basic - disamt + taxamt;
+
+		$(e).parents().siblings('.basic').children("input").val(basic)
+		$(e).parents().siblings('.tamount').children("input").val(total)
+
+		//update Total Bill
+		cal_total();
+		cal_final_change();
+	}
 </script>
 
 @endpush
