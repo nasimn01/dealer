@@ -163,6 +163,17 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <table class="table table-sm table-borderless ">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-end"><h4>Total</h4></td>
+                                                <td><input type="text" class="form-control" name="" value="0"></td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div>
                                     <div class="col-lg-6 offset-3 d-flex justify-content-between">
                                         <a class="btn btn-primary btn-block m-2" href="">Save</a>
