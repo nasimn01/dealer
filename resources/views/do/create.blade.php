@@ -54,7 +54,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="py-2" for="cat">{{__('Do Date')}}<span class="text-danger">*</span></label>
-                                        <input type="date" class="form-control" name="do_date"placeholder="Day-Month-Year" required>
+                                        <input type="text" class="form-control" name="do_date"placeholder="Day-Month-Year" required>
                                     </div>
                                 </div>
                             </div>
