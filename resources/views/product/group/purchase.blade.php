@@ -1,12 +1,14 @@
 @extends('layout.app')
-@section('pageTitle',trans('Create Purchase'))
+@section('pageTitle',trans('Receive Do'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
+
 <section class="section">
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
+                <form method="" action="">
                     <!-- table bordered -->
                     <div class="row p-2 mt-4">
                         <div class="col-lg-3">
@@ -24,8 +26,8 @@
                         <hr>
                      
                         <div class="col-lg-3 mt-2">
-                            <label for=""><b>Purchase Date</b></label>
-                            <input type="date" class="form-control"  name="pur_date">
+                            <label for=""><b>Stock Date</b></label>
+                            <input type="text" id="datepicker" class="form-control"  name="stock_date" placeholder="dd-mm-yyyy">
                         </div>
                         <div class="col-lg-3 mt-2">
                             <label for=""><b>Batch No</b></label>
@@ -33,10 +35,10 @@
                         </div>
                         <div class="col-lg-3 mt-2">
                             <label for=""><b>Status</b></label>
-                            <select class="form-select" name="" id="">
+                            <select class="form-select" name="status" id="">
                                 <option value="0">Pending</option>
                                 <option value="1">Partial Received</option>
-                                <option value="2">Finish</option>
+                                <option value="2">Final</option>
                             </select>
                         </div>
                     </div>
@@ -46,13 +48,13 @@
                                 <tr class="text-center">
                                     <th rowspan="2">{{__('#SL')}}</th>
                                     <th rowspan="2">{{__('Product')}}</th>
-                                    <th rowspan="2">{{__('Werehouse')}}</th>
-                                    <th rowspan="2">{{__('Group')}}</th>
+                                    <th rowspan="2">{{__('Unit Style')}}</th>
+                                    {{-- <th rowspan="2">{{__('Werehouse')}}</th> --}}
                                     <th colspan="3">{{__('Quantity')}}</th>
                                     <th rowspan="2">{{__('Remark')}}</th>
                                 </tr>
                                 <tr class="text-center">
-                                    <th>{{__('Req')}}</th>
+                                    <th>{{__('Do')}}</th>
                                     <th>{{__('Received')}}</th>
                                     <th>{{__('s/o')}}</th>
                                 </tr>
@@ -60,31 +62,29 @@
                             <tbody>
                                <tr>
                                     <th>1</th>
-                                    <td>Mango Drinks [111] Drinks</td>
-                                    <td>
+                                    <td>Mango Drinks [product code] Category group</td>
+                                    <td>Unit</td>
+                                    {{-- <td>
                                         <select class="form-select" name="" id="">
                                             <option value="0">select</option>
                                             <option value="1">werehouse1</option>
                                             <option value="2">werehouse2</option>
                                         </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-select" name="" id="">
-                                            <option value="0">select</option>
-                                            <option value="1">group1</option>
-                                            <option value="2">group2</option>
-                                        </select>
-                                    </td>
+                                    </td> --}}
                                     <td>1200</td>
                                     <td><input class="form-control" type="number" name="" value=""></td>
                                     <td>1200</td>
-                                    <td><input class="form-control" type="number" name="" value=""></td>
+                                    <td><input class="form-control" type="text" name="" value=""></td>
                                </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
+                    <div class="d-flex justify-content-end my-2">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
             </div>
+        </div>
     </div>
 </section>
 @endsection

@@ -16,6 +16,8 @@
 <link rel="stylesheet" href="{{ asset('assets/css/shared/iconly.css') }}">
 {{-- choice css --}}
 <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+<!-- Include jQuery UI CSS file -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
 {{-- tostr css --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -115,6 +117,13 @@
 <script src="{{ asset('/assets/js/bootstrap.js') }}"></script>
 <script src="{{ asset('/assets/js/app.js') }}"></script>
 <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<!-- Include jQuery UI library -->
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $("#datepicker").datepicker();
+    });
+</script>
 @stack('scripts')
 
 {{-- tostr --}}
