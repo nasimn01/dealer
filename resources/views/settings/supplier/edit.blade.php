@@ -41,12 +41,7 @@
                                         <input type="email" value="{{old('email',$supplier->email)}}" class="form-control" name="email">
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="balance">Opening Balance</label>
-                                        <input type="number" value="{{old('balance',$supplier->balance)}}" class="form-control" name="balance">
-                                    </div>
-                                </div>
+
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="country">Country</label>

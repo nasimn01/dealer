@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('do_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->integer('qty')->nullable();
-            $table->decimal('total_price',14,2)->nullable();
+            $table->integer('unite_style_id')->nullable();
             $table->decimal('free',14,2)->nullable();
             $table->decimal('price',14,2)->nullable();
             $table->decimal('basic',14,2)->nullable();

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier_balance extends Model
 {
     use HasFactory;
+
 }

@@ -78,8 +78,16 @@
                                             <input type="number" class="form-control" name="qty[]" onkeyup="get_price(this)">
                                         </div>
                                         <div class="col-lg-2 totalPrice">
-                                            <label class="py-2" for="price">{{__('Total Price')}}<span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" name="total_price[]" onkeyup="get_price(this)">
+                                            <label class="py-2" for="unite_style">{{__('Unit Style')}}<span class="text-danger">*</span></label>
+                                            <select class=" choices form-select" name="unite_style_id[]">
+                                                <option value="">Select style</option>
+                                                @forelse (\App\Models\Settings\Unit_style::all(); as $us)
+                                                <option value="{{ $us->id }}">{{ $us->name }}</option>
+                                                @empty
+                                                @endforelse
+                                            </select>
+                                            {{--  <label class="py-2" for="price">{{__('Total Price')}}<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="total_price[]" onkeyup="get_price(this)">  --}}
                                         </div>
                                         <div class="col-lg-1">
                                             <label class="py-2" for="free">{{__('Free')}}</label>
@@ -91,7 +99,7 @@
                                         </div>
                                         <div class="col-lg-1 basic">
                                             <label class="py-2" for="basic">{{__('Basic')}}<span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" name="basic[]" value="" readonly="readonly">
+                                            <input type="number" class="form-control pbasic" name="basic[]" value="" readonly="readonly">
                                         </div>
                                         <div class="col-lg-1 dis">
                                             <label class="py-2" for="discount">{{__('Dis%')}}</label>
@@ -123,17 +131,17 @@
                                                 <tr>
                                                     <td width="20%">Subtotal</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="number" class="form-control" name="sub_total"></td>
+                                                    <td width="78%"><input type="text" value="" class="form-control tsub" onkeyup="cal_final_amount()" name="sub_total"/></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Vat/Tax</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="number" class="form-control" name="vat_amount"></td>
+                                                    <td width="78%"><input type="number" class="form-control ttax" onkeyup="cal_final_amount()" name="vat_amount"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Discount</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="number" class="form-control" name="discount_amount"></td>
+                                                    <td width="78%"><input type="number" class="form-control tdis" onkeyup="cal_final_amount()" name="discount_amount"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -150,17 +158,23 @@
                                                 <tr>
                                                     <td width="20%">Other Charge</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="number" class="form-control" name="other_charge"></td>
+                                                    <td width="78%"><input type="number" class="form-control tcharge" onkeyup="cal_final_amount()" name="other_charge"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Paid</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="number" class="form-control" name="paid"></td>
+                                                    <td width="78%"><input type="number" class="form-control tpaid" id="tpaid" onkeyup="cal_final_change()" name="paid"></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">Change/Due</td>
                                                     <td width="2%">:</td>
-                                                    <td width="78%"><input type="number" class="form-control" name="due"></td>
+                                                    <td width="78%"><input type="number" class="form-control tchange" name="due">
+                                                    <input type="hidden" value="0" class="form-control tdue" name="total_due"/></td>
+                                                </tr>
+                                                <tr id="due_date" style="display:none">
+                                                    <td width="20%" class="payment-title">Due Date</td>
+                                                    <td width="2%">:</td>
+                                                    <td  width="78%"><input type="date" class="form-control date_pick due_date" name="due_date"/></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -171,7 +185,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-end"><h4>Total</h4></td>
-                                                <td><input type="number" class="form-control" name="total" value="0"></td>
+                                                <td><input type="number" class="form-control ttotal" name="total" onkeyup="cal_final_amount()" value="0"></td>
                                             </tr>
 
                                         </tbody>
@@ -217,8 +231,14 @@ var row=`<main>
             <input type="number" class="form-control" name="qty[]" onkeyup="get_price(this)">
         </div>
         <div class="col-lg-2 totalPrice">
-            <label class="py-2" for="price">{{__('Total Price')}}<span class="text-danger">*</span></label>
-            <input type="number" class="form-control" name="total_price[]" onkeyup="get_price(this)">
+            <label class="py-2" for="unite_style">{{__('Unit Style')}}<span class="text-danger">*</span></label>
+            <select class=" choices form-select" name="unite_style_id[]">
+                <option value="">Select style</option>
+                @forelse (\App\Models\Settings\Unit_style::all(); as $us)
+                <option value="{{ $us->id }}">{{ $us->name }}</option>
+                @empty
+                @endforelse
+            </select>
         </div>
         <div class="col-lg-1">
             <label class="py-2" for="free">{{__('Free')}}</label>
@@ -230,7 +250,7 @@ var row=`<main>
         </div>
         <div class="col-lg-1 basic">
             <label class="py-2" for="basic">{{__('Basic')}}<span class="text-danger">*</span></label>
-            <input type="number" class="form-control" name="basic[]" value="" readonly="readonly">
+            <input type="number" class="form-control pbasic" name="basic[]" value="" readonly="readonly">
         </div>
         <div class="col-lg-1 dis">
             <label class="py-2" for="discount">{{__('Dis%')}}</label>
@@ -331,5 +351,99 @@ function remove_row(){
 		cal_final_change();
 	}
 </script>
+
+<script>
+    /* for check if due or change */
+    function cal_final_change(predefinedamount=""){
+        var subTotalInput = $('input[name=sub_total]').val();
+
+        var total_cal=parseFloat($('.ttotal').val());
+        var totalpaid=parseFloat(predefinedamount) > 0 ? parseFloat(predefinedamount) : parseFloat($('#tpaid').val());
+        var amremain=0;
+        if(total_cal>totalpaid){
+            amremain=(total_cal-totalpaid);
+            $('.tchange').val(amremain.toFixed(2) +' Due');
+            $('.tdue').val(amremain.toFixed(2));
+            $('#due_date').show();
+            $('.tchange').css('color','red');
+        }else if(total_cal<totalpaid){
+            amremain=(totalpaid-total_cal);
+            $('.tchange').val(amremain.toFixed(2) +' Change');
+            $('.tdue').val(0);
+            $('#due_date').hide();
+            $('.tchange').css('color','green');
+        }else{
+            $('.tchange').val(0);
+            $('.tdue').val(0);
+            $('#due_date').hide();
+            $('.tchange').css('color','black');
+        }
+    }
+
+    function cal_total(){
+        var pbasic = 0;
+            //total basic price
+            $(".pbasic").each(function() {
+                //add only if the value is number
+                if(!isNaN(this.value) && this.value.length!=0) {
+                    pbasic += parseFloat(this.value);
+                }
+            });
+
+        var pdisamt = 0;
+            //total basic price
+            $(".pdisamt").each(function() {
+                //add only if the value is number
+                if(!isNaN(this.value) && this.value.length!=0) {
+                    pdisamt += parseFloat(this.value);
+                }
+            });
+
+        var ptaxamt = 0;
+        //total basic price
+        $(".ptaxamt").each(function() {
+            //add only if the value is number
+            if(!isNaN(this.value) && this.value.length!=0) {
+                ptaxamt += parseFloat(this.value);
+            }
+        });
+
+        var tax=ptaxamt;
+        var dis=pdisamt;
+        var basic=pbasic;
+        if(tax)tax=tax; else tax=0;
+        if(dis)dis=dis; else dis=0;
+        if(basic)basic=basic; else basic=0;
+        //if(due)due=due; else due=0;
+        var total= (basic+tax)-dis;
+       // alert(basic);
+        $('.tsub').val(basic.toFixed(2));
+        $('.ttax').val(tax.toFixed(2));
+        $('.tdis').val(dis.toFixed(2));
+        $('.ttotal').val(total.toFixed(2));
+        /*	call amount in word function */
+        amount_in_word();
+    }
+
+    function cal_final_amount(){
+        var tsub=parseFloat($('.tsub').val());
+        var ttax=parseFloat($('.ttax').val());
+        var tdis=parseFloat($('.tdis').val());
+        var tdue=parseFloat($('.tdue').val());
+        var tcharge=parseFloat($('.tcharge').val());
+        if(tsub)tsub=tsub; else tsub=0;
+        if(ttax)ttax=ttax; else ttax=0;
+        if(tdis)tdis=tdis; else tdis=0;
+        if(tdue)tdue=tdue; else tdue=0;
+        if(tcharge)tcharge=tcharge; else tcharge=0;
+
+        var total= ((tsub+ttax+tcharge)-tdis);
+        $('.ttotal').val(total.toFixed(2));
+
+    /*	recall change function */
+        cal_final_change();
+        amount_in_word();
+    }
+    </script>
 
 @endpush

@@ -17,7 +17,7 @@
                                 <div class="col-4">
                                     <input type="text" name="supplier_code" value="{{isset($_GET['supplier_code'])?$_GET['supplier_code']:''}}" placeholder="Supplier Code" class="form-control">
                                 </div>
-                                
+
                                 <div class="col-2 ps-0">
                                     <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
                                 </div>
@@ -31,11 +31,11 @@
                         <a class="float-end" href="{{route(currentUser().'.supplier.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                     </div>
                 </div>
-                
+
                 <!-- table bordered -->
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
-                        
+
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
@@ -60,7 +60,7 @@
                                 <td>{{$data->email}}</td>
                                 <td>{{$data->country}}</td>
                                 <td>{{$data->city}}</td>
-                                <td>{{$data->balance}}</td>
+                                <td>{{$data->balance?->sum('balance_amount')}}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.supplier.edit',encryptor('encrypt',$data->id))}}">
@@ -82,7 +82,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    
+
                     <div class="pt-2">
                         {{$suppliers->links()}}
                     </div>

@@ -62,7 +62,7 @@
                                         <textarea class="form-control" name="address" rows="2">{{old('address')}}</textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
                                 </div>

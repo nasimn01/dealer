@@ -28,7 +28,7 @@ class SupplierController extends Controller
             $suppliers=$suppliers->where('supplier_code','like','%'.$request->supplier_code.'%');
 
         $suppliers=$suppliers->paginate(12);
-        
+
         return view('settings.supplier.index',compact('suppliers'));
     }
 
@@ -59,8 +59,7 @@ class SupplierController extends Controller
             $data->city = $request->city;
             $data->contact = $request->contact;
             $data->address = $request->address;
-            $data->balance = $request->balance;
-            
+
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
 
@@ -124,12 +123,12 @@ class SupplierController extends Controller
     {
         try {
             $data = Supplier::findOrFail(encryptor('decrypt',$id)); // Replace $supplierId with the actual ID of the supplier you want to update
-        
+
             if (!$data) {
                 Toastr::error('Supplier not found!');
                 return redirect()->back();
             }
-        
+
             $data->supplier_code = $request->supplier_code;
             $data->name = $request->name;
             $data->email = $request->email;
@@ -137,44 +136,19 @@ class SupplierController extends Controller
             $data->city = $request->city;
             $data->contact = $request->contact;
             $data->address = $request->address;
-            $data->balance = $request->balance;
-        
+
             $data->company_id = company()['company_id'];
             $data->updated_by = currentUserId();
-        
+
             if ($data->save()) {
-                // Update supplier balance if the balance is greater than 0
-                if ($request->balance == 0 || $request->balance == null) {
-                    //$supb = Supplier_balance::where('supplier_id', $data->id)->first();
-                    $supb= Supplier_balance::where('supplier_id',$data->id)->delete();
-                }
-                elseif ($request->balance > 0) {
-                    $supb = Supplier_balance::where('supplier_id', $data->id)->first();
-        
-                    if (!$supb) {
-                        $supb = new Supplier_balance;
-                        $supb->supplier_id = $data->id;
-                        $supb->company_id = company()['company_id'];
-                    }
-        
-                    $supb->balance_date = now();
-                    $supb->balance_amount = $request->balance;
-                    $supb->status = 1;
-        
-                    $supb->save();
-                }
-        
                 Toastr::success('Update Successfully!');
                 return redirect()->route(currentUser().'.supplier.index');
-            } else {
-                Toastr::warning('Please try Again!');
-                return redirect()->back();
             }
         } catch (Exception $e) {
-            // dd($e);
+            Toastr::warning('Please try Again!');
             return back()->withInput();
         }
-        
+
     }
 
     /**
