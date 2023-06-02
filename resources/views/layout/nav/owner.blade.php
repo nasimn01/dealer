@@ -76,6 +76,7 @@
         </a>
         <ul class="submenu">
             <li class="py-1"><a href="{{route(currentUser().'.docontroll.create')}}" >{{__('Do')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.docontroll.index')}}" >{{__('Do List')}}</a></li>
 		</ul>
     </li>
 

@@ -20,7 +20,7 @@ class GroupController extends Controller
     public function index()
     {
         $data = Group::where(company())->paginate(10);
-        return view('product.group.purchase',compact('data'));
+        return view('product.group.index',compact('data'));
     }
 
     /**

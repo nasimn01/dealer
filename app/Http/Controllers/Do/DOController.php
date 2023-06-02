@@ -20,7 +20,8 @@ class DOController extends Controller
      */
     public function index()
     {
-        //
+        // $data=D_o::all();
+        return view('product.group.purchase');
     }
 
     /**

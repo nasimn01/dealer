@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Category List'))
+@section('pageTitle',trans('Do List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -10,11 +10,15 @@
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0">
-                            <a class="float-end" href="{{route(currentUser().'.category.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                            <a class="float-end" href="{route(currentUser().'.docon.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('Category')}}</th>
+                                    <th scope="col">{{__('Product')}}</th>
+                                    <th scope="col">{{__('Quantity')}}</th>
+                                    <th scope="col">{{__('Do Date')}}</th>
+                                    <th scope="col">{{__('Supplier')}}</th>
+                                    <th scope="col">{{__('Status')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
@@ -24,29 +28,21 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$p->name}}</td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route(currentUser().'.category.edit',encryptor('encrypt',$p->id))}}">
-                                            <i class="bi bi-pencil-square"></i>
+                                        {{--  <a href="{{route(currentUser().'.docon.edit',encryptor('encrypt',$p->id))}}">  --}}
+                                            {{--  <i class="bi bi-pencil-square"></i>  --}}
                                         </a>
-                                        {{-- <a href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                        <form id="form{{$p->id}}" action="{{route(currentUser().'.category.destroy',encryptor('encrypt',$p->id))}}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            
-                                        </form> --}}
                                     </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <th colspan="3" class="text-center">No Data Found</th>
+                                    <th colspan="7" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                     <div class="my-3">
-                        {!! $data->links()!!}
+                        {{--  {!! $data->links()!!}  --}}
                     </div>
                 </div>
             </div>
