@@ -43,12 +43,6 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="balance">Opening Balance</label>
-                                        <input type="number" value="{{old('balance',$customer->balance)}}" class="form-control" name="balance">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="form-group">
                                         <label for="country">Country</label>
                                         <input type="text" value="{{old('country',$customer->country)}}" class="form-control" name="country">
                                     </div>
@@ -62,7 +56,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="address">Address</label>
-                                        <textarea class="form-control" name="address" rows="2">{{old('address',$customer->country)}}</textarea>
+                                        <textarea class="form-control" name="address" rows="2">{{old('address',$customer->address)}}</textarea>
                                     </div>
                                 </div>
 

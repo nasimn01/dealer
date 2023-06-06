@@ -100,6 +100,9 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('users',user::class,['as'=>'owner']);
         Route::resource('supplier',supplier::class,['as'=>'owner']);
         Route::resource('customer',customer::class,['as'=>'owner']);
+        Route::get('supplier-balance/{id}', [supplier::class,'addBalance'])->name('owner.add_balance');
+        Route::get('customer-balance/{id}', [customer::class,'addBalance'])->name('owner.add_customer_balance');
+
 
         // employee settings
         Route::resource('designation',designation::class,['as'=>'owner']);

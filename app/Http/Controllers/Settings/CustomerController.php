@@ -59,7 +59,6 @@ class CustomerController extends Controller
             $data->city = $request->city;
             $data->contact = $request->contact;
             $data->address = $request->address;
-            $data->balance = $request->balance;
             
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
@@ -114,6 +113,18 @@ class CustomerController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Settings\Supplier  $supplier
+     * @return \Illuminate\Http\Response
+     */
+    public function addBalance($id)
+    {
+        $customer = Customer::findOrFail(encryptor('decrypt',$id));
+        return view('settings.customer.addBalance',compact('customer'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -137,7 +148,6 @@ class CustomerController extends Controller
             $data->city = $request->city;
             $data->contact = $request->contact;
             $data->address = $request->address;
-            $data->balance = $request->balance;
         
             $data->company_id = company()['company_id'];
             $data->updated_by = currentUserId();
@@ -159,34 +169,40 @@ class CustomerController extends Controller
         
                 //     $supb->save();
                 // }
-                if ($request->balance == 0 || $request->balance == null) {
+                // if ($request->balance == 0 || $request->balance == null) {
                     
-                    $supb= Customer_balance::where('customer_id',$data->id)->delete();
-                }
-                elseif ($request->balance > 0) {
-                    $supb = Customer_balance::where('customer_id', $data->id)->first();
+                //     $supb= Customer_balance::where('customer_id',$data->id)->delete();
+                // }
+                // elseif ($request->balance > 0) {
+                //     $supb = Customer_balance::where('customer_id', $data->id)->first();
         
-                    if (!$supb) {
-                        $supb = new Customer_balance;
-                        $supb->customer_id = $data->id;
-                        $supb->company_id = company()['company_id'];
-                    }
+                //     if (!$supb) {
+                //         $supb = new Customer_balance;
+                //         $supb->customer_id = $data->id;
+                //         $supb->company_id = company()['company_id'];
+                //     }
         
+                //     $supb->balance_date = now();
+                //     $supb->balance_amount = $request->balance;
+                //     $supb->status = 0;
+        
+                //     $supb->save();
+                // }
+                if($request->balance > 0 ){
+                    $supb= new Customer_balance;
+                    $supb->customer_id = $data->id;
                     $supb->balance_date = now();
                     $supb->balance_amount = $request->balance;
                     $supb->status = 0;
-        
+                    $supb->company_id=company()['company_id'];
                     $supb->save();
                 }
-        
                 Toastr::success('Update Successfully!');
                 return redirect()->route(currentUser().'.customer.index');
-            } else {
-                Toastr::warning('Please try Again!');
-                return redirect()->back();
             }
         } catch (Exception $e) {
             // dd($e);
+            Toastr::warning('Please try Again!');
             return back()->withInput();
         }
     }

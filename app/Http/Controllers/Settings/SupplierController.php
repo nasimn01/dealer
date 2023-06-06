@@ -113,6 +113,18 @@ class SupplierController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Settings\Supplier  $supplier
+     * @return \Illuminate\Http\Response
+     */
+    public function addBalance($id)
+    {
+        $supplier = Supplier::findOrFail(encryptor('decrypt',$id));
+        return view('settings.supplier.addBalance',compact('supplier'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -141,6 +153,15 @@ class SupplierController extends Controller
             $data->updated_by = currentUserId();
 
             if ($data->save()) {
+                if($request->balance > 0 ){
+                    $supb= new Supplier_balance;
+                    $supb->supplier_id = $data->id;
+                    $supb->balance_date = now();
+                    $supb->balance_amount = $request->balance;
+                    $supb->status = 1;
+                    $supb->company_id=company()['company_id'];
+                    $supb->save();
+                }
                 Toastr::success('Update Successfully!');
                 return redirect()->route(currentUser().'.supplier.index');
             }

@@ -11,10 +11,8 @@ class Supplier extends Model
 {
     use HasFactory,SoftDeletes;
 
-    // public function balance(){
-    //     return $this->belongsTo(Supplier_balance::class,'supplier_id','id');
-    // }
-    public function balance(){
+    
+    public function balances(){
         return $this->hasMany(Supplier_balance::class,'supplier_id','id');
     }
 }

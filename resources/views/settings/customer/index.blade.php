@@ -45,7 +45,7 @@
                                 <th scope="col">{{__('Email')}}</th>
                                 <th scope="col">{{__('Country')}}</th>
                                 <th scope="col">{{__('City')}}</th>
-                                <th scope="col">{{__('Old Balance')}}</th>
+                                <th scope="col">{{__('Balance')}}</th>
                                 <th scope="col">{{__('Address')}}</th>
                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                             </tr>
@@ -60,11 +60,14 @@
                                 <td>{{$data->email}}</td>
                                 <td>{{$data->country}}</td>
                                 <td>{{$data->city}}</td>
-                                <td>{{$data->balance}}</td>
+                                <td>{{$data->balances?->sum('balance_amount')}}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.customer.edit',encryptor('encrypt',$data->id))}}">
                                         <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="{{route(currentUser().'.add_customer_balance',encryptor('encrypt',$data->id))}}">
+                                        <i class="bi bi-currency-dollar"></i>
                                     </a>
                                     {{-- <a href="javascript:void()" onclick="$('#form{{$data->id}}').submit()">
                                         <i class="bi bi-trash"></i>
