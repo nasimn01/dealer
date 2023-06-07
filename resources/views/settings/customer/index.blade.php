@@ -100,12 +100,12 @@
                             <form class="form" method="post" action="{{route(currentUser().'.customer.balance')}}">
                                 @csrf
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header py-1">
                                         <h5 class="modal-title" id="batchTitle">Add Balance
                                         </h5>
                                         <button type="button" class="close text-danger" data-bs-dismiss="modal"
                                             aria-label="Close">
-                                            <i data-feather="x"></i>
+                                            <i class="bi bi-x-lg" style="font-size: 1.5rem;"></i>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -135,7 +135,6 @@
                                         </table>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">Add</button>
                                     </div>
                                 </div>
