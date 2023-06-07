@@ -66,9 +66,14 @@
                                     <a href="{{route(currentUser().'.customer.edit',encryptor('encrypt',$data->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a href="{{route(currentUser().'.add_customer_balance',encryptor('encrypt',$data->id))}}">
-                                        <i class="bi bi-currency-dollar"></i>
-                                    </a>
+                                    <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
+                                        data-bs-toggle="modal" data-bs-target="#balance"
+                                        data-customer-code="{{$data->customer_code}}"
+                                        data-name="{{$data->name}}"
+                                        data-customer-id="{{$data->id}}"
+                                        data-balance="{{$data->balances?->sum('balance_amount')}}"
+                                        <span class="text-primary"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(49, 49, 245);"></i></span>
+                                    </button>
                                     {{-- <a href="javascript:void()" onclick="$('#form{{$data->id}}').submit()">
                                         <i class="bi bi-trash"></i>
                                     </a> -->
@@ -85,9 +90,57 @@
                             @endforelse
                         </tbody>
                     </table>
-
                     <div class="pt-2">
                         {{$customers->links()}}
+                    </div>
+                    <div class="modal fade" id="balance" tabindex="-1" role="dialog"
+                        aria-labelledby="balanceTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable"
+                            role="document">
+                            <form class="form" method="post" action="{{route(currentUser().'.customer.balance')}}">
+                                @csrf
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="batchTitle">Add Balance
+                                        </h5>
+                                        <button type="button" class="close text-danger" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <i data-feather="x"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr class="bg-light">
+                                                    <th>Customer Name</th>
+                                                    <td id="customerName"></td>
+                                                </tr>
+                                                <tr class="bg-light">
+                                                    <th>Customer Code</th>
+                                                    <td id="customerCode"></td>
+                                                </tr>
+                                                <tr class="bg-light">
+                                                    <th>Current Balance</th>
+                                                    <td id="customerBalance"></td>
+                                                </tr>
+                                                <tr class="bg-light" style="display: none;">
+                                                    <th>Customer ID</th>
+                                                    <td><input type="hidden" value="" id="customerId" class="form-control" name="customer_id"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Add Balance</th>
+                                                    <td ><input type="number" value="{{old('balance')}}" class="form-control" name="balance" placeholder="add balance"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,4 +148,25 @@
     </div>
 </section>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('#balance').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var customerCode = button.data('customer-code');
+            var name = button.data('name');
+            var customerId = button.data('customer-id');
+            var balance = button.data('balance');
+
+            // Set the values in the modal
+            var modal = $(this);
+            modal.find('#customerCode').text(customerCode);
+            modal.find('#customerName').text(name);
+            modal.find('#customerId').val(customerId);
+            modal.find('#customerBalance').text(balance);
+        });
+    });
+</script>
+
+@endpush
 

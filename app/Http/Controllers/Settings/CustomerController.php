@@ -88,6 +88,40 @@ class CustomerController extends Controller
 
         }
     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function customerBalance(Request $request)
+    {
+        try {
+            if ($request->balance > 0) {
+                $data = new Customer_balance;
+                $data->customer_id = $request->customer_id;
+                $data->balance_date = now();
+                $data->balance_amount = $request->balance;
+                $data->status = 0;
+                $data->company_id = company()['company_id'];
+    
+                if ($data->save()) {
+                    Toastr::success('Balance Added Successfully!');
+                    return redirect()->route(currentUser().'.customer.index');
+                } else {
+                    Toastr::warning('Please try Again!');
+                    return redirect()->back();
+                }
+            } else {
+                Toastr::warning('Balance should be greater than 0!');
+                return redirect()->back();
+            }
+        } catch (Exception $e) {
+            dd($e);
+            return back()->withInput();
+        }
+    }
+    
 
     /**
      * Display the specified resource.
@@ -110,18 +144,6 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail(encryptor('decrypt',$id));
         return view('settings.customer.edit',compact('customer'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Settings\Supplier  $supplier
-     * @return \Illuminate\Http\Response
-     */
-    public function addBalance($id)
-    {
-        $customer = Customer::findOrFail(encryptor('decrypt',$id));
-        return view('settings.customer.addBalance',compact('customer'));
     }
 
     /**
@@ -188,15 +210,6 @@ class CustomerController extends Controller
         
                 //     $supb->save();
                 // }
-                if($request->balance > 0 ){
-                    $supb= new Customer_balance;
-                    $supb->customer_id = $data->id;
-                    $supb->balance_date = now();
-                    $supb->balance_amount = $request->balance;
-                    $supb->status = 0;
-                    $supb->company_id=company()['company_id'];
-                    $supb->save();
-                }
                 Toastr::success('Update Successfully!');
                 return redirect()->route(currentUser().'.customer.index');
             }

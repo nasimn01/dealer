@@ -88,6 +88,39 @@ class SupplierController extends Controller
 
         }
     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function supplierBalance(Request $request)
+    {
+        try {
+            if ($request->balance > 0) {
+                $data = new Supplier_balance;
+                $data->supplier_id = $request->supplier_id;
+                $data->balance_date = now();
+                $data->balance_amount = $request->balance;
+                $data->status = 1;
+                $data->company_id = company()['company_id'];
+    
+                if ($data->save()) {
+                    Toastr::success('Balance Added Successfully!');
+                    return redirect()->route(currentUser().'.supplier.index');
+                } else {
+                    Toastr::warning('Please try Again!');
+                    return redirect()->back();
+                }
+            } else {
+                Toastr::warning('Balance should be greater than 0!');
+                return redirect()->back();
+            }
+        } catch (Exception $e) {
+            dd($e);
+            return back()->withInput();
+        }
+    }
 
     /**
      * Display the specified resource.
@@ -110,18 +143,6 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::findOrFail(encryptor('decrypt',$id));
         return view('settings.supplier.edit',compact('supplier'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Settings\Supplier  $supplier
-     * @return \Illuminate\Http\Response
-     */
-    public function addBalance($id)
-    {
-        $supplier = Supplier::findOrFail(encryptor('decrypt',$id));
-        return view('settings.supplier.addBalance',compact('supplier'));
     }
 
     /**
@@ -153,15 +174,6 @@ class SupplierController extends Controller
             $data->updated_by = currentUserId();
 
             if ($data->save()) {
-                if($request->balance > 0 ){
-                    $supb= new Supplier_balance;
-                    $supb->supplier_id = $data->id;
-                    $supb->balance_date = now();
-                    $supb->balance_amount = $request->balance;
-                    $supb->status = 1;
-                    $supb->company_id=company()['company_id'];
-                    $supb->save();
-                }
                 Toastr::success('Update Successfully!');
                 return redirect()->route(currentUser().'.supplier.index');
             }

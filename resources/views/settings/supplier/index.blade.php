@@ -66,9 +66,14 @@
                                     <a href="{{route(currentUser().'.supplier.edit',encryptor('encrypt',$data->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a href="{{route(currentUser().'.add_balance',encryptor('encrypt',$data->id))}}">
-                                        <i class="bi bi-currency-dollar"></i>
-                                    </a>
+                                    <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
+                                        data-bs-toggle="modal" data-bs-target="#balance"
+                                        data-supplier-code="{{$data->supplier_code}}"
+                                        data-name="{{$data->name}}"
+                                        data-supplier-id="{{$data->id}}"
+                                        data-balance="{{$data->balances?->sum('balance_amount')}}"
+                                        <span class="text-primary"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(49, 49, 245);"></i></span>
+                                    </button>
                                     {{-- <a href="javascript:void()" onclick="$('#form{{$data->id}}').submit()">
                                         <i class="bi bi-trash"></i>
                                     </a> -->
@@ -89,10 +94,80 @@
                     <div class="pt-2">
                         {{$suppliers->links()}}
                     </div>
+                    <div class="modal fade" id="balance" tabindex="-1" role="dialog"
+                        aria-labelledby="balanceTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable"
+                            role="document">
+                            <form class="form" method="post" action="{{route(currentUser().'.supplier.balance')}}">
+                                @csrf
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="batchTitle">Add Balance
+                                        </h5>
+                                        <button type="button" class="close text-danger" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <i data-feather="x"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr class="bg-light">
+                                                    <th>Supplier Name</th>
+                                                    <td id="supplierName"></td>
+                                                </tr>
+                                                <tr class="bg-light">
+                                                    <th>Supplier Code</th>
+                                                    <td id="supplierCode"></td>
+                                                </tr>
+                                                <tr class="bg-light">
+                                                    <th>Current Balance</th>
+                                                    <td id="supplierBalance"></td>
+                                                </tr>
+                                                <tr class="bg-light" style="display: none;">
+                                                    <th>Supplier ID</th>
+                                                    <td><input type="hidden" value="" id="supplierId" class="form-control" name="supplier_id"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Add Balance</th>
+                                                    <td ><input type="number" value="{{old('balance')}}" class="form-control" name="balance" placeholder="add balance"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('#balance').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var supplierCode = button.data('supplier-code');
+            var name = button.data('name');
+            var supplierId = button.data('supplier-id');
+            var balance = button.data('balance');
+
+            // Set the values in the modal
+            var modal = $(this);
+            modal.find('#supplierCode').text(supplierCode);
+            modal.find('#supplierName').text(name);
+            modal.find('#supplierId').val(supplierId);
+            modal.find('#supplierBalance').text(balance);
+        });
+    });
+</script>
+
+@endpush
 
