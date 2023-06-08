@@ -35,7 +35,7 @@
                                         <a href="{{route(currentUser().'.docontroll.edit',encryptor('encrypt',$p->id))}}">
                                        <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a href="{{route(currentUser().'.owner.recive',encryptor('encrypt',$p->id))}}">
+                                        <a href="{{route(currentUser().'.recive',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-cart-fill"></i>
                                         </a>
                                     </td>

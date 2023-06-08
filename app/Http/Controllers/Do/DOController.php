@@ -25,11 +25,11 @@ class DOController extends Controller
         // return view('product.group.purchase');
     }
 
-    public function DoRecive($id)
+    public function DoRecive(Request $request,$id)
     {
         $data=D_o_detail::where('do_id',encryptor('decrypt',$id))->get();
-        return view('do.index',compact('data'));
-        // return view('product.group.purchase');
+        // return $data;
+        return view('do.doreceive',compact('data'));
     }
 
     /**

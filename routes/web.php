@@ -117,7 +117,8 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('product',product::class,['as'=>'owner']);
         Route::resource('batch',batch::class,['as'=>'owner']);
         Route::resource('docontroll',docon::class,['as'=>'owner']);
-        Route::get('doreceive/{id}',docon::class,'DoRecive')->name('owner.recive');
+        Route::get('doreceive/{id}',[docon::class,'DoRecive'])->name('owner.recive');
+        // Route::get('trade-firstform/{encrypted_id}',[trade::class,'FormPartFirstUp'])->name('admin.tradefirstpart');
 
 
 
