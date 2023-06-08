@@ -167,6 +167,5 @@
         });
     });
 </script>
-
 @endpush
 
