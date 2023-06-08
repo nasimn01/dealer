@@ -31,7 +31,11 @@
                         </div>
                         <div class="col-lg-3 mt-2">
                             <label for=""><b>Batch No</b></label>
-                            <input type="text" class="form-control"  name="batch_no">
+                            <select class="form-select" name="batch">
+                                <option value="">Select Batch</option>
+                                <option value="1">Batch1</option>
+                                <option value="2">Batch2</option>
+                            </select>
                         </div>
                         <div class="col-lg-3 mt-2">
                             <label for=""><b>Status</b></label>
@@ -49,6 +53,9 @@
                                     <th rowspan="2">{{__('#SL')}}</th>
                                     <th rowspan="2">{{__('Product')}}</th>
                                     <th rowspan="2">{{__('Unit Style')}}</th>
+                                    <th rowspan="2">{{__('DP')}}</th>
+                                    <th rowspan="2">{{__('TP')}}</th>
+                                    <th rowspan="2">{{__('MRP')}}</th>
                                     {{-- <th rowspan="2">{{__('Werehouse')}}</th> --}}
                                     <th colspan="3">{{__('Quantity')}}</th>
                                     <th rowspan="2">{{__('Remark')}}</th>
@@ -64,6 +71,9 @@
                                     <th>1</th>
                                     <td>Mango Drinks [product code] Category group</td>
                                     <td>Unit</td>
+                                    <td><input class="form-control" type="number" name="dp" value=""></td>
+                                    <td><input class="form-control" type="number" name="tp" value=""></td>
+                                    <td><input class="form-control" type="number" name="mrp" value=""></td>
                                     {{-- <td>
                                         <select class="form-select" name="" id="">
                                             <option value="0">select</option>
