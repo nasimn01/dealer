@@ -14,8 +14,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('Product')}}</th>
-                                    <th scope="col">{{__('Quantity')}}</th>
+                                    <th scope="col">{{__('Supplier')}}</th>
+                                    <th scope="col">{{__('Do Date')}}</th>
                                     <th scope="col">{{__('Do Date')}}</th>
                                     <th scope="col">{{__('Supplier')}}</th>
                                     <th scope="col">{{__('Status')}}</th>
@@ -26,10 +26,17 @@
                                 @forelse($data as $p)
                                 <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
+                                    <td>{{$p->supplier?->name}}</td>
+                                    <td>{{\Carbon\Carbon::parse($p->do_date)->format('d-m-Y')}}</td>
+                                    <td>{{$p->name}}</td>
+                                    <td>{{$p->name}}</td>
                                     <td>{{$p->name}}</td>
                                     <td class="white-space-nowrap">
-                                        {{--  <a href="{{route(currentUser().'.docon.edit',encryptor('encrypt',$p->id))}}">  --}}
-                                            {{--  <i class="bi bi-pencil-square"></i>  --}}
+                                        <a href="{{route(currentUser().'.docontroll.edit',encryptor('encrypt',$p->id))}}">
+                                       <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="{{route(currentUser().'.owner.recive',encryptor('encrypt',$p->id))}}">
+                                            <i class="bi bi-cart-fill"></i>
                                         </a>
                                     </td>
                                 </tr>

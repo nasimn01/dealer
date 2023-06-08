@@ -94,7 +94,7 @@
                                             <input type="number" class="form-control" name="free[]">
                                         </div>
                                         <div class="col-lg-2 buyPrice">
-                                            <label class="py-2" for="price">{{__('Price')}}<span class="text-danger">*</span></label>
+                                            <label class="py-2" for="price">{{__('Tp Price')}}<span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" name="price[]" placeholder="price" onkeyup="get_price(this)">
                                         </div>
                                         <div class="col-lg-1 basic">
@@ -245,7 +245,7 @@ var row=`<main>
             <input type="number" class="form-control" name="free[]">
         </div>
         <div class="col-lg-2 buyPrice">
-            <label class="py-2" for="price">{{__('Price')}}<span class="text-danger">*</span></label>
+            <label class="py-2" for="price">{{__('Tp Price')}}<span class="text-danger">*</span></label>
             <input type="number" class="form-control" name="price[]" placeholder="price" onkeyup="get_price(this)">
         </div>
         <div class="col-lg-1 basic">

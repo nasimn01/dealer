@@ -30,7 +30,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="py-2" for="cat">{{__('Purchase Type')}}<span class="text-danger">*</span></label>
@@ -140,7 +140,7 @@
                                     <div class="form-group mb-3 d-flex justify-content-between">
                                         <input type="text" class="form-control p-0" name="amount" readonly style="width:82%;display:inline-block">
                                         <a  href=""><i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i></a>
-                                       
+
                                     </div>
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end">
@@ -317,8 +317,8 @@
                                             <textarea class="form-control" name="address" rows="2">{{old('address')}}</textarea>
                                         </div>
                                     </div>
-                                    
-                                    
+
+
                                 </div>
                             </div>
                             <div class="modal-footer">

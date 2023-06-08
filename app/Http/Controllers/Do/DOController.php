@@ -20,8 +20,16 @@ class DOController extends Controller
      */
     public function index()
     {
-        // $data=D_o::all();
-        return view('product.group.purchase');
+        $data=D_o::all();
+        return view('do.index',compact('data'));
+        // return view('product.group.purchase');
+    }
+
+    public function DoRecive($id)
+    {
+        $data=D_o_detail::where('do_id',encryptor('decrypt',$id))->get();
+        return view('do.index',compact('data'));
+        // return view('product.group.purchase');
     }
 
     /**
