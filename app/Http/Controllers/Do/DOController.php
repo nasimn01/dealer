@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
+use DB;
+use Carbon\Carbon;
 
 class DOController extends Controller
 {
@@ -23,13 +25,6 @@ class DOController extends Controller
         $data=D_o::all();
         return view('do.index',compact('data'));
         // return view('product.group.purchase');
-    }
-
-    public function DoRecive(Request $request,$id)
-    {
-        $data=D_o_detail::where('do_id',encryptor('decrypt',$id))->get();
-        // return $data;
-        return view('do.doreceive',compact('data'));
     }
 
     /**
@@ -144,5 +139,27 @@ class DOController extends Controller
     public function destroy(D_o $d_o)
     {
         //
+    }
+
+    public function DoRecive($id)
+    {
+        $data=D_o::findOrFail(encryptor('decrypt',$id));
+        // return $data;
+        return view('do.doreceive',compact('data'));
+    }
+
+    public function DoRecive_edit(Request $request,$id)
+    {
+        try{
+            $data=D_o::findOrFail(encryptor('decrypt',$id));
+            $data->updated_by=currentUserId();
+            $data->status=$request->status;
+            if($data->save()){
+                            $dodetail=D_o_detail::findOrFail(encryptor('decrypt',$id));
+                        }
+        }catch(Exception $e){
+            //dd($e);
+            return redirect()->back()->withInput();
+        }
     }
 }

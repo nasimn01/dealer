@@ -8,20 +8,21 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
-                <form method="" action="">
+                <form method="post" action="{{route(currentUser().'.do.accept_do_edit',encryptor('encrypt',$data->id))}}">
+                    @csrf
                     <!-- table bordered -->
                     <div class="row p-2 mt-4">
                         <div class="col-lg-3">
-                             <span><b>Do ID:</b> 122323</span>
+                             <span><b>Do ID:</b> {{$data->id}}</span>
                         </div>
                         <div class="col-lg-3">
-                             <span><b>Supplier ID:</b> 122232</span>
+                             <span><b>Supplier ID:</b> {{$data->supplier?->name}}</span>
                         </div>
                         <div class="col-lg-3">
                              <span><b>Quantity:</b> 500</span>
                         </div>
                         <div class="col-lg-3">
-                            <span><b>Do Date:</b> 12-05-2023</span>
+                            <span><b>Do Date:</b> {{\Carbon\Carbon::parse($data->do_date)->format('d-m-Y')}}</span>
                         </div>
                         <hr>
 
@@ -67,11 +68,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($data as $d)
+                                @forelse ($data->details as $d)
                                     <tr>
                                         <th>{{ ++$loop->index }}</th>
                                         <td>{{$d->product?->product_name}}</td>
-                                        <td>Unit</td>
+                                        <td>{{ $d->unitstyle?->name }}</td>
                                         <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
                                         <td><input class="form-control" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
                                         <td><input class="form-control" type="number" name="mrp" value="{{$d->product?->mrp_price}}"></td>
@@ -82,9 +83,9 @@
                                                 <option value="2">werehouse2</option>
                                             </select>
                                         </td> --}}
-                                        <td>{{ $d->qty }}</td>
-                                        <td><input class="form-control" type="number" name="" value=""></td>
-                                        <td>1200</td>
+                                        <td><input readonly class="form-control" id="do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
+                                        <td><input class="form-control" type="number" id="recive_qty" name="delete_qty" value="" onkeyup="num_qty()"></td>
+                                        <td><input class="form-control" id="num_total" type="text" name="" value="{{ $d->qty }}"></td>
                                         <td><input class="form-control" type="text" name="" value=""></td>
                                 </tr>
                                 @empty
@@ -101,4 +102,11 @@
         </div>
     </div>
 </section>
+<script>
+    function num_qty(){
+        let dq=$('#do_qty').val()?parseFloat($('#do_qty').val()):0;
+        let rq=$('#recive_qty').val()?parseFloat($('#recive_qty').val()):0;
+        $('#num_total').val((dq-rq));
+    }
+</script>
 @endsection
