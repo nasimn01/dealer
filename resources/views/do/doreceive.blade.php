@@ -32,10 +32,12 @@
                         </div>
                         <div class="col-lg-3 mt-2">
                             <label for=""><b>Batch No</b></label>
-                            <select class="form-select" name="batch">
-                                <option value="">Select Batch</option>
-                                <option value="1">Batch1</option>
-                                <option value="2">Batch2</option>
+                            <select class=" choices form-select" name="batch">
+                                <option value="">Select style</option>
+                                @forelse (\App\Models\Product\Batch::all(); as $us)
+                                <option value="{{ $us->id }}">{{ $us->name }}</option>
+                                @empty
+                                @endforelse
                             </select>
                         </div>
                         <div class="col-lg-3 mt-2">
@@ -54,6 +56,9 @@
                                     <th rowspan="2">{{__('#SL')}}</th>
                                     <th rowspan="2">{{__('Product')}}</th>
                                     <th rowspan="2">{{__('Unit Style')}}</th>
+                                    <th rowspan="2">{{__('CTN')}}</th>
+                                    <th rowspan="2">{{__('PCS')}}</th>
+                                    <th rowspan="2">{{__('Total')}}</th>
                                     <th rowspan="2">{{__('DP')}}</th>
                                     <th rowspan="2">{{__('TP')}}</th>
                                     <th rowspan="2">{{__('MRP')}}</th>
@@ -73,6 +78,9 @@
                                         <th>{{ ++$loop->index }}</th>
                                         <td>{{$d->product?->product_name}}</td>
                                         <td>{{ $d->unitstyle?->name }}</td>
+                                        <td><input class="form-control" type="text" name="" value=""></td>
+                                        <td><input class="form-control" type="text" name="" value=""></td>
+                                        <td><input class="form-control" type="text" name="" value=""></td>
                                         <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
                                         <td><input class="form-control" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
                                         <td><input class="form-control" type="number" name="mrp" value="{{$d->product?->mrp_price}}"></td>
