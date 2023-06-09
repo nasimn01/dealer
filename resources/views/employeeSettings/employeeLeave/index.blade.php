@@ -39,10 +39,10 @@
                                         <a href="{{route(currentUser().'.emLeave.edit',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
+                                        <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
                                             <i class="bi bi-trash"></i>
                                         </a>
-                                        <form id="form{{$p->id}}" action="{{route(currentUser().'.emLeave.destroy',encryptor('encrypt',$p->id))}}" method="post">
+                                        <form id="form{{$p->id}}" onsubmit="return confirm('Are you sure?')" action="{{route(currentUser().'.emLeave.destroy',encryptor('encrypt',$p->id))}}" method="post">
                                             @csrf
                                             @method('delete')
                                             

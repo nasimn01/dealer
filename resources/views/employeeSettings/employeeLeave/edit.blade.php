@@ -31,14 +31,14 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="date">{{__('Leave Date Start')}}</label>
-                                            <input type="date" class="form-control" value="{{ old('leave_date_start',$emdata->leave_date_start)}}" name="leave_date_start">
+                                            <input type="text" class="form-control datepicker" value="{{ old('leave_date_start',$emdata->leave_date_start)}}" name="leave_date_start" placeholder="dd/mm/yyyy">
                                             
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="date">{{__('Leave Date End')}}</label>
-                                            <input type="date" class="form-control" value="{{ old('leave_date_end',$emdata->leave_date_end)}}" name="leave_date_end">
+                                            <input type="text" id="datepicker" class="form-control" value="{{ old('leave_date_end',$emdata->leave_date_end)}}" name="leave_date_end" placeholder="dd/mm/yyyy">
                                             
                                         </div>
                                     </div>
