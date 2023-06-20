@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Do\D_o;
 use App\Models\Do\D_o_detail;
+use App\Models\Stock\Stock_model;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Settings\Unit;
 use Exception;
 use DB;
 use Carbon\Carbon;
@@ -148,18 +150,44 @@ class DOController extends Controller
         return view('do.doreceive',compact('data'));
     }
 
+    public function UnitDataGet(Request $request)
+    {
+        $unit=Unit::all();
+        // return $data;
+        return response()->json($unit,200);
+    }
+
+
     public function DoRecive_edit(Request $request,$id)
     {
         try{
             $data=D_o::findOrFail(encryptor('decrypt',$id));
-            $data->updated_by=currentUserId();
             $data->status=$request->status;
+            $data->updated_by=currentUserId();
             if($data->save()){
-                            $dodetail=D_o_detail::findOrFail(encryptor('decrypt',$id));
-                        }
+                // foreach()
+                    $dodetail=D_o_detail::findOrFail(encryptor('decrypt',$id));
+
+                    if($dodetail->save()){
+                        $stock=new Stock_model;
+                        $stock->do_id=$data->id;
+                        $stock->stock_date=$request->stock_date;
+                        $stock->batch_no=$request->batch_no;
+                        $stock->quantity=$request->quantity;
+                        $stock->price=$request->price;
+                        $stock->ex_date=$request->ex_date;
+                        $stock->unite_style=$request->unite_style;
+                        $stock->remark=$request->remark;
+                        $stock->status=$request->status;
+                        $stock->company_id=company()['company_id'];
+                        $stock->created_by= currentUserId();
+                        $stock->save();
+                    }
+                }
         }catch(Exception $e){
             //dd($e);
             return redirect()->back()->withInput();
         }
     }
+
 }

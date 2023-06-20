@@ -13,14 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('batches', function (Blueprint $table) {
+        Schema::create('stock_models', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->decimal('dp',14,2)->nullable();
-            $table->decimal('tp',14,2)->nullable();
-            $table->decimal('mrp',14,2)->nullable();
-            $table->string('unit_style_id')->nullable();
-            $table->string('product_id')->nullable();
+            $table->string('do_id')->nullable();
+            $table->string('stock_date')->nullable();
+            $table->integer('batch_no')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->decimal('price',14,2)->nullable();
+            $table->string('ex_date')->nullable();
+            $table->string('unite_style')->nullable();
+            $table->string('remark')->nullable();
+            $table->string('status')->default(0)->comment('0=out,1=in');
+            $table->integer('chalan_no')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
@@ -36,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('batches');
+        Schema::dropIfExists('stock_models');
     }
 };

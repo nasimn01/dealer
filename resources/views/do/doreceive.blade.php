@@ -18,9 +18,9 @@
                         <div class="col-lg-3">
                              <span><b>Supplier ID:</b> {{$data->supplier?->name}}</span>
                         </div>
-                        <div class="col-lg-3">
+                        {{--  <div class="col-lg-3">
                              <span><b>Quantity:</b> 500</span>
-                        </div>
+                        </div>  --}}
                         <div class="col-lg-3">
                             <span><b>Do Date:</b> {{\Carbon\Carbon::parse($data->do_date)->format('d-m-Y')}}</span>
                         </div>
@@ -30,16 +30,16 @@
                             <label for=""><b>Stock Date</b></label>
                             <input type="text" id="datepicker" class="form-control"  name="stock_date" placeholder="dd-mm-yyyy">
                         </div>
-                        <div class="col-lg-3 mt-2">
+                        {{--  <div class="col-lg-3 mt-2">
                             <label for=""><b>Batch No</b></label>
-                            <select class=" choices form-select" name="batch">
+                            <select class=" choices form-select" name="batch_no">
                                 <option value="">Select style</option>
                                 @forelse (\App\Models\Product\Batch::all(); as $us)
                                 <option value="{{ $us->id }}">{{ $us->name }}</option>
                                 @empty
                                 @endforelse
                             </select>
-                        </div>
+                        </div>  --}}
                         <div class="col-lg-3 mt-2">
                             <label for=""><b>Status</b></label>
                             <select class="form-select" name="status" id="">
@@ -55,15 +55,17 @@
                                 <tr class="text-center">
                                     <th rowspan="2">{{__('#SL')}}</th>
                                     <th rowspan="2">{{__('Product')}}</th>
+                                    <th rowspan="2">{{__('Batch')}}</th>
                                     <th rowspan="2">{{__('Unit Style')}}</th>
                                     <th rowspan="2">{{__('CTN')}}</th>
                                     <th rowspan="2">{{__('PCS')}}</th>
-                                    <th rowspan="2">{{__('Total')}}</th>
+                                    <th rowspan="2">{{__('Free')}}</th>
+                                    <th colspan="3">{{__('Quantity')}}</th>
+                                    {{--  <th rowspan="2">{{__('Total')}}</th>  --}}
                                     <th rowspan="2">{{__('DP')}}</th>
                                     <th rowspan="2">{{__('TP')}}</th>
                                     <th rowspan="2">{{__('MRP')}}</th>
                                     {{-- <th rowspan="2">{{__('Werehouse')}}</th> --}}
-                                    <th colspan="3">{{__('Quantity')}}</th>
                                     <th rowspan="2">{{__('Remark')}}</th>
                                 </tr>
                                 <tr class="text-center">
@@ -77,10 +79,27 @@
                                     <tr>
                                         <th>{{ ++$loop->index }}</th>
                                         <td>{{$d->product?->product_name}}</td>
-                                        <td>{{ $d->unitstyle?->name }}</td>
-                                        <td><input class="form-control" type="text" name="" value=""></td>
-                                        <td><input class="form-control" type="text" name="" value=""></td>
-                                        <td><input class="form-control" type="text" name="" value=""></td>
+                                        <td>
+                                            <select class="form-select" name="batch_no">
+                                                <option value="">Select style</option>
+                                                @forelse (\App\Models\Product\Batch::all(); as $us)
+                                                <option value="{{ $us->id }}">{{ $us->name }}</option>
+                                                @empty
+                                                @endforelse
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input readonly class="form-control" id="" type="text" value="{{ $d->unitstyle?->name }}">
+                                            <input type="hidden" name="unit_style_id" id="unit_style_id" value="{{encryptor('encrypt',$d->unite_style_id)}}">
+                                            @php print_r($d->unite_style_id); @endphp
+                                        </td>
+                                        <td><input class="form-control" id="ctn" type="text" name="ctn" value="" onkeyup="ctn_pcs()"></td>
+                                        <td><input class="form-control" id="pcs" type="text" name="pcs" value=""></td>
+                                        <td><input class="form-control" type="text" name="" value="" placeholder="free pcs"></td>
+                                        <td><input readonly class="form-control" id="do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
+                                        <td><input class="form-control" type="number" id="recive_qty" name="delete_qty" value=""></td>
+                                        <td><input class="form-control" id="num_total" type="text" name="" value="{{ $d->qty }}"></td>
+                                        {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
                                         <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
                                         <td><input class="form-control" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
                                         <td><input class="form-control" type="number" name="mrp" value="{{$d->product?->mrp_price}}"></td>
@@ -91,9 +110,6 @@
                                                 <option value="2">werehouse2</option>
                                             </select>
                                         </td> --}}
-                                        <td><input readonly class="form-control" id="do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
-                                        <td><input class="form-control" type="number" id="recive_qty" name="delete_qty" value="" onkeyup="num_qty()"></td>
-                                        <td><input class="form-control" id="num_total" type="text" name="" value="{{ $d->qty }}"></td>
                                         <td><input class="form-control" type="text" name="" value=""></td>
                                 </tr>
                                 @empty
@@ -111,10 +127,23 @@
     </div>
 </section>
 <script>
-    function num_qty(){
-        let dq=$('#do_qty').val()?parseFloat($('#do_qty').val()):0;
-        let rq=$('#recive_qty').val()?parseFloat($('#recive_qty').val()):0;
-        $('#num_total').val((dq-rq));
+    function ctn_pcs(){
+        let cn=$('#ctn').val()?parseFloat($('#ctn').val()):0;
+        let pc=$('#pcs').val()?parseFloat($('#pcs').val()):0;
+        let unit_style_id=$('#unit_style_id').val()?parseFloat($('#unit_style_id').val()):0;
+        if (cn || pc) {
+            $.ajax({
+                url: "{{route(currentUser().'.unit_data_get')}}",
+                type: "GET",
+                dataType: "json",
+                data: { unit_style_id:unit_style_id },
+                success: function(data) {
+                    console.log(data)
+
+                },
+            });
+        }
+
     }
 </script>
 @endsection
