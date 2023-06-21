@@ -91,7 +91,6 @@
                                         <td>
                                             <input readonly class="form-control" id="" type="text" value="{{ $d->unitstyle?->name }}">
                                             <input type="hidden" name="unit_style_id" id="unit_style_id" value="{{encryptor('encrypt',$d->unite_style_id)}}">
-                                            @php print_r($d->unite_style_id); @endphp
                                         </td>
                                         <td><input class="form-control" id="ctn" type="text" name="ctn" value="" onkeyup="ctn_pcs()"></td>
                                         <td><input class="form-control" id="pcs" type="text" name="pcs" value=""></td>

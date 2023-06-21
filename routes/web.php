@@ -26,6 +26,7 @@ use App\Http\Controllers\Product\CategoryController as category;
 use App\Http\Controllers\Product\GroupController as group;
 use App\Http\Controllers\Product\ProductController as product;
 use App\Http\Controllers\Product\BatchController as batch;
+use App\Http\Controllers\Product\ReturnProductController as returnproduct;
 use App\Http\Controllers\Do\DOController as docon;
 
 
@@ -115,6 +116,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('category',category::class,['as'=>'owner']);
         Route::resource('group',group::class,['as'=>'owner']);
         Route::resource('product',product::class,['as'=>'owner']);
+        Route::resource('returnproduct',returnproduct::class,['as'=>'owner']);
         Route::resource('batch',batch::class,['as'=>'owner']);
         Route::resource('docontroll',docon::class,['as'=>'owner']);
         Route::get('doreceive/{id}',[docon::class,'DoRecive'])->name('owner.recive');
