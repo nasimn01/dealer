@@ -90,14 +90,14 @@
                                         </td>
                                         <td>
                                             <input readonly class="form-control" id="" type="text" value="{{ $d->unitstyle?->name }}">
-                                            <input type="hidden" name="unit_style_id" id="unit_style_id" value="{{encryptor('encrypt',$d->unite_style_id)}}">
+                                            <input type="hidden" class="unit_style_id" name="unit_style_id" value="{{$d->unite_style_id}}">
                                         </td>
-                                        <td><input class="form-control" id="ctn" type="text" name="ctn" value="" onkeyup="ctn_pcs()"></td>
-                                        <td><input class="form-control" id="pcs" type="text" name="pcs" value=""></td>
+                                        <td><input class="form-control ctn" type="text" name="ctn" value="" onkeyup="ctn_pcs(this)"></td>
+                                        <td><input class="form-control pcs" type="text" name="pcs" value="" onkeyup="ctn_pcs(this)"></td>
                                         <td><input class="form-control" type="text" name="" value="" placeholder="free pcs"></td>
-                                        <td><input readonly class="form-control" id="do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
-                                        <td><input class="form-control" type="number" id="recive_qty" name="delete_qty" value=""></td>
-                                        <td><input class="form-control" id="num_total" type="text" name="" value="{{ $d->qty }}"></td>
+                                        <td><input readonly class="form-control" type="number" name="do_qty" value="{{ $d->qty }}"></td>
+                                        <td><input class="form-control" type="number" name="delete_qty" value=""></td>
+                                        <td><input class="form-control" type="text" name="" value="{{ $d->qty }}"></td>
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
                                         <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
                                         <td><input class="form-control" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
@@ -126,18 +126,22 @@
     </div>
 </section>
 <script>
-    function ctn_pcs(){
-        let cn=$('#ctn').val()?parseFloat($('#ctn').val()):0;
-        let pc=$('#pcs').val()?parseFloat($('#pcs').val()):0;
-        let unit_style_id=$('#unit_style_id').val()?parseFloat($('#unit_style_id').val()):0;
-        if (cn || pc) {
+    function ctn_pcs(e){
+
+        let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
+
+        let pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
+        let unit_style_id=$(e).closest('tr').find('.unit_style_id').val();
+
+        if (cn) {
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",
                 type: "GET",
                 dataType: "json",
                 data: { unit_style_id:unit_style_id },
                 success: function(data) {
-                    console.log(data)
+                    total=((cn*data)+pcs)
+                    alert(total);
 
                 },
             });

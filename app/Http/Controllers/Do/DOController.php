@@ -152,7 +152,8 @@ class DOController extends Controller
 
     public function UnitDataGet(Request $request)
     {
-        $unit=Unit::all();
+        $unistyle=$request->unit_style_id;
+        $unit=Unit::where('unit_style_id', $unistyle)->where('name','pcs')->pluck('qty');
         // return $data;
         return response()->json($unit,200);
     }
