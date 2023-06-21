@@ -140,6 +140,7 @@
                 dataType: "json",
                 data: { unit_style_id:unit_style_id },
                 success: function(data) {
+                   // console.log(data);
                     total=((cn*data)+pcs)
                     alert(total);
 
