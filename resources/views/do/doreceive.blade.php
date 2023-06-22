@@ -96,7 +96,7 @@
                                         <td><input class="form-control pcs" type="text" name="pcs" value="" onkeyup="ctn_pcs(this)"></td>
                                         <td><input class="form-control" type="text" name="" value="" placeholder="free pcs"></td>
                                         <td><input readonly class="form-control" type="number" name="do_qty" value="{{ $d->qty }}"></td>
-                                        <td><input class="form-control" type="number" name="delete_qty" value=""></td>
+                                        <td><input class="form-control receive" type="number" name="delete_qty" value=""></td>
                                         <td><input class="form-control" type="text" name="" value="{{ $d->qty }}"></td>
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
                                         <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
@@ -142,7 +142,8 @@
                 success: function(data) {
                    // console.log(data);
                     total=((cn*data)+pcs)
-                    alert(total);
+                    $(e).closest('tr').find('.receive').val(total)
+                    //alert(total);
 
                 },
             });
