@@ -72,8 +72,12 @@ class DOController extends Controller
                             $details->do_id=$data->id;
                             $details->product_id=$request->product_id[$key];
                             $details->qty=$request->qty[$key];
+                            $details->receive_qty=$request->qty[$key];
+                            $details->receive_free_qty=$request->free[$key];
                             $details->unite_style_id=$request->unite_style_id[$key];
                             $details->free=$request->free[$key];
+                            $details->free_tk=$request->free_tk[$key];
+                            $details->free_ratio=$request->free_ratio[$key];
                             $details->price=$request->price[$key];
                             $details->basic=$request->basic[$key];
                             $details->discount_percent=$request->discount_percent[$key];

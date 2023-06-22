@@ -73,7 +73,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 qty">
+                                        <div class="col-lg-1 qty">
                                             <label class="py-2" for="qty">{{__('Quantity')}}<span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" name="qty[]" onkeyup="get_price(this)">
                                         </div>
@@ -93,7 +93,15 @@
                                             <label class="py-2" for="free">{{__('Free')}}</label>
                                             <input type="number" class="form-control" name="free[]">
                                         </div>
-                                        <div class="col-lg-2 buyPrice">
+                                        <div class="col-lg-1">
+                                            <label class="py-2" for="free_tk">{{__('Free TK')}}</label>
+                                            <input type="number" class="form-control" name="free_tk[]">
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label class="py-2" for="free_ratio">{{__('Free Ratio')}}</label>
+                                            <input type="number" class="form-control" name="free_ratio[]">
+                                        </div>
+                                        <div class="col-lg-1 buyPrice">
                                             <label class="py-2" for="price">{{__('Tp Price')}}<span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" name="price[]" placeholder="price" onkeyup="get_price(this)">
                                         </div>
@@ -226,7 +234,7 @@ var row=`<main>
                 </select>
             </div>
         </div>
-        <div class="col-lg-2 qty">
+        <div class="col-lg-1 qty">
             <label class="py-2" for="qty">{{__('Quantity')}}<span class="text-danger">*</span></label>
             <input type="number" class="form-control" name="qty[]" onkeyup="get_price(this)">
         </div>
@@ -244,7 +252,15 @@ var row=`<main>
             <label class="py-2" for="free">{{__('Free')}}</label>
             <input type="number" class="form-control" name="free[]">
         </div>
-        <div class="col-lg-2 buyPrice">
+        <div class="col-lg-1">
+            <label class="py-2" for="free_tk">{{__('Free TK')}}</label>
+            <input type="number" class="form-control" name="free_tk[]">
+        </div>
+        <div class="col-lg-1">
+            <label class="py-2" for="free_ratio">{{__('Free Ratio')}}</label>
+            <input type="number" class="form-control" name="free_ratio[]">
+        </div>
+        <div class="col-lg-1 buyPrice">
             <label class="py-2" for="price">{{__('Tp Price')}}<span class="text-danger">*</span></label>
             <input type="number" class="form-control" name="price[]" placeholder="price" onkeyup="get_price(this)">
         </div>
