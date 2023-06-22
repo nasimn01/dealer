@@ -143,6 +143,7 @@
         let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
 
         let pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
+        let rec=$(e).closest('tr').find('.receive').val(pcs);
         let unit_style_id=$(e).closest('tr').find('.unit_style_id').val();
 
         if (cn) {
