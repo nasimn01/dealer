@@ -67,6 +67,7 @@
                                     <th rowspan="3">{{__('DP')}}</th>
                                     <th rowspan="3">{{__('TP')}}</th>
                                     <th rowspan="3">{{__('TP(free)')}}</th>
+                                    <th rowspan="3">{{__('MRP')}}</th>
                                     <th rowspan="3">{{__('Adjust')}}</th>
                                     <th rowspan="3">{{__('Remark')}}</th>
                                 </tr>
@@ -104,17 +105,21 @@
                                         <td><input class="form-control ctn" type="text" name="ctn" value="" onkeyup="ctn_pcs(this)" placeholder="ctn"></td>
                                         <td><input class="form-control pcs" type="text" name="pcs" value="" onkeyup="ctn_pcs(this)" placeholder="pcs"></td>
                                         <td><input class="form-control" type="text" name="" value="" placeholder="free pcs"></td>
-                                        <td><input  class="form-control do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
-                                        <td><input  class="form-control free_ratio" type="number" name="free_ratio" value="{{ $d->free_ratio }}"></td>
-                                        <td><input  class="form-control free_pcs" type="number" name="free_pcs" value="{{ $d->free }}"></td>
-                                        <td><input  class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
-                                        <td><input class="form-control receive" type="number" name="delete_qty" value=""></td>
-                                        <td><input class="form-control receive_qty" type="text" name="" value="{{ $d->qty }}"></td>
-                                        <td><input class="form-control" type="text" name="" value=""></td>
+                                        <td><input disabled class="form-control do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
+                                        <td><input disabled class="form-control free_ratio" type="number" name="free_ratio" value="{{ $d->free_ratio }}"></td>
+                                        <td><input disabled class="form-control free_pcs" type="number" name="free_pcs" value="{{ $d->free }}"></td>
+                                        <td><input disabled class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
+                                        <td><input readonly class="form-control receive" type="number" name="delete_qty" value=""></td>
+                                        <td><input readonly class="form-control receive_qty" type="text" name="" value="">
+                                            <input class="form-control rece_qty" type="hidden" name="" value="{{ $d->qty }}">
+                                        </td>
+                                        <td><input readonly class="form-control" type="number" name="" value=""></td>
+                                        {{--  <td><input class="form-control" type="text" name="" value=""></td>  --}}
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
                                         <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
                                         <td><input class="form-control tp_price" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
                                         <td><input class="form-control" type="number" name="mrp" value=""></td>
+                                        <td><input class="form-control" type="number" name="mrp" value="{{$d->product?->mrp_price}}"></td>
                                         {{-- <td>
                                             <select class="form-select" name="" id="">
                                                 <option value="0">select</option>
@@ -156,11 +161,11 @@
             let free_ratio=$(e).closest('tr').find('.free_ratio').val()?parseFloat($(e).closest('tr').find('.free_ratio').val()):0;
             let free_pcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;
             let tp_price=$(e).closest('tr').find('.tp_price').val()?parseFloat($(e).closest('tr').find('.tp_price').val()):0;
-            let receive_qty=$(e).closest('tr').find('.receive_qty').val()?parseFloat($(e).closest('tr').find('.receive_qty').val()):0;
-            let so=do_qty-cn;
-            $(e).closest('tr').find('.receive_qty').val(so);
+            let rece_qty=$(e).closest('tr').find('.rece_qty').val()?parseFloat($(e).closest('tr').find('.rece_qty').val()):0;
+            //let so=do_qty-cn;
+            //$(e).closest('tr').find('.receive_qty').val(so);
 
-            if (cn) {
+            if (cn<=do_qty) {
                 $.ajax({
                     url: "{{route(currentUser().'.unit_data_get')}}",
                     type: "GET",
@@ -170,13 +175,13 @@
                     //console.log(data);
                         total=((cn*data)+pcs)
                         $(e).closest('tr').find('.receive').val(total);
-
-                        so=(receive_qty*data);
-                        $(e).closest('tr').find('.receive_qty').val(total);
-
                         total_doqty=(do_qty*data);
                         dodata=(Math.floor(total_doqty/free_ratio)*free_pcs)+total_doqty;
                         tpfree =(tp_price*total_doqty)/dodata;
+
+                        so=(do_qty*data);
+                        sonow=so-total;
+                        $(e).closest('tr').find('.receive_qty').val(sonow);
                         alert(tpfree);
 
                     },
