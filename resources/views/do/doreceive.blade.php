@@ -50,6 +50,10 @@
                                 <option value="2">Final</option>
                             </select>
                         </div>
+                        <div class="col-lg-3 mt-2">
+                            <label for=""><b>Chalan NO</b></label>
+                            <input type="text" id="" class="form-control"  name="chalan_no" placeholder="Chalan NO">
+                        </div>
                     </div>
                     <div class="table-responsive mt-4">
                         <table class="table table-bordered mb-0">
