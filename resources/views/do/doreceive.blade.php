@@ -1,7 +1,9 @@
 @extends('layout.app')
 @section('pageTitle',trans('Receive Do'))
 @section('pageSubTitle',trans('List'))
-
+@push("styles")
+<link rel="stylesheet" href="{{ asset('assets/css/main/full-screen.css') }}">
+@endpush
 @section('content')
 
 <section class="section">
@@ -102,17 +104,17 @@
                                         <td><input class="form-control ctn" type="text" name="ctn" value="" onkeyup="ctn_pcs(this)" placeholder="ctn"></td>
                                         <td><input class="form-control pcs" type="text" name="pcs" value="" onkeyup="ctn_pcs(this)" placeholder="pcs"></td>
                                         <td><input class="form-control" type="text" name="" value="" placeholder="free pcs"></td>
-                                        <td><input readonly class="form-control" type="number" name="do_qty" value="{{ $d->qty }}"></td>
-                                        <td><input readonly class="form-control" type="number" name="free_ratio" value="{{ $d->free_ratio }}"></td>
-                                        <td><input readonly class="form-control" type="number" name="free_pcs" value="{{ $d->free }}"></td>
-                                        <td><input readonly class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
+                                        <td><input  class="form-control do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
+                                        <td><input  class="form-control free_ratio" type="number" name="free_ratio" value="{{ $d->free_ratio }}"></td>
+                                        <td><input  class="form-control free_pcs" type="number" name="free_pcs" value="{{ $d->free }}"></td>
+                                        <td><input  class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
                                         <td><input class="form-control receive" type="number" name="delete_qty" value=""></td>
-                                        <td><input class="form-control" type="text" name="" value="{{ $d->qty }}"></td>
+                                        <td><input class="form-control receive_qty" type="text" name="" value="{{ $d->qty }}"></td>
                                         <td><input class="form-control" type="text" name="" value=""></td>
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
                                         <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
-                                        <td><input class="form-control" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
-                                        <td><input class="form-control" type="number" name="mrp" value="{{$d->product?->mrp_price}}"></td>
+                                        <td><input class="form-control tp_price" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
+                                        <td><input class="form-control" type="number" name="mrp" value=""></td>
                                         {{-- <td>
                                             <select class="form-select" name="" id="">
                                                 <option value="0">select</option>
@@ -137,31 +139,52 @@
         </div>
     </div>
 </section>
-<script>
-    function ctn_pcs(e){
 
-        let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
-
-        let pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
-        let rec=$(e).closest('tr').find('.receive').val(pcs);
-        let unit_style_id=$(e).closest('tr').find('.unit_style_id').val();
-
-        if (cn) {
-            $.ajax({
-                url: "{{route(currentUser().'.unit_data_get')}}",
-                type: "GET",
-                dataType: "json",
-                data: { unit_style_id:unit_style_id },
-                success: function(data) {
-                   // console.log(data);
-                    total=((cn*data)+pcs)
-                    $(e).closest('tr').find('.receive').val(total)
-                    //alert(total);
-
-                },
-            });
-        }
-
-    }
-</script>
 @endsection
+@push("scripts")
+
+    <script>
+        function ctn_pcs(e){
+
+            let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
+
+            let pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
+            $(e).closest('tr').find('.receive').val(pcs);
+            let unit_style_id=$(e).closest('tr').find('.unit_style_id').val();
+
+            let do_qty=$(e).closest('tr').find('.do_qty').val()?parseFloat($(e).closest('tr').find('.do_qty').val()):0;
+            let free_ratio=$(e).closest('tr').find('.free_ratio').val()?parseFloat($(e).closest('tr').find('.free_ratio').val()):0;
+            let free_pcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;
+            let tp_price=$(e).closest('tr').find('.tp_price').val()?parseFloat($(e).closest('tr').find('.tp_price').val()):0;
+            let receive_qty=$(e).closest('tr').find('.receive_qty').val()?parseFloat($(e).closest('tr').find('.receive_qty').val()):0;
+            let so=do_qty-cn;
+            $(e).closest('tr').find('.receive_qty').val(so);
+
+            if (cn) {
+                $.ajax({
+                    url: "{{route(currentUser().'.unit_data_get')}}",
+                    type: "GET",
+                    dataType: "json",
+                    data: { unit_style_id:unit_style_id },
+                    success: function(data) {
+                    //console.log(data);
+                        total=((cn*data)+pcs)
+                        $(e).closest('tr').find('.receive').val(total);
+
+                        so=(receive_qty*data);
+                        $(e).closest('tr').find('.receive_qty').val(total);
+
+                        total_doqty=(do_qty*data);
+                        dodata=(Math.floor(total_doqty/free_ratio)*free_pcs)+total_doqty;
+                        tpfree =(tp_price*total_doqty)/dodata;
+                        alert(tpfree);
+
+                    },
+                });
+            }
+
+        }
+    </script>
+
+    <script src="{{ asset('/assets/js/full_screen.js') }}"></script>
+@endpush

@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('stock_date')->nullable();
             $table->integer('batch_no')->nullable();
             $table->integer('quantity')->nullable();
-            $table->decimal('price',14,2)->nullable();
+            $table->decimal('dp',14,2)->nullable();
+            $table->decimal('tp',14,2)->nullable();
+            $table->decimal('tp_free',14,2)->nullable();
+            $table->decimal('mrp',14,2)->nullable();
             $table->string('ex_date')->nullable();
             $table->string('unite_style')->nullable();
             $table->string('remark')->nullable();

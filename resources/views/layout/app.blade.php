@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dealer | @yield('siteTitle', 'POS')</title>
-    
+
 <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/main/style.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
 <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.svg') }}" type="image/x-icon">
 <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.png') }}" type="image/png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    
+
 <link rel="stylesheet" href="{{ asset('assets/css/shared/iconly.css') }}">
 {{-- choice css --}}
 <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
 {{-- tostr css --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
+@stack('styles')
 <script
   src="https://code.jquery.com/jquery-3.6.1.min.js"
   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
@@ -69,7 +69,7 @@
                         <li><a class="dropdown-item" href="{{route('logOut')}}">{{__('Logout') }}</a></li>
                     </ul>
                 </div>
-                <a href="#" class="burger-btn d-block">
+                <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
