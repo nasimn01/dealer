@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stock_models', function (Blueprint $table) {
+        Schema::create('do_receive_histories', function (Blueprint $table) {
             $table->id();
             $table->string('do_id')->nullable();
             $table->integer('chalan_no')->nullable();
@@ -33,7 +33,6 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -44,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stock_models');
+        Schema::dropIfExists('do_receive_histories');
     }
 };

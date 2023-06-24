@@ -72,8 +72,8 @@ class DOController extends Controller
                             $details->do_id=$data->id;
                             $details->product_id=$request->product_id[$key];
                             $details->qty=$request->qty[$key];
-                            $details->receive_qty=$request->qty[$key];
-                            $details->receive_free_qty=$request->free[$key];
+                            //$details->receive_qty=$request->qty[$key];
+                            //$details->receive_free_qty=$request->free[$key];
                             $details->unite_style_id=$request->unite_style_id[$key];
                             $details->free=$request->free[$key];
                             $details->free_tk=$request->free_tk[$key];
@@ -165,32 +165,43 @@ class DOController extends Controller
 
     public function DoRecive_edit(Request $request,$id)
     {
+        //dd($request->all());
         try{
             $data=D_o::findOrFail(encryptor('decrypt',$id));
             $data->status=$request->status;
             $data->updated_by=currentUserId();
             if($data->save()){
                 // foreach()
-                    $dodetail=D_o_detail::findOrFail(encryptor('decrypt',$id));
-
-                    if($dodetail->save()){
-                        $stock=new Stock_model;
-                        $stock->do_id=$data->id;
-                        $stock->stock_date=$request->stock_date;
-                        $stock->batch_no=$request->batch_no;
-                        $stock->quantity=$request->quantity;
-                        $stock->price=$request->price;
-                        $stock->ex_date=$request->ex_date;
-                        $stock->unite_style=$request->unite_style;
-                        $stock->remark=$request->remark;
-                        $stock->status=$request->status;
-                        $stock->company_id=company()['company_id'];
-                        $stock->created_by= currentUserId();
-                        $stock->save();
+                foreach($request->receive_qty as $key => $value){
+                    if($value){
+                        $dodetail=D_o_detail::where('do_id', encryptor('decrypt',$id))->first();
+                        $dodetail->receive_qty=$request->receive_qty[$key];
+                        $dodetail->receive_free_qty=$request->receive_free_qty[$key];
+                        if($dodetail->save()){
+                            $stock=new Stock_model;
+                            $stock->do_id=$data->id;
+                            $stock->stock_date=$request->stock_date;
+                            $stock->chalan_no=$request->chalan_no;
+                            $stock->batch_no_id=$request->batch_no_id[$key];
+                            $stock->unit_style_id=$request->unit_style_id[$key];
+                            $stock->quantity=$request->receive_qty[$key];
+                            $stock->dp=$request->dp[$key];
+                            $stock->tp=$request->tp[$key];
+                            $stock->tp_free=$request->tp_free[$key];
+                            $stock->mrp=$request->mrp[$key];
+                            $stock->ex_date=$request->ex_date;
+                            $stock->adjust=$request->adjust[$key];
+                            $stock->remark=$request->remark[$key];
+                            $stock->status=0;
+                            $stock->company_id=company()['company_id'];
+                            $stock->created_by= currentUserId();
+                            $stock->save();
+                        }
                     }
                 }
+            }
         }catch(Exception $e){
-            //dd($e);
+            dd($e);
             return redirect()->back()->withInput();
         }
     }

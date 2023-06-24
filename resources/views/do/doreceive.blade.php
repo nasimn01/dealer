@@ -94,7 +94,7 @@
                                         <th>{{ ++$loop->index }}</th>
                                         <td>{{$d->product?->product_name}}</td>
                                         <td>
-                                            <select class="form-select" name="batch_no">
+                                            <select onclick="ctn_pcs(this)" class="form-select" name="batch_no_id[]">
                                                 <option value="">Select style</option>
                                                 @forelse (\App\Models\Product\Batch::all(); as $us)
                                                 <option value="{{ $us->id }}">{{ $us->name }}</option>
@@ -104,26 +104,26 @@
                                         </td>
                                         <td>
                                             <input readonly class="form-control" id="" type="text" value="{{ $d->unitstyle?->name }}">
-                                            <input type="hidden" class="unit_style_id" name="unit_style_id" value="{{$d->unite_style_id}}">
+                                            <input type="hidden" class="unit_style_id" name="unit_style_id[]" value="{{$d->unite_style_id}}">
                                         </td>
-                                        <td><input class="form-control ctn" type="text" name="ctn" value="" onkeyup="ctn_pcs(this)" placeholder="ctn"></td>
-                                        <td><input class="form-control pcs" type="text" name="pcs" value="" onkeyup="ctn_pcs(this)" placeholder="pcs"></td>
-                                        <td><input class="form-control" type="text" name="" value="" placeholder="free pcs"></td>
+                                        <td><input class="form-control ctn" type="text" name="ctn[]" value="" onkeyup="ctn_pcs(this)" placeholder="ctn"></td>
+                                        <td><input class="form-control pcs" type="text" name="pcs[]" value="" onkeyup="ctn_pcs(this)" placeholder="pcs"></td>
+                                        <td><input class="form-control" type="text" name="receive_free_qty[]" value="" placeholder="free pcs"></td>
                                         <td><input disabled class="form-control do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
                                         <td><input disabled class="form-control free_ratio" type="number" name="free_ratio" value="{{ $d->free_ratio }}"></td>
-                                        <td><input disabled class="form-control free_pcs" type="number" name="free_pcs" value="{{ $d->free }}"></td>
+                                        <td><input disabled class="form-control free_pcs" type="number" name="" value="{{ $d->free }}"></td>
                                         <td><input disabled class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
-                                        <td><input readonly class="form-control receive" type="number" name="delete_qty" value=""></td>
-                                        <td><input readonly class="form-control receive_qty" type="text" name="" value="">
+                                        <td><input readonly class="form-control receive" type="number" name="receive_qty[]" value=""></td>
+                                        <td><input readonly class="form-control sonow" type="text" name="so[]" value="">
                                             <input class="form-control rece_qty" type="hidden" name="" value="{{ $d->qty }}">
                                         </td>
-                                        <td><input readonly class="form-control" type="number" name="" value=""></td>
+                                        <td><input readonly class="form-control so_free" type="number" name="so_free[]" value=""></td>
                                         {{--  <td><input class="form-control" type="text" name="" value=""></td>  --}}
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
-                                        <td><input class="form-control" type="number" name="dp" value="{{$d->product?->dp_price}}"></td>
-                                        <td><input class="form-control tp_price" type="number" name="tp" value="{{$d->product?->tp_price}}"></td>
-                                        <td><input class="form-control" type="number" name="mrp" value=""></td>
-                                        <td><input class="form-control" type="number" name="mrp" value="{{$d->product?->mrp_price}}"></td>
+                                        <td><input class="form-control" type="number" name="dp[]" value="{{$d->product?->dp_price}}"></td>
+                                        <td><input class="form-control tp_price" type="number" name="tp[]" value="{{$d->product?->tp_price}}"></td>
+                                        <td><input class="form-control tp_free" type="text" name="tp_free[]" value=""></td>
+                                        <td><input class="form-control" type="number" name="mrp[]" value="{{$d->product?->mrp_price}}"></td>
                                         {{-- <td>
                                             <select class="form-select" name="" id="">
                                                 <option value="0">select</option>
@@ -131,8 +131,8 @@
                                                 <option value="2">werehouse2</option>
                                             </select>
                                         </td> --}}
-                                        <td><input class="form-control" type="text" name="" value=""></td>
-                                        <td><input class="form-control" type="text" name="" value=""></td>
+                                        <td><input class="form-control" type="text" name="adjust[]" value=""></td>
+                                        <td><input class="form-control" type="text" name="remark[]" value=""></td>
                                 </tr>
                                 @empty
 
@@ -169,7 +169,7 @@
             //let so=do_qty-cn;
             //$(e).closest('tr').find('.receive_qty').val(so);
 
-            if (cn<=do_qty) {
+            //if (cn<=do_qty) {
                 $.ajax({
                     url: "{{route(currentUser().'.unit_data_get')}}",
                     type: "GET",
@@ -179,18 +179,23 @@
                     //console.log(data);
                         total=((cn*data)+pcs)
                         $(e).closest('tr').find('.receive').val(total);
+
+                        so_free=(free_pcs*do_qty*data)/free_ratio;
+                        $(e).closest('tr').find('.so_free').val(so_free);
+
                         total_doqty=(do_qty*data);
                         dodata=(Math.floor(total_doqty/free_ratio)*free_pcs)+total_doqty;
-                        tpfree =(tp_price*total_doqty)/dodata;
+                        tpfree =parseFloat((tp_price*total_doqty)/dodata).toFixed(2);
+                        $(e).closest('tr').find('.tp_free').val(tpfree);
 
                         so=(do_qty*data);
-                        sonow=so-total;
-                        $(e).closest('tr').find('.receive_qty').val(sonow);
-                        alert(tpfree);
+                        so_now=so-total;
+                        $(e).closest('tr').find('.sonow').val(so_now);
+                        //alert(tpfree);
 
                     },
                 });
-            }
+           // }
 
         }
     </script>
