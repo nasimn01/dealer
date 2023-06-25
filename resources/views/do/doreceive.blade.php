@@ -91,12 +91,15 @@
                             <tbody>
                                 @forelse ($data->details as $d)
                                 @php
-                                $unit=\App\Models\Settings\Unit::where('unit_style_id', $d->unitstyle?->id)->where('name','pcs')->pluck('qty');
-                               // print_r($unit);
+                                    $unit=\App\Models\Settings\Unit::where('unit_style_id', $d->unitstyle?->id)->where('name','pcs')->pluck('qty');
+
+                                //print_r($unit);
                                 @endphp
                                     <tr>
                                         <th>{{ ++$loop->index }}</th>
-                                        <td>{{$d->product?->product_name}}</td>
+                                        <td>{{$d->product?->product_name}}
+                                            <input type="hidden" name="do_details_id[]" value="{{ $d->id }}">
+                                        </td>
                                         <td>
                                             <select onclick="ctn_pcs(this)" class="form-select" name="batch_no_id[]">
                                                 <option value="">Select style</option>
@@ -118,7 +121,7 @@
                                         <td><input disabled class="form-control free_pcs" type="number" name="" value="{{ $d->free }}"></td>
                                         <td><input disabled class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
                                         <td><input readonly class="form-control receive" type="number" name="receive_qty[]" value=""></td>
-                                        <td><input readonly class="form-control sonow" type="text" name="so[]" value="{{ $unit[0]*$d->qty }}">
+                                        <td><input readonly class="form-control sonow" type="text" name="so[]" value="{{ (($unit[0]*$d->qty) - $d->receive_qty) }}">
                                             <input class="form-control rece_qty" type="hidden" name="" value="{{ $d->qty }}">
                                         </td>
                                         <td><input readonly class="form-control so_free" type="number" name="so_free[]" value="{{ ($d->free*$d->qty*$unit[0])/$d->free_ratio }}"></td>

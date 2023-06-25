@@ -174,9 +174,9 @@ class DOController extends Controller
                 // foreach()
                 foreach($request->receive_qty as $key => $value){
                     if($value){
-                        $dodetail=D_o_detail::where('do_id', encryptor('decrypt',$id))->first();
-                        $dodetail->receive_qty=$request->receive_qty[$key];
-                        $dodetail->receive_free_qty=$request->receive_free_qty[$key];
+                        $dodetail=D_o_detail::find($request->do_details_id[$key]);
+                        $dodetail->receive_qty=($dodetail->receive_qty + $request->receive_qty[$key]);
+                        $dodetail->receive_free_qty=($dodetail->receive_free_qty + $request->receive_free_qty[$key]);
                         if($dodetail->save()){
                             $stock=new Stock_model;
                             $stock->do_id=$data->id;
