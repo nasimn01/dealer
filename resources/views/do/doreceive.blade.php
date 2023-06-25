@@ -15,16 +15,19 @@
                     <!-- table bordered -->
                     <div class="row p-2 mt-4">
                         <div class="col-lg-3">
-                             <span><b>Do ID:</b> {{$data->id}}</span>
+                             <span><b>Do ID: <input style="border-color: transparent; outline: none;" name="do_id" readonly type="text" value="{{$data->id}}"></b></span>
                         </div>
                         <div class="col-lg-3">
-                             <span><b>Supplier ID:</b> {{$data->supplier?->name}}</span>
+                             <span><b>Supplier ID:</b>
+                                <input style="border-color: transparent; outline: none;" readonly type="text" value="{{$data->supplier?->name}}">
+                                <input style="border-color: transparent; outline: none;" name="supplier_id" readonly type="hidden" value="{{$data->supplier?->id}}">
+                            </span>
                         </div>
                         {{--  <div class="col-lg-3">
                              <span><b>Quantity:</b> 500</span>
                         </div>  --}}
                         <div class="col-lg-3">
-                            <span><b>Do Date:</b> {{\Carbon\Carbon::parse($data->do_date)->format('d-m-Y')}}</span>
+                            <span><b>Do Date:</b> <input style="border-color: transparent; outline: none;" name="do_date" readonly type="text" value="{{\Carbon\Carbon::parse($data->do_date)->format('d-m-Y')}}"></span>
                         </div>
                         <hr>
 
@@ -46,7 +49,7 @@
                             <label for=""><b>Status</b></label>
                             <select class="form-select" name="status" id="">
                                 <option value="0">Pending</option>
-                                <option value="1">Partial Received</option>
+                                <option value="1" selected >Partial Received</option>
                                 <option value="2">Final</option>
                             </select>
                         </div>
@@ -92,12 +95,12 @@
                                 @forelse ($data->details as $d)
                                 @php
                                     $unit=\App\Models\Settings\Unit::where('unit_style_id', $d->unitstyle?->id)->where('name','pcs')->pluck('qty');
-
                                 //print_r($unit);
                                 @endphp
                                     <tr>
                                         <th>{{ ++$loop->index }}</th>
                                         <td>{{$d->product?->product_name}}
+                                            <input type="hidden" name="product_id[]" value="{{ $d->product?->id }}">
                                             <input type="hidden" name="do_details_id[]" value="{{ $d->id }}">
                                         </td>
                                         <td>
@@ -122,7 +125,7 @@
                                         <td><input disabled class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
                                         <td><input readonly class="form-control receive" type="number" name="receive_qty[]" value=""></td>
                                         <td><input readonly class="form-control sonow" type="text" name="so[]" value="{{ (($unit[0]*$d->qty) - $d->receive_qty) }}">
-                                            <input class="form-control rece_qty" type="hidden" name="" value="{{ $d->qty }}">
+                                            <input class="form-control rece_qty" type="hidden" name="" value="{{ (($unit[0]*$d->qty) - $d->receive_qty) }}">
                                         </td>
                                         <td><input readonly class="form-control so_free" type="number" name="so_free[]" value="{{ ($d->free*$d->qty*$unit[0])/$d->free_ratio }}"></td>
                                         {{--  <td><input class="form-control" type="text" name="" value=""></td>  --}}
@@ -201,8 +204,7 @@
                         tpfree =parseFloat((tp_price*total_doqty)/dodata).toFixed(2);
                         $(e).closest('tr').find('.tp_free').val(tpfree);
 
-                        so=(do_qty*data);
-                        so_now=so-total;
+                        so_now=rece_qty-total;
                         $(e).closest('tr').find('.sonow').val(so_now);
                         //alert(tpfree);
 

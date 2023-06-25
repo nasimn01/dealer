@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Do\D_o;
 use App\Models\Do\D_o_detail;
+use App\Models\Do\DoReceiveHistory;
 use App\Models\Stock\Stock_model;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
@@ -195,7 +196,37 @@ class DOController extends Controller
                             $stock->status=0;
                             $stock->company_id=company()['company_id'];
                             $stock->created_by= currentUserId();
-                            $stock->save();
+                            if($stock->save()){
+
+                            $history=new DoReceiveHistory;
+                            $history->do_id=$request->do_id;
+                            $history->supplier_id=$request->supplier_id;
+                            $history->do_date=$request->do_date;
+                            $history->stock_date=$request->stock_date;
+                            $history->status=$request->status;
+                            $history->chalan_no=$request->chalan_no;
+                            $history->product_id=$request->product_id[$key];
+                            $history->batch_no_id=$request->batch_no_id[$key];
+                            $history->unit_style_id=$request->unit_style_id[$key];
+                            $history->ctn=$request->ctn[$key];
+                            $history->pcs=$request->pcs[$key];
+                            $history->receive_free_qty=$request->receive_free_qty[$key];
+                            $history->receive_qty=$request->receive_qty[$key];
+                            $history->so=$request->so[$key];
+                            $history->so_free=$request->so_free[$key];
+                            $history->dp=$request->dp[$key];
+                            $history->tp=$request->tp[$key];
+                            $history->tp_free=$request->tp_free[$key];
+                            $history->mrp=$request->mrp[$key];
+                            $history->adjust=$request->adjust[$key];
+                            $history->remark=$request->remark[$key];
+                            $history->company_id=company()['company_id'];
+                            $history->created_by= currentUserId();
+                            $history->save();
+                            Toastr::success('Receive Successfully !');
+                            return redirect()->route(currentUser().'.docontroll.index');
+
+                            }
                         }
                     }
                 }
