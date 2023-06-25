@@ -90,6 +90,10 @@
                             </thead>
                             <tbody>
                                 @forelse ($data->details as $d)
+                                @php
+                                $unit=\App\Models\Settings\Unit::where('unit_style_id', $d->unitstyle?->id)->where('name','pcs')->pluck('qty');
+                               // print_r($unit);
+                                @endphp
                                     <tr>
                                         <th>{{ ++$loop->index }}</th>
                                         <td>{{$d->product?->product_name}}</td>
@@ -114,15 +118,21 @@
                                         <td><input disabled class="form-control free_pcs" type="number" name="" value="{{ $d->free }}"></td>
                                         <td><input disabled class="form-control" type="number" name="free_tk" value="{{ $d->free_tk }}"></td>
                                         <td><input readonly class="form-control receive" type="number" name="receive_qty[]" value=""></td>
-                                        <td><input readonly class="form-control sonow" type="text" name="so[]" value="">
+                                        <td><input readonly class="form-control sonow" type="text" name="so[]" value="{{ $unit[0]*$d->qty }}">
                                             <input class="form-control rece_qty" type="hidden" name="" value="{{ $d->qty }}">
                                         </td>
-                                        <td><input readonly class="form-control so_free" type="number" name="so_free[]" value=""></td>
+                                        <td><input readonly class="form-control so_free" type="number" name="so_free[]" value="{{ ($d->free*$d->qty*$unit[0])/$d->free_ratio }}"></td>
                                         {{--  <td><input class="form-control" type="text" name="" value=""></td>  --}}
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
                                         <td><input class="form-control" type="number" name="dp[]" value="{{$d->product?->dp_price}}"></td>
                                         <td><input class="form-control tp_price" type="number" name="tp[]" value="{{$d->product?->tp_price}}"></td>
-                                        <td><input class="form-control tp_free" type="text" name="tp_free[]" value=""></td>
+                                        {{--  <td><input class="form-control tp_free" type="text" name="tp_free[]" value="{{($d->product?->tp_price *($d->qty*$unit[0]))/ (($d->qty*$unit[0]/$d->free_ratio)*$d->free)+($d->qty*$unit[0]) }}"></td>  --}}
+                                        <td>@php
+                                            $total_doqty=($d->qty*$unit[0]);
+                                            $dodata=(floor($total_doqty/$d->free_ratio)*$d->free)+$total_doqty;
+                                            $tpfree=(($d->product?->tp_price)*$total_doqty)/$dodata;
+                                            @endphp
+                                            <input readonly class="form-control tp_free" type="text" name="tp_free[]" value="{{ number_format($tpfree,2)  }}"></td>
                                         <td><input class="form-control" type="number" name="mrp[]" value="{{$d->product?->mrp_price}}"></td>
                                         {{-- <td>
                                             <select class="form-select" name="" id="">
