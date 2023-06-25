@@ -168,7 +168,7 @@
                                                     <td width="2%">:</td>
                                                     <td width="78%"><input type="number" class="form-control tcharge" onkeyup="cal_final_amount()" name="other_charge"></td>
                                                 </tr>
-                                                <tr>
+                                                {{--  <tr>
                                                     <td width="20%">Paid</td>
                                                     <td width="2%">:</td>
                                                     <td width="78%"><input type="number" class="form-control tpaid" id="tpaid" onkeyup="cal_final_change()" name="paid"></td>
@@ -183,7 +183,7 @@
                                                     <td width="20%" class="payment-title">Due Date</td>
                                                     <td width="2%">:</td>
                                                     <td  width="78%"><input type="date" class="form-control date_pick due_date" name="due_date"/></td>
-                                                </tr>
+                                                </tr>  --}}
                                             </tbody>
                                         </table>
                                     </div>

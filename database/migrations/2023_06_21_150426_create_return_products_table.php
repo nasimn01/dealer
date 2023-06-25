@@ -20,11 +20,18 @@ return new class extends Migration
             $table->string('garir_number')->nullable();
             $table->string('invoice_number')->nullable();
             $table->string('note')->nullable();
+            $table->decimal('sub_total',14,2)->nullable();
+            $table->decimal('vat_amount',10,2)->nullable();
+            $table->decimal('discount_amount',10,2)->nullable();
+            $table->decimal('other_charge',14,2)->nullable();
+            $table->decimal('paid',14,2)->nullable();
+            $table->decimal('total',14,2)->nullable();
             $table->string('status')->default(0)->comment('0=out,1=in');
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+
         });
     }
 
