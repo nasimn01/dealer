@@ -104,7 +104,7 @@
                                             <input type="hidden" name="do_details_id[]" value="{{ $d->id }}">
                                         </td>
                                         <td>
-                                            <select onclick="ctn_pcs(this)" class="form-select" name="batch_no_id[]">
+                                            <select class="form-select" name="batch_no_id[]">
                                                 <option value="">Select style</option>
                                                 @forelse (\App\Models\Product\Batch::all(); as $us)
                                                 <option value="{{ $us->id }}">{{ $us->name }}</option>
@@ -182,6 +182,7 @@
             let free_pcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;
             let tp_price=$(e).closest('tr').find('.tp_price').val()?parseFloat($(e).closest('tr').find('.tp_price').val()):0;
             let rece_qty=$(e).closest('tr').find('.rece_qty').val()?parseFloat($(e).closest('tr').find('.rece_qty').val()):0;
+            let socondition=$(e).closest('tr').find('.sonow').val()?parseFloat($(e).closest('tr').find('.sonow').val()):0;
             //let so=do_qty-cn;
             //$(e).closest('tr').find('.receive_qty').val(so);
 
@@ -193,19 +194,18 @@
                     data: { unit_style_id:unit_style_id },
                     success: function(data) {
                     //console.log(data);
-                        total=((cn*data)+pcs)
-                        $(e).closest('tr').find('.receive').val(total);
+                        total=((cn*data)+pcs);
 
-                        so_free=(free_pcs*do_qty*data)/free_ratio;
-                        $(e).closest('tr').find('.so_free').val(so_free);
-
-                        total_doqty=(do_qty*data);
-                        dodata=(Math.floor(total_doqty/free_ratio)*free_pcs)+total_doqty;
-                        tpfree =parseFloat((tp_price*total_doqty)/dodata).toFixed(2);
-                        $(e).closest('tr').find('.tp_free').val(tpfree);
-
+                        if(total>rece_qty){
+                            alert('You Over Do Quantity!');
+                            $(e).closest('tr').find('.receive').val(socondition);
+                            $(e).closest('tr').find('.sonow').val(0);
+                            $(e).closest('tr').find('.ctn').val(do_qty);
+                        }else{
                         so_now=rece_qty-total;
                         $(e).closest('tr').find('.sonow').val(so_now);
+                        $(e).closest('tr').find('.receive').val(total);
+                        }
                         //alert(tpfree);
 
                     },
