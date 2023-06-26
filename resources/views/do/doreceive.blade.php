@@ -118,7 +118,7 @@
                                         </td>
                                         <td><input class="form-control ctn" type="text" name="ctn[]" value="" onkeyup="ctn_pcs(this)" placeholder="ctn"></td>
                                         <td><input class="form-control pcs" type="text" name="pcs[]" value="" onkeyup="ctn_pcs(this)" placeholder="pcs"></td>
-                                        <td><input class="form-control" type="text" name="receive_free_qty[]" value="" placeholder="free pcs"></td>
+                                        <td><input class="form-control receive_free_qty" type="text" name="receive_free_qty[]" value="" onkeyup="ctn_pcs(this)" placeholder="free pcs"></td>
                                         <td><input disabled class="form-control do_qty" type="number" name="do_qty" value="{{ $d->qty }}"></td>
                                         <td><input disabled class="form-control free_ratio" type="number" name="free_ratio" value="{{ $d->free_ratio }}"></td>
                                         <td><input disabled class="form-control free_pcs" type="number" name="" value="{{ $d->free }}"></td>
@@ -127,7 +127,9 @@
                                         <td><input readonly class="form-control sonow" type="text" name="so[]" value="{{ (($unit[0]*$d->qty) - $d->receive_qty) }}">
                                             <input class="form-control rece_qty" type="hidden" name="" value="{{ (($unit[0]*$d->qty) - $d->receive_qty) }}">
                                         </td>
-                                        <td><input readonly class="form-control so_free" type="number" name="so_free[]" value="{{ ($d->free*$d->qty*$unit[0])/$d->free_ratio }}"></td>
+                                        <td><input readonly class="form-control so_free" type="number" name="so_free[]" value="{{ (floor(($d->free*$d->qty*$unit[0])/$d->free_ratio))-$d->receive_free_qty }}">
+                                            <input readonly class="form-control s_free" type="hidden" name="so_free[]" value="{{ (floor(($d->free*$d->qty*$unit[0])/$d->free_ratio))-$d->receive_free_qty }}">
+                                        </td>
                                         {{--  <td><input class="form-control" type="text" name="" value=""></td>  --}}
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
                                         <td><input class="form-control" type="number" name="dp[]" value="{{$d->product?->dp_price}}"></td>
@@ -182,6 +184,8 @@
             let free_pcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;
             let tp_price=$(e).closest('tr').find('.tp_price').val()?parseFloat($(e).closest('tr').find('.tp_price').val()):0;
             let rece_qty=$(e).closest('tr').find('.rece_qty').val()?parseFloat($(e).closest('tr').find('.rece_qty').val()):0;
+            let rece_free_qty=$(e).closest('tr').find('.receive_free_qty').val()?parseFloat($(e).closest('tr').find('.receive_free_qty').val()):0;
+            let s_free=$(e).closest('tr').find('.s_free').val()?parseFloat($(e).closest('tr').find('.s_free').val()):0;
             let socondition=$(e).closest('tr').find('.sonow').val()?parseFloat($(e).closest('tr').find('.sonow').val()):0;
             //let so=do_qty-cn;
             //$(e).closest('tr').find('.receive_qty').val(so);
@@ -196,15 +200,22 @@
                     //console.log(data);
                         total=((cn*data)+pcs);
 
-                        if(total>rece_qty){
+                        totalwithfree=(total+rece_free_qty);
+                        totalrecqty=rece_qty+s_free;
+                        if(totalwithfree>totalrecqty){
                             alert('You Over Do Quantity!');
-                            $(e).closest('tr').find('.receive').val(socondition);
-                            $(e).closest('tr').find('.sonow').val(0);
+                            $(e).closest('tr').find('.receive').val(totalrecqty);
                             $(e).closest('tr').find('.ctn').val(do_qty);
+                            $(e).closest('tr').find('.receive_free_qty').val(s_free);
+                            $(e).closest('tr').find('.sonow').val(0);
+                            $(e).closest('tr').find('.pcs').val(0);
+                            $(e).closest('tr').find('.so_free').val(0);
                         }else{
-                        so_now=rece_qty-total;
+                        so_now=(rece_qty-total);
+                        so_free_now=(s_free-rece_free_qty);
                         $(e).closest('tr').find('.sonow').val(so_now);
-                        $(e).closest('tr').find('.receive').val(total);
+                        $(e).closest('tr').find('.so_free').val(so_free_now);
+                        $(e).closest('tr').find('.receive').val(totalwithfree);
                         }
                         //alert(tpfree);
 
