@@ -70,7 +70,7 @@
             <li class="py-1"><a href="{{route(currentUser().'.group.index')}}" >{{__('Group')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.batch.index')}}" >{{__('Batch')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.returnproduct.create')}}" >{{__('Return Product')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.returnproduct.index')}}" >{{__('Return Product')}}</a></li>
 		</ul>
     </li>
     <li class="sidebar-item has-sub">

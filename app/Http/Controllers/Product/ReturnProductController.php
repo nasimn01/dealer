@@ -20,7 +20,8 @@ class ReturnProductController extends Controller
      */
     public function index()
     {
-        //
+        $data=ReturnProduct::all();
+        return view('product.returnproduct.index',compact('data'));
     }
 
     /**

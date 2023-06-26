@@ -185,7 +185,7 @@ class DOController extends Controller
                             $stock->chalan_no=$request->chalan_no;
                             $stock->batch_no_id=$request->batch_no_id[$key];
                             $stock->unit_style_id=$request->unit_style_id[$key];
-                            $stock->quantity=$request->receive_qty[$key];
+                            $stock->quantity=$request->receive_qty[$key]+$request->receive_free_qty[$key];
                             $stock->dp=$request->dp[$key];
                             $stock->tp=$request->tp[$key];
                             $stock->tp_free=$request->tp_free[$key];
@@ -223,14 +223,13 @@ class DOController extends Controller
                             $history->company_id=company()['company_id'];
                             $history->created_by= currentUserId();
                             $history->save();
-                            Toastr::success('Receive Successfully !');
-                            return redirect()->route(currentUser().'.docontroll.index');
-
                             }
                         }
                     }
                 }
             }
+            Toastr::success('Receive Successfully !');
+            return redirect()->route(currentUser().'.docontroll.index');
         }catch(Exception $e){
             dd($e);
             return redirect()->back()->withInput();

@@ -128,7 +128,7 @@
                                             <input class="form-control rece_qty" type="hidden" name="" value="{{ (($unit[0]*$d->qty) - $d->receive_qty) }}">
                                         </td>
                                         <td><input readonly class="form-control so_free" type="number" name="so_free[]" value="{{ (floor(($d->free*$d->qty*$unit[0])/$d->free_ratio))-$d->receive_free_qty }}">
-                                            <input readonly class="form-control s_free" type="hidden" name="so_free[]" value="{{ (floor(($d->free*$d->qty*$unit[0])/$d->free_ratio))-$d->receive_free_qty }}">
+                                            <input readonly class="form-control s_free" type="hidden"  value="{{ (floor(($d->free*$d->qty*$unit[0])/$d->free_ratio))-$d->receive_free_qty }}">
                                         </td>
                                         {{--  <td><input class="form-control" type="text" name="" value=""></td>  --}}
                                         {{--  <td><input class="form-control" type="text" name="" value="" placeholder="total"></td>  --}}
@@ -186,7 +186,7 @@
             let rece_qty=$(e).closest('tr').find('.rece_qty').val()?parseFloat($(e).closest('tr').find('.rece_qty').val()):0;
             let rece_free_qty=$(e).closest('tr').find('.receive_free_qty').val()?parseFloat($(e).closest('tr').find('.receive_free_qty').val()):0;
             let s_free=$(e).closest('tr').find('.s_free').val()?parseFloat($(e).closest('tr').find('.s_free').val()):0;
-            let socondition=$(e).closest('tr').find('.sonow').val()?parseFloat($(e).closest('tr').find('.sonow').val()):0;
+            let sonow=$(e).closest('tr').find('.sonow').val()?parseFloat($(e).closest('tr').find('.sonow').val()):0;
             //let so=do_qty-cn;
             //$(e).closest('tr').find('.receive_qty').val(so);
 
@@ -202,9 +202,9 @@
 
                         totalwithfree=(total+rece_free_qty);
                         totalrecqty=rece_qty+s_free;
-                        if(totalwithfree>totalrecqty){
+                        if(total>rece_qty){
                             alert('You Over Do Quantity!');
-                            $(e).closest('tr').find('.receive').val(totalrecqty);
+                            $(e).closest('tr').find('.receive').val(total);
                             $(e).closest('tr').find('.ctn').val(do_qty);
                             $(e).closest('tr').find('.receive_free_qty').val(s_free);
                             $(e).closest('tr').find('.sonow').val(0);
@@ -215,7 +215,7 @@
                         so_free_now=(s_free-rece_free_qty);
                         $(e).closest('tr').find('.sonow').val(so_now);
                         $(e).closest('tr').find('.so_free').val(so_free_now);
-                        $(e).closest('tr').find('.receive').val(totalwithfree);
+                        $(e).closest('tr').find('.receive').val(total);
                         }
                         //alert(tpfree);
 
