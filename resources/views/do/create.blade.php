@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group mb-3">
-                                                <label class="py-2" for="qty">{{__('Quantity')}}<span class="text-danger">*</span></label>
+                                                <label class="py-2" for="q">{{__('Quantity')}}<span class="text-danger">*</span></label>
                                                 <input type="number" class="form-control" id="qty">
                                             </div>
                                         </div>
@@ -159,16 +159,16 @@
                     <tr class="text-center">
                         <td>${counter + 1}</td>
                         <td>${productName}
-                            <input type="text" name="product_id[]" value="${product_id}">
+                            <input type="hidden" name="product_id[]" value="${product_id}">
                         </td>
                         <td>${qty}
-                            <input type="text" name="qty[]" value="${qty}">
+                            <input type="hidden" name="qty[]" value="${qty}">
                         </td>
                         <td>${dp}
-                            <input type="text" name="dp[]" value="${dp}">
+                            <input type="hidden" name="dp[]" value="${dp}">
                         </td>
                         <td>${total}
-                            <input type="text" name="sub_total[]" value="${total}">
+                            <input type="hidden" name="sub_total[]" value="${total}">
                         </td>
                         <td class="white-space-nowrap">
                             <a href="#">
@@ -185,7 +185,7 @@
 
                 // Clear input fields
                 $('#product_id').val('');
-                $('#qty"]').val('');
+                $('#qty').val('');
             }else{
                 const settim=document.getElementById('warning_message');
                 settim.innerHTML='**Give Product and Qty Value**';
