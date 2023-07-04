@@ -19,13 +19,13 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" action="#" enctype="multipart/form-data">
-                        {{--  <form class="form" method="post" action="{{route(currentUser().'.docontroll.store')}}" enctype="multipart/form-data">  --}}
+                        {{--  <form class="form" action="#" enctype="multipart/form-data">  --}}
+                        <form class="form" method="post" action="{{route(currentUser().'.docontroll.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-9 col-md-9 col-sm-9">
                                     <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="cat">{{__('Supplier')}}<span class="text-danger">*</span></label>
                                                 <select class="choices form-select supplier_id" name="supplier_id" onchange="getBalance()">
@@ -40,14 +40,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Do Date')}}<span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="datepicker" name="do_date" placeholder="Day-Month-Year">
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Pay Type')}}<span class="text-danger">*</span></label>
                                                 <select class="form-control form-select" name="bill_id">
@@ -58,6 +58,12 @@
                                                         <option value="">No Data Found</option>
                                                     @endforelse
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="py-2" for="cat">{{__('Reference Number')}}<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="reference_num" placeholder="reference Number">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -120,8 +126,10 @@
                                     <table class="table table-sm table-borderless ">
                                         <tbody>
                                             <tr>
-                                                <td class="text-end"><h4>Total</h4></td>
-                                                <td><input type="number" class="form-control ttotal" name="total" onkeyup="cal_final_amount()" value="0"></td>
+                                                <td class="text-end"><h4>Total Qty</h4></td>
+                                                <td><input readonly type="number" class="form-control total_qty" name="total_qty" value=""></td>
+                                                <td class="text-end"><h4>Total Amount</h4></td>
+                                                <td><input readonly type="number" class="form-control total_amount" name="total_amount" value=""></td>
                                             </tr>
 
                                         </tbody>
@@ -208,6 +216,8 @@
             totalQty+=parseFloat($(this).val());
         });
         $('.doamount').text(total);
+        $('.total_amount').val(total);
+        $('.total_qty').val(totalQty);
         supBalance=parseFloat($('.supbalance').text());
 
         if(total>supBalance){

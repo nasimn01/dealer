@@ -52,14 +52,15 @@ class DOController extends Controller
         try{
             $data=new D_o;
             $data->supplier_id = $request->supplier_id;
-            $data->bill_id = $request->bill_id;
             $data->do_date = $request->do_date;
-            $data->sub_total = $request->sub_total;
-            $data->vat_amount = $request->vat_amount;
-            $data->discount_amount = $request->discount_amount;
-            $data->other_charge = $request->other_charge;
-            $data->paid = $request->paid;
-            $data->total = $request->total;
+            $data->bill_id = $request->bill_id;
+            $data->reference_num = $request->reference_num;
+            $data->total_qty = $request->total_qty;
+            $data->total_amount = $request->total_amount;
+            // $data->vat_amount = $request->vat_amount;
+            // $data->discount_amount = $request->discount_amount;
+            // $data->other_charge = $request->other_charge;
+            // $data->paid = $request->paid;
             $data->status = 0;
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
@@ -73,17 +74,18 @@ class DOController extends Controller
                             $details->do_id=$data->id;
                             $details->product_id=$request->product_id[$key];
                             $details->qty=$request->qty[$key];
+                            $details->dp=$request->dp[$key];
+                            $details->sub_total=$request->sub_total[$key];
                             //$details->receive_qty=$request->qty[$key];
                             //$details->receive_free_qty=$request->free[$key];
-                            $details->unite_style_id=$request->unite_style_id[$key];
-                            $details->free=$request->free[$key];
-                            $details->free_tk=$request->free_tk[$key];
-                            $details->free_ratio=$request->free_ratio[$key];
-                            $details->price=$request->price[$key];
-                            $details->basic=$request->basic[$key];
-                            $details->discount_percent=$request->discount_percent[$key];
-                            $details->vat_percent=$request->vat_percent[$key];
-                            $details->amount=$request->amount[$key];
+                            // $details->unite_style_id=$request->unite_style_id[$key];
+                            // $details->free=$request->free[$key];
+                            // $details->free_tk=$request->free_tk[$key];
+                            // $details->free_ratio=$request->free_ratio[$key];
+                            // $details->basic=$request->basic[$key];
+                            // $details->discount_percent=$request->discount_percent[$key];
+                            // $details->vat_percent=$request->vat_percent[$key];
+                            // $details->amount=$request->amount[$key];
                             $details->save();
                         }
                     }
@@ -148,11 +150,11 @@ class DOController extends Controller
         //
     }
 
-    public function DoRecive($id)
+    public function DoRecive()
     {
-        $data=D_o::findOrFail(encryptor('decrypt',$id));
+        // $data=D_o::findOrFail(encryptor('decrypt',$id));
         // return $data;
-        return view('do.doreceive',compact('data'));
+        return view('do.doreceive');
     }
 
     public function UnitDataGet(Request $request)

@@ -16,14 +16,16 @@ return new class extends Migration
         Schema::create('d_os', function (Blueprint $table) {
             $table->id();
             $table->integer('supplier_id')->nullable();
-            $table->integer('bill_id')->nullable();
             $table->string('do_date')->nullable();
-            $table->decimal('sub_total',14,2)->nullable();
-            $table->decimal('vat_amount',10,2)->nullable();
-            $table->decimal('discount_amount',10,2)->nullable();
-            $table->decimal('other_charge',14,2)->nullable();
-            $table->decimal('paid',14,2)->nullable();
-            $table->decimal('total',14,2)->nullable();
+            $table->integer('bill_id')->nullable();
+            $table->string('reference_num')->nullable();
+            $table->integer('total_qty')->nullable();
+            $table->decimal('total_amount',14,2)->nullable();
+            // $table->decimal('vat_amount',10,2)->nullable();
+            // $table->decimal('discount_amount',10,2)->nullable();
+            // $table->decimal('other_charge',14,2)->nullable();
+            // $table->decimal('paid',14,2)->nullable();
+            // $table->decimal('total',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

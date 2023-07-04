@@ -130,6 +130,12 @@
                                                     <td><input type="hidden" value="" id="supplierId" class="form-control" name="supplier_id"></td>
                                                 </tr>
                                                 <tr>
+                                                    <th>Reference Number</th>
+                                                    <td ><input type="text" value="{{old('reference_number')}}" class="form-control" name="reference_number" placeholder="add reference_number"></td>
+                                                    <th>Balance Date</th>
+                                                    <td ><input type="date" value="{{old('balance_date')}}" class="form-control" name="balance_date" placeholder="add balance_date"></td>
+                                                </tr>
+                                                <tr>
                                                     <th>Add Balance</th>
                                                     <td ><input type="number" value="{{old('balance')}}" class="form-control" name="balance" placeholder="add balance"></td>
                                                 </tr>

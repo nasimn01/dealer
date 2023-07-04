@@ -119,7 +119,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('returnproduct',returnproduct::class,['as'=>'owner']);
         Route::resource('batch',batch::class,['as'=>'owner']);
         Route::resource('docontroll',docon::class,['as'=>'owner']);
-        Route::get('doreceive/{id}',[docon::class,'DoRecive'])->name('owner.recive');
+        Route::get('doreceive',[docon::class,'DoRecive'])->name('owner.doreceive');
         Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('owner.unit_data_get');
         Route::post('/doreceive/{id}', [docon::class,'DoRecive_edit'])->name('owner.do.accept_do_edit');
 

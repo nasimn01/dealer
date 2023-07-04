@@ -100,11 +100,13 @@ class SupplierController extends Controller
             if ($request->balance > 0) {
                 $data = new Supplier_balance;
                 $data->supplier_id = $request->supplier_id;
-                $data->balance_date = now();
+               // $data->balance_date = now();
                 $data->balance_amount = $request->balance;
+                $data->reference_number = $request->reference_number;
+                $data->balance_date = $request->balance_date;
                 $data->status = 1;
                 $data->company_id = company()['company_id'];
-    
+
                 if ($data->save()) {
                     Toastr::success('Balance Added Successfully!');
                     return redirect()->route(currentUser().'.supplier.index');
