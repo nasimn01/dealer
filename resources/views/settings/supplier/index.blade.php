@@ -52,6 +52,7 @@
                         </thead>
                         <tbody>
                             @forelse($suppliers as $data)
+                            @php $balance=$data->balances?->where('status',1)->sum('balance_amount') - $data->balances?->where('status',0)->sum('balance_amount') @endphp
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$data->supplier_code}}</td>
@@ -60,7 +61,7 @@
                                 <td>{{$data->email}}</td>
                                 <td>{{$data->country}}</td>
                                 <td>{{$data->city}}</td>
-                                <td>{{$data->balances?->sum('balance_amount')}}</td>
+                                <td>{{$balance}}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.supplier.edit',encryptor('encrypt',$data->id))}}">

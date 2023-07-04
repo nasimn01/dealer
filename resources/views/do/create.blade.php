@@ -28,10 +28,11 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="cat">{{__('Supplier')}}<span class="text-danger">*</span></label>
-                                                <select class="choices form-select" name="supplier_id">
+                                                <select class="choices form-select supplier_id" name="supplier_id" onchange="getBalance()">
                                                     <option value="">Select Suppliers</option>
                                                     @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
-                                                        <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                        @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
+                                                        <option data-balance="{{ $balance }}" value="{{ $sup->id }}">{{ $sup->name }}</option>
                                                     @empty
                                                         <option value="">No Data Found</option>
                                                     @endforelse
@@ -92,9 +93,9 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="border">
                                         <div class="form-group p-3">
-                                            <p>supplier balance: 50000</p>
-                                            <p>Do taka: 20000</p>
-                                            <p>R: 30000</p>
+                                            <p>supplier balance: <span class="supbalance"> </span></p>
+                                            <p>Do Amount: <span class="doamount"></span></p>
+                                            <p>R: <span class="subRemaining"></span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -162,18 +163,18 @@
                             <input type="hidden" name="product_id[]" value="${product_id}">
                         </td>
                         <td>${qty}
-                            <input type="hidden" name="qty[]" value="${qty}">
+                            <input type="hidden" class="qty" name="qty[]" value="${qty}">
                         </td>
                         <td>${dp}
                             <input type="hidden" name="dp[]" value="${dp}">
                         </td>
                         <td>${total}
-                            <input type="hidden" name="sub_total[]" value="${total}">
+                            <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">
                         </td>
                         <td class="white-space-nowrap">
-                            <a href="#">
-                                <i class="bi bi-trash-fill" style="font-size:1.5rem; color:rgb(230, 5, 5)"></i>
-                            </a>
+                            <button class="btn btn-link text-danger fs-3" type="button" onClick="RemoveThis(this)">
+                                <i class="bi bi-trash-fill" class=""></i>
+                            </button>
                         </td>
                     </tr>
                 `;
@@ -186,6 +187,7 @@
                 // Clear input fields
                 $('#product_id').val('');
                 $('#qty').val('');
+                totalAmount();     //calculate total do amount
             }else{
                 const settim=document.getElementById('warning_message');
                 settim.innerHTML='**Give Product and Qty Value**';
@@ -196,7 +198,35 @@
         });
     });
 
+    function totalAmount(){
+        var total=0;
+        var totalQty=0;
+        $('.sub_total').each(function(){
+            total+=parseFloat($(this).val());
+        });
+        $('.qty').each(function(){
+            totalQty+=parseFloat($(this).val());
+        });
+        $('.doamount').text(total);
+        supBalance=parseFloat($('.supbalance').text());
+
+        if(total>supBalance){
+            alert('You can not create do more then '+supBalance);
+        }
+        $('.subRemaining').text(supBalance-total);
+       // alert(sub_total)
+    }
+    function RemoveThis(e){
+        $(e).closest('tr').remove();
+        totalAmount();
+    }
 </script>
 <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+<script>
+    function getBalance(){
+        var balance=$('.supplier_id option:selected').data('balance');
+        $('.supbalance').text(balance);
+    }
+</script>
 
 @endpush
