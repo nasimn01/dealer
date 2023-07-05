@@ -128,7 +128,6 @@ function removeRow(e){
     function doData(e) {
         let product_id = $(e).closest('tr').find('.product_id').val();
         let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
-        //$('.dp').data('dp');
 
         $.ajax({
             url: "{{ route(currentUser().'.do_data_get') }}",
@@ -152,7 +151,6 @@ function removeRow(e){
     function getCtnQty(e){
 
         let product_id = $(e).closest('tr').find('.product_id').val();
-        //let productId=$(e).closest('tr').find('.product_id').val()?$(e).closest('tr').find('.product_id').val():0;
         let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
         let pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
         let freePcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;

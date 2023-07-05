@@ -21,6 +21,10 @@ return new class extends Migration
             $table->decimal('dp_price',14,2)->nullable();
             $table->decimal('tp_price',14,2)->nullable();
             $table->decimal('mrp_price',14,2)->nullable();
+            $table->decimal('free',14,2)->nullable();
+            $table->decimal('free_ratio',14,2)->nullable();
+            $table->decimal('free_taka',14,2)->nullable();
+            $table->decimal('adjust',14,2)->nullable();
             $table->integer('unit_style_id')->nullable();
             $table->integer('base_unit')->nullable();
             $table->string('color')->nullable();

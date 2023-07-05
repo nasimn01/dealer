@@ -65,7 +65,30 @@
                                         <div class="form-group">
                                             <label for="mrp_price">{{__('MRP Price')}}</label>
                                             <input type="number" class="form-control" value="{{ old('mrp_price')}}" name="mrp_price">
-
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="free">{{__('Free')}}</label>
+                                            <input type="number" class="form-control" value="{{ old('free')}}" name="free">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="free_ratio">{{__('Free Ratio')}}</label>
+                                            <input type="number" class="form-control" value="{{ old('free_ratio')}}" name="free_ratio">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="free_taka">{{__('Free Taka')}}</label>
+                                            <input type="number" class="form-control" value="{{ old('free_taka')}}" name="free_taka">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="adjust">{{__('Adjust')}}</label>
+                                            <input type="number" class="form-control" value="{{ old('adjust')}}" name="adjust">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">

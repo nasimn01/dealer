@@ -58,12 +58,16 @@ class ProductController extends Controller
             $data->dp_price = $request->dp_price;
             $data->tp_price = $request->tp_price;
             $data->mrp_price = $request->mrp_price;
+            $data->free = $request->free;
+            $data->free_ratio = $request->free_ratio;
+            $data->free_taka = $request->free_taka;
+            $data->adjust = $request->adjust;
             $data->unit_style_id = $request->unit_style_id;
             $data->base_unit = $request->base_unit;
             $data->color = $request->color;
             $data->size = $request->size;
             $data->weight = $request->weight;
-            $data->status = 1;
+            $data->status = 0;
             if($request->has('image'))
             $data->image=$this->resizeImage($request->image,'uploads/product_img/'.company()['company_id'],true,200,200,false);
 
@@ -129,6 +133,10 @@ class ProductController extends Controller
             $data->dp_price = $request->dp_price;
             $data->tp_price = $request->tp_price;
             $data->mrp_price = $request->mrp_price;
+            $data->free = $request->free;
+            $data->free_ratio = $request->free_ratio;
+            $data->free_taka = $request->free_taka;
+            $data->adjust = $request->adjust;
             $data->unit_style_id = $request->unit_style_id;
             $data->base_unit = $request->base_unit;
             $data->color = $request->color;
