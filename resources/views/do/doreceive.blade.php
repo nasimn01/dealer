@@ -41,7 +41,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <select class=" choices form-select" id="product_id">
+                                                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -50,7 +50,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class=" choices form-select" id="product_id">
+                                                    <select class=" choices form-select">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -80,4 +80,20 @@
     </div>
 </section>
 @endsection
-
+@push("scripts")
+    <script>
+        function doData(e){
+            let product_id=$(e).closest('tr').find('.product_id').val();
+            //alert(product_id)
+            $.ajax({
+                url: "{{route(currentUser().'.do_data_get')}}",
+                type: "GET",
+                dataType: "json",
+                data: { product_id:product_id },
+                success: function(dodetail) {
+                console.log(dodetail);
+                },
+            });
+        }
+    </script>
+@endpush

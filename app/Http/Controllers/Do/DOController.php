@@ -157,13 +157,21 @@ class DOController extends Controller
         return view('do.doreceive');
     }
 
-    public function UnitDataGet(Request $request)
+    public function doDataGet(Request $request)
     {
-        $unistyle=$request->unit_style_id;
-        $unit=Unit::where('unit_style_id', $unistyle)->where('name','pcs')->pluck('qty');
-        // return $data;
-        return response()->json($unit,200);
+        $product_id=$request->product_id;
+        $dodetail=D_o_detail::where('product_id', $product_id)->pluck('do_id');
+        $dodata=D_o::whereIn('id', $dodetail)->pluck('reference_num');
+        return $dodata;
+        return response()->json($dodata,200);
     }
+
+    // public function UnitDataGet(Request $request)
+    // {
+    //     $unistyle=$request->unit_style_id;
+    //     $unit=Unit::where('unit_style_id', $unistyle)->where('name','pcs')->pluck('qty');
+    //     return response()->json($unit,200);
+    // }
 
 
     public function DoRecive_edit(Request $request,$id)
