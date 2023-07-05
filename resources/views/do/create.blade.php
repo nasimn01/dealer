@@ -192,6 +192,7 @@
                 // Increment counter
                 counter++;
 
+                $('#product_id').find(":selected").remove();
                 // Clear input fields
                 $('#product_id').val('');
                 $('#qty').val('');

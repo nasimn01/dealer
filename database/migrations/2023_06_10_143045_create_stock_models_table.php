@@ -19,11 +19,7 @@ return new class extends Migration
             $table->integer('chalan_no')->nullable();
             $table->string('stock_date')->nullable();
             $table->integer('batch_no_id')->nullable();
-            $table->integer('quantity')->nullable();
-            $table->decimal('dp',14,2)->nullable();
-            $table->decimal('tp',14,2)->nullable();
-            $table->decimal('tp_free',14,2)->nullable();
-            $table->decimal('mrp',14,2)->nullable();
+            $table->integer('quantity_pcs')->nullable();
             $table->string('ex_date')->nullable();
             $table->string('unit_style_id')->nullable();
             $table->string('adjust')->nullable();

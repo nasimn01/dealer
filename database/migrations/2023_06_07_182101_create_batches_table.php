@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->decimal('dp',14,2)->nullable();
             $table->decimal('tp',14,2)->nullable();
+            $table->decimal('tp_free',14,2)->nullable();
             $table->decimal('mrp',14,2)->nullable();
             $table->string('unit_style_id')->nullable();
             $table->string('product_id')->nullable();

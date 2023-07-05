@@ -22,6 +22,17 @@
                         <form method="post" action="#">
                         {{--  <form method="post" action="{{route(currentUser().'.do.accept_do_edit',encryptor('encrypt'))}}">  --}}
                             @csrf
+                            <div class="row p-2 mt-4">
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Stock Date</b></label>
+                                    <input type="text" id="datepicker" class="form-control"  name="stock_date" placeholder="mm-dd-yyyy">
+                                </div>
+
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Chalan NO</b></label>
+                                    <input type="text" id="" class="form-control"  name="chalan_no" placeholder="Chalan NO">
+                                </div>
+                            </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
                                 <div class="table-responsive">
@@ -44,7 +55,7 @@
                                                     <select class="choices form-select product_id" id="product_id" onchange="doData(this);">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -59,7 +70,7 @@
                                                 <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
                                                 <td><input class="form-control dp" type="text" name="dp[]" value="" placeholder="dp"></td>
                                                 <td>
-                                                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                                                    {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -87,7 +98,7 @@ var row=`<tr>
         <select class="choices form-select product_id" id="product_id" onchange="doData(this);">
             <option value="">Select Product</option>
             @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-            <option value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+            <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
             @empty
             @endforelse
         </select>
@@ -96,9 +107,9 @@ var row=`<tr>
         <select class=" choices form-select referance_number">
         </select>
     </td>
-    <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn"></td>
-    <td><input class="form-control pcs" type="text" name="pcs[]" value="" placeholder="pcs"></td>
-    <td><input class="form-control free" type="text" name="free[]" value="" placeholder="free"></td>
+    <td><input class="form-control ctn" type="text" name="ctn[]" onkeyup="getCtnQty(this)" value="" placeholder="ctn"></td>
+    <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
+    <td><input class="form-control free_pcs" type="text" name="free[]" onkeyup="getCtnQty(this)" value="" placeholder="free"></td>
     <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
     <td><input class="form-control dp" type="text" name="dp[]" value="" placeholder="dp"></td>
     <td>
@@ -117,6 +128,7 @@ function removeRow(e){
     function doData(e) {
         let product_id = $(e).closest('tr').find('.product_id').val();
         let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
+        //$('.dp').data('dp');
 
         $.ajax({
             url: "{{ route(currentUser().'.do_data_get') }}",
@@ -131,6 +143,8 @@ function removeRow(e){
                 $.each(dodetail, function(index, value) {
                     selectElement.append('<option value="' + value + '">' + value + '</option>');
                 });
+                let dp=$(e).find('option:selected').data('dp');
+                $(e).closest('tr').find('.dp').val(dp);
             },
         });
     }

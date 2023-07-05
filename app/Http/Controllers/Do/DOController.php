@@ -163,16 +163,16 @@ class DOController extends Controller
         $product_id=$request->product_id;
         $dodetail=D_o_detail::where('product_id', $product_id)->pluck('do_id');
         $dodata=D_o::whereIn('id', $dodetail)->pluck('reference_num')->toArray();
-        return $dodata;
+        //return $dodata;
         return response()->json($dodata,200);
     }
 
     public function UnitDataGet(Request $request)
     {
         $productId=$request->product_id;
-        $unitStyleId=Product::where('id', $productId)->pluck('unit_style_id');
+        $unitStyleId=Product::where('id', $productId)->where('status',0)->pluck('unit_style_id');
         $unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
-        return $unit;
+        //return $unit;
         return response()->json($unit,200);
     }
 
