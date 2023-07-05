@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Do\D_o;
 use App\Models\Do\D_o_detail;
+use App\Models\Product\Product;
 use App\Models\Do\DoReceiveHistory;
 use App\Models\Stock\Stock_model;
 use Illuminate\Http\Request;
@@ -161,17 +162,19 @@ class DOController extends Controller
     {
         $product_id=$request->product_id;
         $dodetail=D_o_detail::where('product_id', $product_id)->pluck('do_id');
-        $dodata=D_o::whereIn('id', $dodetail)->pluck('reference_num');
+        $dodata=D_o::whereIn('id', $dodetail)->pluck('reference_num')->toArray();
         return $dodata;
         return response()->json($dodata,200);
     }
 
-    // public function UnitDataGet(Request $request)
-    // {
-    //     $unistyle=$request->unit_style_id;
-    //     $unit=Unit::where('unit_style_id', $unistyle)->where('name','pcs')->pluck('qty');
-    //     return response()->json($unit,200);
-    // }
+    public function UnitDataGet(Request $request)
+    {
+        $productId=$request->product_id;
+        $unitStyleId=Product::where('id', $productId)->pluck('unit_style_id');
+        $unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
+        return $unit;
+        return response()->json($unit,200);
+    }
 
 
     public function DoRecive_edit(Request $request,$id)
