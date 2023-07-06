@@ -177,62 +177,42 @@ class DOController extends Controller
     }
 
 
-    public function DoRecive_edit(Request $request,$id)
+    public function DoRecive_edit(Request $request)
     {
-        //dd($request->all());
+       // dd($request->all());
         try{
-            $data=D_o::findOrFail(encryptor('decrypt',$id));
-            $data->status=$request->status;
-            $data->updated_by=currentUserId();
-            if($data->save()){
-                // foreach()
-                foreach($request->receive_qty as $key => $value){
+                foreach($request->product_id as $key => $value){
                     if($value){
-                        $dodetail=D_o_detail::find($request->do_details_id[$key]);
-                        $dodetail->receive_qty=($dodetail->receive_qty + $request->receive_qty[$key]);
-                        $dodetail->receive_free_qty=($dodetail->receive_free_qty + $request->receive_free_qty[$key]);
-                        if($dodetail->save()){
+                        $productDp=Product::find($request->product_id[$key]);
+                        $productDp->dp_price=$request->dp[$key];
+                        if($productDp->save()){
                             $stock=new Stock_model;
-                            $stock->do_id=$data->id;
-                            $stock->stock_date=$request->stock_date;
+                            // $stock->do_id=$data->id;
                             $stock->chalan_no=$request->chalan_no;
-                            $stock->batch_no_id=$request->batch_no_id[$key];
-                            $stock->unit_style_id=$request->unit_style_id[$key];
-                            $stock->quantity=$request->receive_qty[$key]+$request->receive_free_qty[$key];
-                            $stock->dp=$request->dp[$key];
-                            $stock->tp=$request->tp[$key];
-                            $stock->tp_free=$request->tp_free[$key];
-                            $stock->mrp=$request->mrp[$key];
-                            $stock->ex_date=$request->ex_date;
-                            $stock->adjust=$request->adjust[$key];
-                            $stock->remark=$request->remark[$key];
+                            $stock->stock_date=$request->stock_date;
+                           // $stock->batch_no_id=$request->batch_no_id[$key];
+                           // $stock->unit_style_id=$request->unit_style_id[$key];
+                            $stock->quantity_pcs=$request->receive[$key];
+                           // $stock->ex_date=$request->ex_date;
+                            // $stock->adjust=$request->adjust[$key];
+                            // $stock->remark=$request->remark[$key];
                             $stock->status=0;
                             $stock->company_id=company()['company_id'];
                             $stock->created_by= currentUserId();
                             if($stock->save()){
 
                             $history=new DoReceiveHistory;
-                            $history->do_id=$request->do_id;
-                            $history->supplier_id=$request->supplier_id;
-                            $history->do_date=$request->do_date;
+                            //$history->do_id=$request->do_id;
                             $history->stock_date=$request->stock_date;
-                            $history->status=$request->status;
                             $history->chalan_no=$request->chalan_no;
                             $history->product_id=$request->product_id[$key];
-                            $history->batch_no_id=$request->batch_no_id[$key];
-                            $history->unit_style_id=$request->unit_style_id[$key];
+                            //$history->batch_no_id=$request->batch_no_id[$key];
                             $history->ctn=$request->ctn[$key];
                             $history->pcs=$request->pcs[$key];
-                            $history->receive_free_qty=$request->receive_free_qty[$key];
-                            $history->receive_qty=$request->receive_qty[$key];
-                            $history->so=$request->so[$key];
-                            $history->so_free=$request->so_free[$key];
+                            $history->receive_free_qty=$request->free[$key];
+                            $history->receive_qty=$request->receive[$key];
                             $history->dp=$request->dp[$key];
-                            $history->tp=$request->tp[$key];
-                            $history->tp_free=$request->tp_free[$key];
-                            $history->mrp=$request->mrp[$key];
-                            $history->adjust=$request->adjust[$key];
-                            $history->remark=$request->remark[$key];
+                            //$history->remark=$request->remark[$key];
                             $history->company_id=company()['company_id'];
                             $history->created_by= currentUserId();
                             $history->save();
@@ -240,9 +220,8 @@ class DOController extends Controller
                         }
                     }
                 }
-            }
             Toastr::success('Receive Successfully !');
-            return redirect()->route(currentUser().'.docontroll.index');
+            return redirect()->back();
         }catch(Exception $e){
             dd($e);
             return redirect()->back()->withInput();

@@ -19,8 +19,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="#">
-                        {{--  <form method="post" action="{{route(currentUser().'.do.accept_do_edit',encryptor('encrypt'))}}">  --}}
+                        <form method="post" action="{{route(currentUser().'.do.accept_do_edit')}}">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
@@ -52,7 +51,7 @@
                                         <tbody id="product">
                                             <tr>
                                                 <td>
-                                                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);">
+                                                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -95,7 +94,7 @@
 
 var row=`<tr>
     <td>
-        <select class="choices form-select product_id" id="product_id" onchange="doData(this);">
+        <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
             <option value="">Select Product</option>
             @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
             <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -134,12 +133,12 @@ function removeRow(e){
             type: "GET",
             dataType: "json",
             data: { product_id: product_id },
-            success: function(dodetail) {
-                //console.log(dodetail);
+            success: function(dodata) {
+                //console.log(dodata);
                 let selectElement = $(e).closest('tr').find('.referance_number');
                 selectElement.empty(); // Clear previous options
 
-                $.each(dodetail, function(index, value) {
+                $.each(dodata, function(index, value) {
                     selectElement.append('<option value="' + value + '">' + value + '</option>');
                 });
                 let dp=$(e).find('option:selected').data('dp');
@@ -161,7 +160,7 @@ function removeRow(e){
                 dataType: "json",
                 data: { product_id:product_id },
                 success: function(data) {
-                console.log(data);
+                //console.log(data);
                 total=((cn*data)+pcs+freePcs);
                 $(e).closest('tr').find('.receive').val(total);
 
