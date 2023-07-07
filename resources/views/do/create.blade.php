@@ -27,9 +27,9 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group mb-3">
-                                                <label class="py-2" for="cat">{{__('Supplier')}}<span class="text-danger">*</span></label>
-                                                <select class="choices form-select supplier_id" name="supplier_id" onchange="getBalance()">
-                                                    <option value="">Select Suppliers</option>
+                                                <label class="py-2" for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
+                                                <select class="choices form-select supplier_id" name="supplier_id" onchange="getBalance()" required>
+                                                    <option value="">Select Distributor</option>
                                                     @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                         @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
                                                         <option data-balance="{{ $balance }}" value="{{ $sup->id }}">{{ $sup->name }}</option>
@@ -43,14 +43,14 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Do Date')}}<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="datepicker" name="do_date" placeholder="Day-Month-Year">
+                                                <input required type="text" class="form-control" id="datepicker" name="do_date" placeholder="Day-Month-Year">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Pay Type')}}<span class="text-danger">*</span></label>
-                                                <select class="form-control form-select" name="bill_id">
+                                                <select class="form-control form-select" name="bill_id" required>
                                                     <option value="">Pay Type</option>
                                                     @forelse(App\Models\Settings\Bill_term::where(company())->get() as $bill)
                                                         <option value="{{ $bill->id }}">{{ $bill->name }}</option>
@@ -63,7 +63,7 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Reference Number')}}<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="reference_num" placeholder="reference Number">
+                                                <input required type="text" class="form-control" name="reference_num" placeholder="reference Number">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -169,6 +169,7 @@
                         <td>${counter + 1}</td>
                         <td>${productName}
                             <input type="hidden" name="product_id[]" value="${product_id}">
+                            <button class="btn btn-primary ms-2 btn-sm">Click</button>
                         </td>
                         <td>${qty}
                             <input type="hidden" class="qty" name="qty[]" value="${qty}">
