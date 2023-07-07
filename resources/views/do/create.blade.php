@@ -198,10 +198,10 @@
                 $('#qty').val('');
                 totalAmount();     //calculate total do amount
             }else{
-                const settim=document.getElementById('warning_message');
-                settim.innerHTML='**Give Product and Qty Value**';
-                setTimeout(  function () { settim.innerHTML=''}  , 3000);
-                setTimeout(  function () { settim.style.display='block'}  , 4000);
+                const setTime=document.getElementById('warning_message');
+                setTime.innerHTML='**Give Product and Qty Value**';
+                setTimeout(  function () { setTime.innerHTML=''}  , 3000);
+                setTimeout(  function () { setTime.style.display='block'}  , 4000);
 
             }
         });
