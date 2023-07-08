@@ -19,7 +19,7 @@ class DashboardController extends Controller
     public function ownerDashboard(){
         return view('dasbhoard.owner');
     }
-    
+
     /*
     * manager dashboard
     */
@@ -31,7 +31,7 @@ class DashboardController extends Controller
     * salesrepresentative dashboard
     */
     public function salesrepresentativeDashboard(){
-        return view('dasbhoard.sr');
+        return view('dasbhoard.dsr');
     }
 
     /*

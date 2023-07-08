@@ -36,8 +36,8 @@ return new class extends Migration
                 'created_at' => Carbon::now()
             ],
             [
-                'type' => 'Sales Representative',
-                'identity' => 'SR',
+                'type' => 'DSR',
+                'identity' => 'DSR',
                 'created_at' => Carbon::now()
             ],
             [
@@ -51,7 +51,7 @@ return new class extends Migration
                 'created_at' => Carbon::now()
             ]
         ]);
-        
+
     }
 
     /**

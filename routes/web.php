@@ -10,6 +10,7 @@ use App\Http\Controllers\Settings\UnitStyleController as unitstyle;
 use App\Http\Controllers\Settings\UnitController as unit;
 use App\Http\Controllers\Settings\SupplierController as supplier;
 use App\Http\Controllers\Settings\CustomerController as customer;
+use App\Http\Controllers\Settings\ShopController as shop;
 use App\Http\Controllers\Settings\UserController as user;
 use App\Http\Controllers\Settings\AdminUserController as admin;
 use App\Http\Controllers\Settings\Location\CountryController as country;
@@ -102,6 +103,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('users',user::class,['as'=>'owner']);
         Route::resource('supplier',supplier::class,['as'=>'owner']);
         Route::resource('customer',customer::class,['as'=>'owner']);
+        Route::resource('shop',shop::class,['as'=>'owner']);
         Route::post('/customer/balance', [customer::class, 'customerBalance'])->name('owner.customer.balance');
         Route::post('/supplier/balance', [supplier::class, 'supplierBalance'])->name('owner.supplier.balance');
 
@@ -123,6 +125,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('do-data-get',[docon::class,'doDataGet'])->name('owner.do_data_get');
         Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('owner.unit_data_get');
         Route::post('doreceive', [docon::class,'DoRecive_edit'])->name('owner.do.accept_do_edit');
+        Route::get('/product-up-for-do/{id}',[docon::class,'productUp'])->name('doscreenProductUp');
 
 
 
@@ -163,8 +166,8 @@ Route::group(['middleware'=>isJso::class],function(){
 });
 
 Route::group(['middleware'=>isSalesrepresentative::class],function(){
-    Route::prefix('SR')->group(function(){
-        Route::get('/dashboard', [dash::class,'salesrepresentativeDashboard'])->name('SR.dashboard');
+    Route::prefix('DSR')->group(function(){
+        Route::get('/dashboard', [dash::class,'salesrepresentativeDashboard'])->name('DSR.dashboard');
 
     });
 });

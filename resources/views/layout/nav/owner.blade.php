@@ -18,6 +18,7 @@
             <li class="py-1"><a href="{{route(currentUser().'.bill.index')}}">{{__('Bill Term')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.supplier.index')}}">{{__('Suppliers')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
 
             <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
                 <ul class="submenu">

@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users=User::where(company())->whereIn('id',[3,4,5,6])->get();
+        $users=User::where(company())->whereIn('role_id',[3,4,5,6])->get();
         return view('settings.users.index',compact('users'));
     }
 
@@ -43,7 +43,7 @@ class UserController extends Controller
             $branches=Branch::where(company())->get();
             $roles=Role::where('id',4)->get();
         }
-       
+
         return view('settings.users.create',compact('roles','branches'));
     }
 
@@ -70,7 +70,7 @@ class UserController extends Controller
                 return redirect()->route(currentUser().'.users.index')->with($this->resMessageHtml(true,null,'Successfully Registred'));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
-            
+
         }catch(Exception $e){
             dd($e);
             return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
@@ -104,7 +104,7 @@ class UserController extends Controller
             $roles=Role::whereIn('id',[4])->get();
         }
         $user=User::findOrFail(encryptor('decrypt',$id));
-       
+
         return view('settings.users.edit',compact('roles','branches','user'));
     }
 

@@ -176,6 +176,25 @@ class DOController extends Controller
         return response()->json($unit,200);
     }
 
+    public function productUp(Request $request, $id)
+    {
+        try{
+            $product=Product::findOrFail($id);
+            $product->free_ratio=$request->free_ratio;
+            $product->dp_price=$request->dp_price;
+            $product->updated_by=currentUserId();
+            $product->save();
+            Toastr::success('Product Ratio & Dp Update!');
+            return redirect(route(currentUser().'.docontroll.create'));
+        }
+        catch (Exception $e){
+             dd($e);
+            Toastr::error('Try Again!');
+            return back()->withInput();
+        }
+
+    }
+
 
     public function DoRecive_edit(Request $request)
     {

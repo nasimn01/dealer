@@ -72,7 +72,7 @@
                                                 <select class=" choices form-select" id="product_id">
                                                     <option value="">Select Product</option>
                                                     @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                    <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                    <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -158,6 +158,8 @@
         $('button.add-row').on('click', function() {
             let dp=$('#product_id').find(":selected").data('dp');
             let productName=$('#product_id').find(":selected").data('name');
+            let freeRatio=$('#product_id').find(":selected").data('ratio');
+            let ProductId=$('#product_id').find(":selected").val();
 
             let product_id= $('#product_id').val();
             let qty = $('#qty').val();
@@ -169,7 +171,59 @@
                         <td>${counter + 1}</td>
                         <td>${productName}
                             <input type="hidden" name="product_id[]" value="${product_id}">
-                            <button class="btn btn-primary ms-2 btn-sm">Click</button>
+                            <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${product_id}">Click</button>
+                            <div class="modal fade" id="modal${product_id}" tabindex="-1" role="dialog" aria-labelledby="modal${product_id}Title" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="#modal${product_id}Title">${productName}</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table class="table table-inverse table-responsive">
+                                                            <thead class="thead-inverse">
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <div class="col-md-12 text-center heading-block">
+                                                                            <h5 style="padding-top: 5px;">Product Free Ratio and Dp price Update</h5>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <form action="{{route('doscreenProductUp', '')}}/" + ProductId>
+                                                                    @csrf
+                                                                    @method('PATCH')
+                                                                    <tr>
+                                                                        <td>Free Ratio</td>
+                                                                        <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
+                                                                        <td>Dp Price</td>
+                                                                        <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><button type="button" class="btn btn-primary">Update</button></td>
+                                                                    </tr>
+                                                                </form>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                         <td>${qty}
                             <input type="hidden" class="qty" name="qty[]" value="${qty}">
