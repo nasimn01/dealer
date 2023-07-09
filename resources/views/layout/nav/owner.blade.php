@@ -16,7 +16,7 @@
             <li class="py-1"><a href="{{route(currentUser().'.users.index')}}">{{__('Users')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.werehouse.index')}}">{{__('Werehouse')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.bill.index')}}">{{__('Bill Term')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.supplier.index')}}">{{__('Suppliers')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.supplier.index')}}">{{__('Distributor')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
 
@@ -81,6 +81,15 @@
             <li class="py-1"><a href="{{route(currentUser().'.docontroll.create')}}" >{{__('Do')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.docontroll.index')}}" >{{__('Do List')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.doreceive')}}" >{{__('Do Receive')}}</a></li>
+		</ul>
+    </li>
+    <li class="sidebar-item has-sub">
+        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Sales')}}</span>
+        </a>
+        <ul class="submenu">
+            <li class="py-1"><a href="{{route(currentUser().'.sales.create')}}" >{{__('New Sales')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.sales.index')}}" >{{__('Sales List')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.sales.edit',1)}}" >{{__('Sales Return')}}</a></li>
 		</ul>
     </li>
 

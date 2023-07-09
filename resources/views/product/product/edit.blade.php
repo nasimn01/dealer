@@ -63,6 +63,12 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
+                                            <label for="tp_free">{{__('TP Free')}}</label>
+                                            <input type="text" readonly class="form-control" value="{{ old('tp_free',$product->tp_free)}}" name="tp_free">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
                                             <label for="mrp_price">{{__('MRP Price')}}</label>
                                             <input type="number" class="form-control" value="{{ old('mrp_price',$product->mrp_price)}}" name="mrp_price">
 

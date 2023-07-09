@@ -185,7 +185,7 @@ class DOController extends Controller
             $product->updated_by=currentUserId();
             $product->save();
             Toastr::success('Product Ratio & Dp Update!');
-            return redirect(route(currentUser().'.docontroll.create'));
+            //return redirect(route(currentUser().'.docontroll.create'));
         }
         catch (Exception $e){
              dd($e);

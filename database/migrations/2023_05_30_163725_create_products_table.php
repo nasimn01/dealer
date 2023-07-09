@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('product_name')->nullable();
             $table->decimal('dp_price',14,2)->nullable();
             $table->decimal('tp_price',14,2)->nullable();
+            $table->decimal('tp_free',14,2)->nullable();
             $table->decimal('mrp_price',14,2)->nullable();
             $table->decimal('free',14,2)->nullable();
             $table->decimal('free_ratio',14,2)->nullable();

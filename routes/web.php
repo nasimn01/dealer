@@ -31,6 +31,9 @@ use App\Http\Controllers\Product\ReturnProductController as returnproduct;
 use App\Http\Controllers\Do\DOController as docon;
 
 
+use App\Http\Controllers\Sales\SalesController as sales;
+
+
 use App\Http\Controllers\Accounts\MasterAccountController as master;
 use App\Http\Controllers\Accounts\SubHeadController as sub_head;
 use App\Http\Controllers\Accounts\ChildOneController as child_one;
@@ -107,7 +110,8 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::post('/customer/balance', [customer::class, 'customerBalance'])->name('owner.customer.balance');
         Route::post('/supplier/balance', [supplier::class, 'supplierBalance'])->name('owner.supplier.balance');
 
-
+        //sales
+        Route::resource('sales',sales::class,['as'=>'owner']);
 
         // employee settings
         Route::resource('designation',designation::class,['as'=>'owner']);
@@ -126,6 +130,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('owner.unit_data_get');
         Route::post('doreceive', [docon::class,'DoRecive_edit'])->name('owner.do.accept_do_edit');
         Route::get('/product-up-for-do/{id}',[docon::class,'productUp'])->name('doscreenProductUp');
+
 
 
 

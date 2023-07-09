@@ -57,6 +57,7 @@ class ProductController extends Controller
             $data->product_name = $request->product_name;
             $data->dp_price = $request->dp_price;
             $data->tp_price = $request->tp_price;
+            $data->tp_free = $request->tp_free;
             $data->mrp_price = $request->mrp_price;
             $data->free = $request->free;
             $data->free_ratio = $request->free_ratio;
@@ -132,6 +133,7 @@ class ProductController extends Controller
             $data->product_name = $request->product_name;
             $data->dp_price = $request->dp_price;
             $data->tp_price = $request->tp_price;
+            $data->tp_free = $request->tp_free;
             $data->mrp_price = $request->mrp_price;
             $data->free = $request->free;
             $data->free_ratio = $request->free_ratio;
