@@ -122,18 +122,16 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('category',category::class,['as'=>'owner']);
         Route::resource('group',group::class,['as'=>'owner']);
         Route::resource('product',product::class,['as'=>'owner']);
+        Route::get('unit-pcs-get',[product::class,'UnitPcsGet'])->name('owner.unit_pcs_get');
         Route::resource('returnproduct',returnproduct::class,['as'=>'owner']);
         Route::resource('batch',batch::class,['as'=>'owner']);
         Route::resource('docontroll',docon::class,['as'=>'owner']);
         Route::get('doreceive',[docon::class,'DoRecive'])->name('owner.doreceive');
         Route::get('do-data-get',[docon::class,'doDataGet'])->name('owner.do_data_get');
-        Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('owner.unit_data_get');
+        // Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('owner.unit_data_get');
         Route::post('doreceive', [docon::class,'DoRecive_edit'])->name('owner.do.accept_do_edit');
-        Route::get('/product-up-for-do/{id}',[docon::class,'productUp'])->name('doscreenProductUp');
-
-
-
-
+        // Route::post('product-up-for-do', [docon::class, 'productUp'])->name('doscreenProductUp');
+        Route::post('doscreenProductUp',[docon::class,'productUpdate'])->name('doscreenProductUp');
 
 
         //Accounts

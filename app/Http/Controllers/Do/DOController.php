@@ -167,34 +167,46 @@ class DOController extends Controller
         return response()->json($dodata,200);
     }
 
-    public function UnitDataGet(Request $request)
+    // public function UnitDataGet(Request $request)
+    // {
+    //     $productId=$request->product_id;
+    //     $unitStyleId=Product::where('id', $productId)->where('status',0)->pluck('unit_style_id');
+    //     $unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
+    //     //return $unit;
+    //     return response()->json($unit,200);
+    // }
+
+    // public function productUp(Request $request)
+    // {
+    //     try{
+    //         $product=Product::where('id',$request->product_id)->first();
+    //         $product->free_ratio=$request->free_ratio;
+    //         $product->dp_price=$request->dp_price;
+    //         $product->updated_by=currentUserId();
+    //         $product->save();
+    //         Toastr::success('Product Ratio & Dp Update!');
+    //         //return redirect(route(currentUser().'.docontroll.create'));
+    //     }
+    //     catch (Exception $e){
+    //          dd($e);
+    //         Toastr::error('Try Again!');
+    //         return back()->withInput();
+    //     }
+
+    // }
+    public function productUpdate(Request $request)
     {
-        $productId=$request->product_id;
-        $unitStyleId=Product::where('id', $productId)->where('status',0)->pluck('unit_style_id');
-        $unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
-        //return $unit;
-        return response()->json($unit,200);
+        // dd($request->all());
+        $productId = $request->input('product_id');
+        $freeRatio = $request->input('free_ratio');
+        $dpPrice = $request->input('dp_price');
+
+        $product = Product::find($productId);
+        $product->free_ratio = $freeRatio;
+        $product->dp_price = $dpPrice;
+        $product->save();
+        return response()->json(['message' => 'Product updated successfully']);
     }
-
-    public function productUp(Request $request, $id)
-    {
-        try{
-            $product=Product::findOrFail($id);
-            $product->free_ratio=$request->free_ratio;
-            $product->dp_price=$request->dp_price;
-            $product->updated_by=currentUserId();
-            $product->save();
-            Toastr::success('Product Ratio & Dp Update!');
-            //return redirect(route(currentUser().'.docontroll.create'));
-        }
-        catch (Exception $e){
-             dd($e);
-            Toastr::error('Try Again!');
-            return back()->withInput();
-        }
-
-    }
-
 
     public function DoRecive_edit(Request $request)
     {

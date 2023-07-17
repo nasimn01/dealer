@@ -196,22 +196,25 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <form action="{{route('doscreenProductUp', '')}}/" + ProductId>
-                                                                    @csrf
-                                                                    @method('PATCH')
-                                                                    <tr>
-                                                                        <td>Free Ratio</td>
-                                                                        <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
-                                                                        <td>Dp Price</td>
-                                                                        <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td><button type="button" class="btn btn-primary">Update</button></td>
-                                                                    </tr>
-                                                                </form>
+                                                                <div id="productFormContainer">
+                                                                    <form id="productForm" action="{{route('doscreenProductUp')}}" method="post">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
+                                                                        <tr>
+                                                                            <td>Free Ratio</td>
+                                                                            <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
+                                                                            <td>Dp Price</td>
+                                                                            <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td><button onclick="saveData()" type="button" class="btn btn-primary">Update</button></td>
+                                                                        </tr>
+                                                                    </form>
+                                                                </div>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -219,7 +222,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
@@ -293,6 +296,26 @@
         var balance=$('.supplier_id option:selected').data('balance');
         $('.supbalance').text(balance);
     }
+</script>
+<script>
+    function saveData() {
+        var form = $('#productForm');
+        var url = form.attr('action');
+        var formData = form.serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
 </script>
 
 @endpush
