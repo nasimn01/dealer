@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 
 use App\Models\Sales\Sales;
+use App\Models\Settings\Shop;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -83,5 +85,16 @@ class SalesController extends Controller
     public function destroy(Sales $sales)
     {
         //
+    }
+
+    public function ShopDataGet(Request $request)
+    {
+        $shop=Shop::all();
+        return response()->json($shop,200);
+    }
+    public function DsrDataGet(Request $request)
+    {
+        $dsr=User::where('role_id',4)->get();
+        return response()->json($dsr,200);
     }
 }

@@ -72,7 +72,7 @@
                                                 <select class=" choices form-select" id="product_id">
                                                     <option value="">Select Product</option>
                                                     @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                    <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                    <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -113,6 +113,7 @@
                                             <th scope="col">{{__('#SL')}}</th>
                                             <th scope="col">{{__('Product Name')}}</th>
                                             <th scope="col">{{__('Qty')}}</th>
+                                            <th scope="col">{{__('Free Qty')}}</th>
                                             <th scope="col">{{__('DP')}}</th>
                                             <th scope="col">{{__('Amount')}}</th>
                                             <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -154,15 +155,27 @@
 <script>
     $(document).ready(function() {
        let counter = 0;
-
         $('button.add-row').on('click', function() {
             let dp=$('#product_id').find(":selected").data('dp');
             let productName=$('#product_id').find(":selected").data('name');
             let freeRatio=$('#product_id').find(":selected").data('ratio');
+            let freeQty=$('#product_id').find(":selected").data('free');
             let ProductId=$('#product_id').find(":selected").val();
-
             let product_id= $('#product_id').val();
             let qty = $('#qty').val();
+            let freeQtyCount;
+            $.ajax({
+                url: "{{route(currentUser().'.unit_data_get')}}",
+                type: "GET",
+                dataType: "json",
+                data: { product_id:ProductId },
+                success: function(data) {
+                   var freeCount=((data/freeRatio)*freeQty);
+                   freeQtyCount=Math.floor(qty*freeCount);
+                   console.log(freeQtyCount);
+
+                },
+            });
 
             if (productName  && qty) {
                 let total= (dp * qty);
@@ -197,7 +210,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <div id="productFormContainer">
-                                                                    <form id="productForm" action="{{route('doscreenProductUp')}}" method="post">
+                                                                    <form id="productForm" action="{{route(currentUser().'.doscreenProductUp')}}" method="post">
                                                                         @csrf
                                                                         @method('PUT')
                                                                         <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
@@ -230,6 +243,9 @@
                         </td>
                         <td>${qty}
                             <input type="hidden" class="qty" name="qty[]" value="${qty}">
+                        </td>
+                        <td>${freeQtyCount}
+                            <input type="hidden" class="qty" name="free_qty[]" value="${freeQtyCount}">
                         </td>
                         <td>${dp}
                             <input type="hidden" name="dp[]" value="${dp}">
@@ -300,18 +316,18 @@
 <script>
     function saveData() {
         var form = $('#productForm');
-        var url = form.attr('action');
+        //var url = form.attr('action');
         var formData = form.serialize();
 
         $.ajax({
             type: 'POST',
-            url: url,
+            url: "{{route(currentUser().'.doscreenProductUp')}}",
             data: formData,
             success: function(response) {
                 console.log(response);
             },
             error: function(xhr, status, error) {
-                console.error(error);
+                console.log("Error: " + error);
             }
         });
     }

@@ -167,14 +167,14 @@ class DOController extends Controller
         return response()->json($dodata,200);
     }
 
-    // public function UnitDataGet(Request $request)
-    // {
-    //     $productId=$request->product_id;
-    //     $unitStyleId=Product::where('id', $productId)->where('status',0)->pluck('unit_style_id');
-    //     $unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
-    //     //return $unit;
-    //     return response()->json($unit,200);
-    // }
+    public function UnitDataGet(Request $request)
+    {
+        $productId=$request->product_id;
+        $unitStyleId=Product::where('id', $productId)->where('status',0)->pluck('unit_style_id');
+        $unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
+        //return $unit;
+        return response()->json($unit,200);
+    }
 
     // public function productUp(Request $request)
     // {
