@@ -135,7 +135,6 @@ function productData(e) {
     var salesPriceInput = $(e).closest('tr').find('input[name="sales_price[]"]');
     var tp = $(e).closest('tr').find('#product_id option:selected').attr('data-tp');
     var tpFree = $(e).closest('tr').find('#product_id option:selected').attr('data-tp_free');
-
     if (selectedOption === "tp") {
         salesPriceInput.val(tp);
     } else if (selectedOption === "tpfree") {
