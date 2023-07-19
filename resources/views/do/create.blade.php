@@ -163,121 +163,121 @@
             let ProductId=$('#product_id').find(":selected").val();
             let product_id= $('#product_id').val();
             let qty = $('#qty').val();
-            let freeQtyCount;
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",
                 type: "GET",
                 dataType: "json",
                 data: { product_id:ProductId },
                 success: function(data) {
-                   var freeCount=((data/freeRatio)*freeQty);
-                   freeQtyCount=Math.floor(qty*freeCount);
-                   console.log(freeQtyCount);
+                    var freeCount = (data / freeRatio) * freeQty;
+                    freeQtyCount = Math.floor(qty * freeCount);
+                    //console.log(freeQtyCount);
 
-                },
-            });
-
-            if (productName  && qty) {
-                let total= (dp * qty);
-                let newRow = `
-                    <tr class="text-center">
-                        <td>${counter + 1}</td>
-                        <td>${productName}
-                            <input type="hidden" name="product_id[]" value="${product_id}">
-                            <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${product_id}">Click</button>
-                            <div class="modal fade" id="modal${product_id}" tabindex="-1" role="dialog" aria-labelledby="modal${product_id}Title" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="#modal${product_id}Title">${productName}</h5>
-                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <table class="table table-inverse table-responsive">
-                                                            <thead class="thead-inverse">
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <div class="col-md-12 text-center heading-block">
-                                                                            <h5 style="padding-top: 5px;">Product Free Ratio and Dp price Update</h5>
+                    if (productName  && qty) {
+                        let total= (dp * qty);
+                        let newRow = `
+                            <tr class="text-center">
+                                <td>${counter + 1}</td>
+                                <td>${productName}
+                                    <input type="hidden" name="product_id[]" value="${product_id}">
+                                    <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${product_id}">Click</button>
+                                    <div class="modal fade" id="modal${product_id}" tabindex="-1" role="dialog" aria-labelledby="modal${product_id}Title" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="#modal${product_id}Title">${productName}</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <table class="table table-inverse table-responsive">
+                                                                    <thead class="thead-inverse">
+                                                                        <tr>
+                                                                            <td colspan="4">
+                                                                                <div class="col-md-12 text-center heading-block">
+                                                                                    <h5 style="padding-top: 5px;">Product Free Ratio and Dp price Update</h5>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <div id="productFormContainer">
+                                                                            <form id="productForm" action="{{route(currentUser().'.doscreenProductUp')}}" method="post">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
+                                                                                <tr>
+                                                                                    <td>Free Ratio</td>
+                                                                                    <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
+                                                                                    <td>Dp Price</td>
+                                                                                    <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td><button onclick="saveData()" type="button" class="btn btn-primary">Update</button></td>
+                                                                                </tr>
+                                                                            </form>
                                                                         </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <div id="productFormContainer">
-                                                                    <form id="productForm" action="{{route(currentUser().'.doscreenProductUp')}}" method="post">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
-                                                                        <tr>
-                                                                            <td>Free Ratio</td>
-                                                                            <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
-                                                                            <td>Dp Price</td>
-                                                                            <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td><button onclick="saveData()" type="button" class="btn btn-primary">Update</button></td>
-                                                                        </tr>
-                                                                    </form>
-                                                                </div>
-                                                            </tbody>
-                                                        </table>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>${qty}
-                            <input type="hidden" class="qty" name="qty[]" value="${qty}">
-                        </td>
-                        <td>${freeQtyCount}
-                            <input type="hidden" class="qty" name="free_qty[]" value="${freeQtyCount}">
-                        </td>
-                        <td>${dp}
-                            <input type="hidden" name="dp[]" value="${dp}">
-                        </td>
-                        <td>${total}
-                            <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">
-                        </td>
-                        <td class="white-space-nowrap">
-                            <button class="btn btn-link text-danger fs-3" type="button" onClick="RemoveThis(this)">
-                                <i class="bi bi-trash-fill" class=""></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
+                                </td>
+                                <td>${qty}
+                                    <input type="hidden" class="qty" name="qty[]" value="${qty}">
+                                </td>
+                                <td>${freeQtyCount}
+                                    <input type="hidden" class="qty" name="free_qty[]" value="${freeQtyCount}">
+                                </td>
+                                <td>${dp}
+                                    <input type="hidden" name="dp[]" value="${dp}">
+                                </td>
+                                <td>${total}
+                                    <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">
+                                </td>
+                                <td class="white-space-nowrap">
+                                    <button class="btn btn-link text-danger fs-3" type="button" onClick="RemoveThis(this)">
+                                        <i class="bi bi-trash-fill" class=""></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
 
-                // Append new row to the table
-               $('#productTableBody').append(newRow);
-                // Increment counter
-                counter++;
+                        // Append new row to the table
+                       $('#productTableBody').append(newRow);
+                        // Increment counter
+                        counter++;
 
-                $('#product_id').find(":selected").remove();
-                // Clear input fields
-                $('#product_id').val('');
-                $('#qty').val('');
-                totalAmount();     //calculate total do amount
-            }else{
-                const setTime=document.getElementById('warning_message');
-                setTime.innerHTML='**Give Product and Qty Value**';
-                setTimeout(  function () { setTime.innerHTML=''}  , 3000);
-                setTimeout(  function () { setTime.style.display='block'}  , 4000);
+                        $('#product_id').find(":selected").remove();
+                        // Clear input fields
+                        $('#product_id').val('');
+                        $('#qty').val('');
+                        totalAmount();     //calculate total do amount
+                    }else{
+                        const setTime=document.getElementById('warning_message');
+                        setTime.innerHTML='**Give Product and Qty Value**';
+                        setTimeout(  function () { setTime.innerHTML=''}  , 3000);
+                        setTimeout(  function () { setTime.style.display='block'}  , 4000);
 
-            }
+                    }
+                },
+            });
+
+
         });
     });
 

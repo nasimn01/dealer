@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle','Update Supplier')
+@section('pageTitle','Update Distributor')
 @section('pageSubTitle','Update')
 
 @section('content')
@@ -16,7 +16,7 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="code">Supplier Code<span class="text-danger">*</span></label>
+                                        <label for="code">Distributor Code<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('supplier_code',$supplier->supplier_code)}}" class="form-control" name="supplier_code" required>
                                     </div>
                                     {{-- @if($errors->has('name'))
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="name">Supplier Name<span class="text-danger">*</span></label>
+                                        <label for="name">Distributor Name<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('name',$supplier->name)}}" class="form-control" name="name" required>
                                     </div>
                                 </div>

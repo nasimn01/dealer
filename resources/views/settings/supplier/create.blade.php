@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Create Supplier')
+@section('pageTitle','Create Distributor')
 @section('pageSubTitle','Create')
 @section('content')
 <section id="multiple-column-form">
@@ -13,7 +13,7 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="code">Supplier Code<span class="text-danger">*</span></label>
+                                        <label for="code">Distributor Code<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('supplier_code')}}" class="form-control" name="supplier_code" required>
                                     </div>
                                     {{-- @if($errors->has('name'))
@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label for="name">Supplier Name<span class="text-danger">*</span></label>
+                                        <label for="name">Distributor Name<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('name')}}" class="form-control" name="name" required>
                                     </div>
                                 </div>

@@ -112,16 +112,19 @@ var row=`<tr>
     <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
     <td><input class="form-control dp" type="text" name="dp[]" value="" placeholder="dp"></td>
     <td>
-        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+        <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
         <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
     </td>
 </tr>`;
     $('#product').append(row);
 }
 
-function removeRow(e){
-    $(e).closest('tr').remove();
+function RemoveRow(e) {
+    if (confirm("Are you sure you want to remove this row?")) {
+        $(e).closest('tr').remove();
+    }
 }
+
 </script>
 <script>
     function doData(e) {

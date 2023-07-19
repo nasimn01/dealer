@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Supplier List')
+@section('pageTitle','Distributor List')
 @section('pageSubTitle','List')
 
 @section('content')
@@ -15,7 +15,7 @@
                                     <input type="text" name="name" value="{{isset($_GET['name'])?$_GET['name']:''}}" placeholder="Name" class="form-control">
                                 </div>
                                 <div class="col-4">
-                                    <input type="text" name="supplier_code" value="{{isset($_GET['supplier_code'])?$_GET['supplier_code']:''}}" placeholder="Supplier Code" class="form-control">
+                                    <input type="text" name="supplier_code" value="{{isset($_GET['supplier_code'])?$_GET['supplier_code']:''}}" placeholder="Distributor Code" class="form-control">
                                 </div>
 
                                 <div class="col-2 ps-0">
@@ -39,7 +39,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
-                                <th scope="col">{{__('Supplier Code')}}</th>
+                                <th scope="col">{{__('Distributor Code')}}</th>
                                 <th scope="col">{{__('Name')}}</th>
                                 <th scope="col">{{__('Contact')}}</th>
                                 <th scope="col">{{__('Email')}}</th>
