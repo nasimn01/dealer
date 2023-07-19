@@ -98,31 +98,32 @@
 <script>
     function addRow(){
 
-var row=`<tr>
-    <td>
-        <select class="choices form-select product_id" id="product_id" name="product_id[]">
-            <option value="">Select Product</option>
-            @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-            <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-            @empty
-            @endforelse
-        </select>
-    </td>
-    <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn"></td>
-    <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs"></td>
-    <td>
-        <select class="form-select" name="select_tp_tpfree" onchange="productData(this);">
-            <option value="0">Select</option>
-            <option value="tp">TP</option>
-            <option value="tpfree">TP Free</option>
-        </select>
-    </td>
-    <td><input class="form-control" type="text" name="sales_price[]" value="" placeholder="Tp Price"></td>
-    <td>
-        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-    </td>
-</tr>`;
+var row=`
+    <tr>
+        <td>
+            <select class="choices form-select product_id" id="product_id" name="product_id[]">
+                <option value="">Select Product</option>
+                @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                @empty
+                @endforelse
+            </select>
+        </td>
+        <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn"></td>
+        <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs"></td>
+        <td>
+            <select class="form-select" name="select_tp_tpfree" onchange="productData(this);">
+                <option value="0">Select</option>
+                <option value="tp">TP</option>
+                <option value="tpfree">TP Free</option>
+            </select>
+        </td>
+        <td><input class="form-control" type="text" name="sales_price[]" value="" placeholder="Tp Price"></td>
+        <td>
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+            <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+        </td>
+    </tr>`;
     $('#sales_repeat').append(row);
 }
 
