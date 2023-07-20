@@ -13,15 +13,29 @@
                         <form method="post" action="{{route(currentUser().'.sales.update',1)}}">
                             @csrf
                             <div class="row p-2 mt-4">
-                                <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Sales</b></label>
-                                    <select class="form-select" name="">
+                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+                                    <label for=""><b>Shop/Dsr</b></label>
+                                    <select class="form-select shop_dsr" onclick="getShopDsr()" name="select_shop_dsr">
                                         <option value="">Select</option>
-                                        <option value="1">Shop</option>
-                                        <option value="2">DSR</option>
+                                        <option value="shop">Shop</option>
+                                        <option value="dsr">DSR</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-3 mt-2">
+
+                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shopNameContainer" style="display: none;">
+                                    <label for=""><b>Shop Name</b></label>
+                                    <select class="form-select" name="shop_name">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2 dsrNameContainer" style="display: none;">
+                                    <label for=""><b>DSR Name</b></label>
+                                    <select class="form-select" name="dsr_name">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
                                     <label for=""><b>Sales Date</b></label>
                                     <input type="text" id="datepicker" class="form-control"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
@@ -39,7 +53,7 @@
                                                 <th colspan="2">{{ __('Damage') }}</th>
                                                 <th rowspan="2">{{__('TP')}}</th>
                                                 <th rowspan="2">{{__('TP(Price)')}}</th>
-                                                {{--  <th rowspan="2">{{__('ACTION')}}</th>  --}}
+                                                <th rowspan="2">{{__('ACTION')}}</th>
                                             </tr>
                                             <tr>
                                                 <th>CTN</th>
@@ -73,17 +87,17 @@
                                                     </select>
                                                 </td>
                                                 <td><input class="form-control" type="text" name="tp_price[]" value="" placeholder="Tp Price"></td>
-                                                {{--  <td>
+                                                <td>
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>  --}}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-4"></div>
-                                <div class="col-lg-8">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
                                     <div class="row">
                                         <div class="col-lg-3 col-md-3 col-sm-4">
                                             <div class="form-group">
@@ -103,20 +117,30 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <select class="form-select" name="">
-                                                    <option value="">Shop</option>
-                                                    <option value="1">kamal Store</option>
-                                                    <option value="2">jamal Store</option>
-                                                </select>
-                                            </div>
+                                            <select class="form-select shop_dsr" onclick="getShopDsr()" name="select_shop_dsr">
+                                                <option value="">Select</option>
+                                                <option value="shop">Shop</option>
+                                                <option value="dsr">DSR</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6 shopNameContainer" id="" style="display: none;">
+                                            <select class="form-select" name="shop_name">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6 dsrNameContainer" id="" style="display: none;">
+                                            <select class="form-select" name="dsr_name">
+                                                <option value="">Select</option>
+                                            </select>
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                        <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group text-primary" style="font-size:1.5rem">
                                                 <i class="bi bi-plus-square-fill"></i>
                                             </div>
@@ -128,15 +152,26 @@
                                                 <h5 for="newreceive">{{__('New Receive')}}</h5>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <select class="form-select" name="">
-                                                    <option value="">Shop</option>
-                                                    <option value="1">kamal Store</option>
-                                                    <option value="2">jamal Store</option>
-                                                </select>
-                                            </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shop_dsr">
+                                            <select class="form-select " onclick="getShopDsr(this)" name="select_shop_dsr">
+                                                <option value="">Select</option>
+                                                <option value="shop">Shop</option>
+                                                <option value="dsr">DSR</option>
+                                            </select>
                                         </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shopNameContainer" style="display: none;">
+                                            <select class="form-select" name="shop_name">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6 mt-2 dsrNameContainer" style="display: none;">
+                                            <select class="form-select" name="dsr_name">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
@@ -149,15 +184,26 @@
                                                 <h5 for="check">{{__('Check')}}</h5>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <select class="form-select" name="">
-                                                    <option value="">Shop</option>
-                                                    <option value="1">kamal Store</option>
-                                                    <option value="2">jamal Store</option>
-                                                </select>
-                                            </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 shop_dsr">
+                                            <select class="form-select "onclick="getShopDsr(this)" name="select_shop_dsr">
+                                                <option value="">Select</option>
+                                                <option value="shop">Shop</option>
+                                                <option value="dsr">DSR</option>
+                                            </select>
                                         </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6 shopNameContainer" style="display: none;">
+                                            <select class="form-select shop_name" name="shop_name">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6 dsrNameContainer" style="display: none;">
+                                            <select class="form-select dsr_name" name="dsr_name">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
@@ -219,5 +265,115 @@
 </section>
 @endsection
 @push("scripts")
+<script>
+    {{--  function getShopDsr() {
+        var selectedOption = document.querySelector('.shop_dsr option:checked').value;
 
+
+        var shopNameContainer = document.getElementsByClassName("shopNameContainer");
+        var dsrNameContainer = document.getElementsByClassName("dsrNameContainer");
+
+        if (selectedOption === "shop") {
+            shopNameContainer.style.display = "block";
+            dsrNameContainer.style.display = "none";
+            getShopData();
+        } else if (selectedOption === "dsr") {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "block";
+            getDsrData();
+        } else {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "none";
+        }
+    }  --}}
+    function getShopDsr(e) {
+        var selectedOption = e.value;
+        var parentContainer = e.closest('.shop_dsr');
+        var shopNameContainer = parentContainer.nextElementSibling;
+        var dsrNameContainer = shopNameContainer.nextElementSibling;
+
+        if (selectedOption === "shop") {
+            shopNameContainer.style.display = "block";
+            dsrNameContainer.style.display = "none";
+            getShopData();
+        } else if (selectedOption === "dsr") {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "block";
+            getDsrData();
+        } else {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "none";
+        }
+    }
+    function getShopData() {
+        $.ajax({
+            url: "{{ route(currentUser().'.get_shop') }}",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                populateShopOptions(data);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    function getDsrData() {
+        $.ajax({
+            url: "{{ route(currentUser().'.get_dsr') }}",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                populateDsrOptions(data);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    {{--  function populateShopOptions(data) {
+        var selectElement = document.querySelector('select[name="shop_name"]');
+        selectElement.innerHTML = "";
+
+        data.forEach(function(shop) {
+            var option = document.createElement("option");
+            option.value = shop.id;
+            option.textContent = shop.shop_name;
+            console.log(option)
+            selectElement.appendChild(option);
+        });
+    }  --}}
+    function populateShopOptions(data) {
+        var selectElements = document.querySelectorAll('.form-select.shop_name');
+
+        selectElements.forEach(function(selectElement) {
+            selectElement.innerHTML = "";
+
+            data.forEach(function(shop) {
+                var option = document.createElement("option");
+                option.value = shop.id;
+                option.textContent = shop.shop_name;
+                selectElement.appendChild(option);
+            });
+        });
+    }
+
+
+    function populateDsrOptions(data) {
+        var selectElements = document.querySelectorAll('.form-select.dsr_name');
+        selectElements.forEach(function(selectElement) {
+            selectElement.innerHTML = "";
+
+        data.forEach(function(dsr) {
+            var option = document.createElement("option");
+            option.value = dsr.id;
+            option.textContent = dsr.name;
+            selectElement.appendChild(option);
+        });
+        });
+    }
+
+</script>
 @endpush

@@ -133,7 +133,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('owner.unit_data_get');
         Route::post('doreceive', [docon::class,'DoRecive_edit'])->name('owner.do.accept_do_edit');
         // Route::post('product-up-for-do', [docon::class, 'productUp'])->name('doscreenProductUp');
-        Route::post('doscreenProductUp',[docon::class,'productUpdate'])->name('owner.doscreenProductUp');
+        Route::get('doscreenProductUp',[docon::class,'productUpdate'])->name('owner.doscreenProductUp');
 
 
         //Accounts

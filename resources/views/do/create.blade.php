@@ -206,9 +206,8 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <div id="productFormContainer">
-                                                                            <form id="productForm" action="{{route(currentUser().'.doscreenProductUp')}}" method="post">
-                                                                                @csrf
-                                                                                @method('PUT')
+                                                                            <form action="" method="post">
+
                                                                                 <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
                                                                                 <tr>
                                                                                     <td>Free Ratio</td>
@@ -220,7 +219,7 @@
                                                                                     <td></td>
                                                                                     <td></td>
                                                                                     <td></td>
-                                                                                    <td><button onclick="saveData()" type="button" class="btn btn-primary">Update</button></td>
+                                                                                    <td><button onclick="saveData(this)" type="button" class="btn btn-primary">Update</button></td>
                                                                                 </tr>
                                                                             </form>
                                                                         </div>
@@ -314,13 +313,13 @@
     }
 </script>
 <script>
-    function saveData() {
-        var form = $('#productForm');
+    function saveData(e) {
+        var form = $(e).closest('form');
         //var url = form.attr('action');
         var formData = form.serialize();
 
         $.ajax({
-            type: 'POST',
+            type: 'get',
             url: "{{route(currentUser().'.doscreenProductUp')}}",
             data: formData,
             success: function(response) {
