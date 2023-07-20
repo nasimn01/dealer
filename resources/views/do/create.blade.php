@@ -219,7 +219,7 @@
                                                                                     <td></td>
                                                                                     <td></td>
                                                                                     <td></td>
-                                                                                    <td><button onclick="saveData(this)" type="button" class="btn btn-primary">Update</button></td>
+                                                                                    <td><button onclick="saveData(this, '${product_id}')" type="button" class="btn btn-primary">Update</button></td>
                                                                                 </tr>
                                                                             </form>
                                                                         </div>
@@ -313,7 +313,7 @@
     }
 </script>
 <script>
-    function saveData(e) {
+    function saveData(e,product_id) {
         var form = $(e).closest('form');
         //var url = form.attr('action');
         var formData = form.serialize();
@@ -323,6 +323,7 @@
             url: "{{route(currentUser().'.doscreenProductUp')}}",
             data: formData,
             success: function(response) {
+                $("#modal" + product_id).modal('hide');
                 console.log(response);
             },
             error: function(xhr, status, error) {
