@@ -167,6 +167,7 @@ class DOController extends Controller
         return response()->json($dodata,200);
     }
 
+    /* unit data get function use do screen, do receive screen, sales screen */
     public function UnitDataGet(Request $request)
     {
         $productId=$request->product_id;

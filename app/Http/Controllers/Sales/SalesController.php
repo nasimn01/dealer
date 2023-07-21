@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 
 use App\Models\Sales\Sales;
+use App\Models\Sales\TemporarySales;
 use App\Models\Settings\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
