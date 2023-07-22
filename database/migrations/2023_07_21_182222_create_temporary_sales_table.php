@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('temporary_sales', function (Blueprint $table) {
             $table->id();
-            $table->string('shop_name')->nullable();
-            $table->string('dsr_name')->nullable();
+            $table->string('shop_id')->nullable();
+            $table->string('dsr_id')->nullable();
             $table->string('sales_date')->nullable();
-            $table->integer('total')->nullable();
+            $table->decimal('total',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

@@ -16,8 +16,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('shop_name')}}</th>
-                                    <th scope="col">{{__('dsr_name')}}</th>
+                                    <th scope="col">{{__('Shop/DSR Name')}}</th>
                                     <th scope="col">{{__('sales_date')}}</th>
                                     <th scope="col">{{__('total')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -26,9 +25,14 @@
                             <tbody>
                                 @forelse($sales as $p)
                                 <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
-                                    <td>{{$p->shop_name}}</td>
-                                    <td>{{$p->dsr_name}}</td>
+                                    <th scope="row">{{ ++$loop->index }}</th>
+                                    <td>
+                                        @if (!empty($p->shop->shop_name))
+                                        <span class="text-warning">Shop :</span> {{ $p->shop->shop_name }}
+                                        @else
+                                        <span class="text-warning">DSR :</span> {{ $p->dsr->name }}
+                                        @endif
+                                    </td>
                                     <td>{{$p->sales_date}}</td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">

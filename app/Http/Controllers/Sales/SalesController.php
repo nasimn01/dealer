@@ -47,8 +47,8 @@ class SalesController extends Controller
     {
         try{
             $data=new TemporarySales;
-            $data->shop_name = $request->shop_name;
-            $data->dsr_name = $request->dsr_name;
+            $data->shop_id = $request->shop_id;
+            $data->dsr_id = $request->dsr_id;
             $data->sales_date = $request->sales_date;
             $data->total = $request->total;
             $data->status = 0;
@@ -106,7 +106,10 @@ class SalesController extends Controller
      */
     public function edit($id)
     {
-        return view('sales.edit');
+        $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
+        $shops=Shop::all();
+        $dsr=User::where('role_id',4)->get();
+        return view('sales.edit',compact('sales','shops','dsr'));
     }
 
     /**

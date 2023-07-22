@@ -24,14 +24,14 @@
 
                                 <div class="col-lg-3 mt-2" id="shopNameContainer" style="display: none;">
                                     <label for=""><b>Shop Name</b></label>
-                                    <select class="form-select" name="shop_name">
+                                    <select class="form-select" name="shop_id">
                                         <option value="">Select</option>
                                     </select>
                                 </div>
 
                                 <div class="col-lg-3 mt-2" id="dsrNameContainer" style="display: none;">
                                     <label for=""><b>DSR Name</b></label>
-                                    <select class="form-select" name="dsr_name">
+                                    <select class="form-select" name="dsr_id">
                                         <option value="">Select</option>
                                     </select>
                                 </div>
@@ -69,10 +69,10 @@
                                                 <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
                                                 <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
                                                 <td>
-                                                    <select class="form-select select_tp_tpfree" name="select_tp_tpfree" onchange="productData(this);">
+                                                    <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
                                                         <option value="0">Select</option>
-                                                        <option value="tp">TP</option>
-                                                        <option value="tpfree">TP Free</option>
+                                                        <option value="1">TP</option>
+                                                        <option value="2">TP Free</option>
                                                     </select>
                                                 </td>
                                                 <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
@@ -125,10 +125,10 @@ var row=`
         <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
         <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
         <td>
-            <select class="form-select select_tp_tpfree" name="select_tp_tpfree" onchange="productData(this);">
+            <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
                 <option value="0">Select</option>
-                <option value="tp">TP</option>
-                <option value="tpfree">TP Free</option>
+                <option value="1">TP</option>
+                <option value="2">TP Free</option>
             </select>
         </td>
         <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
@@ -149,7 +149,7 @@ function removeRow(e){
 }
 
 function productData(e) {
-    var selectedOption =$(e).closest('tr').find('.select_tp_tpfree').val();
+    var selectedOption =parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
     //var salesPriceInput = $(e).closest('tr').find('.ctn_price');
     var tp = $(e).closest('tr').find('#product_id option:selected').attr('data-tp');
     var tpFree = $(e).closest('tr').find('#product_id option:selected').attr('data-tp_free');
@@ -166,11 +166,11 @@ function productData(e) {
             let tpFreePcsPrice=(tpFree/data)*pcs;
             var TpSubtotal=parseFloat((ctn*tp)+tpPcsPrice).toFixed(2);
             var TpFreeSubtotal=parseFloat((ctn*tp)+tpFreePcsPrice).toFixed(2);
-            if (selectedOption === "tp") {
+            if (selectedOption === 1) {
                 $(e).closest('tr').find('.ctn_price').val(tp);
                 $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
                 total_calculate();
-            } else if (selectedOption === "tpfree") {
+            } else if (selectedOption === 2) {
                 $(e).closest('tr').find('.ctn_price').val(tpFree);
                 $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
                 total_calculate();
@@ -244,7 +244,7 @@ function total_calculate() {
     }
 
     function populateShopOptions(data) {
-        var selectElement = document.querySelector('select[name="shop_name"]');
+        var selectElement = document.querySelector('select[name="shop_id"]');
         selectElement.innerHTML = "";
 
         data.forEach(function(item) {
@@ -256,7 +256,7 @@ function total_calculate() {
     }
 
     function populateDsrOptions(data) {
-        var selectElement = document.querySelector('select[name="dsr_name"]');
+        var selectElement = document.querySelector('select[name="dsr_id"]');
         selectElement.innerHTML = "";
 
         data.forEach(function(item) {
