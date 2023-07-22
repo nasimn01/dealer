@@ -89,8 +89,8 @@
                                             <label for="" class="form-group"><h4>Total</h4></label>
                                         </div>
                                         <div class="col-lg-2 mt-2 text-end">
-                                            <label for="" class="form-group"><h5 class="tgrandtotal">0.00</h5></label>
-                                            <input type="hidden" name="tgrandtotal" class="tgrandtotal_p">
+                                            <label for="" class="form-group"><h5 class="total">0.00</h5></label>
+                                            <input type="hidden" name="total" class="total_p">
                                         </div>
                                         <div class="col-lg-2"></div>
                                     </div>
@@ -183,12 +183,12 @@ function productData(e) {
 }
 
 function total_calculate() {
-    var grandtotal = 0;
+    var subtotal = 0;
     $('.subtotal_price').each(function() {
-        grandtotal += parseFloat($(this).val());
+        subtotal += parseFloat($(this).val());
     });
-    $('.tgrandtotal').text(grandtotal.toFixed(2));
-    $('.tgrandtotal_p').val(grandtotal.toFixed(2));
+    $('.total').text(subtotal.toFixed(2));
+    $('.total_p').val(subtotal.toFixed(2));
 
 }
 

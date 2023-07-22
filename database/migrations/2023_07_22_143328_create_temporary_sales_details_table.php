@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('temporary_sales', function (Blueprint $table) {
+        Schema::create('temporary_sales_details', function (Blueprint $table) {
             $table->id();
-            $table->string('shop_name')->nullable();
-            $table->string('dsr_name')->nullable();
-            $table->string('sales_date')->nullable();
-            $table->integer('total')->nullable();
+            $table->integer('sales_id')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->integer('ctn')->nullable();
+            $table->integer('pcs')->nullable();
+            $table->string('select_tp_tpfree')->nullable();
+            $table->decimal('ctn_price',14,2)->nullable();
+            $table->decimal('subtotal_price',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
@@ -34,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('temporary_sales');
+        Schema::dropIfExists('temporary_sales_details');
     }
 };
