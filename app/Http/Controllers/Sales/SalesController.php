@@ -104,6 +104,14 @@ class SalesController extends Controller
      * @param  \App\Models\Sales\Sales  $sales
      * @return \Illuminate\Http\Response
      */
+    public function PrimaryUpdate($id)
+    {
+        $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
+        $shops=Shop::all();
+        $dsr=User::where('role_id',4)->get();
+        return view('sales.primary-update',compact('sales','shops','dsr'));
+    }
+
     public function edit($id)
     {
         $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));

@@ -112,6 +112,7 @@ Route::group(['middleware'=>isOwner::class],function(){
 
         //sales
         Route::resource('sales',sales::class,['as'=>'owner']);
+        Route::get('sales-primary-update/{id}',[sales::class,'PrimaryUpdate'])->name('owner.sales.primary_update');
         Route::get('shop-data-get',[sales::class,'ShopDataGet'])->name('owner.get_shop');
         Route::get('dsr-data-get',[sales::class,'DsrDataGet'])->name('owner.get_dsr');
 

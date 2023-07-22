@@ -42,9 +42,34 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
+                                            <label for="unit_style_id">{{__('Unit Style')}}</label>
+                                            <select onchange="tpFree(this)" name="unit_style_id" class="form-control form-select unit_style_id" >
+                                                <option value="">Select</option>
+                                                @forelse($unit_style as $d)
+                                                    <option value="{{$d->id}}" {{ $product->unit_style_id==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                                @empty
+                                                    <option value="">No data found</option>
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
                                             <label for="product_name">{{__('Product Name')}}</label>
                                             <input type="text" class="form-control" value="{{ old('product_name',$product->product_name)}}" name="product_name">
 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="free_ratio">{{__('Free Ratio')}}</label>
+                                            <input type="number" onkeyup="tpFree(this)" class="form-control free_ratio" value="{{ old('free_ratio',$product->free_ratio)}}" name="free_ratio">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="free">{{__('Free(PCS)')}}</label>
+                                            <input type="number" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free',$product->free)}}" name="free">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -57,14 +82,14 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_price">{{__('TP Price')}}</label>
-                                            <input type="number" class="form-control" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
+                                            <input type="number" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
 
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free')}}</label>
-                                            <input type="text" readonly class="form-control" value="{{ old('tp_free',$product->tp_free)}}" name="tp_free">
+                                            <input type="text" readonly class="form-control tp_free" value="{{ old('tp_free',$product->tp_free)}}" name="tp_free">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -76,18 +101,6 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="free">{{__('Free')}}</label>
-                                            <input type="number" class="form-control" value="{{ old('free',$product->free)}}" name="free">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="free_ratio">{{__('Free Ratio')}}</label>
-                                            <input type="number" class="form-control" value="{{ old('free_ratio',$product->free_ratio)}}" name="free_ratio">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="form-group">
                                             <label for="free_taka">{{__('Free Taka')}}</label>
                                             <input type="number" class="form-control" value="{{ old('free_taka',$product->free_taka)}}" name="free_taka">
                                         </div>
@@ -95,23 +108,10 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="adjust">{{__('Adjust')}}</label>
-                                            <input type="number" class="form-control" value="{{ old('adjust',$product->adjust)}}" name="adjust">
+                                            <input type="text" class="form-control" value="{{ old('adjust',$product->adjust)}}" name="adjust">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="unit_style_id">{{__('Unit Style')}}</label>
-                                            <select onchange="show_unit(this.value)" name="unit_style_id" class="form-control form-select" >
-                                                <option value="">Select</option>
-                                                @forelse($unit_style as $d)
-                                                    <option value="{{$d->id}}" {{ $product->unit_style_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                                @empty
-                                                    <option value="">No data found</option>
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="base_unit">{{__('Unit')}}</label>
                                             <select name="base_unit" class="form-control form-select" >
@@ -123,7 +123,7 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="color">{{__('Color')}}</label>
@@ -185,6 +185,31 @@
     function show_unit(e){
         $('.unit').hide();
         $('.unit'+e).show()
+    }
+</script>
+<script>
+    function tpFree(e){
+        let unitStyleId=$('.unit_style_id').find(":selected").val();
+        let freeRatio=parseFloat($('.free_ratio').val());
+        let freePcs=$('.free_pcs').val();
+        let tpPrice=$('.tp_price').val()?parseFloat($('.tp_price').val()):0;
+        console.log(tpPrice)
+        $.ajax({
+            url: "{{route(currentUser().'.unit_pcs_get')}}",
+            type: "GET",
+            dataType: "json",
+            data: { unit_style_id:unitStyleId },
+            success: function(data) {
+            //console.log(data);
+            if(tpPrice){
+                let total=((data/freeRatio)*freePcs);
+                let tpfreeCal=(parseInt(total)+parseInt(data));
+                let tpfree=(parseInt(tpPrice*data)/parseInt(tpfreeCal)).toFixed(2);
+                $('.tp_free').val(tpfree);
+            }
+
+            },
+        });
     }
 </script>
 @endpush

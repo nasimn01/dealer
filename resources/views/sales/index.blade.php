@@ -36,11 +36,14 @@
                                     <td>{{$p->sales_date}}</td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route(currentUser().'.sales.edit',encryptor('encrypt',$p->id))}}">
-                                            <i class="bi bi-pencil-square"></i>
+                                        <a class="ms-2" href="{{route(currentUser().'.sales.edit',encryptor('encrypt',$p->id))}}">
+                                            <i class="bi bi-receipt-cutoff"></i>
                                         </a>
-                                        <a href="javascript:void()" onclick="showConfirmation({{$p->id}})">
+                                        <a class="ms-2" href="javascript:void()" onclick="showConfirmation({{$p->id}})">
                                             <i class="bi bi-trash" style='color:red'></i>
+                                        </a>
+                                        <a class="ms-2" href="{{route(currentUser().'.sales.primary_update',encryptor('encrypt',$p->id))}}">
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <form id="form{{$p->id}}" action="{{route(currentUser().'.sales.destroy', encryptor('encrypt', $p->id))}}" method="post">
                                             @csrf

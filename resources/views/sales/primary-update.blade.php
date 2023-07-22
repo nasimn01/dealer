@@ -56,31 +56,35 @@
                                             </tr>
                                         </thead>
                                         <tbody id="sales_repeat">
-                                            <tr>
-                                                <td>
-                                                    <select class="choices form-select product_id" id="product_id" name="product_id[]">
-                                                        <option value="">Select Product</option>
-                                                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </td>
-                                                <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
-                                                <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
-                                                <td>
-                                                    <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">TP</option>
-                                                        <option value="2">TP Free</option>
-                                                    </select>
-                                                </td>
-                                                <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
-                                                <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total"></td>
-                                                <td>
-                                                    <span onClick='addRow();' class="add-row text-primary ms-3"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>
-                                            </tr>
+                                            @if ($sales->temporary_sales_details)
+                                                @foreach ($sales->temporary_sales_details as $salesdetails)
+                                                    <tr>
+                                                        <td>
+                                                            <select class="choices form-select product_id" id="product_id" name="product_id[]">
+                                                                <option value="">Select Product</option>
+                                                                @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                                                                <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}" {{ $salesdetails->product_id==$pro->id?'selected':'' }}>{{ $pro->product_name }}</option>
+                                                                @empty
+                                                                @endforelse
+                                                            </select>
+                                                        </td>
+                                                        <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="{{ $salesdetails->ctn }}" placeholder="ctn"></td>
+                                                        <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="{{ $salesdetails->pcs }}" placeholder="pcs"></td>
+                                                        <td>
+                                                            <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
+                                                                <option value="0">Select</option>
+                                                                <option value="1" {{ $salesdetails->select_tp_tpfree ==1?"selected":"" }}>TP</option>
+                                                                <option value="2" {{ $salesdetails->select_tp_tpfree ==2?"selected":"" }}>TP Free</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="{{ $salesdetails->ctn_price }}" placeholder="Tp Price"></td>
+                                                        <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ $salesdetails->subtotal_price }}" placeholder="Sub-Total"></td>
+                                                        <td>
+                                                            <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                     <div class="row mb-1">
@@ -89,8 +93,8 @@
                                             <label for="" class="form-group"><h4>Total</h4></label>
                                         </div>
                                         <div class="col-lg-2 mt-2 text-end">
-                                            <label for="" class="form-group"><h5 class="total">0.00</h5></label>
-                                            <input type="hidden" name="total" class="total_p">
+                                            <label for="" class="form-group"><h5 class="total">{{ $sales->total }} TK</h5></label>
+                                            <input type="hidden" name="total" class="form-control total_p">
                                         </div>
                                         <div class="col-lg-2"></div>
                                     </div>
