@@ -136,7 +136,7 @@
                                             </div>
                                         </div>
                                     </div>  --}}
-                                    <div class="row">
+                                    <div class="row olddue">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <h5 for="check">{{__('Old Due')}}</h5>
@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group text-primary" style="font-size:1.5rem">
-                                                <i class="bi bi-plus-square-fill"></i>
+                                                 <span onClick='oldDue();'><i class="bi bi-plus-square-fill"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +206,7 @@
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group text-primary" style="font-size:1.5rem">
-                                                <i class="bi bi-plus-square-fill"></i>
+                                                {{--  <i class="bi bi-plus-square-fill"></i>  --}}
                                             </div>
                                         </div>
                                     </div>
@@ -243,12 +243,12 @@
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('date')}}" name="total_tk" placeholder="Date">
+                                                <input type="date" class="form-control" value="{{ old('date')}}" name="total_tk" placeholder="Date">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-6">
                                             <div class="form-group text-primary" style="font-size:1.5rem">
-                                                <i class="bi bi-plus-square-fill"></i>
+                                                {{--  <i class="bi bi-plus-square-fill"></i>  --}}
                                             </div>
                                         </div>
                                     </div>
@@ -343,6 +343,47 @@ function removeRow(e){
     if (confirm("Are you sure you want to remove this row?")) {
     $(e).closest('tr').remove();
     }
+}
+
+function oldDue(){
+    var oldDue=`
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group">
+                <h5 for="check">{{__('Old Due')}}</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 shop_dsr">
+            <select class="form-select "onclick="getShopDsr(this)" name="select_shop_dsr">
+                <option value="">Select</option>
+                <option value="shop">Shop</option>
+                <option value="dsr">DSR</option>
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-md-3 col-sm-6 shopNameContainer" style="display: none;">
+            <select class="form-select shop_name" name="shop_name">
+                <option value="">Select</option>
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-md-3 col-sm-6 dsrNameContainer" style="display: none;">
+            <select class="form-select dsr_name" name="dsr_name">
+                <option value="">Select</option>
+            </select>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="form-group">
+                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group text-primary" style="font-size:1.5rem">
+                <span onClick='oldDue();'><i class="bi bi-plus-square-fill"></i></span>
+            </div>
+        </div>`;
+
+    $('.olddue').append(oldDue);
 }
 </script>
 <script>

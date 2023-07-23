@@ -138,9 +138,12 @@ class SalesController extends Controller
      * @param  \App\Models\Sales\Sales  $sales
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sales $sales)
+    public function destroy($id)
     {
-        //
+        $data= TemporarySales::findOrFail(encryptor('decrypt',$id));
+        $data->delete();
+        Toastr::error('Opps!! You Delete Permanently!!');
+        return redirect()->back();
     }
 
     public function ShopDataGet(Request $request)
