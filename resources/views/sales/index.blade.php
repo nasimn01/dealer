@@ -28,9 +28,9 @@
                                     <th scope="row">{{ ++$loop->index }}</th>
                                     <td>
                                         @if (!empty($p->shop->shop_name))
-                                        <span class="text-warning">Shop :</span> {{ $p->shop->shop_name }}
+                                        <span class="text-warning">Shop :</span> {{ $p->shop?->shop_name }}
                                         @else
-                                        <span class="text-warning">DSR :</span> {{ $p->dsr->name }}
+                                        <span class="text-warning">DSR :</span> {{ $p->dsr?->name }}
                                         @endif
                                     </td>
                                     <td>{{$p->sales_date}}</td>

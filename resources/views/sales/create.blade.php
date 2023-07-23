@@ -85,10 +85,10 @@
                                     </table>
                                     <div class="row mb-1">
                                         <div class="col-lg-3"></div>
-                                        <div class="col-lg-5 mt-2 pe-2 text-end">
+                                        <div class="col-lg-5 mt-2 text-end">
                                             <label for="" class="form-group"><h4>Total</h4></label>
                                         </div>
-                                        <div class="col-lg-2 mt-2 text-end">
+                                        <div class="col-lg-3 mt-2 text-end">
                                             <label for="" class="form-group"><h5 class="total">0.00</h5></label>
                                             <input type="hidden" name="total" class="total_p">
                                         </div>
@@ -149,38 +149,46 @@ function removeRow(e){
 }
 
 function productData(e) {
-    var selectedOption =parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
-    //var salesPriceInput = $(e).closest('tr').find('.ctn_price');
-    var tp = $(e).closest('tr').find('#product_id option:selected').attr('data-tp');
-    var tpFree = $(e).closest('tr').find('#product_id option:selected').attr('data-tp_free');
-    var productId = $(e).closest('tr').find('#product_id option:selected').val();
-    var ctn = $(e).closest('tr').find('.ctn').val();
-    var pcs = $(e).closest('tr').find('.pcs').val();
+    var selectedOption = parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
+    console.log(selectedOption)
+    var tp = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
+    var tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
+    var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
+    var ctn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
+    var pcs = $(e).closest('tr').find('.pcs').val() ? parseFloat($(e).closest('tr').find('.pcs').val()) : 0;
     $.ajax({
         url: "{{route(currentUser().'.unit_data_get')}}",
         type: "GET",
         dataType: "json",
-        data: { product_id:productId },
-        success: function(data) {
-            let tpPcsPrice=(tp/data)*pcs;
-            let tpFreePcsPrice=(tpFree/data)*pcs;
-            var TpSubtotal=parseFloat((ctn*tp)+tpPcsPrice).toFixed(2);
-            var TpFreeSubtotal=parseFloat((ctn*tp)+tpFreePcsPrice).toFixed(2);
-            if (selectedOption === 1) {
-                $(e).closest('tr').find('.ctn_price').val(tp);
-                $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
-                total_calculate();
-            } else if (selectedOption === 2) {
-                $(e).closest('tr').find('.ctn_price').val(tpFree);
-                $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
-                total_calculate();
-            } else {
-                $(e).closest('tr').find('.ctn_price').val("");
-            }
+        data: { product_id: productId },
+        success: function (data) {
+            //console.log(data)
+            if(data){
+                let tpPcsPrice = (tp / data) * pcs;
+                let tpFreePcsPrice = (tpFree / data) * pcs;
+                var TpSubtotal = parseFloat((ctn * tp) + tpPcsPrice).toFixed(2);
+                var TpFreeSubtotal = parseFloat((ctn * tpFree) + tpFreePcsPrice).toFixed(2);
 
+                if (selectedOption === 1) {
+                    $(e).closest('tr').find('.ctn_price').val(tp);
+                    $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
+                } else if (selectedOption === 2) {
+                    $(e).closest('tr').find('.ctn_price').val(tpFree);
+                    $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
+                } else {
+                    $(e).closest('tr').find('.ctn_price').val("");
+                    $(e).closest('tr').find('.subtotal_price').val("");
+                }
+                total_calculate();
+            }
+        },
+        error: function () {
+            console.error("Error fetching data from the server.");
         },
     });
+
 }
+
 
 function total_calculate() {
     var subtotal = 0;
