@@ -191,6 +191,22 @@ class DOController extends Controller
         return response()->json(['message' => 'Product updated successfully']);
     }
 
+    public function getProductData(Request $request){
+    $productId = $request->product_id;
+    $getProduct = Product::where('id', $productId)->where('status', 0)->first();
+
+    if ($getProduct) {
+        $data = [
+            'dp_price' => $getProduct->dp_price,
+            'free_ratio' => $getProduct->free_ratio,
+        ];
+
+        return response()->json($data, 200);
+    }
+    return response()->json(['error' => 'Product not found'], 404);
+}
+
+
     public function DoRecive_edit(Request $request)
     {
        // dd($request->all());

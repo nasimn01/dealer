@@ -170,7 +170,7 @@
                 data: { product_id:ProductId },
                 success: function(data) {
                     var freeCount = (data / freeRatio) * freeQty;
-                    freeQtyCount = Math.floor(qty * freeCount);
+                    var freeQtyCount = Math.floor(qty * freeCount);
                     //console.log(freeQtyCount);
 
                     if (productName  && qty) {
@@ -324,13 +324,34 @@
             data: formData,
             success: function(response) {
                 $("#modal" + product_id).modal('hide');
-                console.log(response);
+                //console.log(product_id);
+                getProductData(product_id);
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);
             }
         });
     }
+
+    function getProductData(product_id) {
+        $.ajax({
+            url: "{{ route(currentUser().'.get_ajax_productdata') }}",
+            type: "GET",
+            dataType: "json",
+            data: { product_id: product_id },
+            success: function (data) {
+                console.log(data);
+                var dpPrice = data.dp_price;
+                var freeRatio = data.free_ratio;
+               // console.log(dpPrice);
+                //console.log(freeRatio);
+            },
+            error: function () {
+                console.error("Error fetching data from the server.");
+            },
+        });
+    }
+
 
 </script>
 

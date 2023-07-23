@@ -135,6 +135,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::post('doreceive', [docon::class,'DoRecive_edit'])->name('owner.do.accept_do_edit');
         // Route::post('product-up-for-do', [docon::class, 'productUp'])->name('doscreenProductUp');
         Route::get('doscreenProductUp',[docon::class,'productUpdate'])->name('owner.doscreenProductUp');
+        Route::get('get-product-data-ajax',[docon::class,'getProductData'])->name('owner.get_ajax_productdata');
 
 
         //Accounts
