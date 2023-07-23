@@ -96,7 +96,7 @@
                                                         <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs return"></td>
                                                         <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn damage"></td>
                                                         <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs damage"></td>
-                                                        <td>
+                                                        <td style="width: 110px;">
                                                             <select class="form-select" name="select_tp_tpfree">
                                                                 <option value="">Select</option>
                                                                 <option value="1" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="1" ? "selected":""}}>TP</option>
