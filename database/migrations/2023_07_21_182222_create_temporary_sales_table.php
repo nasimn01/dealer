@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('temporary_sales', function (Blueprint $table) {
             $table->id();
+            $table->string('select_shop_dsr')->nullable();
             $table->string('shop_id')->nullable();
             $table->string('dsr_id')->nullable();
             $table->string('sales_date')->nullable();

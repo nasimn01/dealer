@@ -169,23 +169,23 @@
                 dataType: "json",
                 data: { product_id:ProductId },
                 success: function(data) {
+                    //console.log(data);
                     var freeCount = (data / freeRatio) * freeQty;
                     var freeQtyCount = Math.floor(qty * freeCount);
-                    //console.log(freeQtyCount);
 
                     if (productName  && qty) {
                         let total= (dp * qty);
                         let newRow = `
-                            <tr class="text-center">
+                            <tr class="text-center product_detail_tr${counter}">
                                 <td>${counter + 1}</td>
                                 <td>${productName}
                                     <input type="hidden" name="product_id[]" value="${product_id}">
-                                    <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${product_id}">Click</button>
-                                    <div class="modal fade" id="modal${product_id}" tabindex="-1" role="dialog" aria-labelledby="modal${product_id}Title" aria-hidden="true">
+                                    {{--  <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${counter}">Click</button>  --}}
+                                    <div class="modal fade" id="modal${counter}" tabindex="-1" role="dialog" aria-labelledby="modal${counter}Title" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="#modal${product_id}Title">${productName}</h5>
+                                                    <h5 class="modal-title" id="#modal${counter}Title">${productName}</h5>
                                                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -194,37 +194,37 @@
                                                     <div class="container-fluid">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <table class="table table-inverse table-responsive">
-                                                                    <thead class="thead-inverse">
-                                                                        <tr>
-                                                                            <td colspan="4">
-                                                                                <div class="col-md-12 text-center heading-block">
-                                                                                    <h5 style="padding-top: 5px;">Product Free Ratio and Dp price Update</h5>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <div id="productFormContainer">
-                                                                            <form action="" method="post">
+                                                                <form action="" method="get" class="detail_form${counter}">
+                                                                    <table class="table table-inverse table-responsive">
+                                                                        <thead class="thead-inverse">
+                                                                            <tr>
+                                                                                <td colspan="4">
+                                                                                    <div class="col-md-12 text-center heading-block">
+                                                                                        <h5 style="padding-top: 5px;">Product Free Ratio and Dp price Update</h5>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <div id="productFormContainer">
 
-                                                                                <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
-                                                                                <tr>
-                                                                                    <td>Free Ratio</td>
-                                                                                    <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
-                                                                                    <td>Dp Price</td>
-                                                                                    <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td></td>
-                                                                                    <td></td>
-                                                                                    <td></td>
-                                                                                    <td><button onclick="saveData(this, '${product_id}')" type="button" class="btn btn-primary">Update</button></td>
-                                                                                </tr>
-                                                                            </form>
-                                                                        </div>
-                                                                    </tbody>
-                                                                </table>
+                                                                                    <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
+                                                                                    <tr>
+                                                                                        <td>Free Ratio</td>
+                                                                                        <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
+                                                                                        <td>Dp Price</td>
+                                                                                        <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td></td>
+                                                                                        <td></td>
+                                                                                        <td></td>
+                                                                                        <td><button onclick="saveData(this, '${product_id}','${counter}')" type="button" class="btn btn-primary">Update</button></td>
+                                                                                    </tr>
+                                                                            </div>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -242,7 +242,7 @@
                                 <td>${freeQtyCount}
                                     <input type="hidden" class="qty" name="free_qty[]" value="${freeQtyCount}">
                                 </td>
-                                <td>${dp}
+                                <td class="dp_price${counter}"><span>${dp}</span>
                                     <input type="hidden" name="dp[]" value="${dp}">
                                 </td>
                                 <td>${total}
@@ -261,7 +261,7 @@
                         // Increment counter
                         counter++;
 
-                        $('#product_id').find(":selected").remove();
+                        //$('#product_id').find(":selected").remove();
                         // Clear input fields
                         $('#product_id').val('');
                         $('#qty').val('');
@@ -301,8 +301,10 @@
        // alert(sub_total)
     }
     function RemoveThis(e){
+        if (confirm("Are you sure you want to remove this Product?")) {
         $(e).closest('tr').remove();
         totalAmount();
+        }
     }
 </script>
 <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
@@ -313,8 +315,8 @@
     }
 </script>
 <script>
-    function saveData(e,product_id) {
-        var form = $(e).closest('form');
+    function saveData(e,product_id,c) {
+        var form = $(e).parents('.detail_form'+c);
         //var url = form.attr('action');
         var formData = form.serialize();
 
@@ -323,9 +325,9 @@
             url: "{{route(currentUser().'.doscreenProductUp')}}",
             data: formData,
             success: function(response) {
-                $("#modal" + product_id).modal('hide');
+                $("#modal" + c).modal('hide');
                 //console.log(product_id);
-                getProductData(product_id);
+                getProductData(e,product_id,c);
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);
@@ -333,13 +335,14 @@
         });
     }
 
-    function getProductData(product_id) {
+    function getProductData(e,product_id,c) {
         $.ajax({
             url: "{{ route(currentUser().'.get_ajax_productdata') }}",
             type: "GET",
             dataType: "json",
             data: { product_id: product_id },
             success: function (data) {
+                $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' span').text(data.dp_price);
                 console.log(data);
                 var dpPrice = data.dp_price;
                 var freeRatio = data.free_ratio;

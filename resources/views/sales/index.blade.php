@@ -39,12 +39,14 @@
                                         <a class="ms-2" href="{{route(currentUser().'.sales.edit',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-receipt-cutoff"></i>
                                         </a>
-                                        <a class="ms-2" href="javascript:void()" onclick="showConfirmation({{$p->id}})">
-                                            <i class="bi bi-trash" style='color:red'></i>
-                                        </a>
-                                        <a class="ms-2" href="{{route(currentUser().'.sales.primary_update',encryptor('encrypt',$p->id))}}">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                        @if($p->status==0)
+                                            <a class="ms-2" href="javascript:void()" onclick="showConfirmation({{$p->id}})">
+                                                <i class="bi bi-trash" style='color:red'></i>
+                                            </a>
+                                            <a class="ms-2" href="{{route(currentUser().'.sales.primary_update',encryptor('encrypt',$p->id))}}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        @endif
                                         <form id="form{{$p->id}}" action="{{route(currentUser().'.sales.destroy', encryptor('encrypt', $p->id))}}" method="post">
                                             @csrf
                                             @method('delete')

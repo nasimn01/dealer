@@ -47,6 +47,7 @@ class SalesController extends Controller
     {
         try{
             $data=new TemporarySales;
+            $data->select_shop_dsr = $request->select_shop_dsr;
             $data->shop_id = $request->shop_id;
             $data->dsr_id = $request->dsr_id;
             $data->sales_date = $request->sales_date;
@@ -106,6 +107,7 @@ class SalesController extends Controller
      */
     public function PrimaryUpdate($id)
     {
+        //$sales = TemporarySales::where('status',0)->findOrFail(encryptor('decrypt',$id));
         $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
         $shops=Shop::all();
         $dsr=User::where('role_id',4)->get();
