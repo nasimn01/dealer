@@ -114,6 +114,52 @@ class SalesController extends Controller
         return view('sales.primary-update',compact('sales','shops','dsr'));
     }
 
+    public function primaryStore(Request $request, $id)
+    {
+        try{
+            $data=TemporarySales::findOrFail(encryptor('decrypt',$id));
+            $data->select_shop_dsr = $request->select_shop_dsr;
+            $data->shop_id = $request->shop_id;
+            $data->dsr_id = $request->dsr_id;
+            $data->sales_date = $request->sales_date;
+            $data->total = $request->total;
+            $data->status = 0;
+            $data->company_id=company()['company_id'];
+            $data->updated_by= currentUserId();
+            if($data->save()){
+                if($request->product_id){
+                    $dl=TemporarySalesDetails::where('sales_id',$data->id)->delete();
+                    foreach($request->product_id as $key => $value){
+                        if($value){
+                            $details = new TemporarySalesDetails;
+                            $details->sales_id=$data->id;
+                            $details->product_id=$request->product_id[$key];
+                            $details->ctn=$request->ctn[$key];
+                            $details->pcs=$request->pcs[$key];
+                            $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
+                            $details->ctn_price=$request->ctn_price[$key];
+                            $details->subtotal_price=$request->subtotal_price[$key];
+                            $details->company_id=company()['company_id'];
+                            $details->updated_by= currentUserId();
+                            $details->save();
+                        }
+                    }
+                }
+            Toastr::success('Update Successfully!');
+            return redirect()->route(currentUser().'.sales.index');
+            } else{
+            Toastr::warning('Please try Again!');
+             return redirect()->back();
+            }
+
+        }
+        catch (Exception $e){
+            dd($e);
+            return back()->withInput();
+
+        }
+    }
+
     public function edit($id)
     {
         $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));

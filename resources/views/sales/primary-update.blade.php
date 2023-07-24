@@ -1,7 +1,7 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Sales Create'))
-@section('pageSubTitle',trans('Create'))
+@section('pageTitle',trans('Sales Update'))
+@section('pageSubTitle',trans('Update'))
 
 @section('content')
 <section id="multiple-column-form">
@@ -10,34 +10,41 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route(currentUser().'.sales.store')}}">
+                        <form method="post" action="{{route(currentUser().'.sales.primaryStore',encryptor('encrypt',$sales->id))}}">
                             @csrf
+                            @method('POST')
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Shop/Dsr</b></label>
                                     <select class="form-select" onclick="getShopDsr()" name="select_shop_dsr">
                                         <option value="">Select</option>
-                                        <option value="shop">Shop</option>
-                                        <option value="dsr">DSR</option>
+                                        <option value="shop" {{ $sales->select_shop_dsr ==='shop'?"selected":"" }}>Shop</option>
+                                        <option value="dsr" {{ $sales->select_shop_dsr ==='dsr'?"selected":"" }}>DSR</option>
                                     </select>
                                 </div>
 
-                                <div class="col-lg-3 mt-2" id="shopNameContainer" style="display: none;">
+                                <div class="col-lg-3 mt-2" id="shopNameContainer"  @if($sales->shop_id) style="display: block;" @else style="display: none;" @endif>
                                     <label for=""><b>Shop Name</b></label>
                                     <select class="form-select" name="shop_id">
                                         <option value="">Select</option>
+                                        @foreach (\App\Models\Settings\Shop::all() as $sh)
+                                        <option value="{{ $sh->id }}" {{ $sales->shop_id==$sh->id?'selected':'' }}>{{ $sh->shop_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-lg-3 mt-2" id="dsrNameContainer" style="display: none;">
+                                <div class="col-lg-3 mt-2" id="dsrNameContainer" @if($sales->dsr_id) style="display: block;" @else style="display: none;" @endif>
                                     <label for=""><b>DSR Name</b></label>
                                     <select class="form-select" name="dsr_id">
                                         <option value="">Select</option>
+                                        @foreach (\App\Models\User::where('role_id',4)->get() as $d)
+                                        <option value="{{ $d->id }}" {{ $sales->dsr_id==$d->id?'selected':'' }}>{{ $d->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Sales Date</b></label>
-                                    <input type="text" id="datepicker" class="form-control"  name="sales_date" placeholder="mm-dd-yyyy">
+                                    <input type="text" id="datepicker" class="form-control" value="{{ date('d F Y', strtotime($sales->sales_date)) }}"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
                             </div>
                             <!-- table bordered -->
