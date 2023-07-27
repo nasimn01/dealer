@@ -39,6 +39,7 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Product Name')}}</th>
+                                                <th scope="col">{{__('Lot Number')}}</th>
                                                 <th scope="col">{{__('Do Referance')}}</th>
                                                 <th scope="col">{{__('CTN')}}</th>
                                                 <th scope="col">{{__('PCS')}}</th>
@@ -59,6 +60,7 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
+                                                <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>
                                                 <td>
                                                     <select class=" choices form-select referance_number">
                                                     </select>
@@ -102,6 +104,7 @@ var row=`<tr>
             @endforelse
         </select>
     </td>
+    <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>
     <td>
         <select class=" choices form-select referance_number">
         </select>

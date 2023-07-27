@@ -180,7 +180,7 @@
                                 <td>${counter + 1}</td>
                                 <td>${productName}
                                     <input type="hidden" name="product_id[]" value="${product_id}">
-                                    {{--  <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${counter}">Click</button>  --}}
+                                    <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${counter}">Click</button>
                                     <div class="modal fade" id="modal${counter}" tabindex="-1" role="dialog" aria-labelledby="modal${counter}Title" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -216,8 +216,8 @@
                                                                                         <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td></td>
-                                                                                        <td></td>
+                                                                                        <td>Free Qty</td>
+                                                                                        <td><input class="form-control" name="free" type="number" value="${freeQty}"></td>
                                                                                         <td></td>
                                                                                         <td><button onclick="saveData(this, '${product_id}','${counter}')" type="button" class="btn btn-primary">Update</button></td>
                                                                                     </tr>
@@ -236,16 +236,16 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>${qty}
-                                    <input type="hidden" class="qty" name="qty[]" value="${qty}">
+                                <td class="qty${counter}"><span>${qty}</span>
+                                    <input type="hidden" class="qty_sum" name="qty[]" value="${qty}">
                                 </td>
-                                <td>${freeQtyCount}
-                                    <input type="hidden" class="qty" name="free_qty[]" value="${freeQtyCount}">
+                                <td class="free_qty${counter}"><span>${freeQtyCount}</span>
+                                    <input type="hidden" class="qty_sum" name="free_qty[]" value="${freeQtyCount}">
                                 </td>
                                 <td class="dp_price${counter}"><span>${dp}</span>
                                     <input type="hidden" name="dp[]" value="${dp}">
                                 </td>
-                                <td>${total}
+                                <td class="sub_total${counter}"><span>${total}</span>
                                     <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">
                                 </td>
                                 <td class="white-space-nowrap">
@@ -261,7 +261,7 @@
                         // Increment counter
                         counter++;
 
-                        //$('#product_id').find(":selected").remove();
+                        $('#product_id').find(":selected").remove();
                         // Clear input fields
                         $('#product_id').val('');
                         $('#qty').val('');
@@ -286,7 +286,7 @@
         $('.sub_total').each(function(){
             total+=parseFloat($(this).val());
         });
-        $('.qty').each(function(){
+        $('.qty_sum').each(function(){
             totalQty+=parseFloat($(this).val());
         });
         $('.doamount').text(total);
@@ -306,15 +306,6 @@
         totalAmount();
         }
     }
-</script>
-<script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-<script>
-    function getBalance(){
-        var balance=$('.supplier_id option:selected').data('balance');
-        $('.supbalance').text(balance);
-    }
-</script>
-<script>
     function saveData(e,product_id,c) {
         var form = $(e).parents('.detail_form'+c);
         //var url = form.attr('action');
@@ -326,7 +317,7 @@
             data: formData,
             success: function(response) {
                 $("#modal" + c).modal('hide');
-                //console.log(product_id);
+                //console.log(response);
                 getProductData(e,product_id,c);
             },
             error: function(xhr, status, error) {
@@ -342,11 +333,22 @@
             dataType: "json",
             data: { product_id: product_id },
             success: function (data) {
+                var freeCount = (data.unit_qty / data.free_ratio) * (data.free);
+                var Qty=$(e).parents('.product_detail_tr'+c).find('.qty'+c+' span').text();
+                let totalsubAmount= (data.dp_price * Qty);
+                freeQty=Math.floor(Qty*freeCount);
                 $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' span').text(data.dp_price);
-                console.log(data);
-                var dpPrice = data.dp_price;
-                var freeRatio = data.free_ratio;
-               // console.log(dpPrice);
+                $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' input').val(data.dp_price);
+                $(e).parents('.product_detail_tr'+c).find('.free_qty'+c+' span').text(freeQty);
+                $(e).parents('.product_detail_tr'+c).find('.free_qty'+c+' input').val(freeQty);
+                $(e).parents('.product_detail_tr'+c).find('.sub_total'+c+' span').text(totalsubAmount);
+                $(e).parents('.product_detail_tr'+c).find('.sub_total'+c+' input').val(totalsubAmount);
+                totalAmount();
+                //var freeQtyCount = Math.floor(qty * freeCount);
+                //console.log(freeCount);
+                //var dpPrice = data.dp_price;
+                //var freeRatio = data.free_ratio;
+                //console.log(data.unit);
                 //console.log(freeRatio);
             },
             error: function () {
@@ -354,8 +356,14 @@
             },
         });
     }
-
-
 </script>
+<script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+<script>
+    function getBalance(){
+        var balance=$('.supplier_id option:selected').data('balance');
+        $('.supbalance').text(balance);
+    }
+</script>
+
 
 @endpush

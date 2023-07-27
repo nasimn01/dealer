@@ -18,8 +18,14 @@ return new class extends Migration
             $table->string('do_id')->nullable();
             $table->integer('chalan_no')->nullable();
             $table->string('stock_date')->nullable();
-            $table->integer('batch_no_id')->nullable();
+            $table->string('product_id')->nullable();
+            $table->string('batch_id')->nullable();
             $table->integer('quantity_pcs')->nullable();
+            $table->integer('quantity_free')->nullable();
+            $table->decimal('dp_price',14,2)->nullable();
+            $table->decimal('tp_price',14,2)->nullable();
+            $table->decimal('tp_free',14,2)->nullable();
+            $table->decimal('mrp_price',14,2)->nullable();
             $table->string('ex_date')->nullable();
             $table->string('unit_style_id')->nullable();
             $table->string('adjust')->nullable();

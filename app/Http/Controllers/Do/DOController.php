@@ -75,6 +75,7 @@ class DOController extends Controller
                             $details->do_id=$data->id;
                             $details->product_id=$request->product_id[$key];
                             $details->qty=$request->qty[$key];
+                            $details->free=$request->free_qty[$key];
                             $details->dp=$request->dp[$key];
                             $details->sub_total=$request->sub_total[$key];
                             //$details->receive_qty=$request->qty[$key];
@@ -158,6 +159,21 @@ class DOController extends Controller
         return view('do.doreceive');
     }
 
+    // public function doDataGet(Request $request)
+    // {
+    //     $product_id=$request->product_id;
+    //     $dodetail=D_o_detail::where('product_id', $product_id)->first();
+    //     $dodata=D_o::whereIn('id', $dodetail->do_id)->pluck('reference_num')->toArray();
+    //     if($dodata){
+    //         $data=[
+    //             'qty'=>$dodetail->qty,
+    //             'reference_num'=>$dodata->reference_num,
+    //             'do_id'=>$dodata->id
+    //         ];
+    //         return response()->json($data,200);
+    //     }
+    //     return response()->json(['error' => 'Product not found'], 404);
+    // }
     public function doDataGet(Request $request)
     {
         $product_id=$request->product_id;
@@ -183,10 +199,12 @@ class DOController extends Controller
         $productId = $request->input('product_id');
         $freeRatio = $request->input('free_ratio');
         $dpPrice = $request->input('dp_price');
+        $freeQty = $request->input('free');
 
         $product = Product::find($productId);
         $product->free_ratio = $freeRatio;
         $product->dp_price = $dpPrice;
+        $product->free = $freeQty;
         $product->save();
         return response()->json(['message' => 'Product updated successfully']);
     }
@@ -194,11 +212,14 @@ class DOController extends Controller
     public function getProductData(Request $request){
     $productId = $request->product_id;
     $getProduct = Product::where('id', $productId)->where('status', 0)->first();
+    $unit=Unit::where('unit_style_id', $getProduct->unit_style_id)->where('name','pcs')->first();
 
     if ($getProduct) {
         $data = [
             'dp_price' => $getProduct->dp_price,
             'free_ratio' => $getProduct->free_ratio,
+            'free' => $getProduct->free,
+            'unit_qty' => $unit->qty,
         ];
 
         return response()->json($data, 200);
@@ -222,6 +243,12 @@ class DOController extends Controller
                             $productDp=Product::find($request->product_id[$key]);
                             $productDp->dp_price=$request->dp[$key];
                             if($productDp->save()){
+                                $check_batch=Stock_model::where('product_id',$request->product_id[$key])->where('dp_price',$request->dp[$key])->orderBy('id','DESC')->pluck('batch_id');
+                                if(count($check_batch) > 0){
+                                    $batch_id=$check_batch[0];
+                                }else{
+                                    $batch_id=rand(111,999).$request->product_id[$key].uniqid();
+                                }
                                 $stock=new Stock_model;
                                 // $stock->do_id=$data->id;
                                 $stock->chalan_no=$request->chalan_no;
