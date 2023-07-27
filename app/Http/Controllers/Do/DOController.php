@@ -8,7 +8,7 @@ use App\Models\Do\D_o;
 use App\Models\Do\D_o_detail;
 use App\Models\Product\Product;
 use App\Models\Do\DoReceiveHistory;
-use App\Models\Stock\Stock_model;
+use App\Models\Stock\Stock;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
@@ -243,17 +243,17 @@ class DOController extends Controller
                             $productDp=Product::find($request->product_id[$key]);
                             $productDp->dp_price=$request->dp[$key];
                             if($productDp->save()){
-                                $check_batch=Stock_model::where('product_id',$request->product_id[$key])->where('dp_price',$request->dp[$key])->orderBy('id','DESC')->pluck('batch_id');
+                                $check_batch=Stock::where('product_id',$request->product_id[$key])->where('dp_price',$request->dp[$key])->orderBy('id','DESC')->pluck('batch_id');
                                 if(count($check_batch) > 0){
                                     $batch_id=$check_batch[0];
                                 }else{
                                     $batch_id=rand(111,999).$request->product_id[$key].uniqid();
                                 }
-                                $stock=new Stock_model;
+                                $stock=new Stock;
                                 // $stock->do_id=$data->id;
                                 $stock->chalan_no=$request->chalan_no;
                                 $stock->stock_date=$request->stock_date;
-                            // $stock->batch_no_id=$request->batch_no_id[$key];
+                                $stock->batch_id=$$batch_id;
                             // $stock->unit_style_id=$request->unit_style_id[$key];
                                 $stock->quantity_pcs=$request->receive[$key];
                                 //$stock->ex_date=$request->ex_date;
