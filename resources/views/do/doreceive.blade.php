@@ -39,13 +39,14 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Product Name')}}</th>
-                                                <th scope="col">{{__('Lot Number')}}</th>
+                                                {{--  <th scope="col">{{__('Lot Number')}}</th>  --}}
                                                 <th scope="col">{{__('Do Referance')}}</th>
                                                 <th scope="col">{{__('CTN')}}</th>
                                                 <th scope="col">{{__('PCS')}}</th>
                                                 <th scope="col">{{__('Free')}}</th>
                                                 <th scope="col">{{__('receive')}}</th>
-                                                <th scope="col">{{__('Dp')}}</th>
+                                                <th scope="col">{{__('Dp(PCS)')}}</th>
+                                                <th scope="col">{{__('SubTotal-Dp')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
@@ -60,7 +61,7 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>
+                                                {{--  <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>  --}}
                                                 <td>
                                                     <select class=" choices form-select referance_number">
                                                     </select>
@@ -69,7 +70,11 @@
                                                 <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
                                                 <td><input class="form-control free_pcs" type="text" name="free[]" onkeyup="getCtnQty(this)" value="" placeholder="free"></td>
                                                 <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
-                                                <td><input class="form-control dp" type="text" name="dp[]" value="" placeholder="dp"></td>
+                                                <td>
+                                                    <input class="form-control dp" type="hidden" name="dp[]" value="" placeholder="dp">
+                                                    <input class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS">
+                                                </td>
+                                                <td><input class="form-control subtotal_dp_pcs" type="text" name="subtotal_dp_pcs[]" value="" placeholder="total-dp-price"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -104,7 +109,7 @@ var row=`<tr>
             @endforelse
         </select>
     </td>
-    <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>
+    {{--  <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>  --}}
     <td>
         <select class=" choices form-select referance_number">
         </select>
@@ -113,7 +118,11 @@ var row=`<tr>
     <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
     <td><input class="form-control free_pcs" type="text" name="free[]" onkeyup="getCtnQty(this)" value="" placeholder="free"></td>
     <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
-    <td><input class="form-control dp" type="text" name="dp[]" value="" placeholder="dp"></td>
+    <td>
+        <input class="form-control dp" type="hidden" name="dp[]" value="" placeholder="dp">
+        <input class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS">
+    </td>
+    <td><input class="form-control subtotal_dp_pcs" type="text" name="subtotal_dp_pcs[]" value="" placeholder="total-dp-price"></td>
     <td>
         <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
         <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -159,6 +168,7 @@ function RemoveRow(e) {
         let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
         let pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
         let freePcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;
+        let dpPrice=$(e).closest('tr').find('.dp').val()?parseFloat($(e).closest('tr').find('.dp').val()):0;
         $(e).closest('tr').find('.receive').val(pcs);
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",
@@ -166,9 +176,14 @@ function RemoveRow(e) {
                 dataType: "json",
                 data: { product_id:product_id },
                 success: function(data) {
-                //console.log(data);
-                total=((cn*data)+pcs+freePcs);
-                $(e).closest('tr').find('.receive').val(total);
+                    let dpPcs=parseFloat(dpPrice/data).toFixed(2);
+                    let total=(cn*data)+pcs;
+                    totalReceive=(total+freePcs);
+                    let subTotal=parseFloat(total*dpPcs).toFixed(2);
+                console.log(dpPrice);
+                $(e).closest('tr').find('.dp_pcs').val(dpPcs);
+                $(e).closest('tr').find('.subtotal_dp_pcs').val(subTotal);
+                $(e).closest('tr').find('.receive').val(totalReceive);
 
                 },
             });
