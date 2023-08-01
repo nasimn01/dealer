@@ -161,19 +161,28 @@ class DOController extends Controller
 
     // public function doDataGet(Request $request)
     // {
-    //     $product_id=$request->product_id;
-    //     $dodetail=D_o_detail::where('product_id', $product_id)->first();
-    //     $dodata=D_o::whereIn('id', $dodetail->do_id)->pluck('reference_num')->toArray();
-    //     if($dodata){
-    //         $data=[
-    //             'qty'=>$dodetail->qty,
-    //             'reference_num'=>$dodata->reference_num,
-    //             'do_id'=>$dodata->id
-    //         ];
-    //         return response()->json($data,200);
+    //     $product_id = $request->product_id;
+    //     $dodetail = D_o_detail::where('product_id', $product_id)->first();
+
+    //     if (!$dodetail) {
+    //         return response()->json(['error' => 'Product not found'], 404);
     //     }
-    //     return response()->json(['error' => 'Product not found'], 404);
+
+    //     $dodata = D_o::whereIn('id', $dodetail->do_id)->pluck('reference_num')->toArray();
+    //     return $dodata;
+    //     if (!$dodata) {
+    //         return response()->json(['error' => 'Data not found'], 404);
+    //     }
+
+    //     $data = [
+    //         'qty' => $dodetail->qty,
+    //         'reference_num' => $dodata[0],
+    //         'do_id' => $dodetail->do_id,
+    //     ];
+
+    //     return response()->json($data, 200);
     // }
+
     public function doDataGet(Request $request)
     {
         $product_id=$request->product_id;

@@ -45,6 +45,7 @@
                                                 <th scope="col">{{__('PCS')}}</th>
                                                 <th scope="col">{{__('Free')}}</th>
                                                 <th scope="col">{{__('receive')}}</th>
+                                                <th scope="col">{{__('Dp(CTN)')}}</th>
                                                 <th scope="col">{{__('Dp(PCS)')}}</th>
                                                 <th scope="col">{{__('SubTotal-Dp')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -70,10 +71,8 @@
                                                 <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
                                                 <td><input class="form-control free_pcs" type="text" name="free[]" onkeyup="getCtnQty(this)" value="" placeholder="free"></td>
                                                 <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
-                                                <td>
-                                                    <input class="form-control dp" type="hidden" name="dp[]" value="" placeholder="dp">
-                                                    <input class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS">
-                                                </td>
+                                                <td><input class="form-control dp" type="text" onkeyup="getCtnQty(this)" name="dp[]" value="" placeholder="dp"></td>
+                                                <td><input readonly class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS"></td>
                                                 <td><input class="form-control subtotal_dp_pcs" type="text" name="subtotal_dp_pcs[]" value="" placeholder="total-dp-price"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
@@ -118,10 +117,8 @@ var row=`<tr>
     <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
     <td><input class="form-control free_pcs" type="text" name="free[]" onkeyup="getCtnQty(this)" value="" placeholder="free"></td>
     <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
-    <td>
-        <input class="form-control dp" type="hidden" name="dp[]" value="" placeholder="dp">
-        <input class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS">
-    </td>
+    <td><input class="form-control dp" type="text" onkeyup="getCtnQty(this)" name="dp[]" value="" placeholder="dp"></td>
+    <td><input readonly class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS"></td>
     <td><input class="form-control subtotal_dp_pcs" type="text" name="subtotal_dp_pcs[]" value="" placeholder="total-dp-price"></td>
     <td>
         <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -149,15 +146,15 @@ function RemoveRow(e) {
             dataType: "json",
             data: { product_id: product_id },
             success: function(dodata) {
-                //console.log(dodata);
-                let selectElement = $(e).closest('tr').find('.referance_number');
+                console.log(dodata);
+                {{--  let selectElement = $(e).closest('tr').find('.referance_number');
                 selectElement.empty(); // Clear previous options
 
                 $.each(dodata, function(index, value) {
                     selectElement.append('<option value="' + value + '">' + value + '</option>');
                 });
                 let dp=$(e).find('option:selected').data('dp');
-                $(e).closest('tr').find('.dp').val(dp);
+                $(e).closest('tr').find('.dp').val(dp);  --}}
             },
         });
     }
@@ -170,24 +167,31 @@ function RemoveRow(e) {
         let freePcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;
         let dpPrice=$(e).closest('tr').find('.dp').val()?parseFloat($(e).closest('tr').find('.dp').val()):0;
         $(e).closest('tr').find('.receive').val(pcs);
-            $.ajax({
-                url: "{{route(currentUser().'.unit_data_get')}}",
-                type: "GET",
-                dataType: "json",
-                data: { product_id:product_id },
-                success: function(data) {
-                    let dpPcs=parseFloat(dpPrice/data).toFixed(2);
-                    let total=(cn*data)+pcs;
-                    totalReceive=(total+freePcs);
-                    let subTotal=parseFloat(total*dpPcs).toFixed(2);
-                console.log(dpPrice);
+        $.ajax({
+            url: "{{route(currentUser().'.unit_data_get')}}",
+            type: "GET",
+            dataType: "json",
+            data: { product_id:product_id },
+            success: function(data) {
+                let dpPcs=parseFloat(dpPrice/data).toFixed(2);
+                let total=(cn*data)+pcs;
+                totalReceive=(total+freePcs);
+                let subTotal=parseFloat(total*dpPcs).toFixed(2);
+                //console.log(dpPrice);
                 $(e).closest('tr').find('.dp_pcs').val(dpPcs);
                 $(e).closest('tr').find('.subtotal_dp_pcs').val(subTotal);
                 $(e).closest('tr').find('.receive').val(totalReceive);
+               // changeDp(e,total);
 
-                },
-            });
+            },
+        });
     }
+    {{--  function changeDp(e, total) {
+        let cdp = $(e).closest('tr').find('.dp_pcs').val();
+        csubtotal = cdp * total;
+        $(e).closest('tr').find('.subtotal_dp_pcs').val(csubtotal);
+    }  --}}
+
 </script>
 
 @endpush

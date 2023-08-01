@@ -163,6 +163,33 @@
                                         </div>
                                     </div>
                                     <hr>
+                                    <div class="row newdue">
+                                        <div class="col-lg-2 col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <h5 for="check">{{__('new Due')}}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+                                            <select class="form-select new_due_shop_id" name="new_due_shop_id">
+                                                <option value="">Select</option>
+                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-3 col-sm-6">
+                                            <div class="form-group text-primary" style="font-size:1.5rem">
+                                                 <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
                                     <div class="row new_receive">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
@@ -424,6 +451,44 @@ function oldDue(){
     $('.olddue').append(oldDue);
 }
 function removeOld(e){
+    if (confirm("Are you sure you want to remove this row?")) {
+        $(e).closest('.row').remove();
+    }
+}
+function newDue(){
+    var newDue=`
+    <div class="row appendnew_remove">
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group">
+                <h5 for="check">{{__('New Due')}}</h5>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+            <select class="form-select shop_name" name="shop_name">
+                <option value="">Select</option>
+                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="form-group">
+                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group text-primary" style="font-size:1.5rem">
+                <span onClick='removeNewDue(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                 <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>
+            </div>
+        </div>
+    </div>
+`;
+
+    $('.newdue').append(newDue);
+}
+function removeNewDue(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
     }
