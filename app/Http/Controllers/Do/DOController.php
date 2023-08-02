@@ -159,38 +159,38 @@ class DOController extends Controller
         return view('do.doreceive');
     }
 
-    // public function doDataGet(Request $request)
-    // {
-    //     $product_id = $request->product_id;
-    //     $dodetail = D_o_detail::where('product_id', $product_id)->first();
-
-    //     if (!$dodetail) {
-    //         return response()->json(['error' => 'Product not found'], 404);
-    //     }
-
-    //     $dodata = D_o::whereIn('id', $dodetail->do_id)->pluck('reference_num')->toArray();
-    //     return $dodata;
-    //     if (!$dodata) {
-    //         return response()->json(['error' => 'Data not found'], 404);
-    //     }
-
-    //     $data = [
-    //         'qty' => $dodetail->qty,
-    //         'reference_num' => $dodata[0],
-    //         'do_id' => $dodetail->do_id,
-    //     ];
-
-    //     return response()->json($data, 200);
-    // }
-
     public function doDataGet(Request $request)
     {
-        $product_id=$request->product_id;
-        $dodetail=D_o_detail::where('product_id', $product_id)->pluck('do_id');
-        $dodata=D_o::whereIn('id', $dodetail)->pluck('reference_num')->toArray();
-        //return $dodata;
-        return response()->json($dodata,200);
+        $product_id = $request->product_id;
+        $dodetails = D_o_detail::where('product_id', $product_id)->pluck('do_id', 'id');
+        $dos = D_o::whereIn('id', $dodetails->values())->pluck('reference_num', 'id')->toArray();
+
+        $response = [];
+
+        foreach ($dos as $do_id => $reference_num) {
+            $dodetail_id = $dodetails->search($do_id);
+            if ($dodetail_id !== false) {
+                $response[] = [
+                    'dodetail_id' => $dodetail_id,
+                    'do_id' => $do_id,
+                    'reference_num' => $reference_num,
+                ];
+            }
+        }
+
+        return response()->json($response, 200);
     }
+
+
+
+    // public function doDataGet(Request $request)
+    // {
+    //     $product_id=$request->product_id;
+    //     $dodetail=D_o_detail::where('product_id', $product_id)->pluck('do_id');
+    //     $dodata=D_o::whereIn('id', $dodetail)->pluck('reference_num')->toArray();
+    //     //return $dodata;
+    //     return response()->json($dodata,200);
+    // }
 
     /* unit data get function use do screen, do receive screen, sales screen */
     public function UnitDataGet(Request $request)
@@ -243,12 +243,12 @@ class DOController extends Controller
         try{
                 foreach($request->product_id as $key => $value){
                     if($value){
-                        // $dodetail=D_o_detail::find($request->do_details_id[$key]);
-                        // $dodetail->dp=$request->dp[$key];
-                        // $dodetail->sub_total=($dodetail->qty*$request->dp[$key]);
-                        // $dodetail->receive_qty=($dodetail->receive_qty + $request->receive[$key]);
-                        // $dodetail->receive_free_qty=($dodetail->receive_free_qty + $request->free[$key]);
-                        // if($dodetail->save()){
+                        $dodetail=D_o_detail::find($request->dodetail_id[$key]);
+                        //$dodetail->dp=$request->dp[$key];
+                        //$dodetail->sub_total=($dodetail->qty*$request->dp[$key]);
+                        $dodetail->receive_qty=($dodetail->receive_qty + $request->receive[$key]);
+                        $dodetail->receive_free_qty=($dodetail->receive_free_qty + $request->free[$key]);
+                        if($dodetail->save()){
                             $productDp=Product::find($request->product_id[$key]);
                             $productDp->dp_price=$request->dp[$key];
                             if($productDp->save()){
@@ -290,7 +290,7 @@ class DOController extends Controller
                                 }
                             }
                         }
-                   // }
+                   }
                 }
             Toastr::success('Receive Successfully !');
             return redirect()->back();

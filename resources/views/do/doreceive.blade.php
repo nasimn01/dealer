@@ -62,10 +62,10 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                {{--  <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>  --}}
                                                 <td>
-                                                    <select class=" choices form-select referance_number">
+                                                    <select class="form-select referance_number" value="" name="do_id[]">
                                                     </select>
+                                                    <input type="hidden" class="dodetail_id" name="dodetail_id[]">
                                                 </td>
                                                 <td><input class="form-control ctn" type="text" name="ctn[]" onkeyup="getCtnQty(this)" value="" placeholder="ctn"></td>
                                                 <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
@@ -108,10 +108,10 @@ var row=`<tr>
             @endforelse
         </select>
     </td>
-    {{--  <td><input class="form-control lot_number" type="text" name="lot_number[]" value="" placeholder="Lot Number"></td>  --}}
     <td>
-        <select class=" choices form-select referance_number">
+        <select class="form-select referance_number" name="do_id[]">
         </select>
+        <input type="hidden" class="dodetail_id" name="dodetail_id[]">
     </td>
     <td><input class="form-control ctn" type="text" name="ctn[]" onkeyup="getCtnQty(this)" value="" placeholder="ctn"></td>
     <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
@@ -138,6 +138,42 @@ function RemoveRow(e) {
 <script>
     function doData(e) {
         let product_id = $(e).closest('tr').find('.product_id').val();
+        let cn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
+
+        $.ajax({
+            url: "{{ route(currentUser().'.do_data_get') }}",
+            type: "GET",
+            dataType: "json",
+            data: { product_id: product_id },
+            success: function (dodata) {
+                console.log(dodata);
+                let selectElement = $(e).closest('tr').find('.referance_number');
+                let dodetailIdInput = $(e).closest('tr').find('.dodetail_id');
+
+                selectElement.empty(); // Clear previous options
+
+                $.each(dodata, function (index, value) {
+                    selectElement.append('<option value="' + value.do_id + '" data-dodetail_id="' + value.dodetail_id + '">' + value.reference_num + '</option>');
+                });
+
+                selectElement.on('change', function () {
+                    let selectedOption = $(this).find('option:selected');
+                    let dodetailId = selectedOption.data('dodetail_id');
+                    dodetailIdInput.val(dodetailId);
+
+                    let dp = selectedOption.data('dp');
+                    $(e).closest('tr').find('.dp').val(dp);
+                });
+
+                selectElement.trigger('change'); // Initialize the input field
+            },
+        });
+    }
+
+
+
+    {{--  function doData(e) {
+        let product_id = $(e).closest('tr').find('.product_id').val();
         let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
 
         $.ajax({
@@ -147,17 +183,17 @@ function RemoveRow(e) {
             data: { product_id: product_id },
             success: function(dodata) {
                 console.log(dodata);
-                {{--  let selectElement = $(e).closest('tr').find('.referance_number');
+                let selectElement = $(e).closest('tr').find('.referance_number');
                 selectElement.empty(); // Clear previous options
 
                 $.each(dodata, function(index, value) {
                     selectElement.append('<option value="' + value + '">' + value + '</option>');
                 });
                 let dp=$(e).find('option:selected').data('dp');
-                $(e).closest('tr').find('.dp').val(dp);  --}}
+                $(e).closest('tr').find('.dp').val(dp);
             },
         });
-    }
+    }  --}}
 
     function getCtnQty(e){
 
