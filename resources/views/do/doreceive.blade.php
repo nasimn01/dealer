@@ -54,13 +54,16 @@
                                         <tbody id="product">
                                             <tr>
                                                 <td>
-                                                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
+                                                    <select class="form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
+                                                    <input type="hidden" class="tp_price" name="tp_price[]">
+                                                    <input type="hidden" class="tp_free" name="tp_free[]">
+                                                    <input type="hidden" class="mrp_price" name="mrp_price[]">
                                                 </td>
                                                 <td>
                                                     <select class="form-select referance_number" value="" name="do_id[]">
@@ -100,13 +103,16 @@
 
 var row=`<tr>
     <td>
-        <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
+        <select class="form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
             <option value="">Select Product</option>
             @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-            <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+            <option data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
             @empty
             @endforelse
         </select>
+        <input type="hidden" class="tp_price" name="tp_price[]">
+        <input type="hidden" class="tp_free" name="tp_free[]">
+        <input type="hidden" class="mrp_price" name="mrp_price[]">
     </td>
     <td>
         <select class="form-select referance_number" name="do_id[]">
@@ -139,14 +145,21 @@ function RemoveRow(e) {
     function doData(e) {
         let product_id = $(e).closest('tr').find('.product_id').val();
         let cn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
-
+        let dp=$(e).find('option:selected').data('dp');
+        $(e).closest('tr').find('.dp').val(dp);
+        let tpPrice = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
+        $(e).closest('tr').find('.tp_price').val(tpPrice);
+        let tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
+        $(e).closest('tr').find('.tp_free').val(tpFree);
+        let mrpPrice = $(e).closest('tr').find('.product_id option:selected').attr('data-mrp');
+        $(e).closest('tr').find('.mrp_price').val(mrpPrice);
         $.ajax({
             url: "{{ route(currentUser().'.do_data_get') }}",
             type: "GET",
             dataType: "json",
             data: { product_id: product_id },
             success: function (dodata) {
-                console.log(dodata);
+                //console.log(dodata);
                 let selectElement = $(e).closest('tr').find('.referance_number');
                 let dodetailIdInput = $(e).closest('tr').find('.dodetail_id');
 
@@ -160,9 +173,6 @@ function RemoveRow(e) {
                     let selectedOption = $(this).find('option:selected');
                     let dodetailId = selectedOption.data('dodetail_id');
                     dodetailIdInput.val(dodetailId);
-
-                    let dp = selectedOption.data('dp');
-                    $(e).closest('tr').find('.dp').val(dp);
                 });
 
                 selectElement.trigger('change'); // Initialize the input field
