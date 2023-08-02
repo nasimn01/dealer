@@ -92,10 +92,10 @@
                                                         </td>
                                                         <td><input class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
                                                         <td><input class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
-                                                        <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn return"></td>
-                                                        <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs return"></td>
-                                                        <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn damage"></td>
-                                                        <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs damage"></td>
+                                                        <td><input class="form-control ctn_return" type="text" name="ctn_return[]" value="" placeholder="ctn return"></td>
+                                                        <td><input class="form-control pcs_return" type="text" name="pcs_return[]"value="" placeholder="pcs return"></td>
+                                                        <td><input class="form-control ctn_damage" type="text" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
+                                                        <td><input class="form-control pcs_damage" type="text" name="pcs_damage[]"value="" placeholder="pcs damage"></td>
                                                         <td style="width: 110px;">
                                                             <select class="form-select" name="select_tp_tpfree">
                                                                 <option value="">Select</option>
@@ -353,7 +353,7 @@
                                     <div class="row">
                                         <div class="col-lg-2 col-md-3 col-sm-4">
                                             <div class="form-group">
-                                                <h5 for="total">{{__('Total')}}</h5>
+                                                <h5 for="total">{{__('Final Total')}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
