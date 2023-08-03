@@ -113,7 +113,7 @@
                                             <tr>
                                                 <td class="text-end" colspan="9"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="10">
-                                                    <input type="text" class="form-control" value="{{ $sales->total }}" name="total">
+                                                    <input type="text" class="form-control" value="{{ $sales->total }}" name="total_taka">
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select old_due_shop_id" name="old_due_shop_id">
+                                            <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
                                                 <option value="">Select</option>
                                                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -153,7 +153,7 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+                                                <input type="text" class="form-control" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -170,7 +170,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select new_due_shop_id" name="new_due_shop_id">
+                                            <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
                                                 <option value="">Select</option>
                                                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -180,7 +180,7 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+                                                <input type="text" class="form-control" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -197,7 +197,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select shop_name" name="shop_name">
+                                            <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
                                                 <option value="">Select</option>
                                                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -207,7 +207,7 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+                                                <input type="text" class="form-control" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -223,7 +223,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select shop_name" name="shop_name">
+                                            <select class="form-select check_shop_id" name="check_shop_id[]">
                                                 <option value="">Select</option>
                                                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -233,12 +233,12 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+                                                <input type="text" class="form-control" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="date" class="form-control" value="{{ old('date')}}" name="total_tk" placeholder="Date">
+                                                <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date" placeholder="Date">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-6">
