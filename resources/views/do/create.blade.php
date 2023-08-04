@@ -138,8 +138,8 @@
                                 </div>
                                 <div>
                                     <div class="col-lg-6 offset-3 d-flex justify-content-between">
-                                        <button type="submit" class="btn btn-primary btn-block m-2">Save</button>
-                                        <a class="btn btn-info btn-block m-2">Save & Print</a>
+                                        <button type="submit" class="btn btn-primary btn-block m-2 do_save">Save</button>
+                                        <span class="do_save_message text-danger fw-bold"></span>
                                     </div>
                                 </div>
                             </div>
@@ -156,6 +156,10 @@
     $(document).ready(function() {
        let counter = 0;
         $('button.add-row').on('click', function() {
+            if (!$('.supplier_id').val()) {
+                $('.supplier_id').focus();
+                return false;
+            }
             let dp=$('#product_id').find(":selected").data('dp');
             let productName=$('#product_id').find(":selected").data('name');
             let freeRatio=$('#product_id').find(":selected").data('ratio');
@@ -208,7 +212,7 @@
                                                                         <tbody>
                                                                             <div id="productFormContainer">
 
-                                                                                    <input type="hidden" id="product_id" name="product_id" value="${ProductId}">
+                                                                                    <input type="hidden" name="product_id" value="${ProductId}">
                                                                                     <tr>
                                                                                         <td>Free Ratio</td>
                                                                                         <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
@@ -249,7 +253,7 @@
                                     <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">
                                 </td>
                                 <td class="white-space-nowrap">
-                                    <button class="btn btn-link text-danger fs-3" type="button" onClick="RemoveThis(this)">
+                                    <button class="btn btn-link text-danger fs-3" type="button" onClick="RemoveThis(this,'${product_id}')">
                                         <i class="bi bi-trash-fill" class=""></i>
                                     </button>
                                 </td>
@@ -261,7 +265,7 @@
                         // Increment counter
                         counter++;
 
-                        $('#product_id').find(":selected").remove();
+                        $('#product_id').find(":selected").hide();
                         // Clear input fields
                         $('#product_id').val('');
                         $('#qty').val('');
@@ -296,13 +300,19 @@
 
         if(total>supBalance){
             alert('You can not create do more then '+supBalance);
+            $('.do_save').prop('disabled',true)
+            $('.do_save_message').text('You can not create do more then '+supBalance)
+        }else{
+            $('.do_save').prop('disabled',false)
+            $('.do_save_message').text('')
         }
         $('.subRemaining').text(supBalance-total);
        // alert(sub_total)
     }
-    function RemoveThis(e){
+    function RemoveThis(e,p_id){
         if (confirm("Are you sure you want to remove this Product?")) {
         $(e).closest('tr').remove();
+        $('#product_id option[value="'+p_id+'"]').show();
         totalAmount();
         }
     }

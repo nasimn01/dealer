@@ -238,7 +238,7 @@
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date" placeholder="Date">
+                                                <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date[]" placeholder="Date">
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-6">
@@ -358,7 +358,7 @@
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('commission')}}" name="commission">
+                                                <input type="text" class="form-control" value="{{ old('final_total')}}" name="final_total">
                                             </div>
                                         </div>
                                     </div>

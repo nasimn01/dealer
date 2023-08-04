@@ -146,9 +146,92 @@ class SalesController extends Controller
     }
 
 
-    public function update(Request $request, Sales $sales)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+            $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
+            $sales->shop_id = $request->shop_id;
+            $sales->dsr_id = $request->dsr_id;
+            $sales->sales_date = $request->sales_date;
+
+            $sales->expenses = $request->expenses;
+            $sales->commission = $request->commission;
+            $sales->final_total = $request->final_total;
+            //$sales->total = $request->total;
+            $sales->status = 1;
+            $sales->company_id=company()['company_id'];
+            $sales->updated_by= currentUserId();
+            if($sales->save()){
+                if($request->product_id){
+                    foreach($request->product_id as $key => $value){
+                        if($value){
+                            $details = new TemporarySalesDetails;
+                            $details->sales_id=$data->id;
+                            $details->product_id=$request->product_id[$key];
+                            $details->ctn=$request->ctn[$key];
+                            $details->pcs=$request->pcs[$key];
+                            $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
+                            $details->ctn_price=$request->ctn_price[$key];
+                            $details->subtotal_price=$request->subtotal_price[$key];
+                            $details->company_id=company()['company_id'];
+                            $details->updated_by= currentUserId();
+                            $details->save();
+                        }
+                    }
+                }
+            }
+            if($request->old_due_shop_id){
+                foreach($request->old_due_shop_id as $i=>$old_due_shop_id){
+                    if($old_due_shop_id){
+                        // $olddue=new OldDue;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->old_due_shop_id=$old_due_shop_id;
+                        $olddue->old_due_tk=$request->old_due_tk[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+            if($request->new_due_shop_id){
+                foreach($request->new_due_shop_id as $i=>$new_due_shop_id){
+                    if($new_due_shop_id){
+                        // $olddue=new OldDue;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->new_due_shop_id=$new_due_shop_id;
+                        $olddue->new_due_tk=$request->new_due_tk[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+            if($request->new_receive_shop_id){
+                foreach($request->new_receive_shop_id as $i=>$new_receive_shop_id){
+                    if($new_receive_shop_id){
+                        // $olddue=new OldDue;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->new_receive_shop_id=$new_receive_shop_id;
+                        $olddue->new_receive_tk=$request->new_receive_tk[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+            if($request->check_shop_id){
+                foreach($request->check_shop_id as $i=>$check_shop_id){
+                    if($check_shop_id){
+                        // $olddue=new OldDue;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->check_shop_id=$check_shop_id;
+                        $olddue->check_shop_tk=$request->check_shop_tk[$i];
+                        $olddue->check_date=$request->check_date[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+
+        }
+        catch (Exception $e){
+            dd($e);
+            return back()->withInput();
+
+        }
     }
 
 
