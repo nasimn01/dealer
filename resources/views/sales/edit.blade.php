@@ -90,8 +90,8 @@
                                                                 @endforelse
                                                             </select>
                                                         </td>
-                                                        <td><input class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
-                                                        <td><input class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
+                                                        <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
+                                                        <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
                                                         <td><input class="form-control ctn_return" type="text" name="ctn_return[]" value="" placeholder="ctn return"></td>
                                                         <td><input class="form-control pcs_return" type="text" name="pcs_return[]"value="" placeholder="pcs return"></td>
                                                         <td><input class="form-control ctn_damage" type="text" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
