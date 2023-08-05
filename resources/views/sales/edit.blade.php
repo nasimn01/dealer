@@ -118,6 +118,14 @@
                                                 </td>
                                             </tr>
                                         </tbody>
+                                        <tfoot id="tfootSection" style="display: none;">
+                                            <tr>
+                                                <td class="text-end" colspan="8"><h5 for="return_total_taka">{{__('Return Total Taka')}}</h5></td>
+                                                <td class="text-end" colspan="9">
+                                                    <input type="text" class="form-control return_total_taka" value="" name="return_total_taka">
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -299,38 +307,39 @@
 @push("scripts")
 <script>
     function addRow(){
-
-var row=`
-    <tr>
-        <td colspan="3">
-            <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
-                <option value="">Select Product</option>
-                @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                @empty
-                @endforelse
-            </select>
-        </td>
-        <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn return"></td>
-        <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs return"></td>
-        <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn damage"></td>
-        <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs damage"></td>
-        {{--  <td>
-            <select class="form-select" name="select_tp_tpfree">
-                <option value="">Select</option>
-                <option value="1">TP</option>
-                <option value="2">TP Free</option>
-            </select>
-        </td>  --}}
-        <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>
-        <td><input class="form-control" type="text" name="subtotal_price[]" value="" placeholder="Sub total"></td>
-        <td>
-            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-            <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-        </td>
-    </tr>`;
-    $('#sales_repeat').append(row);
-}
+        var tfootSection = document.getElementById('tfootSection');
+        tfootSection.style.display = 'table-row-group';
+        var row=`
+            <tr>
+                <td colspan="3">
+                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
+                        <option value="">Select Product</option>
+                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                        <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </td>
+                <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn return"></td>
+                <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs return"></td>
+                <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn damage"></td>
+                <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs damage"></td>
+                {{--  <td>
+                    <select class="form-select" name="select_tp_tpfree">
+                        <option value="">Select</option>
+                        <option value="1">TP</option>
+                        <option value="2">TP Free</option>
+                    </select>
+                </td>  --}}
+                <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>
+                <td><input class="form-control" type="text" name="subtotal_price[]" value="" placeholder="Sub total"></td>
+                <td>
+                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                </td>
+            </tr>`;
+            $('#sales_repeat').append(row);
+        }
 
 function removeRow(e){
     if (confirm("Are you sure you want to remove this row?")) {
