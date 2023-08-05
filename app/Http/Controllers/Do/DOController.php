@@ -9,6 +9,7 @@ use App\Models\Do\D_o_detail;
 use App\Models\Product\Product;
 use App\Models\Do\DoReceiveHistory;
 use App\Models\Stock\Stock;
+use App\Models\Settings\Supplier_balance;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
@@ -65,38 +66,47 @@ class DOController extends Controller
             $data->status = 0;
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
-
             if($data->save()){
-                if($request->product_id){
-                    foreach($request->product_id as $key => $value){
-                        // dd($request->all());
-                        if($value){
-                            $details = new D_o_detail;
-                            $details->do_id=$data->id;
-                            $details->product_id=$request->product_id[$key];
-                            $details->qty=$request->qty[$key];
-                            $details->free=$request->free_qty[$key];
-                            $details->dp=$request->dp[$key];
-                            $details->sub_total=$request->sub_total[$key];
-                            //$details->receive_qty=$request->qty[$key];
-                            //$details->receive_free_qty=$request->free[$key];
-                            // $details->unite_style_id=$request->unite_style_id[$key];
-                            // $details->free=$request->free[$key];
-                            // $details->free_tk=$request->free_tk[$key];
-                            // $details->free_ratio=$request->free_ratio[$key];
-                            // $details->basic=$request->basic[$key];
-                            // $details->discount_percent=$request->discount_percent[$key];
-                            // $details->vat_percent=$request->vat_percent[$key];
-                            // $details->amount=$request->amount[$key];
-                            $details->save();
+                if($request->balance > 0 ){
+                    $supb= new Supplier_balance;
+                    $supb->supplier_id = $request->supplier_id;
+                    $supb->balance_date = now();
+                    $supb->balance_amount = $request->balance;
+                    $supb->status = 0;
+                    $supb->company_id=company()['company_id'];
+                    if($supb->save()){
+                        if($request->product_id){
+                            foreach($request->product_id as $key => $value){
+                                // dd($request->all());
+                                if($value){
+                                    $details = new D_o_detail;
+                                    $details->do_id=$data->id;
+                                    $details->product_id=$request->product_id[$key];
+                                    $details->qty=$request->qty[$key];
+                                    $details->free=$request->free_qty[$key];
+                                    $details->dp=$request->dp[$key];
+                                    $details->sub_total=$request->sub_total[$key];
+                                    //$details->receive_qty=$request->qty[$key];
+                                    //$details->receive_free_qty=$request->free[$key];
+                                    // $details->unite_style_id=$request->unite_style_id[$key];
+                                    // $details->free=$request->free[$key];
+                                    // $details->free_tk=$request->free_tk[$key];
+                                    // $details->free_ratio=$request->free_ratio[$key];
+                                    // $details->basic=$request->basic[$key];
+                                    // $details->discount_percent=$request->discount_percent[$key];
+                                    // $details->vat_percent=$request->vat_percent[$key];
+                                    // $details->amount=$request->amount[$key];
+                                    $details->save();
+                                }
+                            }
                         }
+                    Toastr::success('Create Successfully!');
+                    return redirect()->route(currentUser().'.docontroll.index');
+                    } else{
+                    Toastr::warning('Please try Again!');
+                     return redirect()->back();
                     }
                 }
-            Toastr::success('Create Successfully!');
-            return redirect()->route(currentUser().'.docontroll.index');
-            } else{
-            Toastr::warning('Please try Again!');
-             return redirect()->back();
             }
 
         }

@@ -51,6 +51,7 @@
                                                 <th scope="col">{{__('PCS')}}</th>
                                                 <th scope="col">{{__('CTN')}}</th>
                                                 <th scope="col">{{__('CTN Price')}}</th>
+                                                <th scope="col">{{__('PCS Price')}}</th>
                                                 <th scope="col">{{__('Sub-Total')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
@@ -75,7 +76,8 @@
                                                         <option value="2">TP Free</option>
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
+                                                <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="CTN Price"></td>
+                                                <td><input readonly class="form-control per_pcs_price" type="text" value="" placeholder="PCS Price"></td>
                                                 <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total"></td>
                                                 <td>
                                                     <span onClick='addRow();' class="add-row text-primary ms-3"><i class="bi bi-plus-square-fill"></i></span>
@@ -132,6 +134,7 @@ var row=`
             </select>
         </td>
         <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
+        <td><input readonly class="form-control per_pcs_price" type="text" value="" placeholder="PCS Price"></td>
         <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -150,7 +153,7 @@ function removeRow(e){
 
 function productData(e) {
     var selectedOption = parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
-    console.log(selectedOption)
+    //console.log(selectedOption)
     var tp = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
     var tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
     var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
@@ -164,16 +167,20 @@ function productData(e) {
         success: function (data) {
             //console.log(data)
             if(data){
-                let tpPcsPrice = (tp / data) * pcs;
-                let tpFreePcsPrice = (tpFree / data) * pcs;
+                let pcstp=parseFloat(tp / data).toFixed(2);
+                let pcstpFree=parseFloat(ctn * tpFree).toFixed(2);
+                let tpPcsPrice = parseFloat((tp / data) * pcs);
+                let tpFreePcsPrice = parseFloat((tpFree / data) * pcs);
                 var TpSubtotal = parseFloat((ctn * tp) + tpPcsPrice).toFixed(2);
                 var TpFreeSubtotal = parseFloat((ctn * tpFree) + tpFreePcsPrice).toFixed(2);
 
                 if (selectedOption === 1) {
                     $(e).closest('tr').find('.ctn_price').val(tp);
+                    $(e).closest('tr').find('.per_pcs_price').val(pcstp);
                     $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
                 } else if (selectedOption === 2) {
                     $(e).closest('tr').find('.ctn_price').val(tpFree);
+                    $(e).closest('tr').find('.per_pcs_price').val(pcstpFree);
                     $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
                 } else {
                     $(e).closest('tr').find('.ctn_price').val("");
@@ -195,8 +202,8 @@ function total_calculate() {
     $('.subtotal_price').each(function() {
         subtotal += parseFloat($(this).val());
     });
-    $('.total').text(subtotal.toFixed(2));
-    $('.total_p').val(subtotal.toFixed(2));
+    $('.total').text(parseFloat(subtotal).toFixed(2));
+    $('.total_p').val(parseFloat(subtotal).toFixed(2));
 
 }
 

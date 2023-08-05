@@ -100,7 +100,7 @@
                                     <div class="border">
                                         <div class="form-group p-3">
                                             <p>Distributor balance: <span class="supbalance"> </span></p>
-                                            <p>Do Amount: <span class="doamount"></span></p>
+                                            <p>Do Amount: <span class="doamount"></span><input class="doamount_data" type="hidden" name="balance"></p>
                                             <p>R: <span class="subRemaining"></span></p>
                                         </div>
                                     </div>
@@ -294,6 +294,7 @@
             totalQty+=parseFloat($(this).val());
         });
         $('.doamount').text(total);
+        $('.doamount_data').val(total);
         $('.total_amount').val(total);
         $('.total_qty').val(totalQty);
         supBalance=parseFloat($('.supbalance').text());
