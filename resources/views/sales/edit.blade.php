@@ -120,9 +120,9 @@
                                         </tbody>
                                         <tfoot id="tfootSection" style="display: none;">
                                             <tr>
-                                                <td class="text-end" colspan="8"><h5 for="return_total_taka">{{__('Return Total Taka')}}</h5></td>
+                                                <td class="text-end" colspan="8"><h5 for="return_total">{{__('Return Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
-                                                    <input type="text" class="form-control return_total_taka" value="" name="return_total_taka">
+                                                    <input readonly type="text" class="form-control return_total_taka" value="" name="return_total_taka">
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -320,10 +320,10 @@
                         @endforelse
                     </select>
                 </td>
-                <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn return"></td>
-                <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs return"></td>
-                <td><input class="form-control ctn" type="text" name="ctn[]" value="" placeholder="ctn damage"></td>
-                <td><input class="form-control pcs" type="text" name="pcs[]"value="" placeholder="pcs damage"></td>
+                <td><input class="form-control ctn" type="text" name="return_ctn[]" value="" placeholder="ctn return"></td>
+                <td><input class="form-control pcs" type="text" name="return_pcs[]"value="" placeholder="pcs return"></td>
+                <td><input class="form-control ctn" type="text" name="damage_ctn[]" value="" placeholder="ctn damage"></td>
+                <td><input class="form-control pcs" type="text" name="damage_pcs[]"value="" placeholder="pcs damage"></td>
                 {{--  <td>
                     <select class="form-select" name="select_tp_tpfree">
                         <option value="">Select</option>
@@ -332,7 +332,7 @@
                     </select>
                 </td>  --}}
                 <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>
-                <td><input class="form-control" type="text" name="subtotal_price[]" value="" placeholder="Sub total"></td>
+                <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -345,6 +345,15 @@ function removeRow(e){
     if (confirm("Are you sure you want to remove this row?")) {
     $(e).closest('tr').remove();
     }
+}
+function return_total_calculate() {
+    var subtotal = 0;
+    $('.return_subtotal_price').each(function() {
+        subtotal += parseFloat($(this).val());
+    });
+    // $('.total').text(parseFloat(subtotal).toFixed(2));
+    $('.return_total_taka').val(parseFloat(subtotal).toFixed(2));
+
 }
 
 function oldDue(){

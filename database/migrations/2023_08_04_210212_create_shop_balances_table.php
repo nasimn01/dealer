@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('reference_number')->nullable();
             $table->string('check_date')->nullable();
             $table->string('status')->comment('0=>out 1=>in')->nullable();
+            $table->string('status_history')->nullable()->comment('0=out,1=in');
             $table->unsignedBigInteger('company_id')->nullable();
             $table->timestamps();
         });
