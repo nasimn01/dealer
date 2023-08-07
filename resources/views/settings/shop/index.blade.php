@@ -56,7 +56,7 @@
                                 <td>{{$data->shop_name}}</td>
                                 <td>{{$data->owner_name}}</td>
                                 <td>{{$data->contact}}</td>
-                                <td>{{$data->dsr_id}}</td>
+                                <td>{{$data->dsr?->name}}</td>
                                 <td>{{$data->area_name}}</td>
                                 <td>{{$data->balance}}</td>
                                 <td>{{$data->address}}</td>
