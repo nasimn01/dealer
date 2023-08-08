@@ -19,9 +19,13 @@ return new class extends Migration
             $table->integer('product_id')->nullable();
             $table->integer('ctn')->nullable();
             $table->integer('pcs')->nullable();
-            $table->string('select_tp_tpfree')->comment('1=>tp 2=>tpfree')->nullable();
+            $table->integer('ctn_return')->nullable();
+            $table->integer('pcs_return')->nullable();
+            $table->integer('ctn_damage')->nullable();
+            $table->integer('pcs_damage')->nullable();
             $table->decimal('ctn_price',14,2)->nullable();
             $table->decimal('subtotal_price',14,2)->nullable();
+            $table->string('select_tp_tpfree')->comment('1=>tp 2=>tpfree')->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

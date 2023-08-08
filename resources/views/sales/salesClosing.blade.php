@@ -321,10 +321,10 @@
                         @endforelse
                     </select>
                 </td>
-                <td><input class="form-control ctn" type="text" name="return_ctn[]" value="" placeholder="ctn return"></td>
-                <td><input class="form-control pcs" type="text" name="return_pcs[]"value="" placeholder="pcs return"></td>
-                <td><input class="form-control ctn" type="text" name="damage_ctn[]" value="" placeholder="ctn damage"></td>
-                <td><input class="form-control pcs" type="text" name="damage_pcs[]"value="" placeholder="pcs damage"></td>
+                <td><input class="form-control ctn" type="text" name="ctn_return[]" value="" placeholder="ctn return"></td>
+                <td><input class="form-control pcs" type="text" name="pcs_return[]"value="" placeholder="pcs return"></td>
+                <td><input class="form-control ctn" type="text" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
+                <td><input class="form-control pcs" type="text" name="pcs_damage[]"value="" placeholder="pcs damage"></td>
                 {{--  <td>
                     <select class="form-select" name="select_tp_tpfree">
                         <option value="">Select</option>
