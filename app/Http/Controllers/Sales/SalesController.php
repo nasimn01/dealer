@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 
 use App\Models\Sales\Sales;
+use App\Models\Sales\SalesDetails;
 use App\Models\Sales\TemporarySales;
 use App\Models\Sales\TemporarySalesDetails;
 use App\Models\Settings\Shop;
@@ -146,7 +147,6 @@ class SalesController extends Controller
         return view('sales.edit',compact('sales','shops','dsr'));
     }
 
-
     public function update(Request $request, $id)
     {
         try{
@@ -174,6 +174,105 @@ class SalesController extends Controller
                             $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
                             $details->ctn_price=$request->ctn_price[$key];
                             $details->subtotal_price=$request->subtotal_price[$key];
+                            $details->company_id=company()['company_id'];
+                            $details->updated_by= currentUserId();
+                            $details->save();
+                        }
+                    }
+                }
+            }
+            if($request->old_due_shop_id){
+                foreach($request->old_due_shop_id as $i=>$old_due_shop_id){
+                    if($old_due_shop_id){
+                        $olddue=new ShopBalance;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->old_due_shop_id=$old_due_shop_id;
+                        $olddue->old_due_tk=$request->old_due_tk[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+            if($request->new_due_shop_id){
+                foreach($request->new_due_shop_id as $i=>$new_due_shop_id){
+                    if($new_due_shop_id){
+                        $olddue=new ShopBalance;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->new_due_shop_id=$new_due_shop_id;
+                        $olddue->new_due_tk=$request->new_due_tk[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+            if($request->new_receive_shop_id){
+                foreach($request->new_receive_shop_id as $i=>$new_receive_shop_id){
+                    if($new_receive_shop_id){
+                        $olddue=new ShopBalance;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->new_receive_shop_id=$new_receive_shop_id;
+                        $olddue->new_receive_tk=$request->new_receive_tk[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+            if($request->check_shop_id){
+                foreach($request->check_shop_id as $i=>$check_shop_id){
+                    if($check_shop_id){
+                        $olddue=new ShopBalance;
+                        $olddue->sales_id=$sales->id;
+                        $olddue->check_shop_id=$check_shop_id;
+                        $olddue->check_shop_tk=$request->check_shop_tk[$i];
+                        $olddue->check_date=$request->check_date[$i];
+                        $olddue->save();
+                    }
+                }
+            }
+
+        }
+        catch (Exception $e){
+            dd($e);
+            return back()->withInput();
+
+        }
+    }
+    public function salesReceiveScreen($id)
+    {
+        $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
+        $shops=Shop::all();
+        $dsr=User::where('role_id',4)->get();
+        return view('sales.salesClosing',compact('sales','shops','dsr'));
+    }
+    public function salesReceive(Request $request, $id)
+    {
+        try{
+            $sales =new Sales;
+            $sales->shop_id = $request->shop_id;
+            $sales->dsr_id = $request->dsr_id;
+            $sales->sales_date = $request->sales_date;
+
+            $sales->expenses = $request->expenses;
+            $sales->commission = $request->commission;
+            $sales->final_total = $request->final_total;
+            //$sales->total = $request->total;
+            $sales->status = 1;
+            $sales->company_id=company()['company_id'];
+            $sales->updated_by= currentUserId();
+            if($sales->save()){
+                if($request->product_id){
+                    foreach($request->product_id as $key => $value){
+                        if($value){
+                            $details = new SalesDetails;
+                            $details->sales_id=$sales->id;
+                            $details->product_id=$request->product_id[$key];
+                            $details->ctn=$request->ctn[$key];
+                            $details->pcs=$request->pcs[$key];
+                            $details->ctn_return=$request->ctn_return[$key];
+                            $details->pcs_return=$request->pcs_return[$key];
+                            $details->ctn_damage=$request->ctn_damage[$key];
+                            $details->pcs_damage=$request->pcs_damage[$key];
+                            $details->ctn_price=$request->ctn_price[$key];
+                            $details->subtotal_price=$request->subtotal_price[$key];
+                            $details->total_taka=$request->total_taka[$key];
+                            // $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
                             $details->company_id=company()['company_id'];
                             $details->updated_by= currentUserId();
                             $details->save();

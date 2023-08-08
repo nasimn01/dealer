@@ -36,7 +36,7 @@
                                     <td>{{$p->sales_date}}</td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">
-                                        <a class="ms-2" href="{{route(currentUser().'.sales.edit',encryptor('encrypt',$p->id))}}">
+                                        <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-receipt-cutoff"></i>
                                         </a>
                                         @if($p->status==0)

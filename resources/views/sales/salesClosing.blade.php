@@ -12,6 +12,7 @@
                     <div class="card-body">
                         <form method="post" action="{{route(currentUser().'.sales.receive',encryptor('encrypt',$sales->id))}}">
                             @csrf
+                            {{-- <input type="hidden" value="{{ $sales->id }}"> --}}
                             <div class="row p-2 mt-4">
                                 {{--  <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
                                     <label for=""><b>Shop/Dsr</b></label>
@@ -312,7 +313,7 @@
         var row=`
             <tr>
                 <td colspan="3">
-                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
+                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="return_product_id[]">
                         <option value="">Select Product</option>
                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                         <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
