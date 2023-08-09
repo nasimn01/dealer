@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('adjust')->nullable();
             $table->string('remark')->nullable();
             $table->string('status')->nullable()->comment('0=out,1=in');
-            $table->string('status_history')->nullable()->comment('0=out,1=in');
+            $table->string('status_history')->nullable()->comment('0=out_sales,1=in_return,2=in_damage,3=in_purchase,4=out_damage,5=out_purchase_return');
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

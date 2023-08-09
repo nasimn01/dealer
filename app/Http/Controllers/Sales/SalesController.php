@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Stock\Stock;
 use Exception;
 
 class SalesController extends Controller
@@ -54,11 +55,24 @@ class SalesController extends Controller
                             $details->ctn=$request->ctn[$key];
                             $details->pcs=$request->pcs[$key];
                             $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
+                            $details->per_pcs_price=$request->per_pcs_price[$key];
                             $details->ctn_price=$request->ctn_price[$key];
                             $details->subtotal_price=$request->subtotal_price[$key];
                             $details->company_id=company()['company_id'];
                             $details->created_by= currentUserId();
-                            $details->save();
+                            if($details->save()){
+                                $stock=new Stock;
+                                $stock->product_id=$request->product_id[$key];
+                                $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                $stock->status_history=1;
+                                $stock->status=1;
+                                if($request->select_tp_tpfree[$key]==1){
+                                    $stock->tp_price=$request->per_pcs_price[$key];
+                                }else{
+                                    $stock->tp_free=$request->per_pcs_price[$key];
+                                }
+                                $stock->save();
+                            }
                         }
                     }
                 }

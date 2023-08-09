@@ -71,13 +71,12 @@
                                                 <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
                                                 <td>
                                                     <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                                                        <option value="0">Select</option>
                                                         <option value="1">TP</option>
                                                         <option value="2">TP Free</option>
                                                     </select>
                                                 </td>
                                                 <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="CTN Price"></td>
-                                                <td><input readonly class="form-control per_pcs_price" type="text" value="" placeholder="PCS Price"></td>
+                                                <td><input readonly class="form-control per_pcs_price" type="text" name="per_pcs_price[]" value="" placeholder="PCS Price"></td>
                                                 <td>
                                                     <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
                                                     <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
