@@ -49,7 +49,7 @@
                                                 <th scope="col">{{__('Product Name')}}</th>
                                                 <th scope="col">{{__('CTN')}}</th>
                                                 <th scope="col">{{__('PCS')}}</th>
-                                                <th scope="col">{{__('CTN')}}</th>
+                                                <th scope="col">{{__('Tp/Tpfree')}}</th>
                                                 <th scope="col">{{__('CTN Price')}}</th>
                                                 <th scope="col">{{__('PCS Price')}}</th>
                                                 <th scope="col">{{__('Sub-Total')}}</th>
@@ -78,7 +78,10 @@
                                                 </td>
                                                 <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="CTN Price"></td>
                                                 <td><input readonly class="form-control per_pcs_price" type="text" value="" placeholder="PCS Price"></td>
-                                                <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total"></td>
+                                                <td>
+                                                    <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
+                                                    <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
+                                                </td>
                                                 <td>
                                                     <span onClick='addRow();' class="add-row text-primary ms-3"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
@@ -134,8 +137,11 @@ var row=`
             </select>
         </td>
         <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
-        <td><input readonly class="form-control per_pcs_price" type="text" value="" placeholder="PCS Price"></td>
-        <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total"></td>
+        <td><input readonly class="form-control per_pcs_price" name="per_pcs_price[]" type="text" value="" placeholder="PCS Price"></td>
+        <td>
+            <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
+            <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
+        </td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
             <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -165,7 +171,10 @@ function productData(e) {
         dataType: "json",
         data: { product_id: productId },
         success: function (data) {
+            // this function have doController UnitDataGet return qty
             //console.log(data)
+            let totalqty=((data*ctn)+pcs);
+            $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
             if(data){
                 let pcstp=parseFloat(tp / data).toFixed(2);
                 let pcstpFree=parseFloat(ctn * tpFree).toFixed(2);
