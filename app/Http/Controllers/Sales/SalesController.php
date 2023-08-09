@@ -8,6 +8,7 @@ use App\Models\Sales\Sales;
 use App\Models\Sales\SalesDetails;
 use App\Models\Sales\TemporarySales;
 use App\Models\Sales\TemporarySalesDetails;
+use App\Models\Sales\SalesPayment;
 use App\Models\Settings\Shop;
 use App\Models\Settings\ShopBalance;
 use App\Models\User;
@@ -55,7 +56,7 @@ class SalesController extends Controller
                             $details->ctn=$request->ctn[$key];
                             $details->pcs=$request->pcs[$key];
                             $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
-                            $details->per_pcs_price=$request->per_pcs_price[$key];
+                            $details->pcs_price=$request->per_pcs_price[$key];
                             $details->ctn_price=$request->ctn_price[$key];
                             $details->subtotal_price=$request->subtotal_price[$key];
                             $details->company_id=company()['company_id'];
@@ -131,6 +132,7 @@ class SalesController extends Controller
                             $details->pcs=$request->pcs[$key];
                             $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
                             $details->ctn_price=$request->ctn_price[$key];
+                            $details->pcs_price=$request->per_pcs_price[$key];
                             $details->subtotal_price=$request->subtotal_price[$key];
                             $details->company_id=company()['company_id'];
                             $details->updated_by= currentUserId();
@@ -220,7 +222,7 @@ class SalesController extends Controller
             if($request->new_receive_shop_id){
                 foreach($request->new_receive_shop_id as $i=>$new_receive_shop_id){
                     if($new_receive_shop_id){
-                        $olddue=new ShopBalance;
+                        $olddue=new SalesPayment;
                         $olddue->sales_id=$sales->id;
                         $olddue->new_receive_shop_id=$new_receive_shop_id;
                         $olddue->new_receive_tk=$request->new_receive_tk[$i];

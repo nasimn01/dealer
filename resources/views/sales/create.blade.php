@@ -130,7 +130,6 @@ var row=`
         <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
         <td>
             <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                <option value="0">Select</option>
                 <option value="1">TP</option>
                 <option value="2">TP Free</option>
             </select>

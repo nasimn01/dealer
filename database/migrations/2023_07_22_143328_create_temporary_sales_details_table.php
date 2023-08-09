@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('pcs')->nullable();
             $table->string('select_tp_tpfree')->comment('1=>tp 2=>tpfree')->nullable();
             $table->decimal('ctn_price',14,2)->nullable();
-            $table->decimal('per_pcs_price',14,2)->nullable();
+            $table->decimal('pcs_price',14,2)->nullable();
             $table->decimal('subtotal_price',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();

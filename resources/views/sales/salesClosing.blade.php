@@ -104,7 +104,14 @@
                                                                 <option value="2" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="2" ? "selected":""}}>TP Free</option>
                                                             </select>
                                                         </td>  --}}
-                                                        <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>
+                                                        <td>
+                                                            <input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price">
+                                                            @if($salesdetails->select_tp_tpfree==1)
+                                                            <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
+                                                            @else
+                                                            <input class="form-control" type="hidden" name="tp_free[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
+                                                            @endif
+                                                        </td>
                                                         <td><input class="form-control" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
                                                         <td></td>
                                                     </tr>
