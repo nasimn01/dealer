@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('shop_id')->nullable();
             $table->string('dsr_id')->nullable();
             $table->string('sales_date')->nullable();
-            $table->integer('product_id')->nullable();
-            $table->integer('ctn')->nullable();
-            $table->integer('pcs')->nullable();
-            $table->integer('tp')->nullable();
-            $table->decimal('tp_price',14,2)->nullable();
+            // $table->integer('product_id')->nullable();
+            // $table->integer('ctn')->nullable();
+            // $table->integer('pcs')->nullable();
+            // $table->integer('tp')->nullable();
+            // $table->decimal('tp_price',14,2)->nullable();
             $table->decimal('expenses',14,2)->nullable();
             $table->decimal('commission',14,2)->nullable();
             $table->decimal('final_total',14,2)->nullable();
