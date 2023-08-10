@@ -10,9 +10,9 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route(currentUser().'.sales.receive',encryptor('encrypt',$sales->id))}}">
+                        <form method="post" action="{{route(currentUser().'.sales.receive')}}">
                             @csrf
-                            {{-- <input type="hidden" value="{{ $sales->id }}"> --}}
+                            <input type="hidden" value="{{ $sales->id }}" name="sales_id">
                             <div class="row p-2 mt-4">
                                 {{--  <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
                                     <label for=""><b>Shop/Dsr</b></label>
@@ -106,11 +106,11 @@
                                                         </td>  --}}
                                                         <td>
                                                             <input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price">
-                                                            @if($salesdetails->select_tp_tpfree==1)
+                                                            {{--  @if($salesdetails->select_tp_tpfree==1)
                                                             <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
                                                             @else
                                                             <input class="form-control" type="hidden" name="tp_free[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
-                                                            @endif
+                                                            @endif  --}}
                                                             <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
                                                         </td>
                                                         <td><input class="form-control" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
@@ -247,7 +247,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
@@ -374,7 +373,7 @@ function oldDue(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select shop_name" name="shop_name">
+            <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -384,7 +383,7 @@ function oldDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+                <input type="text" class="form-control" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -394,7 +393,7 @@ function oldDue(){
             </div>
         </div>
     </div>
-`;
+    `;
 
     $('.olddue').append(oldDue);
 }
@@ -408,11 +407,11 @@ function newDue(){
     <div class="row appendnew_remove">
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group">
-                <h5 for="check">{{__('New Due')}}</h5>
+                <h5 for="check">{{__('new Due')}}</h5>
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select shop_name" name="shop_name">
+            <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -422,7 +421,7 @@ function newDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+                <input type="text" class="form-control" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -432,7 +431,7 @@ function newDue(){
             </div>
         </div>
     </div>
-`;
+    `;
 
     $('.newdue').append(newDue);
 }
@@ -444,66 +443,80 @@ function removeNewDue(e){
 
 function newReceive(){
     var newReceive=`
-    <div class="col-lg-2 col-md-3 col-sm-6">
-        <div class="form-group">
-            <h5 for="check">{{__('New Receive')}}</h5>
+    <div class="row append_new_receive">
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group">
+                <h5 for="check">{{__('New Receive')}}</h5>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-        <select class="form-select shop_name" name="shop_name">
-            <option value="">Select</option>
-            @foreach (\App\Models\Settings\Shop::all(); as $shop)
-            <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-            @endforeach
-        </select>
-    </div>
+        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+            <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
+                <option value="">Select</option>
+                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-    <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="form-group">
-            <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="form-group">
+                <input type="text" class="form-control" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+            </div>
         </div>
-    </div>
-    <div class="col-lg-2 col-md-3 col-sm-6">
-        <div class="form-group text-primary" style="font-size:1.5rem">
-             <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group text-primary" style="font-size:1.5rem">
+                <span onClick='removeNewRec(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                 <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
+            </div>
         </div>
     </div>`;
-
     $('.new_receive').append(newReceive);
+}
+function removeNewRec(e){
+    if (confirm("Are you sure you want to remove this row?")) {
+        $(e).closest('.row').remove();
+    }
 }
 function newCheck(){
     var newCheck=`
-    <div class="col-lg-2 col-md-3 col-sm-6">
-        <div class="form-group">
-            <h5 for="check">{{__('Check')}}</h5>
+    <div class="row append_check">
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group">
+                <h5 for="check">{{__('Check')}}</h5>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-        <select class="form-select shop_name" name="shop_name">
-            <option value="">Select</option>
-            @foreach (\App\Models\Settings\Shop::all(); as $shop)
-            <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-6">
-        <div class="form-group">
-            <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk" placeholder="Tk">
+        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+            <select class="form-select check_shop_id" name="check_shop_id[]">
+                <option value="">Select</option>
+                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                @endforeach
+            </select>
         </div>
-    </div>
-    <div class="col-lg-2 col-md-3 col-sm-6">
-        <div class="form-group">
-            <input type="date" class="form-control" value="{{ old('date')}}" name="total_tk" placeholder="Date">
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="form-group">
+                <input type="text" class="form-control" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+            </div>
         </div>
-    </div>
-    <div class="col-lg-1 col-md-3 col-sm-6">
-        <div class="form-group text-primary" style="font-size:1.5rem">
-             <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group">
+                <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date[]" placeholder="Date">
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-3 col-sm-6">
+            <div class="form-group text-primary" style="font-size:1.5rem">
+                <span onClick='removeNewCheck(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                 <span onClick='newCheck();'><i class="bi bi-plus-square-fill"></i></span>
+            </div>
         </div>
     </div>`;
 
     $('.check_no').append(newCheck);
+}
+function removeNewCheck(e){
+    if (confirm("Are you sure you want to remove this row?")) {
+        $(e).closest('.row').remove();
+    }
 }
 function getCtnQty(e){
 
