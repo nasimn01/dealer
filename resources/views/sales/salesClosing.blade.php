@@ -110,7 +110,7 @@
                                                             @if($salesdetails->select_tp_tpfree==1)
                                                                 <input class="form-control" type="hidden" name="price_type[]" value="1">
                                                             @else
-                                                                <input class="form-control" type="hidden" name="price_type[]" value="0">
+                                                                <input class="form-control" type="hidden" name="price_type[]" value="2">
                                                             @endif
                                                             <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
 
