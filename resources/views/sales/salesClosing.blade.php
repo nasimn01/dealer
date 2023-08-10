@@ -93,10 +93,10 @@
                                                         </td>
                                                         <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
                                                         <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
-                                                        <td><input class="form-control ctn_return" type="text" name="ctn_return[]" value="" placeholder="ctn return"></td>
-                                                        <td><input class="form-control pcs_return" type="text" name="pcs_return[]"value="" placeholder="pcs return"></td>
-                                                        <td><input class="form-control ctn_damage" type="text" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
-                                                        <td><input class="form-control pcs_damage" type="text" name="pcs_damage[]"value="" placeholder="pcs damage"></td>
+                                                        <td><input class="form-control ctn_return" type="text" onkeyup="getCtnQty(this)" name="ctn_return[]" value="" placeholder="ctn return"></td>
+                                                        <td><input class="form-control pcs_return" type="text" onkeyup="getCtnQty(this)" name="pcs_return[]"value="" placeholder="pcs return"></td>
+                                                        <td><input class="form-control ctn_damage" type="text" onkeyup="getCtnQty(this)" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
+                                                        <td><input class="form-control pcs_damage" type="text" onkeyup="getCtnQty(this)" name="pcs_damage[]"value="" placeholder="pcs damage"></td>
                                                         {{--  <td style="width: 110px;">
                                                             <select class="form-select" name="select_tp_tpfree">
                                                                 <option value="">Select</option>
@@ -111,6 +111,7 @@
                                                             @else
                                                             <input class="form-control" type="hidden" name="tp_free[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
                                                             @endif
+                                                            <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
                                                         </td>
                                                         <td><input class="form-control" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
                                                         <td></td>
@@ -503,6 +504,27 @@ function newCheck(){
     </div>`;
 
     $('.check_no').append(newCheck);
+}
+function getCtnQty(e){
+
+    let product_id = $(e).closest('tr').find('.product_id').val();
+    let returnCtn=$(e).closest('tr').find('.ctn_return').val()?parseFloat($(e).closest('tr').find('.ctn_return').val()):0;
+    let returnPcs=$(e).closest('tr').find('.pcs_return').val()?parseFloat($(e).closest('tr').find('.pcs_return').val()):0;
+    let ctnDamage=$(e).closest('tr').find('.ctn_damage').val()?parseFloat($(e).closest('tr').find('.ctn_damage').val()):0;
+    let pcsDamage=$(e).closest('tr').find('.pcs_damage').val()?parseFloat($(e).closest('tr').find('.pcs_damage').val()):0;
+    $.ajax({
+        url: "{{route(currentUser().'.unit_data_get')}}",
+        type: "GET",
+        dataType: "json",
+        data: { product_id:product_id },
+        success: function(data) {
+            console.log(data);
+            let totalReturn=parseFloat(data*returnCtn)+returnPcs;
+            let totalDamage=parseFloat(data*ctnDamage)+pcsDamage;
+            let totalReceive=totalReturn+totalDamage;
+            $(e).closest('tr').find('.totalquantity_pcs').val(totalReceive);
+        },
+    });
 }
 </script>
 @endpush

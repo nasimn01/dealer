@@ -175,7 +175,7 @@ function productData(e) {
             $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
             if(data){
                 let pcstp=parseFloat(tp / data).toFixed(2);
-                let pcstpFree=parseFloat(ctn * tpFree).toFixed(2);
+                let pcstpFree=parseFloat(tpFree / data).toFixed(2);
                 let tpPcsPrice = parseFloat((tp / data) * pcs);
                 let tpFreePcsPrice = parseFloat((tpFree / data) * pcs);
                 var TpSubtotal = parseFloat((ctn * tp) + tpPcsPrice).toFixed(2);
