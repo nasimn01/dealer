@@ -106,11 +106,14 @@
                                                         </td>  --}}
                                                         <td>
                                                             <input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price">
-                                                            {{--  @if($salesdetails->select_tp_tpfree==1)
-                                                            <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
+                                                            <input class="form-control select_tp_tpfree" type="hidden" name="select_tp_tpfree[]" value="{{ $salesdetails->select_tp_tpfree }}">
+                                                            @if($salesdetails->select_tp_tpfree==1)
+                                                                <input class="form-control" type="hidden" name="price_type[]" value="1">
                                                             @else
-                                                            <input class="form-control" type="hidden" name="tp_free[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
-                                                            @endif  --}}
+                                                                <input class="form-control" type="hidden" name="price_type[]" value="0">
+                                                            @endif
+                                                            <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
+
                                                             <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
                                                         </td>
                                                         <td><input class="form-control" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>

@@ -293,8 +293,11 @@ class SalesController extends Controller
                                 $details->ctn_damage=$request->ctn_damage[$key];
                                 $details->pcs_damage=$request->pcs_damage[$key];
                                 $details->ctn_price=$request->ctn_price[$key];
-                                // $details->tp_price=$request->tp_price[$key];
-                                // $details->tp_free=$request->tp_free[$key];
+                                if($request->price_type[$key]=="1"){
+                                    $details->tp_price=$request->tp_price[$key];
+                                }else{
+                                    $details->tp_free=$request->tp_price[$key];
+                                }
                                 $details->totalquantity_pcs=$request->totalquantity_pcs[$key];
                                 $details->subtotal_price=$request->subtotal_price[$key];
                                 // $details->total_taka=$request->total_taka[$key];
@@ -358,6 +361,8 @@ class SalesController extends Controller
                 }
 
             }
+            Toastr::success('Sales Closing Successfully Done!');
+            return redirect()->back();
         }
         catch (Exception $e){
             dd($e);
