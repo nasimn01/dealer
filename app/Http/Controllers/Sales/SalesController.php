@@ -123,6 +123,7 @@ class SalesController extends Controller
             if($data->save()){
                 if($request->product_id){
                     $dl=TemporarySalesDetails::where('sales_id',$data->id)->delete();
+                    $dlstock=Stock::where('sales_id',$data->id)->delete();
                     foreach($request->product_id as $key => $value){
                         if($value){
                             $details = new TemporarySalesDetails;
@@ -136,7 +137,19 @@ class SalesController extends Controller
                             $details->subtotal_price=$request->subtotal_price[$key];
                             $details->company_id=company()['company_id'];
                             $details->updated_by= currentUserId();
-                            $details->save();
+                            if($details->save()){
+                                $stock=new Stock;
+                                $stock->product_id=$request->product_id[$key];
+                                $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                $stock->status_history=1;
+                                $stock->status=1;
+                                if($request->select_tp_tpfree[$key]==1){
+                                    $stock->tp_price=$request->per_pcs_price[$key];
+                                }else{
+                                    $stock->tp_free=$request->per_pcs_price[$key];
+                                }
+                                $stock->save();
+                            }
                         }
                     }
                 }
