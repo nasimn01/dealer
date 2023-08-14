@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('product_id')->nullable();
             $table->integer('ctn')->nullable();
             $table->integer('pcs')->nullable();
+            $table->integer('totalquantity_pcs')->nullable();
             $table->string('select_tp_tpfree')->comment('1=>tp 2=>tpfree')->nullable();
             $table->decimal('ctn_price',14,2)->nullable();
             $table->decimal('pcs_price',14,2)->nullable();

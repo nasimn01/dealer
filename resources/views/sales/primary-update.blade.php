@@ -56,8 +56,9 @@
                                                 <th scope="col">{{__('Product Name')}}</th>
                                                 <th scope="col">{{__('CTN')}}</th>
                                                 <th scope="col">{{__('PCS')}}</th>
-                                                <th scope="col">{{__('CTN')}}</th>
+                                                <th scope="col">{{__('Tp/Tpfree')}}</th>
                                                 <th scope="col">{{__('CTN Price')}}</th>
+                                                <th scope="col">{{__('PCS Price')}}</th>
                                                 <th scope="col">{{__('Sub-Total')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
@@ -79,13 +80,16 @@
                                                         <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="{{ $salesdetails->pcs }}" placeholder="pcs"></td>
                                                         <td>
                                                             <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                                                                <option value="0">Select</option>
                                                                 <option value="1" {{ $salesdetails->select_tp_tpfree ==1?"selected":"" }}>TP</option>
                                                                 <option value="2" {{ $salesdetails->select_tp_tpfree ==2?"selected":"" }}>TP Free</option>
                                                             </select>
                                                         </td>
                                                         <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="{{ $salesdetails->ctn_price }}" placeholder="Tp Price"></td>
-                                                        <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ $salesdetails->subtotal_price }}" placeholder="Sub-Total"></td>
+                                                        <td><input readonly class="form-control per_pcs_price" name="per_pcs_price[]" type="text" value="{{ $salesdetails->pcs_price }}" placeholder="PCS Price"></td>
+                                                        <td>
+                                                            <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ $salesdetails->subtotal_price }}" placeholder="Sub-Total">
+                                                            <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
+                                                        </td>
                                                         <td>
                                                             <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                         </td>
@@ -95,7 +99,7 @@
                                         </tbody>
                                     </table>
                                     <div class="row mb-1">
-                                        <div class="col-lg-3"></div>
+                                        <div class="col-lg-4"></div>
                                         <div class="col-lg-5 mt-2 pe-2 text-end">
                                             <label for="" class="form-group"><h4>Total</h4></label>
                                         </div>
@@ -137,13 +141,16 @@ var row=`
         <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
         <td>
             <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                <option value="0">Select</option>
                 <option value="1">TP</option>
                 <option value="2">TP Free</option>
             </select>
         </td>
         <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
-        <td><input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total"></td>
+        <td><input readonly class="form-control per_pcs_price" name="per_pcs_price[]" type="text" value="" placeholder="PCS Price"></td>
+        <td>
+            <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
+            <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
+        </td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
             <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -160,46 +167,61 @@ function removeRow(e){
 }
 
 function productData(e) {
-    var selectedOption =parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
-    //var salesPriceInput = $(e).closest('tr').find('.ctn_price');
-    var tp = $(e).closest('tr').find('#product_id option:selected').attr('data-tp');
-    var tpFree = $(e).closest('tr').find('#product_id option:selected').attr('data-tp_free');
-    var productId = $(e).closest('tr').find('#product_id option:selected').val();
-    var ctn = $(e).closest('tr').find('.ctn').val();
-    var pcs = $(e).closest('tr').find('.pcs').val();
+    var selectedOption = parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
+    //console.log(selectedOption)
+    var tp = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
+    var tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
+    var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
+    var ctn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
+    var pcs = $(e).closest('tr').find('.pcs').val() ? parseFloat($(e).closest('tr').find('.pcs').val()) : 0;
     $.ajax({
         url: "{{route(currentUser().'.unit_data_get')}}",
         type: "GET",
         dataType: "json",
-        data: { product_id:productId },
-        success: function(data) {
-            let tpPcsPrice=(tp/data)*pcs;
-            let tpFreePcsPrice=(tpFree/data)*pcs;
-            var TpSubtotal=parseFloat((ctn*tp)+tpPcsPrice).toFixed(2);
-            var TpFreeSubtotal=parseFloat((ctn*tp)+tpFreePcsPrice).toFixed(2);
-            if (selectedOption === 1) {
-                $(e).closest('tr').find('.ctn_price').val(tp);
-                $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
-                total_calculate();
-            } else if (selectedOption === 2) {
-                $(e).closest('tr').find('.ctn_price').val(tpFree);
-                $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
-                total_calculate();
-            } else {
-                $(e).closest('tr').find('.ctn_price').val("");
-            }
+        data: { product_id: productId },
+        success: function (data) {
+            // this function have doController UnitDataGet return qty
+            //console.log(data)
+            let totalqty=((data*ctn)+pcs);
+            $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
+            if(data){
+                let pcstp=parseFloat(tp / data).toFixed(2);
+                let pcstpFree=parseFloat(tpFree / data).toFixed(2);
+                let tpPcsPrice = parseFloat((tp / data) * pcs);
+                let tpFreePcsPrice = parseFloat((tpFree / data) * pcs);
+                var TpSubtotal = parseFloat((ctn * tp) + tpPcsPrice).toFixed(2);
+                var TpFreeSubtotal = parseFloat((ctn * tpFree) + tpFreePcsPrice).toFixed(2);
 
+                if (selectedOption === 1) {
+                    $(e).closest('tr').find('.ctn_price').val(tp);
+                    $(e).closest('tr').find('.per_pcs_price').val(pcstp);
+                    $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
+                } else if (selectedOption === 2) {
+                    $(e).closest('tr').find('.ctn_price').val(tpFree);
+                    $(e).closest('tr').find('.per_pcs_price').val(pcstpFree);
+                    $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
+                } else {
+                    $(e).closest('tr').find('.ctn_price').val("");
+                    $(e).closest('tr').find('.subtotal_price').val("");
+                }
+                total_calculate();
+            }
+        },
+        error: function () {
+            console.error("Error fetching data from the server.");
         },
     });
+
 }
+
 
 function total_calculate() {
     var subtotal = 0;
     $('.subtotal_price').each(function() {
         subtotal += parseFloat($(this).val());
     });
-    $('.total').text(subtotal.toFixed(2));
-    $('.total_p').val(subtotal.toFixed(2));
+    $('.total').text(parseFloat(subtotal).toFixed(2));
+    $('.total_p').val(parseFloat(subtotal).toFixed(2));
 
 }
 

@@ -88,11 +88,11 @@
                                         </tbody>
                                     </table>
                                     <div class="row mb-1">
-                                        <div class="col-lg-3"></div>
+                                        <div class="col-lg-4"></div>
                                         <div class="col-lg-5 mt-2 text-end">
                                             <label for="" class="form-group"><h4>Total</h4></label>
                                         </div>
-                                        <div class="col-lg-3 mt-2 text-end">
+                                        <div class="col-lg-2 mt-2 text-end">
                                             <label for="" class="form-group"><h5 class="total">0.00</h5></label>
                                             <input type="hidden" name="total" class="total_p">
                                         </div>

@@ -58,6 +58,7 @@ class SalesController extends Controller
                             $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
                             $details->pcs_price=$request->per_pcs_price[$key];
                             $details->ctn_price=$request->ctn_price[$key];
+                            $details->totalquantity_pcs=$request->totalquantity_pcs[$key];
                             $details->subtotal_price=$request->subtotal_price[$key];
                             $details->company_id=company()['company_id'];
                             $details->created_by= currentUserId();
@@ -66,8 +67,8 @@ class SalesController extends Controller
                                 $stock->sales_id=$data->id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
-                                $stock->status_history=1;
-                                $stock->status=1;
+                                $stock->status_history=0;
+                                $stock->status=0;
                                 if($request->select_tp_tpfree[$key]==1){
                                     $stock->tp_price=$request->per_pcs_price[$key];
                                 }else{
@@ -135,15 +136,17 @@ class SalesController extends Controller
                             $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
                             $details->ctn_price=$request->ctn_price[$key];
                             $details->pcs_price=$request->per_pcs_price[$key];
+                            $details->totalquantity_pcs=$request->totalquantity_pcs[$key];
                             $details->subtotal_price=$request->subtotal_price[$key];
                             $details->company_id=company()['company_id'];
                             $details->updated_by= currentUserId();
                             if($details->save()){
                                 $stock=new Stock;
+                                $stock->sales_id=$data->id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
-                                $stock->status_history=1;
-                                $stock->status=1;
+                                $stock->status_history=0;
+                                $stock->status=0;
                                 if($request->select_tp_tpfree[$key]==1){
                                     $stock->tp_price=$request->per_pcs_price[$key];
                                 }else{
@@ -160,7 +163,6 @@ class SalesController extends Controller
             Toastr::warning('Please try Again!');
              return redirect()->back();
             }
-
         }
         catch (Exception $e){
             dd($e);
