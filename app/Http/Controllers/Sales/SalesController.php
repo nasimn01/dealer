@@ -63,6 +63,7 @@ class SalesController extends Controller
                             $details->created_by= currentUserId();
                             if($details->save()){
                                 $stock=new Stock;
+                                $stock->sales_id=$data->id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
                                 $stock->status_history=1;
