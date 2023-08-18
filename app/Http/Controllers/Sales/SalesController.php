@@ -322,6 +322,20 @@ class SalesController extends Controller
                                 $details->company_id=company()['company_id'];
                                 $details->created_by= currentUserId();
                                 $details->save();
+                                // if($details->save()){
+                                //     $stock=new Stock;
+                                //     $stock->sales_id=$sales->id;
+                                //     $stock->product_id=$request->product_id[$key];
+                                //     $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                //     $stock->status_history=1;
+                                //     $stock->status=1;
+                                //     if($request->select_tp_tpfree[$key]==1){
+                                //         $stock->tp_price=$request->per_pcs_price[$key];
+                                //     }else{
+                                //         $stock->tp_free=$request->per_pcs_price[$key];
+                                //     }
+                                //     $stock->save();
+                                // }
                             }
                         }
                     }
