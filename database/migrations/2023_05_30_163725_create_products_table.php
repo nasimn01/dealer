@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('group_id')->nullable();
             $table->integer('category_id')->nullable();
+            $table->integer('distributor_id')->nullable();
             $table->string('product_name')->nullable();
             $table->decimal('dp_price',14,2)->nullable();
             $table->decimal('tp_price',14,2)->nullable();
