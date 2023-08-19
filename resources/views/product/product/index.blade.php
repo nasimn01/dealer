@@ -22,6 +22,7 @@
                                     <th scope="col">{{__('DP Price')}}</th>
                                     <th scope="col">{{__('TP Price')}}</th>
                                     <th scope="col">{{__('MRP Price')}}</th>
+                                    <th scope="col">{{__('Distributor')}}</th>
                                     {{--  <th scope="col">{{__('Unit')}}</th>  --}}
                                     <th scope="col">{{__('Image')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -37,6 +38,7 @@
                                     <td>{{$p->dp_price}}</td>
                                     <td>{{$p->tp_price}}</td>
                                     <td>{{$p->mrp_price}}</td>
+                                    <td>{{$p->distributor?->name}}</td>
                                     {{--  <td>{{$p->unit?->name}}</td>  --}}
                                     <td><img width="50px" src="{{asset('uploads/product_img/'.company()['company_id'].'/'.$p->image)}}" alt=""></td>
                                     <td class="white-space-nowrap">

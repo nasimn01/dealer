@@ -28,15 +28,26 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
-                                                <select class="choices form-select supplier_id" name="supplier_id" onchange="getBalance()" required>
-                                                    <option value="">Select Distributor</option>
-                                                    @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
-                                                        @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
-                                                        <option data-balance="{{ $balance }}" value="{{ $sup->id }}">{{ $sup->name }}</option>
-                                                    @empty
-                                                        <option value="">No Data Found</option>
-                                                    @endforelse
-                                                </select>
+                                                @if($user)
+                                                    <select class="form-select supplier_id" name="supplier_id" required  onload="getBalance()">
+                                                        @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
+                                                            @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
+                                                            <option data-balance="{{ $balance }}" value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                        @empty
+                                                            <option value="">No Data Found</option>
+                                                        @endforelse
+                                                    </select>
+                                                @else
+                                                    <select class="form-select supplier_id" name="supplier_id" onchange="getBalance()" required>
+                                                        <option value="">Select Distributor</option>
+                                                        @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                            @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
+                                                            <option data-balance="{{ $balance }}" value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                        @empty
+                                                            <option value="">No Data Found</option>
+                                                        @endforelse
+                                                    </select>
+                                                @endif
                                             </div>
                                         </div>
 
@@ -69,13 +80,23 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="product">{{__('Product')}}<span class="text-danger">*</span></label>
-                                                <select class=" choices form-select" id="product_id">
-                                                    <option value="">Select Product</option>
-                                                    @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                    <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                                                    @empty
-                                                    @endforelse
-                                                </select>
+                                                @if($user)
+                                                    <select class=" choices form-select" id="product_id" onchange="getBalance()">
+                                                        <option value="">Select Product</option>
+                                                        @forelse (\App\Models\Product\Product::where(company())->where('distributor_id',$user->distributor_id)->get(); as $pro)
+                                                        <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        @empty
+                                                        @endforelse
+                                                    </select>
+                                                @else
+                                                    <select class=" choices form-select" id="product_id">
+                                                        <option value="">Select Product</option>
+                                                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                                                        <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        @empty
+                                                        @endforelse
+                                                    </select>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -165,7 +186,7 @@
             let freeRatio=$('#product_id').find(":selected").data('ratio');
             let freeQty=$('#product_id').find(":selected").data('free');
             let ProductId=$('#product_id').find(":selected").val();
-            let product_id= $('#product_id').val();
+            let product_id= $('#product_id').data('value');
             let qty = $('#qty').val();
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",

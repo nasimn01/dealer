@@ -143,6 +143,19 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
+                                            <label class="" for="cat">{{__('Distributor')}}</label>
+                                            <select class="choices form-select supplier_id" name="distributor_id">
+                                                <option value="">Select Distributor</option>
+                                                @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                    <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                @empty
+                                                    <option value="">No Data Found</option>
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
                                             <label for="image">{{__('Image')}}</label>
                                             <input type="file" class="form-control" value="{{ old('image')}}" name="image">
 

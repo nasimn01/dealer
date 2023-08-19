@@ -165,6 +165,15 @@ Route::group(['middleware'=>isManager::class],function(){
     Route::prefix('manager')->group(function(){
         Route::get('/dashboard', [dash::class,'managerDashboard'])->name('manager.dashboard');
 
+        Route::resource('docontroll',docon::class,['as'=>'manager']);
+        Route::get('doreceive',[docon::class,'DoRecive'])->name('manager.doreceive');
+        Route::get('do-data-get',[docon::class,'doDataGet'])->name('manager.do_data_get');
+        Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('manager.unit_data_get');
+        Route::post('doreceive', [docon::class,'DoRecive_edit'])->name('manager.do.accept_do_edit');
+        // Route::post('product-up-for-do', [docon::class, 'productUp'])->name('doscreenProductUp');
+        Route::get('doscreenProductUp',[docon::class,'productUpdate'])->name('manager.doscreenProductUp');
+        Route::get('get-product-data-ajax',[docon::class,'getProductData'])->name('manager.get_ajax_productdata');
+
     });
 });
 

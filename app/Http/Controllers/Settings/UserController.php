@@ -58,6 +58,7 @@ class UserController extends Controller
         try{
             $user=new User;
             $user->name=$request->userName;
+            $user->distributor_id=$request->distributor_id;
             $user->contact_no=$request->contactNumber;
             $user->email=$request->userEmail;
             $user->password=Hash::make($request->password);
@@ -121,6 +122,7 @@ class UserController extends Controller
             $user=User::findOrFail(encryptor('decrypt',$id));
             $user->name=$request->userName;
             $user->contact_no=$request->contactNumber;
+            $user->distributor_id=$request->distributor_id;
             $user->email=$request->userEmail;
             if($request->has('password') && $request->password)
                 $user->password=Hash::make($request->password);

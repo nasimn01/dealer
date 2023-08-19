@@ -54,6 +54,7 @@ class ProductController extends Controller
             $data=new Product;
             $data->group_id = $request->group_id;
             $data->category_id = $request->category_id;
+            $data->distributor_id = $request->distributor_id;
             $data->product_name = $request->product_name;
             $data->dp_price = $request->dp_price;
             $data->tp_price = $request->tp_price;
@@ -129,6 +130,7 @@ class ProductController extends Controller
         try{
             $data= Product::findOrFail(encryptor('decrypt',$id));
             $data->group_id = $request->group_id;
+            $data->distributor_id = $request->distributor_id;
             $data->category_id = $request->category_id;
             $data->product_name = $request->product_name;
             $data->dp_price = $request->dp_price;

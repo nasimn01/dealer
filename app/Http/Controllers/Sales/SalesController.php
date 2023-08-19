@@ -342,11 +342,11 @@ class SalesController extends Controller
                                         $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
                                         $stock->status_history=1;
                                         $stock->status=1;
-                                        if($request->select_tp_tpfree[$key]==1){
-                                            $stock->tp_price=$request->per_pcs_price[$key];
-                                        }else{
-                                            $stock->tp_free=$request->per_pcs_price[$key];
-                                        }
+                                        // if($request->select_tp_tpfree[$key]==1){
+                                        //     $stock->tp_price=$request->per_pcs_price[$key];
+                                        // }else{
+                                        //     $stock->tp_free=$request->per_pcs_price[$key];
+                                        // }
                                         $stock->save();
                                     }
                                     if($request->ctn_damage[$key] >0 || $request->pcs_damage[$key]>0){
@@ -354,13 +354,13 @@ class SalesController extends Controller
                                         $stock->sales_id=$sales->id;
                                         $stock->product_id=$request->product_id[$key];
                                         $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
-                                        $stock->status_history=1;
-                                        $stock->status=2;
-                                        if($request->select_tp_tpfree[$key]==1){
-                                            $stock->tp_price=$request->per_pcs_price[$key];
-                                        }else{
-                                            $stock->tp_free=$request->per_pcs_price[$key];
-                                        }
+                                        $stock->status_history=2;
+                                        $stock->status=1;
+                                        // if($request->select_tp_tpfree[$key]==1){
+                                        //     $stock->tp_price=$request->per_pcs_price[$key];
+                                        // }else{
+                                        //     $stock->tp_free=$request->per_pcs_price[$key];
+                                        // }
                                         $stock->save();
                                     }
                                 }

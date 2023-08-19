@@ -67,6 +67,7 @@ class User extends Authenticatable
     public function branch(){
         return $this->belongsTo(Branch::class);
     }
+
     public function distributor(){
         return $this->belongsTo(Supplier::class,'distributor_id','id');
     }

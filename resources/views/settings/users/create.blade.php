@@ -87,7 +87,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="" for="cat">{{__('Distributor')}}</label>
-                                            <select class="choices form-select supplier_id" name="supplier_id">
+                                            <select class="choices form-select supplier_id" name="distributor_id">
                                                 <option value="">Select Distributor</option>
                                                 @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                     @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp

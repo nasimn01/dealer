@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Settings\Unit;
+use App\Models\User;
 use Exception;
 use DB;
 use Carbon\Carbon;
@@ -39,7 +40,8 @@ class DOController extends Controller
      */
     public function create()
     {
-        return view('do.create');
+        $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
+        return view('do.create',compact('user'));
     }
 
     /**
