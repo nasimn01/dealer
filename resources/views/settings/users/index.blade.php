@@ -26,7 +26,8 @@
                                 <th scope="col">{{__('Contact')}}</th>
                                 <th scope="col">{{__('Image')}}</th>
                                 <th scope="col">{{__('Role')}}</th>
-                                
+                                <th scope="col">{{__('Distributor')}}</th>
+
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -41,6 +42,7 @@
                                 <!-- <td>@if($p->status == 1) {{__('Active') }} @else {{__('Inactive') }} @endif</td> -->
                                 <!-- or <td>{{ $p->status == 1?"Active":"Inactive" }}</td>-->
                                 <td>{{$p->role?->type}}</td>
+                                <td>{{$p->distributor?->name}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.users.edit',encryptor('encrypt',$p->id))}}">
                                         <i class="bi bi-pencil-square"></i>

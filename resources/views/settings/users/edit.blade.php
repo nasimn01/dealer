@@ -44,7 +44,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                
+
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="userEmail">{{__('Email')}}</label>
@@ -79,7 +79,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                
+
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="password">{{__('Password')}}<span class="text-danger">*</span></label>
@@ -87,6 +87,20 @@
                                                 @if($errors->has('password'))
                                                     <span class="text-danger"> {{ $errors->first('password') }}</span>
                                                 @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="" for="cat">{{__('Distributor')}}</label>
+                                            <select class="choices form-select supplier_id" name="supplier_id">
+                                                <option value="">Select Distributor</option>
+                                                @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                    @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
+                                                    <option data-balance="{{ $balance }}" value="{{ $sup->id }}"{{ $user->distributor_id==$sup->id?'selected':''  }}>{{ $sup->name }}</option>
+                                                @empty
+                                                    <option value="">No Data Found</option>
+                                                @endforelse
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -104,7 +118,7 @@
                                     <div class="col-12 d-flex justify-content-end">
                                     <img width="80px" height="40px" class="float-first" src="{{asset('images/users/'.company()['company_id'].'/'.$user->image)}}" alt="">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">{{__('Save')}}</button>
-                                        
+
                                     </div>
                                 </div>
                             </form>

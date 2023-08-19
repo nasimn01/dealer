@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Settings\Company;
 use App\Models\Settings\Branch;
+use App\Models\Settings\Supplier;
 
 
 class User extends Authenticatable
@@ -65,5 +66,8 @@ class User extends Authenticatable
     */
     public function branch(){
         return $this->belongsTo(Branch::class);
+    }
+    public function distributor(){
+        return $this->belongsTo(Supplier::class,'distributor_id','id');
     }
 }
