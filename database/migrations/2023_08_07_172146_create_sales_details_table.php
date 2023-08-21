@@ -26,7 +26,8 @@ return new class extends Migration
             $table->decimal('ctn_price',14,2)->nullable();
             $table->decimal('tp_price',14,2)->nullable();
             $table->decimal('tp_free',14,2)->nullable();
-            $table->decimal('totalquantity_pcs',14,2)->nullable();
+            $table->decimal('total_return_pcs',14,2)->nullable();
+            $table->decimal('total_sales_pcs',14,2)->nullable();
             $table->decimal('subtotal_price',14,2)->nullable();
             // $table->string('select_tp_tpfree')->comment('1=>tp 2=>tpfree')->nullable();
             $table->string('status')->default(0);

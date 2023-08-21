@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
+use \App\Models\Product\Product;
 use Exception;
 
 class SalesController extends Controller
@@ -275,7 +276,8 @@ class SalesController extends Controller
         $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
         $shops=Shop::all();
         $dsr=User::where('role_id',4)->get();
-        return view('sales.salesClosing',compact('sales','shops','dsr'));
+        $product=Product::where(company())->get();
+        return view('sales.salesClosing',compact('sales','shops','dsr','product'));
     }
     public function salesReceive(Request $request)
     { // dd($request->all());
@@ -308,13 +310,14 @@ class SalesController extends Controller
                                 $details->pcs_return=$request->pcs_return[$key];
                                 $details->ctn_damage=$request->ctn_damage[$key];
                                 $details->pcs_damage=$request->pcs_damage[$key];
-                                $details->ctn_price=$request->ctn_price[$key];
+                                // $details->ctn_price=$request->ctn_price[$key];
                                 if($request->price_type[$key]=="1"){
                                     $details->tp_price=$request->tp_price[$key];
                                 }else{
                                     $details->tp_free=$request->tp_price[$key];
                                 }
-                                $details->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                $details->total_return_pcs=$request->total_return_pcs[$key];
+                                $details->total_sales_pcs=$request->total_sales_pcs[$key];
                                 $details->subtotal_price=$request->subtotal_price[$key];
                                 // $details->total_taka=$request->total_taka[$key];
                                 // $details->select_tp_tpfree=$request->select_tp_tpfree[$key];
@@ -339,7 +342,7 @@ class SalesController extends Controller
                                         $stock=new Stock;
                                         $stock->sales_id=$sales->id;
                                         $stock->product_id=$request->product_id[$key];
-                                        $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                        $stock->totalquantity_pcs=$request->total_return_pcs[$key];
                                         $stock->status_history=1;
                                         $stock->status=1;
                                         // if($request->select_tp_tpfree[$key]==1){
@@ -353,7 +356,7 @@ class SalesController extends Controller
                                         $stock=new Stock;
                                         $stock->sales_id=$sales->id;
                                         $stock->product_id=$request->product_id[$key];
-                                        $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                        $stock->totalquantity_pcs=$request->total_return_pcs[$key];
                                         $stock->status_history=2;
                                         $stock->status=1;
                                         // if($request->select_tp_tpfree[$key]==1){

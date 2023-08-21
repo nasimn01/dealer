@@ -67,7 +67,8 @@
                                                 <th colspan="2">{{ __('Return') }}</th>
                                                 <th colspan="2" class="text-danger">{{ __('Damage') }}</th>
                                                 {{--  <th rowspan="2">{{__('TP/Tp Free')}}</th>  --}}
-                                                <th rowspan="2">{{__('CTN(Price)')}}</th>
+                                                <th rowspan="2">{{__('PCS(Price)')}}</th>
+                                                {{--  <th rowspan="2">{{__('CTN(Price)')}}</th>  --}}
                                                 <th rowspan="2">{{__('Sub-Total(Price)')}}</th>
                                                 <th rowspan="2"></th>
                                             </tr>
@@ -83,13 +84,15 @@
                                                 @foreach ($sales->temporary_sales_details as $salesdetails)
                                                     <tr>
                                                         <td>
-                                                            <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
+                                                            <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
+                                                            <input readonly class="form-control product_id" type="hidden" name="product_id[]" value="{{ $salesdetails->product_id }}">
+                                                            {{--  <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
                                                                 <option value="">Select Product</option>
                                                                 @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                                 <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}" {{ old('product_id', $pro->id)==$salesdetails->product_id ? "selected":""}}>{{ $pro->product_name }}</option>
                                                                 @empty
                                                                 @endforelse
-                                                            </select>
+                                                            </select>  --}}
                                                         </td>
                                                         <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
                                                         <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
@@ -105,7 +108,7 @@
                                                             </select>
                                                         </td>  --}}
                                                         <td>
-                                                            <input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price">
+                                                            <input class="form-control" type="text" name="pcs_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}" placeholder="PCS Price">
                                                             <input class="form-control select_tp_tpfree" type="hidden" name="select_tp_tpfree[]" value="{{ $salesdetails->select_tp_tpfree }}">
                                                             @if($salesdetails->select_tp_tpfree==1)
                                                                 <input class="form-control" type="hidden" name="price_type[]" value="1">
@@ -114,8 +117,10 @@
                                                             @endif
                                                             <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
 
-                                                            <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
+                                                            <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
+                                                            <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="">
                                                         </td>
+                                                        {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
                                                         <td><input class="form-control" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
                                                         <td></td>
                                                     </tr>
@@ -342,7 +347,8 @@
                         <option value="2">TP Free</option>
                     </select>
                 </td>  --}}
-                <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>
+                <td><input class="form-control" type="text" name="pcs_price[]" value="" placeholder="PCS Price"></td>
+                {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -524,6 +530,8 @@ function removeNewCheck(e){
 function getCtnQty(e){
 
     let product_id = $(e).closest('tr').find('.product_id').val();
+    let Ctn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
+    let Pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
     let returnCtn=$(e).closest('tr').find('.ctn_return').val()?parseFloat($(e).closest('tr').find('.ctn_return').val()):0;
     let returnPcs=$(e).closest('tr').find('.pcs_return').val()?parseFloat($(e).closest('tr').find('.pcs_return').val()):0;
     let ctnDamage=$(e).closest('tr').find('.ctn_damage').val()?parseFloat($(e).closest('tr').find('.ctn_damage').val()):0;
@@ -534,11 +542,16 @@ function getCtnQty(e){
         dataType: "json",
         data: { product_id:product_id },
         success: function(data) {
-            console.log(data);
+            let otdTotalQty=(Ctn*data)+Pcs;
             let totalReturn=parseFloat(data*returnCtn)+returnPcs;
             let totalDamage=parseFloat(data*ctnDamage)+pcsDamage;
+            let totalSalesQty=otdTotalQty-(totalReturn+totalDamage);
             let totalReceive=totalReturn+totalDamage;
-            $(e).closest('tr').find('.totalquantity_pcs').val(totalReceive);
+            //console.log(otdTotalQty);
+            //console.log(totalSalesQty);
+            //console.log(totalReceive);
+            $(e).closest('tr').find('.total_return_pcs').val(totalReceive);
+            $(e).closest('tr').find('.total_sales_pcs').val(totalSalesQty);
         },
     });
 }
