@@ -178,7 +178,8 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                                <input type="hidden" class="form-control o_due_tk" value="">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -205,7 +206,8 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                                                <input type="hidden" class="form-control n_due_tk" value="">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -232,7 +234,8 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                                                <input type="hidden" class="form-control n_receive_tk" value="">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -257,7 +260,8 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                                                <input type="hidden" class="form-control c_shop_tk" value="">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -328,7 +332,7 @@
         var row=`
             <tr>
                 <td colspan="3">
-                    <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="return_product_id[]">
+                    <select class="choices form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
                         <option value="">Select Product</option>
                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                         <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -336,10 +340,10 @@
                         @endforelse
                     </select>
                 </td>
-                <td><input class="form-control ctn" type="text" name="ctn_return[]" value="" placeholder="ctn return"></td>
-                <td><input class="form-control pcs" type="text" name="pcs_return[]"value="" placeholder="pcs return"></td>
-                <td><input class="form-control ctn" type="text" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
-                <td><input class="form-control pcs" type="text" name="pcs_damage[]"value="" placeholder="pcs damage"></td>
+                <td><input class="form-control old_ctn" type="text" onkeyup="getCtnQty(this)" name="old_ctn_return[]" value="" placeholder="ctn return"></td>
+                <td><input class="form-control old_pcs" type="text" onkeyup="getCtnQty(this)" name="old_pcs_return[]" value="" placeholder="pcs return"></td>
+                <td><input class="form-control old_ctn_damage" type="text" onkeyup="getCtnQty(this)" name="old_ctn_damage[]" value="" placeholder="ctn damage"></td>
+                <td><input class="form-control old_pcs_damage" type="text" onkeyup="getCtnQty(this)" name="old_pcs_damage[]" value="" placeholder="pcs damage"></td>
                 {{--  <td>
                     <select class="form-select" name="select_tp_tpfree">
                         <option value="">Select</option>
@@ -347,7 +351,7 @@
                         <option value="2">TP Free</option>
                     </select>
                 </td>  --}}
-                <td><input class="form-control" type="text" name="pcs_price[]" value="" placeholder="PCS Price"></td>
+                <td><input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this)" name="old_pcs_price[]" value="" placeholder="PCS Price"></td>
                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
@@ -377,14 +381,45 @@ function primarySubTotal() {
     $('.subtotal_price').each(function() {
         psubtotal += parseFloat($(this).val());
     });
-    // $('.total').text(parseFloat(psubtotal).toFixed(2));
     $('.ptotal_taka').val(parseFloat(psubtotal).toFixed(2));
+
+}
+function totalOldDue() {
+    var tolddue = 0;
+    $('.old_due_tk').each(function() {
+        tolddue += parseFloat($(this).val());
+    });
+    $('.o_due_tk').val(parseFloat(tolddue).toFixed(2));
+
+}
+function totalNewDue() {
+    var toNwdue = 0;
+    $('.new_due_tk').each(function() {
+        toNwdue += parseFloat($(this).val());
+    });
+    $('.n_due_tk').val(parseFloat(toNwdue).toFixed(2));
+
+}
+function totalNewReceive() {
+    var toNwRec = 0;
+    $('.new_receive_tk').each(function() {
+        toNwRec += parseFloat($(this).val());
+    });
+    $('.n_receive_tk').val(parseFloat(toNwRec).toFixed(2));
+
+}
+function totalNewCheck() {
+    var toNwCk = 0;
+    $('.check_shop_tk').each(function() {
+        toNwCk += parseFloat($(this).val());
+    });
+    $('.c_shop_tk').val(parseFloat(toNwCk).toFixed(2));
 
 }
 
 function oldDue(){
     var oldDue=`
-    <div class="row append_remove">
+    <div class="row append_remove m-0 p-0">
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group">
                 <h5 for="check">{{__('Old Due')}}</h5>
@@ -401,7 +436,7 @@ function oldDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -422,7 +457,7 @@ function removeOld(e){
 }
 function newDue(){
     var newDue=`
-    <div class="row appendnew_remove">
+    <div class="row appendnew_remove m-0 p-0">
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group">
                 <h5 for="check">{{__('new Due')}}</h5>
@@ -439,7 +474,7 @@ function newDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -461,7 +496,7 @@ function removeNewDue(e){
 
 function newReceive(){
     var newReceive=`
-    <div class="row append_new_receive">
+    <div class="row append_new_receive m-0 p-0">
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group">
                 <h5 for="check">{{__('New Receive')}}</h5>
@@ -478,7 +513,7 @@ function newReceive(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -497,7 +532,7 @@ function removeNewRec(e){
 }
 function newCheck(){
     var newCheck=`
-    <div class="row append_check">
+    <div class="row append_check m-0 p-0">
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group">
                 <h5 for="check">{{__('Check')}}</h5>
@@ -513,7 +548,7 @@ function newCheck(){
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -546,25 +581,35 @@ function getCtnQty(e){
     let ctnDamage=$(e).closest('tr').find('.ctn_damage').val()?parseFloat($(e).closest('tr').find('.ctn_damage').val()):0;
     let pcsDamage=$(e).closest('tr').find('.pcs_damage').val()?parseFloat($(e).closest('tr').find('.pcs_damage').val()):0;
     let pcsPrice=$(e).closest('tr').find('.per_pcs_price').val()?parseFloat($(e).closest('tr').find('.per_pcs_price').val()):0;
+
+    let oldCtn=$(e).closest('tr').find('.old_ctn').val()?parseFloat($(e).closest('tr').find('.old_ctn').val()):0;
+    let oldPcs=$(e).closest('tr').find('.old_pcs').val()?parseFloat($(e).closest('tr').find('.old_pcs').val()):0;
+    let oldCtnDmg=$(e).closest('tr').find('.old_ctn_damage').val()?parseFloat($(e).closest('tr').find('.old_ctn_damage').val()):0;
+    let oldPcsDmg=$(e).closest('tr').find('.old_pcs_damage').val()?parseFloat($(e).closest('tr').find('.old_pcs_damage').val()):0;
+    let oldPcsPrice=$(e).closest('tr').find('.old_pcs_price').val()?parseFloat($(e).closest('tr').find('.old_pcs_price').val()):0;
     $.ajax({
         url: "{{route(currentUser().'.unit_data_get')}}",
         type: "GET",
         dataType: "json",
         data: { product_id:product_id },
         success: function(data) {
+            //console.log(data);
             let oldTotalQty=(Ctn*data)+Pcs;
             let totalReturn=parseFloat(data*returnCtn)+returnPcs;
             let totalDamage=parseFloat(data*ctnDamage)+pcsDamage;
             let totalSalesQty=oldTotalQty-(totalReturn+totalDamage);
             let totalReceive=totalReturn+totalDamage;
             let subTotalPrice=(pcsPrice*oldTotalQty)-(pcsPrice*totalReceive);
-            //console.log(subTotalPrice);
-            //console.log(totalSalesQty);
-            //console.log(totalReceive);
             $(e).closest('tr').find('.subtotal_price').val(subTotalPrice);
             $(e).closest('tr').find('.total_return_pcs').val(totalReceive);
             $(e).closest('tr').find('.total_sales_pcs').val(totalSalesQty);
             primarySubTotal();
+
+            let oldSub=(oldCtn*data)+oldPcs;
+            let oldSubDmg=(oldCtnDmg*data)+oldPcsDmg;
+            let oldSubtotalPrice=(oldSub+oldSubDmg)*oldPcsPrice;
+            $(e).closest('tr').find('.return_subtotal_price').val(oldSubtotalPrice);
+            return_total_calculate();
         },
     });
 }

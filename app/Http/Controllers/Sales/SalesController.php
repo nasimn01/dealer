@@ -371,6 +371,18 @@ class SalesController extends Controller
                         }
                     }
                 }
+                // if($request->return_product_id){
+                //     foreach($request->return_product_id as $i=>$return_product_id){
+                //         if($return_product_id){
+                //             $olddue=new ShopBalance;
+                //             // $olddue->sales_id=$sales->id;
+                //             $olddue->shop_id=$return_product_id;
+                //             $olddue->balance_amount=$request->old_due_tk[$i];
+                //             $olddue->status=1;
+                //             $olddue->save();
+                //         }
+                //     }
+                // }
                 if($request->old_due_shop_id){
                     foreach($request->old_due_shop_id as $i=>$old_due_shop_id){
                         if($old_due_shop_id){
