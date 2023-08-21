@@ -91,6 +91,7 @@
                                                             <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
                                                         </td>
                                                         <td>
+                                                            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                                             <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                         </td>
                                                     </tr>

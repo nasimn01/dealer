@@ -128,7 +128,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered mb-0 table-striped">
                                     <thead>
                                         <tr class="text-center">
                                             <th scope="col">{{__('#SL')}}</th>

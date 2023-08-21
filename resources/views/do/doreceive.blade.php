@@ -35,7 +35,7 @@
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered mb-0">
+                                    <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Product Name')}}</th>
@@ -128,7 +128,7 @@ var row=`<tr>
     <td><input class="form-control subtotal_dp_pcs" type="text" name="subtotal_dp_pcs[]" value="" placeholder="total-dp-price"></td>
     <td>
         <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+        {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
     </td>
 </tr>`;
     $('#product').append(row);

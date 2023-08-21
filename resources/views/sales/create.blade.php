@@ -43,7 +43,7 @@
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered mb-0">
+                                    <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Product Name')}}</th>

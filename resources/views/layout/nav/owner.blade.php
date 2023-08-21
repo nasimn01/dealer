@@ -53,7 +53,7 @@
 		</ul>
 
     </li> --}}
-     <li class="sidebar-item has-sub">
+     {{--  <li class="sidebar-item has-sub">
         <a href="#" class='sidebar-link'><i class="bi bi-gear-fill"></i><span>{{__('Employee Settings')}}</span>
         </a>
         <ul class="submenu">
@@ -61,7 +61,7 @@
             <li class="py-1"><a href="{{route(currentUser().'.employee.index')}}" >{{__('Employee list')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.emLeave.index')}}" >{{__('Employee Leave list')}}</a></li>
 		</ul>
-    </li>
+    </li>  --}}
 
     <li class="sidebar-item has-sub">
         <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Products')}}</span>
