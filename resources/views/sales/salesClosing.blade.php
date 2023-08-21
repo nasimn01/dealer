@@ -108,20 +108,20 @@
                                                             </select>
                                                         </td>  --}}
                                                         <td>
-                                                            <input class="form-control" type="text" name="pcs_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}" placeholder="PCS Price">
+                                                            <input readonly class="form-control per_pcs_price" type="text" name="pcs_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}" placeholder="PCS Price">
                                                             <input class="form-control select_tp_tpfree" type="hidden" name="select_tp_tpfree[]" value="{{ $salesdetails->select_tp_tpfree }}">
                                                             @if($salesdetails->select_tp_tpfree==1)
                                                                 <input class="form-control" type="hidden" name="price_type[]" value="1">
                                                             @else
                                                                 <input class="form-control" type="hidden" name="price_type[]" value="2">
                                                             @endif
-                                                            <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}">
+                                                            <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('tp_price',$salesdetails->pcs_price) }}">
 
                                                             <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
                                                             <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="">
                                                         </td>
                                                         {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
-                                                        <td><input class="form-control" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
+                                                        <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
                                                         <td></td>
                                                     </tr>
 
@@ -130,7 +130,7 @@
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
-                                                    <input type="text" class="form-control" value="{{ $sales->total }}" name="total_taka">
+                                                    <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="total_taka">
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -372,6 +372,15 @@ function return_total_calculate() {
     $('.return_total_taka').val(parseFloat(subtotal).toFixed(2));
 
 }
+function primarySubTotal() {
+    var psubtotal = 0;
+    $('.subtotal_price').each(function() {
+        psubtotal += parseFloat($(this).val());
+    });
+    // $('.total').text(parseFloat(psubtotal).toFixed(2));
+    $('.ptotal_taka').val(parseFloat(psubtotal).toFixed(2));
+
+}
 
 function oldDue(){
     var oldDue=`
@@ -398,7 +407,7 @@ function oldDue(){
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group text-primary" style="font-size:1.5rem">
                 <span onClick='removeOld(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                 <span onClick='oldDue();'><i class="bi bi-plus-square-fill"></i></span>
+                 {{--  <span onClick='oldDue();'><i class="bi bi-plus-square-fill"></i></span>  --}}
             </div>
         </div>
     </div>
@@ -436,7 +445,7 @@ function newDue(){
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group text-primary" style="font-size:1.5rem">
                 <span onClick='removeNewDue(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                 <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>
+                 {{--  <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>  --}}
             </div>
         </div>
     </div>
@@ -475,7 +484,7 @@ function newReceive(){
         <div class="col-lg-2 col-md-3 col-sm-6">
             <div class="form-group text-primary" style="font-size:1.5rem">
                 <span onClick='removeNewRec(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                 <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
+                 {{--  <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>  --}}
             </div>
         </div>
     </div>`;
@@ -515,7 +524,7 @@ function newCheck(){
         <div class="col-lg-1 col-md-3 col-sm-6">
             <div class="form-group text-primary" style="font-size:1.5rem">
                 <span onClick='removeNewCheck(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                 <span onClick='newCheck();'><i class="bi bi-plus-square-fill"></i></span>
+                 {{--  <span onClick='newCheck();'><i class="bi bi-plus-square-fill"></i></span>  --}}
             </div>
         </div>
     </div>`;
@@ -536,22 +545,26 @@ function getCtnQty(e){
     let returnPcs=$(e).closest('tr').find('.pcs_return').val()?parseFloat($(e).closest('tr').find('.pcs_return').val()):0;
     let ctnDamage=$(e).closest('tr').find('.ctn_damage').val()?parseFloat($(e).closest('tr').find('.ctn_damage').val()):0;
     let pcsDamage=$(e).closest('tr').find('.pcs_damage').val()?parseFloat($(e).closest('tr').find('.pcs_damage').val()):0;
+    let pcsPrice=$(e).closest('tr').find('.per_pcs_price').val()?parseFloat($(e).closest('tr').find('.per_pcs_price').val()):0;
     $.ajax({
         url: "{{route(currentUser().'.unit_data_get')}}",
         type: "GET",
         dataType: "json",
         data: { product_id:product_id },
         success: function(data) {
-            let otdTotalQty=(Ctn*data)+Pcs;
+            let oldTotalQty=(Ctn*data)+Pcs;
             let totalReturn=parseFloat(data*returnCtn)+returnPcs;
             let totalDamage=parseFloat(data*ctnDamage)+pcsDamage;
-            let totalSalesQty=otdTotalQty-(totalReturn+totalDamage);
+            let totalSalesQty=oldTotalQty-(totalReturn+totalDamage);
             let totalReceive=totalReturn+totalDamage;
-            //console.log(otdTotalQty);
+            let subTotalPrice=(pcsPrice*oldTotalQty)-(pcsPrice*totalReceive);
+            //console.log(subTotalPrice);
             //console.log(totalSalesQty);
             //console.log(totalReceive);
+            $(e).closest('tr').find('.subtotal_price').val(subTotalPrice);
             $(e).closest('tr').find('.total_return_pcs').val(totalReceive);
             $(e).closest('tr').find('.total_sales_pcs').val(totalSalesQty);
+            primarySubTotal();
         },
     });
 }
