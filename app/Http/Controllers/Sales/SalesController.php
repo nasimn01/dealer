@@ -467,6 +467,15 @@ class SalesController extends Controller
         }
     }
 
+    public function printSalesClosing($id)
+    {
+        $sales = Sales::findOrFail(encryptor('decrypt',$id));
+        $shops=Shop::all();
+        $dsr=User::where('role_id',4)->get();
+        $product=Product::where(company())->get();
+        return view('sales.printSalesClosing',compact('sales','shops','dsr','product'));
+    }
+
 
     public function destroy($id)
     {

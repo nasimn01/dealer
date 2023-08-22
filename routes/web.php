@@ -115,6 +115,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('sales-primary-update/{id}',[sales::class,'PrimaryUpdate'])->name('owner.sales.primary_update');
         Route::post('sales-primary-store/{id}',[sales::class,'primaryStore'])->name('owner.sales.primaryStore');
         Route::get('sales-receive-screen/{id}',[sales::class,'salesReceiveScreen'])->name('owner.sales.receiveScreen');
+        Route::get('sales-print-page/{id}',[sales::class,'printSalesClosing'])->name('owner.sales.printpage');
         Route::post('sales-receive',[sales::class,'salesReceive'])->name('owner.sales.receive');
         Route::get('shop-data-get',[sales::class,'ShopDataGet'])->name('owner.get_shop');
         Route::get('dsr-data-get',[sales::class,'DsrDataGet'])->name('owner.get_dsr');

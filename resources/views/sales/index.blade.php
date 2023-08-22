@@ -39,6 +39,9 @@
                                         <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-receipt-cutoff"></i>
                                         </a>
+                                        <a class="ms-2" href="{{route(currentUser().'.sales.printpage',encryptor('encrypt',$p->id))}}">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
                                         @if($p->status==0)
                                             <a class="ms-2" href="javascript:void()" onclick="showConfirmation({{$p->id}})">
                                                 <i class="bi bi-trash" style='color:red'></i>
