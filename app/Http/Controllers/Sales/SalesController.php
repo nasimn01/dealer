@@ -326,18 +326,6 @@ class SalesController extends Controller
                                 $details->created_by= currentUserId();
                                 // $details->save();
                                 if($details->save()){
-                                    // $stock=new Stock;
-                                    // $stock->sales_id=$sales->id;
-                                    // $stock->product_id=$request->product_id[$key];
-                                    // $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
-                                    // $stock->status_history=1;
-                                    // $stock->status=1;
-                                    // if($request->select_tp_tpfree[$key]==1){
-                                    //     $stock->tp_price=$request->per_pcs_price[$key];
-                                    // }else{
-                                    //     $stock->tp_free=$request->per_pcs_price[$key];
-                                    // }
-                                    // $stock->save();
                                     if($request->ctn_return[$key] >0 || $request->pcs_return[$key]>0){
                                         $stock=new Stock;
                                         $stock->sales_id=$sales->id;
@@ -371,18 +359,53 @@ class SalesController extends Controller
                         }
                     }
                 }
-                // if($request->return_product_id){
-                //     foreach($request->return_product_id as $i=>$return_product_id){
-                //         if($return_product_id){
-                //             $olddue=new ShopBalance;
-                //             // $olddue->sales_id=$sales->id;
-                //             $olddue->shop_id=$return_product_id;
-                //             $olddue->balance_amount=$request->old_due_tk[$i];
-                //             $olddue->status=1;
-                //             $olddue->save();
-                //         }
-                //     }
-                // }
+                if($request->return_product_id){
+                    foreach($request->return_product_id as $i=>$return_product_id){
+                        if($return_product_id){
+                            $rsales=new SalesDetails;
+                            // $rsales->sales_id=$sales->id;
+                            $rsales->product_id=$return_product_id;
+                            $rsales->ctn_return=$request->old_ctn_return[$i];
+                            $rsales->pcs_return=$request->old_pcs_return[$i];
+                            $rsales->ctn_damage=$request->old_ctn_damage[$i];
+                            $rsales->pcs_damage=$request->old_pcs_damage[$i];
+                            $rsales->tp_price=$request->old_pcs_price[$i];
+                            $rsales->subtotal_price=$request->return_subtotal_price[$i];
+                            // $rsales->balance_amount=$request->old_due_tk[$i];
+                            $rsales->status=0;
+                            if($rsales->save()){
+                                if($request->old_ctn_return[$i] >0 || $request->old_pcs_return[$i]>0){
+                                    $stock=new Stock;
+                                    // $stock->sales_id=$sales->id;
+                                    $stock->product_id=$request->return_product_id[$i];
+                                    $stock->totalquantity_pcs=$request->old_total_return_pcs[$i];
+                                    $stock->status_history=1;
+                                    $stock->status=1;
+                                    // if($request->select_tp_tpfree[$i]==1){
+                                    //     $stock->tp_price=$request->per_pcs_price[$i];
+                                    // }else{
+                                    //     $stock->tp_free=$request->per_pcs_price[$i];
+                                    // }
+                                    $stock->save();
+                                }
+                                if($request->old_ctn_damage[$i] >0 || $request->old_pcs_damage[$i]>0){
+                                    $stock=new Stock;
+                                    // $stock->sales_id=$sales->id;
+                                    $stock->product_id=$request->return_product_id[$i];
+                                    $stock->totalquantity_pcs=$request->old_total_return_pcs[$i];
+                                    $stock->status_history=2;
+                                    $stock->status=1;
+                                    // if($request->select_tp_tpfree[$i]==1){
+                                    //     $stock->tp_price=$request->per_pcs_price[$i];
+                                    // }else{
+                                    //     $stock->tp_free=$request->per_pcs_price[$i];
+                                    // }
+                                    $stock->save();
+                                }
+                            }
+                        }
+                    }
+                }
                 if($request->old_due_shop_id){
                     foreach($request->old_due_shop_id as $i=>$old_due_shop_id){
                         if($old_due_shop_id){
@@ -398,37 +421,37 @@ class SalesController extends Controller
                 if($request->new_due_shop_id){
                     foreach($request->new_due_shop_id as $i=>$new_due_shop_id){
                         if($new_due_shop_id){
-                            $olddue=new ShopBalance;
-                            // $olddue->sales_id=$sales->id;
-                            $olddue->shop_id=$new_due_shop_id;
-                            $olddue->balance_amount=$request->new_due_tk[$i];
-                            $olddue->status=0;
-                            $olddue->save();
+                            $newdue=new ShopBalance;
+                            // $newdue->sales_id=$sales->id;
+                            $newdue->shop_id=$new_due_shop_id;
+                            $newdue->balance_amount=$request->new_due_tk[$i];
+                            $newdue->status=0;
+                            $newdue->save();
                         }
                     }
                 }
                 if($request->new_receive_shop_id){
                     foreach($request->new_receive_shop_id as $i=>$new_receive_shop_id){
                         if($new_receive_shop_id){
-                            $olddue=new SalesPayment;
-                            $olddue->sales_id=$sales->id;
-                            $olddue->shop_id=$new_receive_shop_id;
-                            $olddue->amount=$request->new_receive_tk[$i];
-                            $olddue->cash_type=1;
-                            $olddue->save();
+                            $payment=new SalesPayment;
+                            $payment->sales_id=$sales->id;
+                            $payment->shop_id=$new_receive_shop_id;
+                            $payment->amount=$request->new_receive_tk[$i];
+                            $payment->cash_type=1;
+                            $payment->save();
                         }
                     }
                 }
                 if($request->check_shop_id){
                     foreach($request->check_shop_id as $i=>$check_shop_id){
                         if($check_shop_id){
-                            $olddue=new SalesPayment;
-                            $olddue->sales_id=$sales->id;
-                            $olddue->shop_id=$check_shop_id;
-                            $olddue->amount=$request->check_shop_tk[$i];
-                            $olddue->check_date=$request->check_date[$i];
-                            $olddue->cash_type=0;
-                            $olddue->save();
+                            $pay=new SalesPayment;
+                            $pay->sales_id=$sales->id;
+                            $pay->shop_id=$check_shop_id;
+                            $pay->amount=$request->check_shop_tk[$i];
+                            $pay->check_date=$request->check_date[$i];
+                            $pay->cash_type=0;
+                            $pay->save();
                         }
                     }
                 }

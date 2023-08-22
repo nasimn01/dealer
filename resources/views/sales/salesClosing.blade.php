@@ -351,7 +351,10 @@
                         <option value="2">TP Free</option>
                     </select>
                 </td>  --}}
-                <td><input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this)" name="old_pcs_price[]" value="0" placeholder="PCS Price"></td>
+                <td>
+                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this)" name="old_pcs_price[]" value="" placeholder="PCS Price">
+                    <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
+                </td>
                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
@@ -634,7 +637,9 @@ function getCtnQty(e){
 
             let oldSub=(oldCtn*data)+oldPcs;
             let oldSubDmg=(oldCtnDmg*data)+oldPcsDmg;
-            let oldSubtotalPrice=(oldSub+oldSubDmg)*oldPcsPrice;
+            let totalReturnQty=(oldSub+oldSubDmg);
+            let oldSubtotalPrice=(totalReturnQty*oldPcsPrice);
+            $(e).closest('tr').find('.old_total_return_pcs').val(totalReturnQty);
             $(e).closest('tr').find('.return_subtotal_price').val(oldSubtotalPrice);
             return_total_calculate();
         },
