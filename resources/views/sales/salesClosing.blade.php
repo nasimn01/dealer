@@ -439,7 +439,8 @@ function FinalTotal(){
     if(expenses)expenses=expenses; else expenses=0;
     if(comission)comission=comission; else comission=0;
 
-    var total= ((todayTotal+oldDue)-(returnTotal+newDue+expenses+comission));
+    //var total= ((todayTotal+oldDue)-(returnTotal+newDue+expenses+comission));
+    var total= (todayTotal-(returnTotal+expenses+comission));
     $('.final_total_tk').val(total.toFixed(2));
 }
 
