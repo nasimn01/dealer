@@ -139,7 +139,7 @@
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="return_total">{{__('Return Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
-                                                    <input readonly type="text" class="form-control return_total_taka" value="" name="return_total_taka">
+                                                    <input readonly type="text" class="form-control return_total_taka" value="0" name="return_total_taka">
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -179,7 +179,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control o_due_tk" value="">
+                                                <input type="hidden" class="form-control o_due_tk" value="0">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -207,7 +207,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control n_due_tk" value="">
+                                                <input type="hidden" class="form-control n_due_tk" value="0">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -235,7 +235,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control n_receive_tk" value="">
+                                                <input type="hidden" class="form-control n_receive_tk" value="0">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -261,7 +261,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control c_shop_tk" value="">
+                                                <input type="hidden" class="form-control c_shop_tk" value="0">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -283,7 +283,7 @@
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('expenses')}}" name="expenses">
+                                                <input type="text" class="form-control expenses_tk" onkeyup="FinalTotal()" value="{{ old('expenses')}}" name="expenses">
                                             </div>
                                         </div>
                                     </div>
@@ -295,7 +295,7 @@
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('commission')}}" name="commission">
+                                                <input type="text" class="form-control commission_tk" onkeyup="FinalTotal()" value="{{ old('commission')}}" name="commission">
                                             </div>
                                         </div>
                                     </div>
@@ -307,7 +307,7 @@
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('final_total')}}" name="final_total">
+                                                <input type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
                                             </div>
                                         </div>
                                     </div>
@@ -351,7 +351,7 @@
                         <option value="2">TP Free</option>
                     </select>
                 </td>  --}}
-                <td><input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this)" name="old_pcs_price[]" value="" placeholder="PCS Price"></td>
+                <td><input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this)" name="old_pcs_price[]" value="0" placeholder="PCS Price"></td>
                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
@@ -365,6 +365,7 @@
 function removeRow(e){
     if (confirm("Are you sure you want to remove this row?")) {
     $(e).closest('tr').remove();
+    return_total_calculate();
     }
 }
 function return_total_calculate() {
@@ -416,6 +417,28 @@ function totalNewCheck() {
     $('.c_shop_tk').val(parseFloat(toNwCk).toFixed(2));
 
 }
+function FinalTotal(){
+    var todayTotal=parseFloat($('.ptotal_taka').val());
+    var returnTotal=parseFloat($('.return_total_taka').val());
+    var oldDue=parseFloat($('.o_due_tk').val());
+    var newDue=parseFloat($('.n_due_tk').val());
+    var newRec=parseFloat($('.n_receive_tk').val());
+    var newCheck=parseFloat($('.c_shop_tk').val());
+    var expenses=parseFloat($('.expenses_tk').val());
+    var comission=parseFloat($('.commission_tk').val());
+
+    if(todayTotal)todayTotal=todayTotal; else todayTotal=0;
+    if(returnTotal)returnTotal=returnTotal; else returnTotal=0;
+    if(oldDue)oldDue=oldDue; else oldDue=0;
+    if(newDue)newDue=newDue; else newDue=0;
+    if(newRec)newRec=newRec; else newRec=0;
+    if(newCheck)newCheck=newCheck; else newCheck=0;
+    if(expenses)expenses=expenses; else expenses=0;
+    if(comission)comission=comission; else comission=0;
+
+    var total= ((todayTotal+oldDue)-(returnTotal+newDue+expenses+comission));
+    $('.final_total_tk').val(total.toFixed(2));
+}
 
 function oldDue(){
     var oldDue=`
@@ -453,6 +476,7 @@ function oldDue(){
 function removeOld(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
+        totalOldDue();
     }
 }
 function newDue(){
@@ -491,6 +515,7 @@ function newDue(){
 function removeNewDue(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
+        totalNewDue();
     }
 }
 
@@ -528,6 +553,7 @@ function newReceive(){
 function removeNewRec(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
+        totalNewReceive();
     }
 }
 function newCheck(){
@@ -569,6 +595,7 @@ function newCheck(){
 function removeNewCheck(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
+        totalNewCheck();
     }
 }
 function getCtnQty(e){
