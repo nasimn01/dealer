@@ -61,7 +61,7 @@
                                                 <th rowspan="2">{{__('PCS(Price)')}}</th>
                                                 {{--  <th rowspan="2">{{__('CTN(Price)')}}</th>  --}}
                                                 <th rowspan="2">{{__('Sub-Total(Price)')}}</th>
-                                                <th rowspan="2"></th>
+                                                {{--  <th rowspan="2"></th>  --}}
                                             </tr>
                                             <tr>
                                                 <th>CTN</th>
@@ -71,8 +71,9 @@
                                             </tr>
                                         </thead>
                                         <tbody id="sales_repeat">
-                                            @if ($sales->temporary_sales_details)
-                                                @foreach ($sales->temporary_sales_details as $salesdetails)
+
+                                            @if ($sales->sales_details)
+                                                @foreach ($sales->sales_details as $salesdetails)
                                                     <tr>
                                                         <td>
                                                             <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
@@ -87,10 +88,10 @@
                                                         </td>
                                                         <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
                                                         <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
-                                                        <td><input class="form-control ctn_return" type="text" onkeyup="getCtnQty(this)" name="ctn_return[]" value="" placeholder="ctn return"></td>
-                                                        <td><input class="form-control pcs_return" type="text" onkeyup="getCtnQty(this)" name="pcs_return[]"value="" placeholder="pcs return"></td>
-                                                        <td><input class="form-control ctn_damage" type="text" onkeyup="getCtnQty(this)" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
-                                                        <td><input class="form-control pcs_damage" type="text" onkeyup="getCtnQty(this)" name="pcs_damage[]"value="" placeholder="pcs damage"></td>
+                                                        <td><input class="form-control ctn_return" type="text" name="ctn_return[]" value="{{ old('ctn_return',$salesdetails->ctn_return) }}" placeholder="ctn return"></td>
+                                                        <td><input class="form-control pcs_return" type="text" name="pcs_return[]"value="{{ old('pcs_return',$salesdetails->pcs_return) }}" placeholder="pcs return"></td>
+                                                        <td><input class="form-control ctn_damage" type="text" name="ctn_damage[]" value="{{ old('ctn_damage',$salesdetails->ctn_damage) }}" placeholder="ctn damage"></td>
+                                                        <td><input class="form-control pcs_damage" type="text" name="pcs_damage[]"value="{{ old('pcs_damage',$salesdetails->pcs_damage) }}" placeholder="pcs damage"></td>
                                                         {{--  <td style="width: 110px;">
                                                             <select class="form-select" name="select_tp_tpfree">
                                                                 <option value="">Select</option>
@@ -122,7 +123,7 @@
                                                 <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
                                                     <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="total_taka">
-                                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                    {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -137,10 +138,10 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control old_ctn" type="text" onkeyup="getCtnQty(this)" name="old_ctn_return[]" value="" placeholder="ctn return"></td>
-                                                <td><input class="form-control old_pcs" type="text" onkeyup="getCtnQty(this)" name="old_pcs_return[]" value="" placeholder="pcs return"></td>
-                                                <td><input class="form-control old_ctn_damage" type="text" onkeyup="getCtnQty(this)" name="old_ctn_damage[]" value="" placeholder="ctn damage"></td>
-                                                <td><input class="form-control old_pcs_damage" type="text" onkeyup="getCtnQty(this)" name="old_pcs_damage[]" value="" placeholder="pcs damage"></td>
+                                                <td><input class="form-control old_ctn" type="text" name="old_ctn_return[]" value="" placeholder="ctn return"></td>
+                                                <td><input class="form-control old_pcs" type="text" name="old_pcs_return[]" value="" placeholder="pcs return"></td>
+                                                <td><input class="form-control old_ctn_damage" type="text" name="old_ctn_damage[]" value="" placeholder="ctn damage"></td>
+                                                <td><input class="form-control old_pcs_damage" type="text" name="old_pcs_damage[]" value="" placeholder="pcs damage"></td>
                                                 {{--  <td>
                                                     <select class="form-select" name="select_tp_tpfree">
                                                         <option value="">Select</option>
@@ -149,15 +150,15 @@
                                                     </select>
                                                 </td>  --}}
                                                 <td>
-                                                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this)" name="old_pcs_price[]" value="" placeholder="PCS Price">
+                                                    <input class="form-control old_pcs_price" type="text" name="old_pcs_price[]" value="" placeholder="PCS Price">
                                                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
                                                 </td>
                                                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
                                                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
-                                                <td>
+                                                {{--  <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                                                    {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
-                                                </td>
+                                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                </td>  --}}
                                             </tr>
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="return_total">{{__('Return Total Taka')}}</h5></td>
@@ -193,11 +194,6 @@
                                                 <input type="hidden" class="form-control o_due_tk" value="0">
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='oldDue();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
                                     </div>
                                     <hr>
                                     <div class="row newdue">
@@ -221,13 +217,11 @@
                                                 <input type="hidden" class="form-control n_due_tk" value="0">
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
                                     </div>
                                     <hr>
+                                    @if($sales->sales_payment)
+                                    @foreach ($sales->sales_payment as $payments)
+                                    @if($payments->cash_type==0)
                                     <div class="row new_receive">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
@@ -245,16 +239,17 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive()" value="{{ old('new_receive_tk',$payments->amount)}}" name="new_receive_tk[]" placeholder="Tk">
                                                 <input type="hidden" class="form-control n_receive_tk" value="0">
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
                                     </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                    @if($sales->sales_payment)
+                                    @foreach ($sales->sales_payment as $payments)
+                                    @if($payments->cash_type==1)
                                     <div class="row check_no">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
@@ -271,7 +266,7 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk',$payments->amount)}}" name="check_shop_tk[]" placeholder="Tk">
                                                 <input type="hidden" class="form-control c_shop_tk" value="0">
                                             </div>
                                         </div>
@@ -280,12 +275,11 @@
                                                 <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date[]" placeholder="Date">
                                             </div>
                                         </div>
-                                        <div class="col-lg-1 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='newCheck();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
                                     </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
+
                                     <div class="row">
                                         <div class="col-lg-2 col-md-3 col-sm-4">
                                             <div class="form-group">
