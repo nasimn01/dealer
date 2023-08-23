@@ -363,7 +363,7 @@ class SalesController extends Controller
                     foreach($request->return_product_id as $i=>$return_product_id){
                         if($return_product_id){
                             $rsales=new SalesDetails;
-                            // $rsales->sales_id=$sales->id;
+                            $rsales->sales_id=$sales->id;
                             $rsales->product_id=$return_product_id;
                             $rsales->ctn_return=$request->old_ctn_return[$i];
                             $rsales->pcs_return=$request->old_pcs_return[$i];
@@ -376,7 +376,7 @@ class SalesController extends Controller
                             if($rsales->save()){
                                 if($request->old_ctn_return[$i] >0 || $request->old_pcs_return[$i]>0){
                                     $stock=new Stock;
-                                    // $stock->sales_id=$sales->id;
+                                    $stock->sales_id=$sales->id;
                                     $stock->product_id=$request->return_product_id[$i];
                                     $stock->totalquantity_pcs=$request->old_total_return_pcs[$i];
                                     $stock->status_history=1;
@@ -390,7 +390,7 @@ class SalesController extends Controller
                                 }
                                 if($request->old_ctn_damage[$i] >0 || $request->old_pcs_damage[$i]>0){
                                     $stock=new Stock;
-                                    // $stock->sales_id=$sales->id;
+                                    $stock->sales_id=$sales->id;
                                     $stock->product_id=$request->return_product_id[$i];
                                     $stock->totalquantity_pcs=$request->old_total_return_pcs[$i];
                                     $stock->status_history=2;
@@ -410,7 +410,7 @@ class SalesController extends Controller
                     foreach($request->old_due_shop_id as $i=>$old_due_shop_id){
                         if($old_due_shop_id){
                             $olddue=new ShopBalance;
-                            // $olddue->sales_id=$sales->id;
+                            $olddue->sales_id=$sales->id;
                             $olddue->shop_id=$old_due_shop_id;
                             $olddue->balance_amount=$request->old_due_tk[$i];
                             $olddue->status=1;
@@ -422,7 +422,7 @@ class SalesController extends Controller
                     foreach($request->new_due_shop_id as $i=>$new_due_shop_id){
                         if($new_due_shop_id){
                             $newdue=new ShopBalance;
-                            // $newdue->sales_id=$sales->id;
+                            $newdue->sales_id=$sales->id;
                             $newdue->shop_id=$new_due_shop_id;
                             $newdue->balance_amount=$request->new_due_tk[$i];
                             $newdue->status=0;

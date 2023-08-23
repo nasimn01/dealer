@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('shop_balances', function (Blueprint $table) {
             $table->id();
             $table->string('shop_id')->nullable();
+            $table->string('sales_id')->nullable();
             $table->decimal('balance_amount',10,2)->nullable();
             $table->string('reference_number')->nullable();
             // $table->string('check_date')->nullable();

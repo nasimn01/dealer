@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Settings\Shop;
 use App\Models\User;
 use App\Models\Sales\SalesPayment;
+use App\Models\Settings\ShopBalance;
 
 class Sales extends Model
 {
@@ -19,6 +20,9 @@ class Sales extends Model
     }
     public function sales_payment(){
         return $this->hasMany(SalesPayment::class,'sales_id','id');
+    }
+    public function shop_balance(){
+        return $this->hasMany(ShopBalance::class,'sales_id','id');
     }
 
     public function sales_details(){

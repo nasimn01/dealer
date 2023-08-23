@@ -77,14 +77,6 @@
                                                     <tr>
                                                         <td>
                                                             <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
-                                                            <input readonly class="form-control product_id" type="hidden" name="product_id[]" value="{{ $salesdetails->product_id }}">
-                                                            {{--  <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
-                                                                <option value="">Select Product</option>
-                                                                @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                                <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}" {{ old('product_id', $pro->id)==$salesdetails->product_id ? "selected":""}}>{{ $pro->product_name }}</option>
-                                                                @empty
-                                                                @endforelse
-                                                            </select>  --}}
                                                         </td>
                                                         <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
                                                         <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
@@ -100,7 +92,7 @@
                                                             </select>
                                                         </td>  --}}
                                                         <td>
-                                                            <input readonly class="form-control per_pcs_price" type="text" name="pcs_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}" placeholder="PCS Price">
+                                                            <input readonly class="form-control per_pcs_price" type="text" name="pcs_price[]" @if($salesdetails->tp_price) value="{{ old('pcs_price',$salesdetails->tp_price) }}"@else value="{{ old('pcs_price',$salesdetails->tp_free) }}" @endif }  placeholder="PCS Price">
                                                             <input class="form-control select_tp_tpfree" type="hidden" name="select_tp_tpfree[]" value="{{ $salesdetails->select_tp_tpfree }}">
                                                             @if($salesdetails->select_tp_tpfree==1)
                                                                 <input class="form-control" type="hidden" name="price_type[]" value="1">
@@ -154,7 +146,7 @@
                                                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
                                                 </td>
                                                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
-                                                <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
+                                                <td><input class="form-control" type="text" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                                                 {{--  <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -173,52 +165,53 @@
                             <div class="row">
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
+                                    @if($sales->shop_balance)
+                                    @foreach ($sales->shop_balance as $balance)
+                                    @if($balance->status==0)
                                     <div class="row olddue">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <h5 for="check">{{__('Old Due')}}</h5>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
-                                                <option value="">Select</option>
-                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
-                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-lg-4 col-md-3 col-sm-6">
+                                            <input readonly class="form-control" type="text" value="{{ $balance->shop?->shop_name }}">
                                         </div>
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control o_due_tk" value="0">
+                                                <input type="text" class="form-control" value="{{ old('old_due_tk',$balance->balance_amount)}}" name="old_due_tk[]">
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
                                     <hr>
+                                    @if($sales->shop_balance)
+                                    @foreach ($sales->shop_balance as $balance)
+                                    @if($balance->status==1)
                                     <div class="row newdue">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <h5 for="check">{{__('new Due')}}</h5>
+                                                <h5 for="check">{{__('New Due')}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
-                                                <option value="">Select</option>
-                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
-                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <input readonly class="form-control" type="text" value="{{ $balance->shop?->shop_name }}">
                                         </div>
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control n_due_tk" value="0">
+                                                <input type="text" class="form-control" value="{{ old('new_due_tk',$balance->balance_amount)}}" name="new_due_tk[]">
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
                                     <hr>
+
                                     @if($sales->sales_payment)
                                     @foreach ($sales->sales_payment as $payments)
                                     @if($payments->cash_type==1)
@@ -248,6 +241,7 @@
                                     @endif
                                     @endforeach
                                     @endif
+
                                     @if($sales->sales_payment)
                                     @foreach ($sales->sales_payment as $payments)
                                     @if($payments->cash_type==0)
