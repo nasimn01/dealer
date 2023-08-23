@@ -29,7 +29,7 @@
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
                                                 @if($user)
-                                                    <select class="form-select supplier_id" name="supplier_id" required  onload="getBalance()">
+                                                    <select class="form-select supplier_id" name="supplier_id" required >
                                                         @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
                                                             @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
                                                             <option data-balance="{{ $balance }}" value="{{ $sup->id }}">{{ $sup->name }}</option>
@@ -391,6 +391,7 @@
 </script>
 <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
 <script>
+    getBalance()
     function getBalance(){
         var balance=$('.supplier_id option:selected').data('balance');
         $('.supbalance').text(balance);

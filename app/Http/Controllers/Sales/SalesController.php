@@ -469,7 +469,8 @@ class SalesController extends Controller
 
     public function printSalesClosing($id)
     {
-        $sales = Sales::findOrFail(encryptor('decrypt',$id));
+        $sales = Sales::findOrFail($id);
+        // $sales = Sales::findOrFail(encryptor('decrypt',$id));
         $shops=Shop::all();
         $dsr=User::where('role_id',4)->get();
         $product=Product::where(company())->get();

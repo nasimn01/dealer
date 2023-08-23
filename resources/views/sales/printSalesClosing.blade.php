@@ -221,7 +221,7 @@
                                     <hr>
                                     @if($sales->sales_payment)
                                     @foreach ($sales->sales_payment as $payments)
-                                    @if($payments->cash_type==0)
+                                    @if($payments->cash_type==1)
                                     <div class="row new_receive">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
@@ -229,12 +229,13 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
+                                            <input readonly class="form-control" type="text" value="{{ $payments->shop?->shop_name }}">
+                                            {{--  <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
                                                 <option value="">Select</option>
                                                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                                                 @endforeach
-                                            </select>
+                                            </select>  --}}
                                         </div>
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
@@ -249,7 +250,7 @@
                                     @endif
                                     @if($sales->sales_payment)
                                     @foreach ($sales->sales_payment as $payments)
-                                    @if($payments->cash_type==1)
+                                    @if($payments->cash_type==0)
                                     <div class="row check_no">
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
@@ -257,22 +258,16 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select check_shop_id" name="check_shop_id[]">
-                                                <option value="">Select</option>
-                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
-                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <input readonly class="form-control" type="text" value="{{ $payments->shop?->shop_name }}">
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk',$payments->amount)}}" name="check_shop_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control c_shop_tk" value="0">
+                                                <input readonly type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk',$payments->amount)}}" name="check_shop_tk[]">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date[]" placeholder="Date">
+                                                <input type="date" class="form-control" value="{{ old('check_date',$payments->check_date)}}" name="check_date[]" placeholder="Date">
                                             </div>
                                         </div>
                                     </div>
@@ -288,7 +283,7 @@
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control expenses_tk" onkeyup="FinalTotal()" value="{{ old('expenses')}}" name="expenses">
+                                                <input type="text" class="form-control expenses_tk" value="{{ old('expenses',$sales->expenses)}}" name="expenses">
                                             </div>
                                         </div>
                                     </div>
@@ -300,7 +295,7 @@
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control commission_tk" onkeyup="FinalTotal()" value="{{ old('commission')}}" name="commission">
+                                                <input type="text" class="form-control commission_tk" value="{{ old('commission',$sales->commission)}}" name="commission">
                                             </div>
                                         </div>
                                     </div>
@@ -312,7 +307,7 @@
                                         </div>
                                         <div class="col-lg-7 col-md-9 col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
+                                                <input type="text" class="form-control final_total_tk" value="{{ old('final_total',$sales->final_total)}}" name="final_total">
                                             </div>
                                         </div>
                                     </div>

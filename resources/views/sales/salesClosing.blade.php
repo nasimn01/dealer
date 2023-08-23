@@ -326,6 +326,7 @@
 @endsection
 @push("scripts")
 <script>
+    FinalTotal();
     function addRow(){
         var tfootSection = document.getElementById('tfootSection');
         tfootSection.style.display = 'table-row-group';
@@ -352,7 +353,7 @@
                     </select>
                 </td>  --}}
                 <td>
-                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this)" name="old_pcs_price[]" value="" placeholder="PCS Price">
+                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this),FinalTotal()" name="old_pcs_price[]" value="" placeholder="PCS Price">
                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
                 </td>
                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
