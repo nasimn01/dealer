@@ -118,6 +118,7 @@
                                                             <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('tp_price',$salesdetails->pcs_price) }}">
 
                                                             <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
+                                                            <input class="form-control total_damage_pcs" type="hidden" name="total_damage_pcs[]" value="">
                                                             <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="">
                                                         </td>
                                                         {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
@@ -355,6 +356,7 @@
                 <td>
                     <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this),FinalTotal()" name="old_pcs_price[]" value="" placeholder="PCS Price">
                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
+                    <input class="form-control old_total_damage_pcs" type="hidden" name="old_total_damage_pcs[]" value="">
                 </td>
                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
@@ -633,15 +635,17 @@ function getCtnQty(e){
             let totalReceive=totalReturn+totalDamage;
             let subTotalPrice=(pcsPrice*oldTotalQty)-(pcsPrice*totalReceive);
             $(e).closest('tr').find('.subtotal_price').val(subTotalPrice);
-            $(e).closest('tr').find('.total_return_pcs').val(totalReceive);
+            $(e).closest('tr').find('.total_return_pcs').val(totalReturn);
+            $(e).closest('tr').find('.total_damage_pcs').val(totalDamage);
             $(e).closest('tr').find('.total_sales_pcs').val(totalSalesQty);
             primarySubTotal();
 
-            let oldSub=(oldCtn*data)+oldPcs;
-            let oldSubDmg=(oldCtnDmg*data)+oldPcsDmg;
-            let totalReturnQty=(oldSub+oldSubDmg);
+            let oldSubPcs=(oldCtn*data)+oldPcs;
+            let oldSubDmgPcs=(oldCtnDmg*data)+oldPcsDmg;
+            let totalReturnQty=(oldSubPcs+oldSubDmgPcs);
             let oldSubtotalPrice=(totalReturnQty*oldPcsPrice);
-            $(e).closest('tr').find('.old_total_return_pcs').val(totalReturnQty);
+            $(e).closest('tr').find('.old_total_return_pcs').val(oldSubPcs);
+            $(e).closest('tr').find('.old_total_damage_pcs').val(oldSubDmgPcs);
             $(e).closest('tr').find('.return_subtotal_price').val(oldSubtotalPrice);
             return_total_calculate();
         },

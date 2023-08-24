@@ -317,6 +317,7 @@ class SalesController extends Controller
                                     $details->tp_free=$request->tp_price[$key];
                                 }
                                 $details->total_return_pcs=$request->total_return_pcs[$key];
+                                $details->total_damage_pcs=$request->total_damage_pcs[$key];
                                 $details->total_sales_pcs=$request->total_sales_pcs[$key];
                                 $details->subtotal_price=$request->subtotal_price[$key];
                                 // $details->total_taka=$request->total_taka[$key];
@@ -324,7 +325,6 @@ class SalesController extends Controller
                                 $details->status=0;
                                 $details->company_id=company()['company_id'];
                                 $details->created_by= currentUserId();
-                                // $details->save();
                                 if($details->save()){
                                     if($request->ctn_return[$key] >0 || $request->pcs_return[$key]>0){
                                         $stock=new Stock;
@@ -344,7 +344,7 @@ class SalesController extends Controller
                                         $stock=new Stock;
                                         $stock->sales_id=$sales->id;
                                         $stock->product_id=$request->product_id[$key];
-                                        $stock->totalquantity_pcs=$request->total_return_pcs[$key];
+                                        $stock->totalquantity_pcs=$request->total_damage_pcs[$key];
                                         $stock->status_history=2;
                                         $stock->status=1;
                                         if($request->price_type[$key]=="1"){
@@ -392,7 +392,7 @@ class SalesController extends Controller
                                     $stock=new Stock;
                                     $stock->sales_id=$sales->id;
                                     $stock->product_id=$request->return_product_id[$i];
-                                    $stock->totalquantity_pcs=$request->old_total_return_pcs[$i];
+                                    $stock->totalquantity_pcs=$request->old_total_damage_pcs[$i];
                                     $stock->status_history=2;
                                     $stock->status=1;
                                     // if($request->select_tp_tpfree[$i]==1){
