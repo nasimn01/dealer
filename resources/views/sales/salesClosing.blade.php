@@ -119,7 +119,7 @@
 
                                                             <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
                                                             <input class="form-control total_damage_pcs" type="hidden" name="total_damage_pcs[]" value="">
-                                                            <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="">
+                                                            <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
                                                         </td>
                                                         {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
                                                         <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
@@ -131,7 +131,7 @@
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
-                                                    <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="total_taka">
+                                                    <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="daily_total_taka">
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>

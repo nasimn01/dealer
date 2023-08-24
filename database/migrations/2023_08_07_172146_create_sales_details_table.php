@@ -31,7 +31,7 @@ return new class extends Migration
             $table->decimal('total_sales_pcs',14,2)->nullable();
             $table->decimal('subtotal_price',14,2)->nullable();
             // $table->string('select_tp_tpfree')->comment('1=>tp 2=>tpfree')->nullable();
-            $table->string('status')->default(0);
+            $table->string('status')->comment('0=return,1=oldreturn');
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

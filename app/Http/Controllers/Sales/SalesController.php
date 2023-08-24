@@ -290,6 +290,8 @@ class SalesController extends Controller
                 $sales->dsr_id = $request->dsr_id;
                 $sales->sales_date = $request->sales_date;
 
+                $sales->daily_total_taka = $request->daily_total_taka;
+                $sales->return_total_taka = $request->return_total_taka;
                 $sales->expenses = $request->expenses;
                 $sales->commission = $request->commission;
                 $sales->final_total = $request->final_total;
@@ -371,8 +373,10 @@ class SalesController extends Controller
                             $rsales->pcs_damage=$request->old_pcs_damage[$i];
                             $rsales->tp_price=$request->old_pcs_price[$i];
                             $rsales->subtotal_price=$request->return_subtotal_price[$i];
+                            $rsales->total_return_pcs=$request->old_total_return_pcs[$i];
+                            $rsales->total_damage_pcs=$request->old_total_damage_pcs[$i];
                             // $rsales->balance_amount=$request->old_due_tk[$i];
-                            $rsales->status=0;
+                            $rsales->status=1;
                             if($rsales->save()){
                                 if($request->old_ctn_return[$i] >0 || $request->old_pcs_return[$i]>0){
                                     $stock=new Stock;

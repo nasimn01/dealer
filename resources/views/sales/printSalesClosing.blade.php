@@ -58,6 +58,7 @@
                                                 <th colspan="2">{{ __('Return') }}</th>
                                                 <th colspan="2" class="text-danger">{{ __('Damage') }}</th>
                                                 {{--  <th rowspan="2">{{__('TP/Tp Free')}}</th>  --}}
+                                                <th rowspan="2">{{__('Sales(PCS)')}}</th>
                                                 <th rowspan="2">{{__('PCS(Price)')}}</th>
                                                 {{--  <th rowspan="2">{{__('CTN(Price)')}}</th>  --}}
                                                 <th rowspan="2">{{__('Sub-Total(Price)')}}</th>
@@ -74,66 +75,55 @@
 
                                             @if ($sales->sales_details)
                                                 @foreach ($sales->sales_details as $salesdetails)
-                                                    <tr>
-                                                        <td>
-                                                            <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
-                                                        </td>
-                                                        <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
-                                                        <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
-                                                        <td><input class="form-control ctn_return" type="text" name="ctn_return[]" value="{{ old('ctn_return',$salesdetails->ctn_return) }}" placeholder="ctn return"></td>
-                                                        <td><input class="form-control pcs_return" type="text" name="pcs_return[]"value="{{ old('pcs_return',$salesdetails->pcs_return) }}" placeholder="pcs return"></td>
-                                                        <td><input class="form-control ctn_damage" type="text" name="ctn_damage[]" value="{{ old('ctn_damage',$salesdetails->ctn_damage) }}" placeholder="ctn damage"></td>
-                                                        <td><input class="form-control pcs_damage" type="text" name="pcs_damage[]"value="{{ old('pcs_damage',$salesdetails->pcs_damage) }}" placeholder="pcs damage"></td>
-                                                        {{--  <td style="width: 110px;">
-                                                            <select class="form-select" name="select_tp_tpfree">
-                                                                <option value="">Select</option>
-                                                                <option value="1" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="1" ? "selected":""}}>TP</option>
-                                                                <option value="2" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="2" ? "selected":""}}>TP Free</option>
-                                                            </select>
-                                                        </td>  --}}
-                                                        <td>
-                                                            <input readonly class="form-control per_pcs_price" type="text" name="pcs_price[]" @if($salesdetails->tp_price) value="{{ old('pcs_price',$salesdetails->tp_price) }}"@else value="{{ old('pcs_price',$salesdetails->tp_free) }}" @endif }  placeholder="PCS Price">
-                                                            <input class="form-control select_tp_tpfree" type="hidden" name="select_tp_tpfree[]" value="{{ $salesdetails->select_tp_tpfree }}">
-                                                            @if($salesdetails->select_tp_tpfree==1)
-                                                                <input class="form-control" type="hidden" name="price_type[]" value="1">
-                                                            @else
-                                                                <input class="form-control" type="hidden" name="price_type[]" value="2">
-                                                            @endif
-                                                            <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('tp_price',$salesdetails->pcs_price) }}">
-
-                                                            <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
-                                                            <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="">
-                                                        </td>
-                                                        {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
-                                                        <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
-                                                        <td></td>
-                                                    </tr>
-
+                                                @if ($salesdetails->status==0)
+                                                <tr>
+                                                    <td>
+                                                        <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
+                                                    </td>
+                                                    <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
+                                                    <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
+                                                    <td><input class="form-control ctn_return" type="text" name="ctn_return[]" value="{{ old('ctn_return',$salesdetails->ctn_return) }}" placeholder="ctn return"></td>
+                                                    <td><input class="form-control pcs_return" type="text" name="pcs_return[]"value="{{ old('pcs_return',$salesdetails->pcs_return) }}" placeholder="pcs return"></td>
+                                                    <td><input class="form-control ctn_damage" type="text" name="ctn_damage[]" value="{{ old('ctn_damage',$salesdetails->ctn_damage) }}" placeholder="ctn damage"></td>
+                                                    <td><input class="form-control pcs_damage" type="text" name="pcs_damage[]"value="{{ old('pcs_damage',$salesdetails->pcs_damage) }}" placeholder="pcs damage"></td>
+                                                    <td><input class="form-control total_sales_pcs" type="text" name="total_sales_pcs[]" value="{{ old('total_sales_pcs',$salesdetails->total_sales_pcs) }}"></td>
+                                                    {{--  <td style="width: 110px;">
+                                                        <select class="form-select" name="select_tp_tpfree">
+                                                            <option value="">Select</option>
+                                                            <option value="1" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="1" ? "selected":""}}>TP</option>
+                                                            <option value="2" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="2" ? "selected":""}}>TP Free</option>
+                                                        </select>
+                                                    </td>  --}}
+                                                    <td>
+                                                        <input readonly class="form-control per_pcs_price" type="text" name="pcs_price[]" @if($salesdetails->tp_price) value="{{ old('pcs_price',$salesdetails->tp_price) }}"@else value="{{ old('pcs_price',$salesdetails->tp_free) }}" @endif>
+                                                    </td>
+                                                    {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
+                                                    <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
+                                                    <td></td>
+                                                </tr>
+                                                @endif
                                                 @endforeach
                                             @endif
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
-                                                    <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="total_taka">
+                                                    <input type="text" class="form-control ptotal_taka" value="{{ $sales->daily_total_taka }}" name="total_taka">
                                                     {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
                                                 </td>
                                             </tr>
                                         </tbody>
                                         <tfoot id="tfootSection">
+                                            @if ($sales->sales_details)
+                                            @foreach ($sales->sales_details as $salesdetails)
+                                            @if ($salesdetails->status==1)
                                             <tr>
                                                 <td colspan="3">
-                                                    <select class="choices form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
-                                                        <option value="">Select Product</option>
-                                                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
+                                                    <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
                                                 </td>
-                                                <td><input class="form-control old_ctn" type="text" name="old_ctn_return[]" value="" placeholder="ctn return"></td>
-                                                <td><input class="form-control old_pcs" type="text" name="old_pcs_return[]" value="" placeholder="pcs return"></td>
-                                                <td><input class="form-control old_ctn_damage" type="text" name="old_ctn_damage[]" value="" placeholder="ctn damage"></td>
-                                                <td><input class="form-control old_pcs_damage" type="text" name="old_pcs_damage[]" value="" placeholder="pcs damage"></td>
+                                                <td><input class="form-control old_ctn" type="text" name="old_ctn_return[]" value="{{ old('old_ctn_return',$salesdetails->ctn_return) }}" placeholder="ctn return"></td>
+                                                <td><input class="form-control old_pcs" type="text" name="old_pcs_return[]" value="{{ old('old_pcs_return',$salesdetails->pcs_return) }}" placeholder="pcs return"></td>
+                                                <td><input class="form-control old_ctn_damage" type="text" name="old_ctn_damage[]" value="{{ old('old_ctn_damage',$salesdetails->ctn_damage) }}" placeholder="ctn damage"></td>
+                                                <td><input class="form-control old_pcs_damage" type="text" name="old_pcs_damage[]" value="{{ old('old_pcs_damage',$salesdetails->pcs_damage) }}" placeholder="pcs damage"></td>
                                                 {{--  <td>
                                                     <select class="form-select" name="select_tp_tpfree">
                                                         <option value="">Select</option>
@@ -141,21 +131,19 @@
                                                         <option value="2">TP Free</option>
                                                     </select>
                                                 </td>  --}}
+                                                <td> <input readonly class="form-control" type="text" value="" placeholder="PCS"></td>
                                                 <td>
-                                                    <input class="form-control old_pcs_price" type="text" name="old_pcs_price[]" value="" placeholder="PCS Price">
-                                                    <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
+                                                    <input class="form-control old_pcs_price" type="text" name="old_pcs_price[]" value="{{ $salesdetails->tp_price }}" placeholder="PCS Price">
                                                 </td>
-                                                {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
-                                                <td><input class="form-control" type="text" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
-                                                {{--  <td>
-                                                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>  --}}
+                                                <td><input class="form-control" type="text" name="return_subtotal_price[]" value="{{ $salesdetails->subtotal_price }}" placeholder="Sub total"></td>
                                             </tr>
+                                            @endif
+                                            @endforeach
+                                            @endif
                                             <tr>
-                                                <td class="text-end" colspan="8"><h5 for="return_total">{{__('Return Total Taka')}}</h5></td>
-                                                <td class="text-end" colspan="9">
-                                                    <input readonly type="text" class="form-control return_total_taka" value="0" name="return_total_taka">
+                                                <td class="text-end" colspan="9"><h5 for="return_total">{{__('Return Total Taka')}}</h5></td>
+                                                <td class="text-end" colspan="10">
+                                                    <input readonly type="text" class="form-control return_total_taka" value="{{ $sales->return_total_taka }}" name="return_total_taka">
                                                 </td>
                                             </tr>
                                         </tfoot>

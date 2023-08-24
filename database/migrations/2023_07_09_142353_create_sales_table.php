@@ -23,6 +23,8 @@ return new class extends Migration
             // $table->integer('pcs')->nullable();
             // $table->integer('tp')->nullable();
             // $table->decimal('tp_price',14,2)->nullable();
+            $table->decimal('daily_total_taka',14,2)->nullable();
+            $table->decimal('return_total_taka',14,2)->nullable();
             $table->decimal('expenses',14,2)->nullable();
             $table->decimal('commission',14,2)->nullable();
             $table->decimal('final_total',14,2)->nullable();
