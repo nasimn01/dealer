@@ -4,7 +4,7 @@
 @section('pageSubTitle',trans('Show'))
 
 @section('content')
-<section id="multiple-column-form">
+<section id="result_show">
     <div class="row match-height">
         <div class="col-12">
             <div class="card">
@@ -15,7 +15,7 @@
                             <input type="hidden" value="{{ $sales->id }}" name="sales_id">
                             <div class="row p-2 mt-4">
                                 @if (!empty($sales->shop_id))
-                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shopNameContainer">
+                                <div class="col-lg-3 col-md-3 col-sm-3 mt-2 shopNameContainer">
                                     <label for=""><b>Shop Name</b></label>
                                     <select class="form-select" name="shop_id">
                                         <option value="">Select</option>
@@ -29,7 +29,7 @@
                                 @endif
 
                                 @if (!empty($sales->dsr_id))
-                                    <div class="col-lg-3 col-md-3 col-sm-6 mt-2 dsrNameContainer">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 mt-2 dsrNameContainer">
                                         <label for=""><b>DSR Name</b></label>
                                         <select class="form-select" name="dsr_id">
                                             <option value="">Select</option>
@@ -41,7 +41,7 @@
                                         </select>
                                     </div>
                                 @endif
-                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
                                     <label for=""><b>Sales Date</b></label>
                                     <input type="text" id="datepicker" class="form-control" value="{{ $sales->sales_date }}"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
@@ -99,14 +99,14 @@
                                                     </td>
                                                     {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
                                                     <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
-                                                    <td></td>
+                                                    {{--  <td></td>  --}}
                                                 </tr>
                                                 @endif
                                                 @endforeach
                                             @endif
                                             <tr>
-                                                <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
-                                                <td class="text-end" colspan="9">
+                                                <td class="text-end" colspan="9"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
+                                                <td class="text-end" colspan="10">
                                                     <input type="text" class="form-control ptotal_taka" value="{{ $sales->daily_total_taka }}" name="total_taka">
                                                     {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
                                                 </td>
@@ -140,12 +140,14 @@
                                             @endif
                                             @endforeach
                                             @endif
+                                            @if ($salesdetails->status==1)
                                             <tr>
                                                 <td class="text-end" colspan="9"><h5 for="return_total">{{__('Return Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="10">
                                                     <input readonly type="text" class="form-control return_total_taka" value="{{ $sales->return_total_taka }}" name="return_total_taka">
                                                 </td>
                                             </tr>
+                                            @endif
                                         </tfoot>
                                     </table>
                                 </div>
@@ -157,16 +159,16 @@
                                     @foreach ($sales->shop_balance as $balance)
                                     @if($balance->status==0)
                                     <div class="row olddue">
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
+                                        <div class="col-lg-2 col-md-3 col-sm-2">
                                             <div class="form-group">
                                                 <h5 for="check">{{__('Old Due')}}</h5>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-3 col-sm-6">
+                                        <div class="col-lg-4 col-md-3 col-sm-4">
                                             <input readonly class="form-control" type="text" value="{{ $balance->shop?->shop_name }}">
                                         </div>
 
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" value="{{ old('old_due_tk',$balance->balance_amount)}}" name="old_due_tk[]">
                                             </div>
@@ -305,4 +307,16 @@
         </div>
     </div>
 </section>
+<button type="button" class="btn btn-info" onclick="printDiv('result_show')">Print</button>
 @endsection
+@push('scripts')
+<script>
+    function printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+</script>
+@endpush
