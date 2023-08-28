@@ -92,5 +92,14 @@
             {{--  <li class="py-1"><a href="{{route(currentUser().'.sales.edit',1)}}" >{{__('Sales Return')}}</a></li>  --}}
 		</ul>
     </li>
+    <li class="sidebar-item has-sub">
+        <a href="#" class='sidebar-link'><i class="bi bi-card-checklist"></i><span>{{__('Report')}}</span>
+        </a>
+        <ul class="submenu">
+            {{-- <li class="py-1"><a href="{{route(currentUser().'.preport')}}" >{{__('Purchase Report')}}</a></li> --}}
+            <li class="py-1"><a href="{{route(currentUser().'.sreport')}}" >{{__('Stock Report')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.shopdue')}}" >{{__('Shop Due Report')}}</a></li>
+		</ul>
+    </li>
 
 </ul>

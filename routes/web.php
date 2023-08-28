@@ -29,6 +29,7 @@ use App\Http\Controllers\Product\ProductController as product;
 use App\Http\Controllers\Product\BatchController as batch;
 use App\Http\Controllers\Product\ReturnProductController as returnproduct;
 use App\Http\Controllers\Do\DOController as docon;
+use App\Http\Controllers\Reports\ReportController as report;
 
 
 use App\Http\Controllers\Sales\SalesController as sales;
@@ -140,6 +141,10 @@ Route::group(['middleware'=>isOwner::class],function(){
         // Route::post('product-up-for-do', [docon::class, 'productUp'])->name('doscreenProductUp');
         Route::get('doscreenProductUp',[docon::class,'productUpdate'])->name('owner.doscreenProductUp');
         Route::get('get-product-data-ajax',[docon::class,'getProductData'])->name('owner.get_ajax_productdata');
+
+        //report
+        Route::get('/stock-report',[report::class,'stockreport'])->name('owner.sreport');
+        Route::get('/shop-due-report',[report::class,'ShopDue'])->name('owner.shopdue');
 
 
         //Accounts
