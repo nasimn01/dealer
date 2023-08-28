@@ -14,7 +14,7 @@
                             <form class="form" method="get" action="">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-2 mt-2">
+                                    {{--  <div class="col-md-2 mt-2">
                                         <label for="fdate" class="float-end"><h6>{{__('From Date')}}</h6></label>
                                     </div>
                                     <div class="col-md-4">
@@ -27,17 +27,17 @@
                                     </div>
                                     <div class="col-md-4">
                                         <input type="date" id="tdate" class="form-control" value="{{isset($_GET['tdate'])?$_GET['tdate']:''}}" name="tdate">
-                                    </div>
+                                    </div>  --}}
 
 
                                     <div class="col-md-2 mt-4">
                                         <label for="supplierName" class="float-end"><h6>{{__('Shop Name/OWner Name')}}</h6></label>
                                     </div>
                                     <div class="col-md-4 mt-4">
-                                        <select class="form-control form-select" name="customer" id="customer">
+                                        <select class="form-control form-select" name="shop_name" id="shop_name">
                                             <option value="">Select Party</option>
                                             @forelse($shop as $c)
-                                                {{--  <option value="{{$c->id}}" {{isset($_GET['customer'])&& $_GET['customer']==$c->id?'selected':''}}> {{ $c->customer_name}}</option>  --}}
+                                                <option value="{{$c->id}}" {{isset($_GET['shop_name'])&& $_GET['shop_name']==$c->id?'selected':''}}> {{ $c->shop_name}}</option>
                                             @empty
                                                 <option value="">No data found</option>
                                             @endforelse
@@ -59,10 +59,12 @@
                                         <tr class="bg-primary text-white text-center">
                                             <th class="p-2">{{__('#SL')}}</th>
                                             <th class="p-2" data-title="Party Name">{{__('Shop Name')}}</th>
+                                            <th class="p-2" data-title="Party Name">{{__('Amount')}}</th>
                                     </thead>
                                     <tbody>
                                         {{--  @forelse($data as $d)  --}}
                                         <tr class="text-center">
+                                            <td>1</td>
                                             <td>1</td>
                                             <td>1</td>
                                         </tr>

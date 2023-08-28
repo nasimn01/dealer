@@ -51,7 +51,7 @@
                                     <tr class="text-center">
                                         <th scope="row">{{ ++$loop->index }}</th>
                                         <td>{{$s->product_name}}</td>
-                                        <td>{{$s->qty}}</td>
+                                        <td>{{ $s->ins - $s->outs }}</td>
                                         {{--  <td>{{$s->qty}}</td>  --}}
                                     @empty
                                     <tr>
