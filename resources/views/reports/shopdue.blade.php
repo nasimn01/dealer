@@ -62,17 +62,17 @@
                                             <th class="p-2" data-title="Party Name">{{__('Amount')}}</th>
                                     </thead>
                                     <tbody>
-                                        {{--  @forelse($data as $d)  --}}
+                                        @forelse($data as $d)
                                         <tr class="text-center">
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
+                                            <td>{{ ++$loop->index }}</td>
+                                            <td>{{ $d->shop_name }}</td>
+                                            <td>{{ $d->balance_out-$d->balance_in }}</td>
                                         </tr>
-                                        {{--  @empty  --}}
+                                        @empty
                                         <tr>
-                                            <th colspan="11" class="text-center">No data Found</th>
+                                            <th colspan="4" class="text-center">No data Found</th>
                                         </tr>
-                                        {{--  @endforelse  --}}
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </form>
