@@ -40,7 +40,6 @@ class ReportController extends Controller
 
     public function ShopDue(Request $request)
     {
-        // dd($request->all());
         $shop = Shop::where(company())->get();
 
         $query = ShopBalance::join('shops', 'shops.id', '=', 'shop_balances.shop_id')
@@ -52,10 +51,8 @@ class ReportController extends Controller
 
     if ($request->shop_name) {
         $query->where('shop_balances.shop_id', $request->shop_name);
-        // dd($query->toSql());
     }
     $data = $query->get();
-
         return view('reports.shopdue', compact('shop','data'));
     }
 }
