@@ -8,6 +8,13 @@
         </a>
     </li>
     <li class="sidebar-item has-sub">
+        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Products')}}</span>
+        </a>
+        <ul class="submenu">
+            <li class="py-1"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product List')}}</a></li>
+		</ul>
+    </li>
+    <li class="sidebar-item has-sub">
         <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('DO Setting')}}</span>
         </a>
         <ul class="submenu">

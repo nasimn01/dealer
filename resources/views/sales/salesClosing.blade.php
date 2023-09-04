@@ -26,28 +26,32 @@
                                 @if (!empty($sales->shop_id))
                                 <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shopNameContainer">
                                     <label for=""><b>Shop Name</b></label>
-                                    <select class="form-select" name="shop_id">
+                                    {{--  <input readonly class="form-control" type="text" value="{{ $sales->shop?->shop_name }}" placeholder="">
+                                    <input class="form-control" type="hidden" name="shop_id" value="{{ old('shop_id',$sales->shop_id) }}" placeholder="">  --}}
+                                    {{--  <select class="form-select" name="shop_id">
                                         <option value="">Select</option>
                                         @forelse($shops as $sh)
                                         <option value="{{$sh->id}}" {{ $sales->shop_id==$sh->id?"selected":""}}> {{ $sh->shop_name}}</option>
                                         @empty
                                             <option value="">No data found</option>
                                         @endforelse
-                                    </select>
+                                    </select>  --}}
                                 </div>
                                 @endif
 
                                 @if (!empty($sales->dsr_id))
                                     <div class="col-lg-3 col-md-3 col-sm-6 mt-2 dsrNameContainer">
                                         <label for=""><b>DSR Name</b></label>
-                                        <select class="form-select" name="dsr_id">
+                                        <input readonly class="form-control" type="text" value="{{ $sales->dsr?->name }}" placeholder="">
+                                        <input class="form-control" type="hidden" name="dsr_id" value="{{ old('dsr_id',$sales->dsr_id) }}" placeholder="">
+                                        {{--  <select class="form-select" name="dsr_id">
                                             <option value="">Select</option>
                                             @forelse($dsr as $d)
                                             <option value="{{$d->id}}" {{ $sales->dsr_id==$d->id?"selected":""}}> {{ $d->name}}</option>
                                             @empty
                                                 <option value="">No data found</option>
                                             @endforelse
-                                        </select>
+                                        </select>  --}}
                                     </div>
                                 @endif
                                 <div class="col-lg-3 col-md-3 col-sm-6 mt-2">

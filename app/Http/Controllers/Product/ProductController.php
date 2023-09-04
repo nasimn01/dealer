@@ -12,6 +12,7 @@ use App\Models\Settings\Unit_style;
 use App\Models\Settings\Unit;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\User;
 use Exception;
 
 class ProductController extends Controller
@@ -39,7 +40,8 @@ class ProductController extends Controller
         $category=Category::all();
         $unit_style=Unit_style::all();
         $base_unit=Unit::all();
-        return view('product.product.create',compact('group','category','unit_style','base_unit'));
+        $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
+        return view('product.product.create',compact('group','category','unit_style','base_unit','user'));
     }
 
     /**

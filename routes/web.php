@@ -171,6 +171,8 @@ Route::group(['middleware'=>isManager::class],function(){
     Route::prefix('manager')->group(function(){
         Route::get('/dashboard', [dash::class,'managerDashboard'])->name('manager.dashboard');
 
+        Route::resource('product',product::class,['as'=>'manager']);
+        Route::get('unit-pcs-get',[product::class,'UnitPcsGet'])->name('manager.unit_pcs_get');
         Route::resource('docontroll',docon::class,['as'=>'manager']);
         Route::get('doreceive',[docon::class,'DoRecive'])->name('manager.doreceive');
         Route::get('do-data-get',[docon::class,'doDataGet'])->name('manager.do_data_get');
