@@ -96,9 +96,10 @@ class SalesController extends Controller
     }
 
 
-    public function show(Sales $sales)
+    public function show($id)
     {
-        //
+        $sales=TemporarySales::findOrFail(encryptor('decrypt',$id));
+        return view('sales.show',compact('sales'));
     }
 
 

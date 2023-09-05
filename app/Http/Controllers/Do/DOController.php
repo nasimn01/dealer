@@ -325,7 +325,7 @@ class DOController extends Controller
             }
             Toastr::success('Receive Successfully !');
             // return $history->chalan_no;
-            // return redirect(route(currentUser().'.do.receivelist',encryptor('encrypt',$history->chalan_no)));
+            return redirect(route(currentUser().'.do.receivelist'));
         }catch(Exception $e){
             dd($e);
             return redirect()->back()->withInput();

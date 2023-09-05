@@ -11,14 +11,10 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <div class="row">
-                            <h3 class="text-center"> {{ $settings->name }}</h3>
-                        </div>
-                        <div class="row">
-                            <span class="text-center">Contact: {{ $settings->contact }}</span>
-                        </div>
-                        <div class="row">
-                            <span class="text-center">Address :{{ $settings->address }}</span>
+                        <div class="row text-center">
+                            <h3> {{ $settings->name }}</h3>
+                            <p class="mb-1">Contact: {{ $settings->contact }}</p>
+                            <p>Address :{{ $settings->address }}</p>
                         </div>
                         <table style="width: 100%">
                             <tr>
