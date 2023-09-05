@@ -246,7 +246,7 @@ class DOController extends Controller
         return response()->json($data, 200);
     }
     return response()->json(['error' => 'Product not found'], 404);
-}
+    }
 
 
     public function DoRecive_edit(Request $request)
@@ -324,11 +324,28 @@ class DOController extends Controller
 
             }
             Toastr::success('Receive Successfully !');
-            return redirect()->back();
+            // return $history->chalan_no;
+            // return redirect(route(currentUser().'.do.receivelist',encryptor('encrypt',$history->chalan_no)));
         }catch(Exception $e){
             dd($e);
             return redirect()->back()->withInput();
         }
     }
+
+    public function doReceiveList()
+    {
+        $data=DoReceiveHistory::groupBy('do_receive_histories.chalan_no')->get();
+        // return $data;
+        return view('do.receive-list',compact('data'));
+    }
+    public function showDoReceive($chalan_no)
+    {
+        $print_data=DoReceiveHistory::where('chalan_no',$chalan_no)->get();
+        $stockDate = $print_data->first()->stock_date;
+        $chalanNo = $print_data->first()->chalan_no;
+        // return $print_data;
+        return view('do.print-do-receive',compact('print_data', 'stockDate', 'chalanNo'));
+    }
+
 
 }

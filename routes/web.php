@@ -138,6 +138,8 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('do-data-get',[docon::class,'doDataGet'])->name('owner.do_data_get');
         Route::get('unit-data-get',[docon::class,'UnitDataGet'])->name('owner.unit_data_get');
         Route::post('doreceive', [docon::class,'DoRecive_edit'])->name('owner.do.accept_do_edit');
+        Route::get('do-receive-list', [docon::class,'doReceiveList'])->name('owner.do.receivelist');
+        Route::get('do-receive-list/{chalan_no}', [docon::class,'showDoReceive'])->name('owner.showDoReceive');
         // Route::post('product-up-for-do', [docon::class, 'productUp'])->name('doscreenProductUp');
         Route::get('doscreenProductUp',[docon::class,'productUpdate'])->name('owner.doscreenProductUp');
         Route::get('get-product-data-ajax',[docon::class,'getProductData'])->name('owner.get_ajax_productdata');

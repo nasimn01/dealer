@@ -26,8 +26,8 @@
                                 @if (!empty($sales->shop_id))
                                 <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shopNameContainer">
                                     <label for=""><b>Shop Name</b></label>
-                                    {{--  <input readonly class="form-control" type="text" value="{{ $sales->shop?->shop_name }}" placeholder="">
-                                    <input class="form-control" type="hidden" name="shop_id" value="{{ old('shop_id',$sales->shop_id) }}" placeholder="">  --}}
+                                    <input readonly class="form-control" type="text" value="{{ $sales->shop?->shop_name }}" placeholder="">
+                                    <input class="form-control" type="hidden" name="shop_id" value="{{ old('shop_id',$sales->shop_id) }}" placeholder="">
                                     {{--  <select class="form-select" name="shop_id">
                                         <option value="">Select</option>
                                         @forelse($shops as $sh)

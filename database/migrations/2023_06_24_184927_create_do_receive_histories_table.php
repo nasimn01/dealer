@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('do_receive_histories', function (Blueprint $table) {
             $table->id();
             $table->string('do_id')->nullable();
-            $table->integer('chalan_no')->nullable();
+            $table->string('chalan_no')->nullable();
             $table->string('stock_date')->nullable();
             $table->string('product_id')->nullable();
             $table->string('batch_id')->nullable();

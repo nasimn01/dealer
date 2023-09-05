@@ -75,12 +75,13 @@
 		</ul>
     </li>
     <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('DO Setting')}}</span>
+        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('DO')}}</span>
         </a>
         <ul class="submenu">
-            <li class="py-1"><a href="{{route(currentUser().'.docontroll.create')}}" >{{__('Do')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.docontroll.create')}}" >{{__('New Do')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.docontroll.index')}}" >{{__('Do List')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.doreceive')}}" >{{__('Do Receive')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.do.receivelist')}}" >{{__('Do Receive List')}}</a></li>
 		</ul>
     </li>
     <li class="sidebar-item has-sub">
