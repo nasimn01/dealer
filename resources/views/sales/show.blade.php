@@ -88,14 +88,21 @@
 </section>
 <button type="button" class="btn btn-info" onclick="printDiv('result_show')">Print</button>
 @endsection
-@push('scripts')
+{{--  @push('scripts')
 <script>
     function printDiv(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
-    var originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-}
+        var prtContent = document.getElementById(divName);
+        var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.onload =function(){
+            WinPrint.focus();
+            WinPrint.print();
+        }
+
+       // WinPrint.close();
+
+    }
 </script>
-@endpush
+@endpush  --}}

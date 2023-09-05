@@ -73,7 +73,7 @@
 </section>
 <button type="button" class="btn btn-info" onclick="printDiv('result_show')">Print</button>
 @endsection
-@push('scripts')
+{{--  @push('scripts')
 <script>
     function printDiv(divName) {
     var printContents = document.getElementById(divName).innerHTML;
@@ -83,4 +83,4 @@
     document.body.innerHTML = originalContents;
 }
 </script>
-@endpush
+@endpush  --}}

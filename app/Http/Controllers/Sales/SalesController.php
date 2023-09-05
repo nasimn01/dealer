@@ -384,6 +384,7 @@ class SalesController extends Controller
                                     $stock->sales_id=$sales->id;
                                     $stock->product_id=$request->return_product_id[$i];
                                     $stock->totalquantity_pcs=$request->old_total_return_pcs[$i];
+                                    $stock->tp_price=$request->old_pcs_price[$i];
                                     $stock->status_history=1;
                                     $stock->status=1;
                                     // if($request->select_tp_tpfree[$i]==1){
@@ -398,6 +399,7 @@ class SalesController extends Controller
                                     $stock->sales_id=$sales->id;
                                     $stock->product_id=$request->return_product_id[$i];
                                     $stock->totalquantity_pcs=$request->old_total_damage_pcs[$i];
+                                    $stock->tp_price=$request->old_pcs_price[$i];
                                     $stock->status_history=2;
                                     $stock->status=1;
                                     // if($request->select_tp_tpfree[$i]==1){
