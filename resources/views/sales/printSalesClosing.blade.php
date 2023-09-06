@@ -129,157 +129,97 @@
                             </div>
                         </div>
                         <div class="row">
-                        <div class="col-6"></div>
-                        <div class="col-6">
+                        <div class="col-4"></div>
+                        <div class="col-8">
                             <table class="table table-bordered mb-0 table-striped">
                                 @if($sales->shop_balance)
                                 <tr>
-                                    <td class="text-center" colspan="2"><h5>Old Due</h5></td>
+                                    <td class="text-center" colspan="3"><h6>Old Due</h6></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" colspan="2"><b>Shop</b></td>
+                                    <td class="text-center"><b>Price</b></td>
                                 </tr>
                                 @foreach ($sales->shop_balance as $balance)
                                 @if($balance->status==0)
-                                <tr>
-                                    <td>{{ $balance->shop?->shop_name }}</td>
+                                <tr class="text-center">
+                                    <td colspan="2">{{ $balance->shop?->shop_name }}</td>
                                     <td>{{ $balance->balance_amount }}</td>
                                 </tr>
                                 @endif
                                 @endforeach
                                 @endif
+
+                                @if($sales->shop_balance)
                                 <tr>
-                                    <td><b>Sales Date</b></td>
-                                    <td>{{ $sales->sales_date }}</td>
+                                    <td class="text-center" colspan="3"><h6>New Due</h6></td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td colspan="2"><b>Shop</b></td>
+                                    <td><b>Price</b></td>
+                                </tr>
+                                @foreach ($sales->shop_balance as $balance)
+                                @if($balance->status==1)
+                                <tr class="text-center">
+                                    <td colspan="2">{{ $balance->shop?->shop_name }}</td>
+                                    <td>{{ $balance->balance_amount}}</td>
+                                </tr>
+                                @endif
+                                @endforeach
+                                @endif
+
+                                @if($sales->sales_payment)
+                                <tr>
+                                    <td class="text-center" colspan="3"><h6>New Receive</h6></td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td colspan="2"><b>Shop</b></td>
+                                    <td><b>Price</b></td>
+                                </tr>
+                                @foreach ($sales->sales_payment as $payments)
+                                @if($payments->cash_type==1)
+                                <tr class="text-center">
+                                    <td colspan="2">{{ $payments->shop?->shop_name }}</td>
+                                    <td>{{ $payments->amount}}</td>
+                                </tr>
+                                @endif
+                                @endforeach
+                                @endif
+
+                                @if($sales->sales_payment)
+                                <tr>
+                                    <td class="text-center" colspan="3"><h6>Check</h6></td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td><b>Shop</b></td>
+                                    <td><b>Date</b></td>
+                                    <td><b>Price</b></td>
+                                </tr>
+                                @foreach ($sales->sales_payment as $payments)
+                                @if($payments->cash_type==0)
+                                <tr class="text-center">
+                                    <td>{{ $payments->shop?->shop_name }}</td>
+                                    <td>{{ $payments->check_date }}</td>
+                                    <td>{{ $payments->amount}}</td>
+                                </tr>
+                                @endif
+                                @endforeach
+                                @endif
+
+                                <tr class="text-center">
+                                    <td  colspan="2"><h6>{{__('Expenses')}}</h6></td>
+                                    <td>{{ $sales->expenses}}</td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td  colspan="2"><h6>{{__('Commission')}}</h6></td>
+                                    <td>{{ $sales->commission}}</td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td  colspan="2"><h6>{{__('Final Total')}}</h6></td>
+                                    <td><b>{{ $sales->final_total}}</b></td>
                                 </tr>
                             </table>
                         </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-10">
-                                @if($sales->shop_balance)
-                                @foreach ($sales->shop_balance as $balance)
-                                @if($balance->status==0)
-                                <div class="row olddue">
-                                    <div class="col-lg-2 col-md-3 col-sm-2">
-                                        <div class="form-group">
-                                            <h6 for="check">{{__('Old Due')}}</h6>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-3 col-sm-4">{{ $balance->shop?->shop_name }}</div>
-
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <div class="form-group">{{ $balance->balance_amount }}</div>
-                                    </div>
-                                </div>
-                                @endif
-                                @endforeach
-                                @endif
-                                <hr>
-                                @if($sales->shop_balance)
-                                @foreach ($sales->shop_balance as $balance)
-                                @if($balance->status==1)
-                                <div class="row newdue">
-                                    <div class="col-lg-2 col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            <h6 for="check">{{__('New Due')}}</h6>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">{{ $balance->shop?->shop_name }}</div>
-                                    <div class="col-lg-3 col-md-3 col-sm-6">
-                                        <div class="form-group">{{ $balance->balance_amount}}</div>
-                                    </div>
-                                </div>
-                                @endif
-                                @endforeach
-                                @endif
-                                <hr>
-
-                                @if($sales->sales_payment)
-                                @foreach ($sales->sales_payment as $payments)
-                                @if($payments->cash_type==1)
-                                <div class="row new_receive">
-                                    <div class="col-lg-2 col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            <h6 for="check">{{__('New Receive')}}</h6>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                        {{ $payments->shop?->shop_name }}
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-3 col-sm-6">
-                                        <div class="form-group"> {{ old('new_receive_tk',$payments->amount)}}</div>
-                                    </div>
-                                </div>
-                                @endif
-                                @endforeach
-                                @endif
-
-                                @if($sales->sales_payment)
-                                @foreach ($sales->sales_payment as $payments)
-                                @if($payments->cash_type==0)
-                                <div class="row check_no">
-                                    <div class="col-lg-2 col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            <h5 for="check">{{__('Check')}}</h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                        {{ $payments->shop?->shop_name }}
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            {{ $payments->amount}}
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            {{ $payments->check_date }}
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                @endforeach
-                                @endif
-
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 col-sm-4">
-                                        <div class="form-group">
-                                            <h6 for="expenses">{{__('Expenses')}}</h6>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 col-md-9 col-sm-8">
-                                        <div class="form-group">
-                                            {{ $sales->expenses}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 col-sm-4">
-                                        <div class="form-group">
-                                            <h5 for="commission">{{__('Commission')}}</h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 col-md-9 col-sm-8">
-                                        <div class="form-group">
-                                            {{ $sales->commission}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 col-sm-4">
-                                        <div class="form-group">
-                                            <h5 for="total">{{__('Final Total')}}</h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 col-md-9 col-sm-8">
-                                        <div class="form-group">
-                                            {{ $sales->final_total}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end my-2">
                         </div>
                     </div>
                 </div>
