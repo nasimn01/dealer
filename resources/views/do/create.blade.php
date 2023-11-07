@@ -332,6 +332,7 @@
        // alert(sub_total)
     }
     function RemoveThis(e,p_id){
+        console.log(p_id)
         if (confirm("Are you sure you want to remove this Product?")) {
         $(e).closest('tr').remove();
         $('#product_id option[value="'+p_id+'"]').show();
