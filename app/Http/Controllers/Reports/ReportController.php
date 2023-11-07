@@ -47,12 +47,12 @@ class ReportController extends Controller
         ->select('shops.*', 'shop_balances.*',
             DB::raw('SUM(CASE WHEN shop_balances.status = 0 THEN shop_balances.balance_amount ELSE 0 END) as balance_out'),
             DB::raw('SUM(CASE WHEN shop_balances.status = 1 THEN shop_balances.balance_amount ELSE 0 END) as balance_in')
-    );
+        );
 
-    if ($request->shop_name) {
-        $query->where('shop_balances.shop_id', $request->shop_name);
-    }
-    $data = $query->get();
+        if ($request->shop_name) {
+            $query->where('shop_balances.shop_id', $request->shop_name);
+            }
+        $data = $query->get();
         return view('reports.shopdue', compact('shop','data'));
     }
 }
