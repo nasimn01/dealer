@@ -187,6 +187,7 @@
             let freeQty=$('#product_id').find(":selected").data('free');
             let ProductId=$('#product_id').find(":selected").val();
             let product_id= $('#product_id').data('value');
+            console.log(product_id);
             let qty = $('#qty').val();
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",
@@ -332,7 +333,7 @@
        // alert(sub_total)
     }
     function RemoveThis(e,p_id){
-        console.log(p_id)
+        //console.log(p_id)
         if (confirm("Are you sure you want to remove this Product?")) {
         $(e).closest('tr').remove();
         $('#product_id option[value="'+p_id+'"]').show();

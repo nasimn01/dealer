@@ -183,7 +183,7 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(),FinalTotal()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
                                                 <input type="hidden" class="form-control o_due_tk" value="0">
                                             </div>
                                         </div>
@@ -211,7 +211,7 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue(),FinalTotal()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
                                                 <input type="hidden" class="form-control n_due_tk" value="0">
                                             </div>
                                         </div>
@@ -239,7 +239,7 @@
 
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                                                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive(),FinalTotal()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
                                                 <input type="hidden" class="form-control n_receive_tk" value="0">
                                             </div>
                                         </div>
@@ -431,6 +431,7 @@ function FinalTotal(){
     var todayTotal=parseFloat($('.ptotal_taka').val());
     var returnTotal=parseFloat($('.return_total_taka').val());
     var oldDue=parseFloat($('.o_due_tk').val());
+    console.log(oldDue)
     var newDue=parseFloat($('.n_due_tk').val());
     var newRec=parseFloat($('.n_receive_tk').val());
     var newCheck=parseFloat($('.c_shop_tk').val());
@@ -446,8 +447,8 @@ function FinalTotal(){
     if(expenses)expenses=expenses; else expenses=0;
     if(comission)comission=comission; else comission=0;
 
-    //var total= ((todayTotal+oldDue)-(returnTotal+newDue+expenses+comission));
-    var total= (todayTotal-(returnTotal+expenses+comission));
+    var total= ((todayTotal+oldDue)-(returnTotal+newDue+expenses+comission));
+    //var total= (todayTotal-(returnTotal+expenses+comission));
     $('.final_total_tk').val(total.toFixed(2));
 }
 
@@ -470,7 +471,7 @@ function oldDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(),FinalTotal()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -509,7 +510,7 @@ function newDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue(),FinalTotal()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -549,7 +550,7 @@ function newReceive(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive(),FinalTotal()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
