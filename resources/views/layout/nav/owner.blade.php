@@ -69,7 +69,7 @@
         <ul class="submenu">
             <li class="py-1"><a href="{{route(currentUser().'.category.index')}}" >{{__('Category')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.group.index')}}" >{{__('Group')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.batch.index')}}" >{{__('Batch')}}</a></li>
+            {{--  <li class="py-1"><a href="{{route(currentUser().'.batch.index')}}" >{{__('Batch')}}</a></li>  --}}
             <li class="py-1"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.returnproduct.index')}}" >{{__('Return Product')}}</a></li>
 		</ul>

@@ -222,7 +222,7 @@
             success: function(data) {
             //console.log(data);
             if(tpPrice){
-                let total=isNaN(parseFloat((data/freeRatio)*freePcs));
+                let total=((data/freeRatio)*freePcs);
                 let tpfreeCal=(parseInt(total)+parseInt(data));
                 let tpfree=(parseInt(tpPrice*data)/parseInt(tpfreeCal)).toFixed(2);
                 $('.tp_free').val(tpfree);

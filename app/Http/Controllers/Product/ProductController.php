@@ -195,7 +195,8 @@ class ProductController extends Controller
     public function UnitPcsGet(Request $request)
     {
         $unitStyle=$request->unit_style_id;
-        $unit=Unit::where('unit_style_id', $unitStyle)->where('name','pcs')->pluck('qty');
+        $unit=Unit::where('unit_style_id', $unitStyle)->pluck('qty');
+        // $unit=Unit::where('unit_style_id', $unitStyle)->where('name','pcs')->pluck('qty');
         // return $unit;
         return response()->json($unit,200);
     }
