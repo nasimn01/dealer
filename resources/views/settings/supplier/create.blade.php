@@ -44,7 +44,7 @@
                                         <input type="number" value="{{old('balance')}}" class="form-control" name="balance">
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                {{--  <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="country">Country</label>
                                         <input type="text" value="{{old('country')}}" class="form-control" name="country">
@@ -55,7 +55,7 @@
                                         <label for="city">City</label>
                                         <input type="text" value="{{old('city')}}" class="form-control" name="city">
                                     </div>
-                                </div>
+                                </div>  --}}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="address">Address</label>
