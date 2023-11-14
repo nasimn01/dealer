@@ -13,11 +13,11 @@
         </a>
         <ul class="submenu">
             <li class="py-1"><a href="{{route(currentUser().'.company.index')}}">{{__('Company Details')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.supplier.index')}}">{{__('Distributor')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.users.index')}}">{{__('Users')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.werehouse.index')}}">{{__('Werehouse')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.bill.index')}}">{{__('Bill Term')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.supplier.index')}}">{{__('Distributor')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>
+            {{--  <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>  --}}
             <li class="py-1"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
 
             <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
