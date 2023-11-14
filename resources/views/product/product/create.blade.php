@@ -35,14 +35,6 @@
                                                     @endforelse
                                                 </select>
                                             @endif
-                                            {{--  <select class="choices form-select supplier_id" name="distributor_id">
-                                                <option value="">Select Distributor</option>
-                                                @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
-                                                    <option value="{{ $sup->id }}">{{ $sup->name }}</option>
-                                                @empty
-                                                    <option value="">No Data Found</option>
-                                                @endforelse
-                                            </select>  --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -64,7 +56,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="category_id">{{__('Category')}}<span class="text-danger">*</span></label>
                                             <select required name="category_id" class="form-control form-select" >
@@ -76,7 +68,7 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="unit_style_id">{{__('Unit Style')}}</label>
