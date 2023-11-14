@@ -16,6 +16,43 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
+                                            <label class="" for="cat">{{__('Distributor')}}</label>
+                                            @if($user)
+                                            <select class="form-select supplier_id" name="supplier_id" required>
+                                                @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                @empty
+                                                    <option value="">No Data Found</option>
+                                                @endforelse
+                                            </select>
+                                            @else
+                                                <select class="form-select supplier_id" name="supplier_id" onchange="getBalance()" required>
+                                                    <option value="">Select Distributor</option>
+                                                    @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                        <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                    @empty
+                                                        <option value="">No Data Found</option>
+                                                    @endforelse
+                                                </select>
+                                            @endif
+                                            {{--  <select class="choices form-select supplier_id" name="distributor_id">
+                                                <option value="">Select Distributor</option>
+                                                @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                    <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                                @empty
+                                                    <option value="">No Data Found</option>
+                                                @endforelse
+                                            </select>  --}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="product_name">{{__('Product Name')}}</label>
+                                            <input type="text" class="form-control" value="{{ old('product_name')}}" name="product_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
                                             <label for="group_id">{{__('Group')}}<span class="text-danger">*</span></label>
                                             <select required name="group_id" class="form-control form-select" >
                                                 <option value="">Select</option>
@@ -51,13 +88,6 @@
                                                     <option value="">No data found</option>
                                                 @endforelse
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="product_name">{{__('Product Name')}}</label>
-                                            <input type="text" class="form-control" value="{{ old('product_name')}}" name="product_name">
-
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -123,7 +153,7 @@
                                             </select>
                                         </div>
                                     </div>  --}}
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="color">{{__('Color')}}</label>
                                             <input type="text" class="form-control" value="{{ old('color')}}" name="color">
@@ -140,38 +170,7 @@
                                             <label for="weight">{{__('Weight')}}</label>
                                             <input type="text" class="form-control" value="{{ old('weight')}}" name="weight">
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label class="" for="cat">{{__('Distributor')}}</label>
-                                            @if($user)
-                                            <select class="form-select supplier_id" name="supplier_id" required>
-                                                @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
-                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
-                                                @empty
-                                                    <option value="">No Data Found</option>
-                                                @endforelse
-                                            </select>
-                                        @else
-                                            <select class="form-select supplier_id" name="supplier_id" onchange="getBalance()" required>
-                                                <option value="">Select Distributor</option>
-                                                @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
-                                                    <option value="{{ $sup->id }}">{{ $sup->name }}</option>
-                                                @empty
-                                                    <option value="">No Data Found</option>
-                                                @endforelse
-                                            </select>
-                                        @endif
-                                            {{--  <select class="choices form-select supplier_id" name="distributor_id">
-                                                <option value="">Select Distributor</option>
-                                                @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
-                                                    <option value="{{ $sup->id }}">{{ $sup->name }}</option>
-                                                @empty
-                                                    <option value="">No Data Found</option>
-                                                @endforelse
-                                            </select>  --}}
-                                        </div>
-                                    </div>
+                                    </div>  --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="image">{{__('Image')}}</label>
