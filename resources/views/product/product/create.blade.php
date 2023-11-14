@@ -163,13 +163,13 @@
                                             <input type="text" class="form-control" value="{{ old('weight')}}" name="weight">
                                         </div>
                                     </div>  --}}
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="image">{{__('Image')}}</label>
                                             <input type="file" class="form-control" value="{{ old('image')}}" name="image">
 
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                 </div>
 
                                 <div class="row">

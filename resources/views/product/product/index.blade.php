@@ -17,14 +17,14 @@
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Group')}}</th>
-                                    <th scope="col">{{__('Category')}}</th>
+                                    {{--  <th scope="col">{{__('Category')}}</th>  --}}
                                     <th scope="col">{{__('Name')}}</th>
                                     <th scope="col">{{__('DP Price')}}</th>
                                     <th scope="col">{{__('TP Price')}}</th>
                                     <th scope="col">{{__('MRP Price')}}</th>
                                     <th scope="col">{{__('Distributor')}}</th>
                                     {{--  <th scope="col">{{__('Unit')}}</th>  --}}
-                                    <th scope="col">{{__('Image')}}</th>
+                                    {{--  <th scope="col">{{__('Image')}}</th>  --}}
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
@@ -33,14 +33,14 @@
                                 <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$p->group?->name}}</td>
-                                    <td>{{$p->category?->name}}</td>
+                                    {{--  <td>{{$p->category?->name}}</td>  --}}
                                     <td>{{$p->product_name}}</td>
                                     <td>{{$p->dp_price}}</td>
                                     <td>{{$p->tp_price}}</td>
                                     <td>{{$p->mrp_price}}</td>
                                     <td>{{$p->distributor?->name}}</td>
                                     {{--  <td>{{$p->unit?->name}}</td>  --}}
-                                    <td><img width="50px" src="{{asset('uploads/product_img/'.company()['company_id'].'/'.$p->image)}}" alt=""></td>
+                                    {{--  <td><img width="50px" src="{{asset('uploads/product_img/'.company()['company_id'].'/'.$p->image)}}" alt=""></td>  --}}
                                     <td class="white-space-nowrap">
                                         <a href="{{route(currentUser().'.product.edit',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-pencil-square"></i>
