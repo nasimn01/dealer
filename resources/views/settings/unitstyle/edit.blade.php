@@ -17,13 +17,18 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="name">Name</label>
-                                        <input type="text" id="name" value="{{old('name',$unitstyle->name)}}" class="form-control" placeholder="Unit Style Name" name="name">
+                                        <input type="text" id="name" value="{{old('name',$unitstyle?->name)}}" class="form-control" placeholder="Unit Style Name" name="name">
                                     </div>
                                     @if($errors->has('name'))
                                         <span class="text-danger"> {{ $errors->first('name') }}</span>
                                     @endif
                                 </div>
-                                
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="qty">Quantity<span class="text-danger">*</span></label>
+                                        <input required type="number" value="{{old('qty',$unit?->qty)}}" class="form-control"  name="qty" required>
+                                    </div>
+                                </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="status">Status</label>

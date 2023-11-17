@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 
 use App\Models\Settings\Unit_style;
+use App\Models\Settings\Unit;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
@@ -49,10 +50,17 @@ class UnitStyleController extends Controller
             $data=new Unit_style;
             $data->name = $request->name;
             $data->status=1;
-        
             $data->created_by= currentUserId();
 
             if($data->save()){
+                $unit=new Unit;
+                $unit->unit_style_id=$data->id;
+                $unit->name=$request->name;
+                $unit->qty=$request->qty;
+                $unit->status=1;
+                $unit->created_by= currentUserId();
+                $unit->save();
+
             Toastr::success('Create Successfully!');
             return redirect()->route(currentUser().'.unitstyle.index');
             } else{
@@ -68,46 +76,35 @@ class UnitStyleController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Settings\Unit_style  $unit_style
-     * @return \Illuminate\Http\Response
-     */
     public function show(Unit_style $unit_style)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Settings\Unit_style  $unit_style
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $unitstyle= Unit_style::findOrFail(encryptor('decrypt',$id));
-        return view('settings.unitstyle.edit',compact('unitstyle'));
+        $unit= Unit::where('unit_style_id',encryptor('decrypt',$id))->first();
+        return view('settings.unitstyle.edit',compact('unitstyle','unit'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Settings\Unit_style  $unit_style
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         try{
             $data= Unit_style::findOrFail(encryptor('decrypt',$id));
             $data->name = $request->name;
             $data->status = $request->status;
-        
+
             $data->updated_by= currentUserId();
 
             if($data->save()){
+                $unit=Unit::where('unit_style_id',encryptor('decrypt',$id))->first();
+                $unit->unit_style_id=$data->id;
+                $unit->name=$request->name;
+                $unit->qty=$request->qty;
+                $unit->status=1;
+                $unit->created_by= currentUserId();
+                $unit->save();
             Toastr::success('Update Successfully!');
             return redirect()->route(currentUser().'.unitstyle.index');
             } else{

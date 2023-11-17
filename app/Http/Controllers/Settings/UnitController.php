@@ -53,7 +53,6 @@ class UnitController extends Controller
             $data->name=$request->name;
             $data->qty=$request->qty;
             $data->status=1;
-        
             $data->created_by= currentUserId();
 
             if($data->save()){
@@ -111,7 +110,7 @@ class UnitController extends Controller
             $data->name=$request->name;
             $data->qty=$request->qty;
             $data->status=$request->status;
-        
+
             $data->updated_by= currentUserId();
 
             if($data->save()){

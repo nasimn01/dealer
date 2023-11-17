@@ -14,7 +14,7 @@
                                 <div class="col-6">
                                     <input type="text" name="name" value="{{isset($_GET['name'])?$_GET['name']:''}}" placeholder="Name" class="form-control">
                                 </div>
-                                
+
                                 <div class="col-2 ps-0">
                                     <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
                                 </div>
@@ -28,15 +28,16 @@
                         <a class="float-end" href="{{route(currentUser().'.unitstyle.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                     </div>
                 </div>
-                
+
                 <!-- table bordered -->
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
-                        
+
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Name')}}</th>
+                                <th scope="col">{{__('Qty')}}</th>
                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                             </tr>
                         </thead>
@@ -45,6 +46,7 @@
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$data->name}}</td>
+                                <td>{{$data->unit?->qty}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.unitstyle.edit',encryptor('encrypt',$data->id))}}">
                                         <i class="bi bi-pencil-square"></i>
@@ -65,7 +67,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    
+
                     <div class="pt-2">
                         {{$unitstyles->links()}}
                     </div>

@@ -19,13 +19,14 @@
             <li class="py-1"><a href="{{route(currentUser().'.bill.index')}}">{{__('Bill Term')}}</a></li>
             {{--  <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>  --}}
             <li class="py-1"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
 
-            <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
+            {{--  <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
                 <ul class="submenu">
                     <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
                     <li class="py-1"><a href="{{route(currentUser().'.unit.index')}}">{{__('Unit')}}</a></li>
                 </ul>
-            </li>
+            </li>  --}}
 
 		</ul>
 
