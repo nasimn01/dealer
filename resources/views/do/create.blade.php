@@ -81,7 +81,8 @@
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="product">{{__('Product')}}<span class="text-danger">*</span></label>
                                                 @if($user)
-                                                    <select class=" choices form-select" id="product_id" onchange="getBalance()">
+                                                    {{--  <select class=" choices form-select" id="product_id" onchange="getBalance()">  --}}
+                                                    <select class="form-select" id="product_id" onchange="getBalance()">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->where('distributor_id',$user->distributor_id)->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -89,7 +90,8 @@
                                                         @endforelse
                                                     </select>
                                                 @else
-                                                    <select class="choices form-select" id="product_id">
+                                                    {{--  <select class="choices form-select" id="product_id">  --}}
+                                                    <select class="form-select" id="product_id">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
