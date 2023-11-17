@@ -89,7 +89,7 @@
                                                         @endforelse
                                                     </select>
                                                 @else
-                                                    <select class=" choices form-select" id="product_id">
+                                                    <select class="choices form-select" id="product_id">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -186,8 +186,8 @@
             let freeRatio=$('#product_id').find(":selected").data('ratio');
             let freeQty=$('#product_id').find(":selected").data('free');
             let ProductId=$('#product_id').find(":selected").val();
-            let product_id= $('#product_id').data('value');
-            console.log(product_id);
+            //let product_id= $('#product_id').find(":selected").data('value');
+            //console.log(ProductId);
             let qty = $('#qty').val();
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",
@@ -205,7 +205,7 @@
                             <tr class="text-center product_detail_tr${counter}">
                                 <td>${counter + 1}</td>
                                 <td>${productName}
-                                    <input type="hidden" name="product_id[]" value="${product_id}">
+                                    <input type="hidden" name="product_id[]" value="${ProductId}">
                                     <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${counter}">Click</button>
                                     <div class="modal fade" id="modal${counter}" tabindex="-1" role="dialog" aria-labelledby="modal${counter}Title" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -245,7 +245,7 @@
                                                                                         <td>Free Qty</td>
                                                                                         <td><input class="form-control" name="free" type="number" value="${freeQty}"></td>
                                                                                         <td></td>
-                                                                                        <td><button onclick="saveData(this, '${product_id}','${counter}')" type="button" class="btn btn-primary">Update</button></td>
+                                                                                        <td><button onclick="saveData(this, '${ProductId}','${counter}')" type="button" class="btn btn-primary">Update</button></td>
                                                                                     </tr>
                                                                             </div>
                                                                         </tbody>
@@ -275,7 +275,7 @@
                                     <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">
                                 </td>
                                 <td class="white-space-nowrap">
-                                    <button class="btn btn-link text-danger fs-3" type="button" onClick="RemoveThis(this,'${product_id}')">
+                                    <button class="btn btn-link text-danger fs-3" type="button" onClick="RemoveThis(this,'${ProductId}')">
                                         <i class="bi bi-trash-fill" class=""></i>
                                     </button>
                                 </td>
