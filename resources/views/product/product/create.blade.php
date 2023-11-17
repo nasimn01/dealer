@@ -56,7 +56,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="category_id">{{__('Category')}}<span class="text-danger">*</span></label>
                                             <select required name="category_id" class="form-control form-select" >
@@ -68,7 +68,7 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                    </div>  --}}
+                                    </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="unit_style_id">{{__('Unit Style')}}</label>
@@ -91,7 +91,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="free">{{__('Free(PCS)')}}</label>
-                                            <input type="number" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free')}}" name="free pcs">
+                                            <input type="text" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free')}}" name="free pcs">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">

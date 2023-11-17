@@ -68,7 +68,7 @@
         <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Products')}}</span>
         </a>
         <ul class="submenu">
-            {{--  <li class="py-1"><a href="{{route(currentUser().'.category.index')}}" >{{__('Category')}}</a></li>  --}}
+            <li class="py-1"><a href="{{route(currentUser().'.category.index')}}" >{{__('Category')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.group.index')}}" >{{__('Group')}}</a></li>
             {{--  <li class="py-1"><a href="{{route(currentUser().'.batch.index')}}" >{{__('Batch')}}</a></li>  --}}
             <li class="py-1"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product')}}</a></li>
