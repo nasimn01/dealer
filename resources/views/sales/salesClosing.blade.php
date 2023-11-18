@@ -152,172 +152,218 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-2"></div>
-                                <div class="col-lg-10">
-                                    {{--  <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sm-4">
-                                            <div class="form-group">
-                                                <h5 for="totaltk">{{__('Total Taka')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sm-8">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk">
-                                            </div>
-                                        </div>
-                                    </div>  --}}
-                                    <div class="row olddue">
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <h5 for="check">{{__('Old Due')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
-                                                <option value="">Select</option>
-                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
-                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(),FinalTotal()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control o_due_tk" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='oldDue();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row newdue">
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <h5 for="check">{{__('new Due')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
-                                                <option value="">Select</option>
-                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
-                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue(),FinalTotal()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control n_due_tk" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row new_receive">
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <h5 for="check">{{__('New Receive')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
-                                                <option value="">Select</option>
-                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
-                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive(),FinalTotal()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control n_receive_tk" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row check_no">
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <h5 for="check">{{__('Check')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                            <select class="form-select check_shop_id" name="check_shop_id[]">
-                                                <option value="">Select</option>
-                                                @foreach (\App\Models\Settings\Shop::all(); as $shop)
-                                                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
-                                                <input type="hidden" class="form-control c_shop_tk" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-3 col-sm-6">
-                                            <div class="form-group">
-                                                <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date[]" placeholder="Date">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-1 col-md-3 col-sm-6">
-                                            <div class="form-group text-primary" style="font-size:1.5rem">
-                                                 <span onClick='newCheck();'><i class="bi bi-plus-square-fill"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-3 col-sm-4">
-                                            <div class="form-group">
-                                                <h5 for="expenses">{{__('Expenses')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-7 col-md-9 col-sm-8">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control expenses_tk" onkeyup="FinalTotal()" value="{{ old('expenses')}}" name="expenses">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-3 col-sm-4">
-                                            <div class="form-group">
-                                                <h5 for="commission">{{__('Commission')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-7 col-md-9 col-sm-8">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control commission_tk" onkeyup="FinalTotal()" value="{{ old('commission')}}" name="commission">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-3 col-sm-4">
-                                            <div class="form-group">
-                                                <h5 for="total">{{__('Final Total')}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-7 col-md-9 col-sm-8">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="col-lg-3 text-center">
+                                   <b>Note and Coin</b>
+                                  <table class="ms-3" width="170" cellspcing="0">
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>1</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                      <th class="ps-1"> = </th>
+                                      <th>500</th>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>2</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>5</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>10</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>20</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>50</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>100</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>200</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>500</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="bg-info text-white px-3 text-center"><b>1000</b></td>
+                                      <td><input class="form-control" type="text" /></td>
+                                    </tr>
+                                  </table>
                                 </div>
-                            </div>
+                                <div class="col-lg-9">
+                                  {{--  <div class="row">
+                                      <div class="col-lg-3 col-md-3 col-sm-4">
+                                          <div class="form-group">
+                                              <h5 for="totaltk">{{__('Total Taka')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-9 col-md-9 col-sm-8">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" value="{{ old('total_tk')}}" name="total_tk">
+                                          </div>
+                                      </div>
+                                  </div>  --}}
+                                  <div class="row olddue">
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <h5 for="check">{{__('Old Due')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+                                          <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
+                                              <option value="">Select</option>
+                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              @endforeach
+                                          </select>
+                                      </div>
+
+                                      <div class="col-lg-3 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(),FinalTotal()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                              <input type="hidden" class="form-control o_due_tk" value="0">
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group text-primary" style="font-size:1.5rem">
+                                               <span onClick='oldDue();'><i class="bi bi-plus-square-fill"></i></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row newdue">
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <h5 for="check">{{__('new Due')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+                                          <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
+                                              <option value="">Select</option>
+                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              @endforeach
+                                          </select>
+                                      </div>
+
+                                      <div class="col-lg-3 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue(),FinalTotal()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                                              <input type="hidden" class="form-control n_due_tk" value="0">
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group text-primary" style="font-size:1.5rem">
+                                               <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row new_receive">
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <h5 for="check">{{__('New Receive')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+                                          <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
+                                              <option value="">Select</option>
+                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              @endforeach
+                                          </select>
+                                      </div>
+
+                                      <div class="col-lg-3 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive(),FinalTotal()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                                              <input type="hidden" class="form-control n_receive_tk" value="0">
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group text-primary" style="font-size:1.5rem">
+                                               <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row check_no">
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <h5 for="check">{{__('Check')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
+                                          <select class="form-select check_shop_id" name="check_shop_id[]">
+                                              <option value="">Select</option>
+                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              @endforeach
+                                          </select>
+                                      </div>
+                                      <div class="col-lg-3 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                                              <input type="hidden" class="form-control c_shop_tk" value="0">
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-2 col-md-3 col-sm-6">
+                                          <div class="form-group">
+                                              <input type="date" class="form-control" value="{{ old('check_date')}}" name="check_date[]" placeholder="Date">
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-1 col-md-3 col-sm-6">
+                                          <div class="form-group text-primary" style="font-size:1.5rem">
+                                               <span onClick='newCheck();'><i class="bi bi-plus-square-fill"></i></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-2 col-md-3 col-sm-4">
+                                          <div class="form-group">
+                                              <h5 for="expenses">{{__('Expenses')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-7 col-md-9 col-sm-8">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control expenses_tk" onkeyup="FinalTotal()" value="{{ old('expenses')}}" name="expenses">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-2 col-md-3 col-sm-4">
+                                          <div class="form-group">
+                                              <h5 for="commission">{{__('Commission')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-7 col-md-9 col-sm-8">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control commission_tk" onkeyup="FinalTotal()" value="{{ old('commission')}}" name="commission">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-2 col-md-3 col-sm-4">
+                                          <div class="form-group">
+                                              <h5 for="total">{{__('Final Total')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-7 col-md-9 col-sm-8">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  </div>
+                                </div>
                             <div class="d-flex justify-content-end my-2">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>

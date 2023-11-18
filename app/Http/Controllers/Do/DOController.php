@@ -209,7 +209,8 @@ class DOController extends Controller
     {
         $productId=$request->product_id;
         $unitStyleId=Product::where('id', $productId)->where('status',0)->pluck('unit_style_id');
-        $unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
+        $unit=Unit::whereIn('unit_style_id', $unitStyleId)->pluck('qty');
+        //$unit=Unit::whereIn('unit_style_id', $unitStyleId)->where('name','pcs')->pluck('qty');
         //return $unit;
         return response()->json($unit,200);
     }
@@ -232,7 +233,8 @@ class DOController extends Controller
     public function getProductData(Request $request){
     $productId = $request->product_id;
     $getProduct = Product::where('id', $productId)->where('status', 0)->first();
-    $unit=Unit::where('unit_style_id', $getProduct->unit_style_id)->where('name','pcs')->first();
+    $unit=Unit::where('unit_style_id', $getProduct->unit_style_id)->first();
+    //$unit=Unit::where('unit_style_id', $getProduct->unit_style_id)->where('name','pcs')->first();
 
     if ($getProduct) {
         $data = [

@@ -54,14 +54,14 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Do Date')}}<span class="text-danger">*</span></label>
-                                                <input required type="text" class="form-control" id="datepicker" name="do_date" placeholder="Day-Month-Year">
+                                                <input required type="text" class="form-control" value="<?php print(date("d-m-Y")); ?>" id="datepicker" name="do_date" placeholder="Day-Month-Year">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Pay Type')}}<span class="text-danger">*</span></label>
-                                                <select class="form-control form-select" name="bill_id" required>
+                                                <select class="form-control form-select" name="bill_id">
                                                     <option value="">Pay Type</option>
                                                     @forelse(App\Models\Settings\Bill_term::where(company())->get() as $bill)
                                                         <option value="{{ $bill->id }}">{{ $bill->name }}</option>
@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group mb-3">
-                                                <label class="py-2" for="q">{{__('Quantity')}}<span class="text-danger">*</span></label>
+                                                <label class="py-2" for="q">{{__('Quantity(CTN)')}}<span class="text-danger">*</span></label>
                                                 <input type="number" class="form-control" id="qty">
                                             </div>
                                         </div>
@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="border">
+                                    <div class="border bg-info w-bold text-white">
                                         <div class="form-group p-3">
                                             <p>Distributor balance: <span class="supbalance"> </span></p>
                                             <p>Do Amount: <span class="doamount"></span><input class="doamount_data" type="hidden" name="balance"></p>
@@ -135,8 +135,8 @@
                                         <tr class="text-center">
                                             <th scope="col">{{__('#SL')}}</th>
                                             <th scope="col">{{__('Product Name')}}</th>
-                                            <th scope="col">{{__('Qty')}}</th>
-                                            <th scope="col">{{__('Free Qty')}}</th>
+                                            <th scope="col">{{__('Qty(CTN)')}}</th>
+                                            <th scope="col">{{__('Free Qty(PCS)')}}</th>
                                             <th scope="col">{{__('DP')}}</th>
                                             <th scope="col">{{__('Amount')}}</th>
                                             <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -197,7 +197,8 @@
                 dataType: "json",
                 data: { product_id:ProductId },
                 success: function(data) {
-                    //console.log(data);
+                    console.log(data);
+                    console.log(freeQty);
                     var freeCount = (data / freeRatio) * freeQty;
                     var freeQtyCount = Math.floor(qty * freeCount);
 
