@@ -140,8 +140,8 @@
     }
 </script>
 @stack('scripts')
-<script src="{{ asset('/assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-<script src="{{ asset('/assets/js/pages/form-element-select.js') }}"></script>
+{{--  <script src="{{ asset('/assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+<script src="{{ asset('/assets/js/pages/form-element-select.js') }}"></script>  --}}
 {{-- tostr --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 {!! Toastr::message() !!}

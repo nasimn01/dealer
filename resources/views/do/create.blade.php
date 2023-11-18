@@ -58,7 +58,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3 col-md-6 col-sm-12">
+                                        {{--  <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Pay Type')}}<span class="text-danger">*</span></label>
                                                 <select class="form-control form-select" name="bill_id">
@@ -70,7 +70,7 @@
                                                     @endforelse
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>  --}}
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Reference Number')}}<span class="text-danger">*</span></label>

@@ -75,26 +75,26 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="free_ratio">{{__('Free Ratio')}}</label>
-                                            <input type="number" onkeyup="tpFree(this)" class="form-control free_ratio" value="{{ old('free_ratio',$product->free_ratio)}}" name="free_ratio">
+                                            <input type="number" min="0" onkeyup="tpFree(this)" class="form-control free_ratio" value="{{ old('free_ratio',$product->free_ratio)}}" name="free_ratio">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="free">{{__('Free(PCS)')}}</label>
-                                            <input type="text" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free',$product->free)}}" name="free">
+                                            <input type="number" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free',$product->free)}}" name="free">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="dp_price">{{__('DP Price')}}</label>
-                                            <input type="number" class="form-control" value="{{ old('dp_price',$product->dp_price)}}" name="dp_price">
+                                            <input type="number" min="0" step="0.01" class="form-control" value="{{ old('dp_price',$product->dp_price)}}" name="dp_price">
 
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_price">{{__('TP Price')}}</label>
-                                            <input type="number" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
+                                            <input type="number" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price',$product->tp_price)}}" name="tp_price">
 
                                         </div>
                                     </div>
