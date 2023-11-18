@@ -216,7 +216,6 @@ class DOController extends Controller
 
     public function productUpdate(Request $request)
     {
-
         $productId = $request->input('product_id');
         $freeRatio = $request->input('free_ratio');
         $dpPrice = $request->input('dp_price');

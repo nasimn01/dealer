@@ -18,7 +18,7 @@
                                         <div class="form-group">
                                             <label class="" for="cat">{{__('Distributor')}}</label>
                                             @if($user)
-                                            <select class="form-select supplier_id" name="supplier_id" required>
+                                            <select class="form-select distributor_id" name="distributor_id" required>
                                                 @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
                                                 <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                                 @empty
@@ -26,7 +26,7 @@
                                                 @endforelse
                                             </select>
                                             @else
-                                                <select class="form-select supplier_id" name="supplier_id" onchange="getBalance()" required>
+                                                <select class="form-select distributor_id" name="distributor_id" onchange="getBalance()" required>
                                                     <option value="">Select Distributor</option>
                                                     @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                         <option value="{{ $sup->id }}">{{ $sup->name }}</option>
@@ -91,7 +91,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="free">{{__('Free(PCS)')}}</label>
-                                            <input type="text" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free')}}" name="free pcs">
+                                            <input type="text" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free')}}" name="free">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -112,6 +112,7 @@
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free')}}</label>
                                             <input type="text" readonly class="form-control tp_free" value="{{ old('tp_free')}}" name="tp_free">
+                                            <input type="hidden" class="form-control tp_free_up" value="" name="">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -129,7 +130,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="adjust">{{__('Adjust')}}</label>
-                                            <input type="text" class="form-control" value="{{ old('adjust')}}" name="adjust">
+                                            <input type="text" onkeyup="Adjust(this)" class="form-control adjust" value="0" name="adjust">
                                         </div>
                                     </div>
                                     {{--  <div class="col-lg-4 col-md-6 col-sm-12">
@@ -217,10 +218,19 @@
                 let tpfreeCal=(parseInt(total)+parseInt(data));
                 let tpfree=(parseInt(tpPrice*data)/parseInt(tpfreeCal)).toFixed(2);
                 $('.tp_free').val(tpfree);
+                $('.tp_free_up').val(tpfree);
             }
 
             },
         });
+    }
+    function Adjust(e){
+        let adjust=$('.adjust').val();
+        let tpFreeValue=$('.tp_free_up').val();
+        let tpFreeUp=parseFloat(adjust)+parseFloat(tpFreeValue);
+        console.log(adjust)
+        console.log(tpFreeValue)
+        $('.tp_free').val(tpFreeUp);
     }
 </script>
 @endpush

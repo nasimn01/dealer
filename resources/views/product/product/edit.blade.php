@@ -17,7 +17,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="" for="cat">{{__('Distributor')}}</label>
-                                            <select class="choices form-select supplier_id" name="distributor_id">
+                                            <select class="choices form-select distributor_id" name="distributor_id">
                                                 <option value="">Select Distributor</option>
                                                 @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                     <option value="{{ $sup->id }}" {{ $product->distributor_id==$sup->id?'selected':'' }}>{{ $sup->name }}</option>
@@ -81,7 +81,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="free">{{__('Free(PCS)')}}</label>
-                                            <input type="number" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free',$product->free)}}" name="free">
+                                            <input type="text" onkeyup="tpFree(this)" class="form-control free_pcs" value="{{ old('free',$product->free)}}" name="free">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -102,6 +102,7 @@
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free')}}</label>
                                             <input type="text" readonly class="form-control tp_free" value="{{ old('tp_free',$product->tp_free)}}" name="tp_free">
+                                            <input type="hidden" class="form-control tp_free_up" value="" name="">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -120,7 +121,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="adjust">{{__('Adjust')}}</label>
-                                            <input type="text" class="form-control" value="{{ old('adjust',$product->adjust)}}" name="adjust">
+                                            <input type="text" onkeyup="Adjust(this)" class="form-control" value="{{ old('adjust',$product->adjust)}}" name="adjust">
                                         </div>
                                     </div>
                                     {{--  <div class="col-lg-4 col-md-6 col-sm-12">
@@ -222,6 +223,14 @@
 
             },
         });
+    }
+    function Adjust(e){
+        let adjust=$('.adjust').val();
+        let tpFreeValue=$('.tp_free_up').val();
+        let tpFreeUp=parseFloat(adjust)+parseFloat(tpFreeValue);
+        console.log(adjust)
+        console.log(tpFreeValue)
+        $('.tp_free').val(tpFreeUp);
     }
 </script>
 @endpush
