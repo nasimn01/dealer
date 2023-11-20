@@ -216,8 +216,8 @@
             if(tpPrice){
                 let total=((data/freeRatio)*freePcs);
                 let tpfreeCal=(parseInt(total)+parseInt(data));
-                let tpfree=(parseInt(tpPrice*data)/parseInt(tpfreeCal)).toFixed(2);
-                $('.tp_free').val(tpfree);
+                let tpfree=(parseInt(tpPrice*data)/parseInt(tpfreeCal))?(parseInt(tpPrice*data)/parseInt(tpfreeCal)):0;
+                $('.tp_free').val(parseFloat(tpfree).toFixed(2));
                 $('.tp_free_up').val(tpfree);
             }
 
