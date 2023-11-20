@@ -24,12 +24,12 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Stock Date</b></label>
-                                    <input type="text" id="datepicker" class="form-control" value="<?php print(date("d-m-Y")); ?>"  name="stock_date" placeholder="mm-dd-yyyy">
+                                    <input type="text" required id="datepicker" class="form-control" value="<?php print(date("d-m-Y")); ?>"  name="stock_date" placeholder="mm-dd-yyyy">
                                 </div>
 
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Chalan NO</b></label>
-                                    <input type="text" id="" class="form-control"  name="chalan_no" placeholder="Chalan NO">
+                                    <input type="text" id="" required class="form-control"  name="chalan_no" placeholder="Chalan NO">
                                 </div>
                             </div>
                             <!-- table bordered -->
