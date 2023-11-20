@@ -26,7 +26,7 @@
                                     <td>{{$p->chalan_no}}</td>
                                     <td>{{$p->stock_date}}</td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route(currentUser().'.showDoReceive'.$p?->chalan_no)}}">
+                                        <a href="{{route(currentUser().'.showDoReceive',$p->chalan_no)}}">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
