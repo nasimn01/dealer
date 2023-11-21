@@ -215,7 +215,13 @@
                                       <th class="ps-1"> = </th>
                                       <th class="onethousandtakaCalculate">0</th>
                                     </tr>
-                                  </table>
+                                    <tr>
+                                      <td class="text-white px-3 text-center"></td>
+                                      <th>Total</th>
+                                      <th class="ps-1"> = </th>
+                                      <th class="allConinUpdate">0</th>
+                                    </tr>
+                                </table>
                                 </div>
                                 <div class="col-lg-9">
                                   {{--  <div class="row">
@@ -751,7 +757,9 @@ function getCoinNote(e){
     $('.twohundredtakaCalculate').text(uptwoHundredTaka);
     $('.fivehundredtakaCalculate').text(upfiveHundredTaka);
     $('.onethousandtakaCalculate').text(uponeThousanddTaka);
-    //console.log(uptwoTaka);
+    let allcoinNot=uponeTaka+uptwoTaka+upfiveTaka+uptenTaka+uptwentyTaka+upfiftyTaka+uponeHundredTaka+uptwoHundredTaka+upfiveHundredTaka+uponeThousanddTaka;
+    $('.allConinUpdate').text(allcoinNot);
+    console.log(allcoinNot);
 }
 </script>
 @endpush
