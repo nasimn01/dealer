@@ -292,7 +292,7 @@
                                       </div>
                                   </div>
                                   <hr>
-                                  <div class="row new_receive">
+                                  {{--  <div class="row new_receive">
                                       <div class="col-lg-2 col-md-3 col-sm-6">
                                           <div class="form-group">
                                               <h5 for="check">{{__('New Receive')}}</h5>
@@ -318,7 +318,7 @@
                                                <span onClick='newReceive();'><i class="bi bi-plus-square-fill"></i></span>
                                           </div>
                                       </div>
-                                  </div>
+                                  </div>  --}}
                                   <div class="row check_no">
                                       <div class="col-lg-2 col-md-3 col-sm-6">
                                           <div class="form-group">
@@ -371,6 +371,30 @@
                                       <div class="col-lg-7 col-md-9 col-sm-8">
                                           <div class="form-group">
                                               <input type="text" class="form-control commission_tk" onkeyup="FinalTotal()" value="{{ old('commission')}}" name="commission">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-2 col-md-3 col-sm-4">
+                                          <div class="form-group">
+                                              <h5 for="cash">{{__('Cash Receive')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-7 col-md-9 col-sm-8">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control cash" onkeyup="FinalTotal()" value="{{ old('cash')}}" name="cash">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-2 col-md-3 col-sm-4">
+                                          <div class="form-group">
+                                              <h5 for="dsr_salary">{{__('DSR Salary')}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-7 col-md-9 col-sm-8">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control dsr_salary" onkeyup="FinalTotal()" value="{{ old('dsr_salary')}}" name="dsr_salary">
                                           </div>
                                       </div>
                                   </div>
@@ -759,6 +783,7 @@ function getCoinNote(e){
     $('.onethousandtakaCalculate').text(uponeThousanddTaka);
     let allcoinNot=uponeTaka+uptwoTaka+upfiveTaka+uptenTaka+uptwentyTaka+upfiftyTaka+uponeHundredTaka+uptwoHundredTaka+upfiveHundredTaka+uponeThousanddTaka;
     $('.allConinUpdate').text(allcoinNot);
+    $('.cash').val(allcoinNot);
     console.log(allcoinNot);
 }
 </script>
