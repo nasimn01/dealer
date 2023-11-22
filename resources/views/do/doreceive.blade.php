@@ -219,11 +219,11 @@ function RemoveRow(e) {
             dataType: "json",
             data: { product_id:product_id },
             success: function(data) {
+                //console.log(data);
                 let dpPcs=parseFloat(dpPrice/data).toFixed(2);
                 let total=(cn*data)+pcs;
                 totalReceive=(total+freePcs);
                 let subTotal=parseFloat(total*dpPcs).toFixed(2);
-                //console.log(dpPrice);
                 $(e).closest('tr').find('.dp_pcs').val(dpPcs);
                 $(e).closest('tr').find('.subtotal_dp_pcs').val(subTotal);
                 $(e).closest('tr').find('.receive').val(totalReceive);
