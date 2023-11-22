@@ -19,7 +19,7 @@
                                             <label class="" for="cat">{{__('Distributor')}}</label>
                                             @if($user)
                                             <select class="form-select distributor_id" name="distributor_id" required>
-                                                @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
+                                                @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->orderBy('id', 'desc')->get() as $sup)
                                                 <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                                 @empty
                                                     <option value="">No Data Found</option>
@@ -27,8 +27,8 @@
                                             </select>
                                             @else
                                                 <select class="form-select distributor_id" name="distributor_id" onchange="getBalance()" required>
-                                                    <option value="">Select Distributor</option>
-                                                    @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                    {{--  <option value="">Select Distributor</option>  --}}
+                                                    @forelse (App\Models\Settings\Supplier::where(company())->orderBy('id', 'desc')->get() as $sup)
                                                         <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                                     @empty
                                                         <option value="">No Data Found</option>
