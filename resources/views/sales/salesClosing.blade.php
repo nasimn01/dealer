@@ -157,61 +157,61 @@
                                   <table class="ms-3" width="170" cellspcing="0">
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>1</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control onetaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control onetaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="onetakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>2</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control twotaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control twotaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="twotakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>5</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control fivetaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control fivetaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="fivetakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>10</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control tentaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control tentaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="tentakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>20</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control twentytaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control twentytaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="twentytakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>50</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control fiftytaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control fiftytaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="fiftytakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>100</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control onehundredtaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control onehundredtaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="onehundredtakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>200</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control twohundredtaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control twohundredtaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="twohundredtakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>500</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control fivehundredtaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control fivehundredtaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="fivehundredtakaCalculate">0</th>
                                     </tr>
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>1000</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control onethousandtaka" type="text" /></td>
+                                      <td><input onkeyup="getCoinNote(this)" class="form-control onethousandtaka" type="number" /></td>
                                       <th class="ps-1"> = </th>
                                       <th class="onethousandtakaCalculate">0</th>
                                     </tr>
