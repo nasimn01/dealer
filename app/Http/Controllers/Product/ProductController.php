@@ -148,7 +148,7 @@ class ProductController extends Controller
             $data->color = $request->color;
             $data->size = $request->size;
             $data->weight = $request->weight;
-            $data->status = $request->status;
+            $data->status = 0;
 
             if($request->has('image')){
                 if($data->image){

@@ -18,7 +18,7 @@
                                         <div class="form-group">
                                             <label class="" for="cat">{{__('Distributor')}}</label>
                                             <select class="choices form-select distributor_id" name="distributor_id">
-                                                <option value="">Select Distributor</option>
+                                                {{--  <option value="">Select Distributor</option>  --}}
                                                 @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                     <option value="{{ $sup->id }}" {{ $product->distributor_id==$sup->id?'selected':'' }}>{{ $sup->name }}</option>
                                                 @empty
@@ -162,7 +162,7 @@
 
                                         </div>
                                     </div>  --}}
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="contact">{{__('Status')}}</label>
                                             <select name="status" class="form-control form-select">
@@ -171,7 +171,7 @@
                                                 <option value="1" {{ $product->status==1?"selected":""}}>Active</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>  --}}
 
                                 </div>
                                 <div class="row">

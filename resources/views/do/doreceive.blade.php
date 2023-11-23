@@ -219,7 +219,7 @@ function RemoveRow(e) {
             dataType: "json",
             data: { product_id:product_id },
             success: function(data) {
-                //console.log(data);
+                console.log(data);
                 let dpPcs=parseFloat(dpPrice/data).toFixed(2);
                 let total=(cn*data)+pcs;
                 totalReceive=(total+freePcs);
