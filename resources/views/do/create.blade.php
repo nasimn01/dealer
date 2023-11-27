@@ -90,8 +90,8 @@
                                                         @endforelse
                                                     </select>
                                                 @else
-                                                    {{--  <select class="choices form-select" id="product_id">  --}}
-                                                    <select class="form-select" id="product_id">
+                                                    <select class="select2 form-select" id="product_id">
+                                                    {{--  <select class="form-select" id="product_id">  --}}
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -175,10 +175,15 @@
 </section>
 @endsection
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
+
+        $('.select2').select2();
+
        let counter = 0;
         $('button.add-row').on('click', function() {
+            console.log($('#product_id').find(":selected").data('custom-properties'))
             if (!$('.supplier_id').val()) {
                 $('.supplier_id').focus();
                 return false;
