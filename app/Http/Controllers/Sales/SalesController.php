@@ -31,7 +31,8 @@ class SalesController extends Controller
 
     public function create()
     {
-        return view('sales.create');
+        $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
+        return view('sales.create',compact('user'));
     }
 
 
@@ -502,5 +503,10 @@ class SalesController extends Controller
     {
         $dsr=User::where('role_id',4)->get();
         return response()->json($dsr,200);
+    }
+    public function SupplierProduct(Request $request)
+    {
+        $product=Product::where('distributor_id',$request->supplier_id)->get();
+        return response()->json($product,200);
     }
 }

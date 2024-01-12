@@ -120,6 +120,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::post('sales-receive',[sales::class,'salesReceive'])->name('owner.sales.receive');
         Route::get('shop-data-get',[sales::class,'ShopDataGet'])->name('owner.get_shop');
         Route::get('dsr-data-get',[sales::class,'DsrDataGet'])->name('owner.get_dsr');
+        Route::get('supplier-product-data-get',[sales::class,'SupplierProduct'])->name('owner.get_supplier_product');
 
         // employee settings
         Route::resource('designation',designation::class,['as'=>'owner']);

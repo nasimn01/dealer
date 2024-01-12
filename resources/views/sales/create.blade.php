@@ -39,10 +39,31 @@
                                     <label for=""><b>Sales Date</b></label>
                                     <input type="text" id="datepicker" class="form-control" value="<?php print(date("d-m-Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                                    <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
+                                    @if($user)
+                                        <select class="form-select supplier_id" onchange="getProduct();">
+                                            @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+                                        </select>
+                                    @else
+                                        <select class="form-select supplier_id" onchange="getProduct();">
+                                            <option value="">Select Distributor</option>
+                                            @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+                                        </select>
+                                    @endif
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
-                                <div class="table-responsive">
+                                <div class="table-responsive d-none show_click">
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
@@ -53,38 +74,10 @@
                                                 <th scope="col">{{__('CTN Price')}}</th>
                                                 <th scope="col">{{__('PCS Price')}}</th>
                                                 <th scope="col">{{__('Sub-Total')}}</th>
-                                                <th class="white-space-nowrap">{{__('ACTION')}}</th>
+                                                {{--  <th class="white-space-nowrap">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                         </thead>
-                                        <tbody id="sales_repeat">
-                                            <tr>
-                                                <td>
-                                                    <select class="choices form-select product_id" id="product_id" name="product_id[]">
-                                                        <option value="">Select Product</option>
-                                                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </td>
-                                                <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
-                                                <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
-                                                <td>
-                                                    <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
-                                                        <option value="1">TP</option>
-                                                        <option value="2">TP Free</option>
-                                                    </select>
-                                                </td>
-                                                <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="CTN Price"></td>
-                                                <td><input readonly class="form-control per_pcs_price" type="text" name="per_pcs_price[]" value="" placeholder="PCS Price"></td>
-                                                <td>
-                                                    <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
-                                                    <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
-                                                </td>
-                                                <td>
-                                                    <span onClick='addRow();' class="add-row text-primary ms-3"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>
-                                            </tr>
+                                        <tbody id="sales_repeat" class="sales_repeat">
                                         </tbody>
                                     </table>
                                     <div class="row mb-1">
@@ -113,9 +106,63 @@
 @endsection
 @push("scripts")
 <script>
+    function getProduct(e){
+        var SuplierId=$('.supplier_id').val();
+        let counter = 0;
+        $.ajax({
+            url: "{{route(currentUser().'.get_supplier_product')}}",
+            type: "GET",
+            dataType: "json",
+            data: { supplier_id:SuplierId },
+            success: function(productdata) {
+                console.log(productdata);
+                let selectElement = $('.sales_repeat');
+                    selectElement.empty();
+                    $.each(productdata, function(index, value) {
+                        selectElement.append(
+                            `<tr>
+                                <td>
+                                    <input readonly class="form-control" type="text" value="${value.product_name}" placeholder="">
+                                    <input readonly class="form-control product_id" type="hidden" name="product_id[]" value="${value.id}">
+                                    <input readonly class="form-control tp_price" type="hidden" value="${value.tp_price}">
+                                    <input readonly class="form-control tp_free" type="hidden" value="${value.tp_free}">
+                                    {{--  <select class="choices form-select product_id" id="product_id" name="product_id[]">
+                                        <option value="">Select Product</option>
+                                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                                        <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>  --}}
+                                </td>
+                                <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
+                                <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
+                                <td>
+                                    <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
+                                        <option value="1">TP</option>
+                                        <option value="2">TP Free</option>
+                                    </select>
+                                </td>
+                                <td><input class="form-control ctn_price" type="text" name="ctn_price[]" value="" placeholder="Tp Price"></td>
+                                <td><input readonly class="form-control per_pcs_price" name="per_pcs_price[]" type="text" value="" placeholder="PCS Price"></td>
+                                <td>
+                                    <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
+                                    <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
+                                </td>
+                                {{--  <td>
+                                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                </td>  --}}
+                            </tr>`
+                        );
+                        counter++;
+                    });
+            },
+        });
+        $('.show_click').removeClass('d-none');
+     }
     function addRow(){
 
-var row=`
+    var row=`
     <tr>
         <td>
             <select class="choices form-select product_id" id="product_id" name="product_id[]">
@@ -141,7 +188,7 @@ var row=`
             <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
         </td>
         <td>
-            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+            {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
             {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
         </td>
     </tr>`;
@@ -158,9 +205,12 @@ function removeRow(e){
 function productData(e) {
     var selectedOption = parseInt($(e).closest('tr').find('.select_tp_tpfree').val());
     //console.log(selectedOption)
-    var tp = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
-    var tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
-    var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
+    var tp = $(e).closest('tr').find('.tp_price').val();
+    var tpFree = $(e).closest('tr').find('.tp_free').val();
+    var productId = $(e).closest('tr').find('.product_id').val();
+    //var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
+    //var tp = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
+    //var tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
     var ctn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
     var pcs = $(e).closest('tr').find('.pcs').val() ? parseFloat($(e).closest('tr').find('.pcs').val()) : 0;
     $.ajax({
