@@ -35,7 +35,6 @@ class SalesController extends Controller
         return view('sales.create',compact('user'));
     }
 
-
     public function store(Request $request)
     { //dd($request->all());
         try{
@@ -508,5 +507,13 @@ class SalesController extends Controller
     {
         $product=Product::where('distributor_id',$request->supplier_id)->get();
         return response()->json($product,200);
+    }
+    public function salesClosing(Request $request)
+    {
+        $sales = TemporarySales::all();
+        $shops=Shop::all();
+        $dsr=User::where('role_id',4)->get();
+        $product=Product::where(company())->get();
+        return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product'));
     }
 }
