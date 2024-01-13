@@ -37,7 +37,7 @@ class SalesController extends Controller
 
 
     public function store(Request $request)
-    {
+    { //dd($request->all());
         try{
             $data=new TemporarySales;
             $data->select_shop_dsr = $request->select_shop_dsr;
@@ -49,8 +49,8 @@ class SalesController extends Controller
             $data->company_id=company()['company_id'];
             $data->created_by= currentUserId();
             if($data->save()){
-                if($request->product_id){
-                    foreach($request->product_id as $key => $value){
+                if($request->subtotal_price){
+                    foreach($request->subtotal_price as $key => $value){
                         if($value){
                             $details = new TemporarySalesDetails;
                             $details->sales_id=$data->id;

@@ -24,14 +24,14 @@
 
                                 <div class="col-lg-3 mt-2" id="shopNameContainer" style="display: none;">
                                     <label for=""><b>Shop Name</b></label>
-                                    <select class="form-select" name="shop_id">
+                                    <select class="form-select shop_id" name="shop_id">
                                         <option value="">Select</option>
                                     </select>
                                 </div>
 
                                 <div class="col-lg-3 mt-2" id="dsrNameContainer" style="display: none;">
                                     <label for=""><b>DSR Name</b></label>
-                                    <select class="form-select" name="dsr_id">
+                                    <select class="form-select dsr_id" name="dsr_id">
                                         <option value="">Select</option>
                                     </select>
                                 </div>
@@ -272,15 +272,19 @@ function total_calculate() {
         var selectedOption = document.querySelector('select[name="select_shop_dsr"]').value;
 
         var shopNameContainer = document.getElementById("shopNameContainer");
+        var shopDropdown = document.querySelector('select[name="shop_id"]');
         var dsrNameContainer = document.getElementById("dsrNameContainer");
+        var dsrDropdown = document.querySelector('select[name="dsr_id"]');
 
         if (selectedOption === "shop") {
             shopNameContainer.style.display = "block";
             dsrNameContainer.style.display = "none";
+            dsrDropdown.value = "";
             getShopData();
         } else if (selectedOption === "dsr") {
             shopNameContainer.style.display = "none";
             dsrNameContainer.style.display = "block";
+            shopDropdown.value = "";
             getDsrData();
         } else {
             shopNameContainer.style.display = "none";
