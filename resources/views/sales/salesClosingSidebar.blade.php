@@ -84,8 +84,8 @@
                                             </tr>
                                         </thead>
                                         <tbody id="sales_repeat">
-                                            @if ($sales->temporary_sales_details)
-                                                @foreach ($sales->temporary_sales_details as $salesdetails)
+                                            @if ($sales?->temporary_sales_details)
+                                                @foreach ($sales?->temporary_sales_details as $salesdetails)
                                                     <tr>
                                                         <td>
                                                             <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">

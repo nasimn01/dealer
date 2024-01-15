@@ -532,7 +532,11 @@ class SalesController extends Controller
             $shops=Shop::all();
             $dsr=User::where('role_id',4)->get();
             $product=Product::where(company())->get();
-            return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product'));
+            if($sales){
+                return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product'));
+            }else {
+                return view('sales.nodata');
+            }
         }else {
             return redirect()->back();
         }
