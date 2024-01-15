@@ -17,6 +17,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
 use \App\Models\Product\Product;
+use Carbon\Carbon;
 use Exception;
 
 class SalesController extends Controller
@@ -514,6 +515,26 @@ class SalesController extends Controller
         $shops=Shop::all();
         $dsr=User::where('role_id',4)->get();
         $product=Product::where(company())->get();
-        return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product'));
+        return view('sales.getsalesClosing',compact('sales','shops','dsr','product'));
+    }
+    public function getSalesClosingData(Request $request)
+    { //dd($request->all());
+        if($request->sales_date && $request->dsr_id || $request->shop_id){
+            $requestdDate = Carbon::createFromFormat('m/d/Y', $request->sales_date)->format('d-m-Y');
+            $sales = TemporarySales::orderBy('id', 'asc')
+            ->where('sales_date',$requestdDate)
+            ->where(function ($query) use ($request) {
+            $query->where('dsr_id', $request->dsr_id)
+            ->orWhere('shop_id', $request->shop_id);
+            })
+            ->first();
+            //return $sales;
+            $shops=Shop::all();
+            $dsr=User::where('role_id',4)->get();
+            $product=Product::where(company())->get();
+            return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product'));
+        }else {
+            return redirect()->back();
+        }
     }
 }

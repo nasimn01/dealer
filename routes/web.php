@@ -121,7 +121,8 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('shop-data-get',[sales::class,'ShopDataGet'])->name('owner.get_shop');
         Route::get('dsr-data-get',[sales::class,'DsrDataGet'])->name('owner.get_dsr');
         Route::get('supplier-product-data-get',[sales::class,'SupplierProduct'])->name('owner.get_supplier_product');
-        Route::get('salesclosing-data-get',[sales::class,'salesClosing'])->name('owner.salesClosing');
+        Route::get('salesclosing-screen',[sales::class,'salesClosing'])->name('owner.salesClosing');
+        Route::post('salesclosing-data-get',[sales::class,'getSalesClosingData'])->name('owner.getSalesClosingData');
 
         // employee settings
         Route::resource('designation',designation::class,['as'=>'owner']);

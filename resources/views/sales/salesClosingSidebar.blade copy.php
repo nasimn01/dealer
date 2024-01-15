@@ -12,51 +12,36 @@
                     <div class="card-body">
                         <form method="post" action="{{route(currentUser().'.sales.receive')}}">
                             @csrf
-                            <input type="hidden" value="{{ $sales?->id }}" name="sales_id">
+                            {{--  //<input type="hidden" value="{{ $sales->id }}" name="sales_id">  --}}
                             <div class="row p-2 mt-4">
-                                {{--  <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+                                <div class="col-lg-3 mt-2">
                                     <label for=""><b>Shop/Dsr</b></label>
-                                    <select class="form-select shop_dsr" onclick="getShopDsr()" name="select_shop_dsr">
+                                    <select class="form-select" onclick="getShopDsr()" name="select_shop_dsr">
                                         <option value="">Select</option>
                                         <option value="shop">Shop</option>
                                         <option value="dsr">DSR</option>
                                     </select>
-                                </div>  --}}
-
-                                @if (!empty($sales->shop_id))
-                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shopNameContainer">
-                                    <label for=""><b>Shop Name</b></label>
-                                    <input readonly class="form-control" type="text" value="{{ $sales->shop?->shop_name }}" placeholder="">
-                                    <input class="form-control" type="hidden" name="shop_id" value="{{ old('shop_id',$sales->shop_id) }}" placeholder="">
-                                    {{--  <select class="form-select" name="shop_id">
-                                        <option value="">Select</option>
-                                        @forelse($shops as $sh)
-                                        <option value="{{$sh->id}}" {{ $sales->shop_id==$sh->id?"selected":""}}> {{ $sh->shop_name}}</option>
-                                        @empty
-                                            <option value="">No data found</option>
-                                        @endforelse
-                                    </select>  --}}
                                 </div>
-                                @endif
 
-                                @if (!empty($sales->dsr_id))
-                                    <div class="col-lg-3 col-md-3 col-sm-6 mt-2 dsrNameContainer">
-                                        <label for=""><b>DSR Name</b></label>
-                                        <input readonly class="form-control" type="text" value="{{ $sales->dsr?->name }}" placeholder="">
-                                        <input class="form-control" type="hidden" name="dsr_id" value="{{ old('dsr_id',$sales->dsr_id) }}" placeholder="">
-                                        {{--  <select class="form-select" name="dsr_id">
-                                            <option value="">Select</option>
-                                            @forelse($dsr as $d)
-                                            <option value="{{$d->id}}" {{ $sales->dsr_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                            @empty
-                                                <option value="">No data found</option>
-                                            @endforelse
-                                        </select>  --}}
-                                    </div>
-                                @endif
-                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+                                <div class="col-lg-3 mt-2" id="shopNameContainer" style="display: none;">
+                                    <label for=""><b>Shop Name</b></label>
+                                    <select class="form-select shop_id" name="shop_id">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-3 mt-2" id="dsrNameContainer" style="display: none;">
+                                    <label for=""><b>DSR Name</b></label>
+                                    <select class="form-select dsr_id" name="dsr_id">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 mt-2">
                                     <label for=""><b>Sales Date</b></label>
-                                    <input type="text" id="datepicker" class="form-control" value="{{ $sales?->sales_date }}"  name="sales_date" placeholder="mm-dd-yyyy">
+                                    <input type="text" id="datepicker" class="form-control" value="<?php print(date("d-m-Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
+                                </div>
+                                <div class="col-lg-3 mt-4">
+                                    <button type="button" class="btn btn-primary">GO</button>
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -84,58 +69,11 @@
                                             </tr>
                                         </thead>
                                         <tbody id="sales_repeat">
-                                            @if ($sales->temporary_sales_details)
-                                                @foreach ($sales->temporary_sales_details as $salesdetails)
-                                                    <tr>
-                                                        <td>
-                                                            <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
-                                                            <input readonly class="form-control product_id" type="hidden" name="product_id[]" value="{{ $salesdetails->product_id }}">
-                                                            {{--  <select class="choices form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
-                                                                <option value="">Select Product</option>
-                                                                @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                                <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}" {{ old('product_id', $pro->id)==$salesdetails->product_id ? "selected":""}}>{{ $pro->product_name }}</option>
-                                                                @empty
-                                                                @endforelse
-                                                            </select>  --}}
-                                                        </td>
-                                                        <td><input readonly class="form-control ctn" type="text" name="ctn[]" value="{{ old('ctn',$salesdetails->ctn) }}" placeholder="ctn"></td>
-                                                        <td><input readonly class="form-control pcs" type="text" name="pcs[]"value="{{ old('pcs',$salesdetails->pcs) }}" placeholder="pcs"></td>
-                                                        <td><input class="form-control ctn_return" type="text" onkeyup="getCtnQty(this)" name="ctn_return[]" value="" placeholder="ctn return"></td>
-                                                        <td><input class="form-control pcs_return" type="text" onkeyup="getCtnQty(this)" name="pcs_return[]"value="" placeholder="pcs return"></td>
-                                                        <td><input class="form-control ctn_damage" type="text" onkeyup="getCtnQty(this)" name="ctn_damage[]" value="" placeholder="ctn damage"></td>
-                                                        <td><input class="form-control pcs_damage" type="text" onkeyup="getCtnQty(this)" name="pcs_damage[]"value="" placeholder="pcs damage"></td>
-                                                        {{--  <td style="width: 110px;">
-                                                            <select class="form-select" name="select_tp_tpfree">
-                                                                <option value="">Select</option>
-                                                                <option value="1" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="1" ? "selected":""}}>TP</option>
-                                                                <option value="2" {{ old('select_tp_tpfree', $salesdetails->select_tp_tpfree)=="2" ? "selected":""}}>TP Free</option>
-                                                            </select>
-                                                        </td>  --}}
-                                                        <td>
-                                                            <input readonly class="form-control per_pcs_price" type="text" name="pcs_price[]" value="{{ old('pcs_price',$salesdetails->pcs_price) }}" placeholder="PCS Price">
-                                                            <input class="form-control select_tp_tpfree" type="hidden" name="select_tp_tpfree[]" value="{{ $salesdetails->select_tp_tpfree }}">
-                                                            @if($salesdetails->select_tp_tpfree==1)
-                                                                <input class="form-control" type="hidden" name="price_type[]" value="1">
-                                                            @else
-                                                                <input class="form-control" type="hidden" name="price_type[]" value="2">
-                                                            @endif
-                                                            <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('tp_price',$salesdetails->pcs_price) }}">
-
-                                                            <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
-                                                            <input class="form-control total_damage_pcs" type="hidden" name="total_damage_pcs[]" value="">
-                                                            <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
-                                                        </td>
-                                                        {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
-                                                        <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                @endforeach
-                                            @endif
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
-                                                    <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="daily_total_taka">
+                                                    <input type="text" class="form-control ptotal_taka" value="" name="daily_total_taka">
+                                                    {{--  <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="daily_total_taka">  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -155,73 +93,73 @@
                                 <div class="col-lg-3 text-center">
                                    <b>Note and Coin</b>
                                   <table class="ms-3" width="170" cellspcing="0">
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>1</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control onetaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="onetakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>2</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control twotaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="twotakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>5</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control fivetaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="fivetakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>10</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control tentaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="tentakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>20</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control twentytaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="twentytakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>50</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control fiftytaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="fiftytakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>100</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control onehundredtaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="onehundredtakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>200</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control twohundredtaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="twohundredtakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>500</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control fivehundredtaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="fivehundredtakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="bg-info text-white px-3 text-center"><b>1000</b></td>
-                                      <td><input onkeyup="getCoinNote(this)" class="form-control onethousandtaka" type="number" /></td>
-                                      <th class="ps-1"> = </th>
-                                      <th class="onethousandtakaCalculate">0</th>
-                                    </tr>
-                                    <tr>
-                                      <td class="text-white px-3 text-center"></td>
-                                      <th>Total</th>
-                                      <th class="ps-1"> = </th>
-                                      <th class="allConinUpdate">0</th>
-                                    </tr>
-                                </table>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>1</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control onetaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="onetakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>2</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control twotaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="twotakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>5</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control fivetaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="fivetakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>10</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control tentaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="tentakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>20</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control twentytaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="twentytakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>50</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control fiftytaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="fiftytakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>100</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control onehundredtaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="onehundredtakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>200</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control twohundredtaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="twohundredtakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>500</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control fivehundredtaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="fivehundredtakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="bg-info text-white px-3 text-center"><b>1000</b></td>
+                                        <td><input onkeyup="getCoinNote(this)" class="form-control onethousandtaka" type="number" /></td>
+                                        <th class="ps-1"> = </th>
+                                        <th class="onethousandtakaCalculate">0</th>
+                                        </tr>
+                                        <tr>
+                                        <td class="text-white px-3 text-center"></td>
+                                        <th>Total</th>
+                                        <th class="ps-1"> = </th>
+                                        <th class="allConinUpdate">0</th>
+                                        </tr>
+                                  </table>
                                 </div>
                                 <div class="col-lg-9">
                                   {{--  <div class="row">
@@ -786,5 +724,82 @@ function getCoinNote(e){
     $('.cash').val(allcoinNot);
     console.log(allcoinNot);
 }
+</script>
+<script>
+    function getShopDsr() {
+        var selectedOption = document.querySelector('select[name="select_shop_dsr"]').value;
+
+        var shopNameContainer = document.getElementById("shopNameContainer");
+        var shopDropdown = document.querySelector('select[name="shop_id"]');
+        var dsrNameContainer = document.getElementById("dsrNameContainer");
+        var dsrDropdown = document.querySelector('select[name="dsr_id"]');
+
+        if (selectedOption === "shop") {
+            shopNameContainer.style.display = "block";
+            dsrNameContainer.style.display = "none";
+            dsrDropdown.value = "";
+            getShopData();
+        } else if (selectedOption === "dsr") {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "block";
+            shopDropdown.value = "";
+            getDsrData();
+        } else {
+            shopNameContainer.style.display = "none";
+            dsrNameContainer.style.display = "none";
+        }
+    }
+    function getShopData() {
+        $.ajax({
+            url: "{{ route(currentUser().'.get_shop') }}",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                populateShopOptions(data);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    function getDsrData() {
+        $.ajax({
+            url: "{{ route(currentUser().'.get_dsr') }}",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                populateDsrOptions(data);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    function populateShopOptions(data) {
+        var selectElement = document.querySelector('select[name="shop_id"]');
+        selectElement.innerHTML = "";
+
+        data.forEach(function(item) {
+            var option = document.createElement("option");
+            option.value = item.id;
+            option.textContent = item.shop_name;
+            selectElement.appendChild(option);
+        });
+    }
+
+    function populateDsrOptions(data) {
+        var selectElement = document.querySelector('select[name="dsr_id"]');
+        selectElement.innerHTML = "";
+
+        data.forEach(function(item) {
+            var option = document.createElement("option");
+            option.value = item.id;
+            option.textContent = item.name;
+            selectElement.appendChild(option);
+        });
+    }
+
 </script>
 @endpush
