@@ -113,6 +113,7 @@ Route::group(['middleware'=>isOwner::class],function(){
 
         //sales
         Route::resource('sales',sales::class,['as'=>'owner']);
+        Route::get('selected-sales-get',[sales::class,'selectedCreate'])->name('owner.selectedCreate');
         Route::get('sales-primary-update/{id}',[sales::class,'PrimaryUpdate'])->name('owner.sales.primary_update');
         Route::post('sales-primary-store/{id}',[sales::class,'primaryStore'])->name('owner.sales.primaryStore');
         Route::get('sales-receive-screen/{id}',[sales::class,'salesReceiveScreen'])->name('owner.sales.receiveScreen');

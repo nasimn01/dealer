@@ -90,6 +90,7 @@
         </a>
         <ul class="submenu">
             <li class="py-1"><a href="{{route(currentUser().'.sales.create')}}" >{{__('New Sales')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.selectedCreate')}}" >{{__('Selected New Sales')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.sales.index')}}" >{{__('Sales List')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.salesClosing')}}" >{{__('Sales Closing')}}</a></li>
             {{--  <li class="py-1"><a href="{{route(currentUser().'.sales.edit',1)}}" >{{__('Sales Return')}}</a></li>  --}}

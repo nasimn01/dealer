@@ -5,7 +5,7 @@ namespace App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Settings\Unit;
+use App\Models\Settings\Unit_style;
 use App\Models\Settings\Supplier;
 
 class Product extends Model
@@ -20,8 +20,8 @@ class Product extends Model
      return $this->belongsTo(Category::class,'category_id','id');
     }
 
-    public function unit(){
-     return $this->belongsTo(Unit::class,'base_unit','id');
+    public function unit_style(){
+     return $this->belongsTo(Unit_style::class,'unit_style_id','id');
     }
 
     public function distributor(){

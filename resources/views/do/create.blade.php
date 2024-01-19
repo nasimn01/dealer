@@ -85,7 +85,7 @@
                                                     <select class="form-select" id="product_id" onchange="getBalance()">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->where('distributor_id',$user->distributor_id)->get(); as $pro)
-                                                        <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -94,7 +94,7 @@
                                                     {{--  <select class="form-select" id="product_id">  --}}
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option data-dp='{{ $pro->dp_price }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -137,7 +137,7 @@
                                             <th scope="col">{{__('Product Name')}}</th>
                                             <th scope="col">{{__('Qty(CTN)')}}</th>
                                             <th scope="col">{{__('Free Qty(PCS)')}}</th>
-                                            <th scope="col">{{__('DP')}}</th>
+                                            <th scope="col">{{__('DP(CTN)')}}</th>
                                             <th scope="col">{{__('Amount')}}</th>
                                             <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                         </tr>
@@ -189,6 +189,7 @@
                 return false;
             }
             let dp=$('#product_id').find(":selected").data('dp');
+            let unitQty=$('#product_id').find(":selected").data('unit');
             let productName=$('#product_id').find(":selected").data('name');
             let freeRatio=$('#product_id').find(":selected").data('ratio');
             let freeQty=$('#product_id').find(":selected").data('free');
@@ -202,13 +203,14 @@
                 dataType: "json",
                 data: { product_id:ProductId },
                 success: function(data) {
-                    console.log(data);
-                    console.log(freeQty);
+                    //console.log(data);
+                    //console.log(freeQty);
                     var freeCount = (data / freeRatio) * freeQty;
                     var freeQtyCount = Math.floor(qty * freeCount);
 
                     if (productName  && qty) {
-                        let total= (dp * qty);
+                        let totalCtnTk=(dp*unitQty);
+                        let total= (totalCtnTk * qty);
                         let newRow = `
                             <tr class="text-center product_detail_tr${counter}">
                                 <td>${counter + 1}</td>
@@ -274,10 +276,10 @@
                                     <input type="hidden" class="qty_sum" name="qty[]" value="${qty}">
                                 </td>
                                 <td class="free_qty${counter}"><span>${freeQtyCount}</span>
-                                    <input type="hidden" class="qty_sum" name="free_qty[]" value="${freeQtyCount}">
+                                    <input type="hidden" class="freeqty_sum" name="free_qty[]" value="${freeQtyCount}">
                                 </td>
-                                <td class="dp_price${counter}"><span>${dp}</span>
-                                    <input type="hidden" name="dp[]" value="${dp}">
+                                <td class="dp_price${counter}"><span>${totalCtnTk}</span>
+                                    <input type="hidden" name="dp[]" value="${totalCtnTk}">
                                 </td>
                                 <td class="sub_total${counter}"><span>${total}</span>
                                     <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">

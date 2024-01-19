@@ -96,28 +96,28 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="dp_price">{{__('DP Price(CTN)')}}</label>
+                                            <label for="dp_price">{{__('DP Price(PCS)')}}</label>
                                             <input type="number" min="0" step="0.01" class="form-control" value="{{ old('dp_price')}}" name="dp_price">
 
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="tp_price">{{__('TP Price(CTN)')}}</label>
+                                            <label for="tp_price">{{__('TP Price(PCS)')}}</label>
                                             <input type="number" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
 
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="tp_free">{{__('TP Free(CTN)')}}</label>
+                                            <label for="tp_free">{{__('TP Free(PCS)')}}</label>
                                             <input type="text" readonly class="form-control tp_free" value="{{ old('tp_free')}}" name="tp_free">
                                             <input type="hidden" class="form-control tp_free_up" value="" name="">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="mrp_price">{{__('MRP Price(CTN)')}}</label>
+                                            <label for="mrp_price">{{__('MRP Price(PCS)')}}</label>
                                             <input type="number" class="form-control" value="{{ old('mrp_price')}}" name="mrp_price">
                                         </div>
                                     </div>
