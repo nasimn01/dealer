@@ -220,24 +220,27 @@ function productData(e) {
         data: { product_id: productId },
         success: function (data) {
             // this function have doController UnitDataGet return qty
-            //console.log(data)
+            console.log(data)
             let totalqty=((data*ctn)+pcs);
             $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
             if(data){
-                let pcstp=parseFloat(tp / data).toFixed(2);
-                let pcstpFree=parseFloat(tpFree / data).toFixed(2);
-                let tpPcsPrice = parseFloat((tp / data) * pcs);
-                let tpFreePcsPrice = parseFloat((tpFree / data) * pcs);
-                var TpSubtotal = parseFloat((ctn * tp) + tpPcsPrice).toFixed(2);
-                var TpFreeSubtotal = parseFloat((ctn * tpFree) + tpFreePcsPrice).toFixed(2);
+                let ctnTp=parseFloat(tp * data).toFixed(2);
+                let ctntpFree=parseFloat(tpFree * data).toFixed(2);
+                let tpCtnPrice = parseFloat(ctnTp * ctn);
+                let tpPCSPrice = parseFloat(tp * pcs);
+                let tpFreeCtnPrice = parseFloat((tpFree * data) * ctn);
+                let tpFreePcsPrice = parseFloat(tpFree * pcs);
+                var TpSubtotal = parseFloat(tpPCSPrice + tpCtnPrice).toFixed(2);
+                var TpFreeSubtotal = parseFloat(tpFreePcsPrice + tpFreeCtnPrice).toFixed(2);
 
                 if (selectedOption === 1) {
-                    $(e).closest('tr').find('.ctn_price').val(tp);
-                    $(e).closest('tr').find('.per_pcs_price').val(pcstp);
+                    //$(e).closest('tr').find('.ctn_price').val(tp);
+                    $(e).closest('tr').find('.ctn_price').val(ctnTp);
+                    $(e).closest('tr').find('.per_pcs_price').val(tp);
                     $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
                 } else if (selectedOption === 2) {
-                    $(e).closest('tr').find('.ctn_price').val(tpFree);
-                    $(e).closest('tr').find('.per_pcs_price').val(pcstpFree);
+                    $(e).closest('tr').find('.ctn_price').val(ctntpFree);
+                    $(e).closest('tr').find('.per_pcs_price').val(tpFree);
                     $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
                 } else {
                     $(e).closest('tr').find('.ctn_price').val("");
