@@ -253,7 +253,7 @@
 
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(),FinalTotal()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control o_due_tk" value="0">
                                           </div>
                                       </div>
@@ -281,7 +281,7 @@
 
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue(),FinalTotal()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control n_due_tk" value="0">
                                           </div>
                                       </div>
@@ -335,7 +335,7 @@
                                       </div>
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control c_shop_tk" value="0">
                                           </div>
                                       </div>
@@ -377,7 +377,7 @@
                                   <div class="row">
                                       <div class="col-lg-2 col-md-3 col-sm-4">
                                           <div class="form-group">
-                                              <h5 for="cash">{{__('Cash Receive')}}</h5>
+                                              <h5 for="cash">{{__('Dsr Cash Receive')}}</h5>
                                           </div>
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
@@ -452,7 +452,7 @@
                     </select>
                 </td>  --}}
                 <td>
-                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this),FinalTotal()" name="old_pcs_price[]" value="" placeholder="PCS Price">
+                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this);FinalTotal();" name="old_pcs_price[]" value="" placeholder="PCS Price">
                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
                     <input class="form-control old_total_damage_pcs" type="hidden" name="old_total_damage_pcs[]" value="">
                 </td>
@@ -523,12 +523,15 @@ function totalNewCheck() {
 }
 function FinalTotal(){
     var todayTotal=parseFloat($('.ptotal_taka').val());
+    var dsrCashTk=parseFloat($('.cash').val());
+    var dsrSalary=parseFloat($('.dsr_salary').val());
     var returnTotal=parseFloat($('.return_total_taka').val());
     var oldDue=parseFloat($('.o_due_tk').val());
     console.log(oldDue)
     var newDue=parseFloat($('.n_due_tk').val());
     var newRec=parseFloat($('.n_receive_tk').val());
     var newCheck=parseFloat($('.c_shop_tk').val());
+    console.log(newCheck);
     var expenses=parseFloat($('.expenses_tk').val());
     var comission=parseFloat($('.commission_tk').val());
 
@@ -540,8 +543,10 @@ function FinalTotal(){
     if(newCheck)newCheck=newCheck; else newCheck=0;
     if(expenses)expenses=expenses; else expenses=0;
     if(comission)comission=comission; else comission=0;
+    if(dsrCashTk)dsrCashTk=dsrCashTk; else dsrCashTk=0;
+    if(dsrSalary)dsrSalary=dsrSalary; else dsrSalary=0;
 
-    var total= ((todayTotal+oldDue)-(returnTotal+newDue+expenses+comission));
+    var total= ((todayTotal+oldDue+dsrCashTk)-(returnTotal+newDue+expenses+comission+newCheck+dsrSalary));
     //var total= (todayTotal-(returnTotal+expenses+comission));
     $('.final_total_tk').val(total.toFixed(2));
 }
@@ -680,7 +685,7 @@ function newCheck(){
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
