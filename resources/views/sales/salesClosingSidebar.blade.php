@@ -152,9 +152,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-3 text-center">
+                                <div class="col-lg-3 text-center border-end">
                                    <b>Note and Coin</b>
-                                  <table class="ms-3" width="170" cellspcing="0">
+                                  <table class="ms-3" width="auto" cellspcing="0">
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>1</b></td>
                                       <td><input onkeyup="getCoinNote(this)" class="form-control onetaka" type="number" /></td>
@@ -220,6 +220,11 @@
                                       <th>Total</th>
                                       <th class="ps-1"> = </th>
                                       <th class="allConinUpdate">0</th>
+                                    </tr>
+                                    <tr>
+                                      <th colspan="2">Final Total</th>
+                                      <th class="ps-1"> = </th>
+                                      <th class=""><input disabled type="text" class="form-control final_total_tk" value="{{ old('final_total')}}"></th>
                                     </tr>
                                 </table>
                                 </div>
@@ -406,7 +411,7 @@
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
                                           <div class="form-group">
-                                              <input type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
+                                              <input readonly type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
                                           </div>
                                       </div>
                                   </div>
@@ -787,8 +792,11 @@ function getCoinNote(e){
     $('.fivehundredtakaCalculate').text(upfiveHundredTaka);
     $('.onethousandtakaCalculate').text(uponeThousanddTaka);
     let allcoinNot=uponeTaka+uptwoTaka+upfiveTaka+uptenTaka+uptwentyTaka+upfiftyTaka+uponeHundredTaka+uptwoHundredTaka+upfiveHundredTaka+uponeThousanddTaka;
-    $('.allConinUpdate').text(allcoinNot);
-    $('.cash').val(allcoinNot);
+    var finalTotalTaka=parseFloat($('.final_total_tk').val());
+    $('.allConinUpdate').text(finalTotalTaka-allcoinNot);
+    //$('.allConinUpdate').text(allcoinNot);
+    //$('.cash').val(allcoinNot);
+
     console.log(allcoinNot);
 }
 </script>
