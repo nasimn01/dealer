@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Create Bill Term'))
+@section('pageTitle',trans('Search Sales Closing'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')

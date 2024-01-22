@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <form method="post" action="{{route(currentUser().'.sales.receive')}}">
                             @csrf
-                            <input type="hidden" value="{{ $sales->id }}" name="sales_id">
+                            <input type="hidden" value="{{ $sales?->id }}" name="sales_id">
                             <div class="row p-2 mt-4">
                                 {{--  <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
                                     <label for=""><b>Shop/Dsr</b></label>
@@ -56,7 +56,7 @@
                                 @endif
                                 <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
                                     <label for=""><b>Sales Date</b></label>
-                                    <input type="text" id="datepicker" class="form-control" value="{{ $sales->sales_date }}"  name="sales_date" placeholder="mm-dd-yyyy">
+                                    <input type="text" id="datepicker" class="form-control" value="{{ $sales?->sales_date }}"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -84,8 +84,8 @@
                                             </tr>
                                         </thead>
                                         <tbody id="sales_repeat">
-                                            @if ($sales->temporary_sales_details)
-                                                @foreach ($sales->temporary_sales_details as $salesdetails)
+                                            @if ($sales?->temporary_sales_details)
+                                                @foreach ($sales?->temporary_sales_details as $salesdetails)
                                                     <tr>
                                                         <td>
                                                             <input readonly class="form-control" type="text" value="{{ $salesdetails->product?->product_name }}">
@@ -152,9 +152,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-3 text-center">
+                                <div class="col-lg-3 text-center border-end">
                                    <b>Note and Coin</b>
-                                  <table class="ms-3" width="170" cellspcing="0">
+                                  <table class="ms-3" width="auto" cellspcing="0">
                                     <tr>
                                       <td class="bg-info text-white px-3 text-center"><b>1</b></td>
                                       <td><input onkeyup="getCoinNote(this)" class="form-control onetaka" type="number" /></td>
@@ -221,6 +221,11 @@
                                       <th class="ps-1"> = </th>
                                       <th class="allConinUpdate">0</th>
                                     </tr>
+                                    <tr>
+                                      <th colspan="2">Final Total</th>
+                                      <th class="ps-1"> = </th>
+                                      <th class=""><input disabled type="text" class="form-control final_total_tk" value="{{ old('final_total')}}"></th>
+                                    </tr>
                                 </table>
                                 </div>
                                 <div class="col-lg-9">
@@ -253,7 +258,7 @@
 
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(),FinalTotal()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control o_due_tk" value="0">
                                           </div>
                                       </div>
@@ -281,7 +286,7 @@
 
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue(),FinalTotal()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control n_due_tk" value="0">
                                           </div>
                                       </div>
@@ -335,7 +340,7 @@
                                       </div>
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control c_shop_tk" value="0">
                                           </div>
                                       </div>
@@ -377,7 +382,7 @@
                                   <div class="row">
                                       <div class="col-lg-2 col-md-3 col-sm-4">
                                           <div class="form-group">
-                                              <h5 for="cash">{{__('Cash Receive')}}</h5>
+                                              <h5 for="cash">{{__('Dsr Cash Receive')}}</h5>
                                           </div>
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
@@ -406,7 +411,7 @@
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
                                           <div class="form-group">
-                                              <input type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
+                                              <input readonly type="text" class="form-control final_total_tk" value="{{ old('final_total')}}" name="final_total">
                                           </div>
                                       </div>
                                   </div>
@@ -452,7 +457,7 @@
                     </select>
                 </td>  --}}
                 <td>
-                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this),FinalTotal()" name="old_pcs_price[]" value="" placeholder="PCS Price">
+                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this);FinalTotal();" name="old_pcs_price[]" value="" placeholder="PCS Price">
                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
                     <input class="form-control old_total_damage_pcs" type="hidden" name="old_total_damage_pcs[]" value="">
                 </td>
@@ -523,12 +528,15 @@ function totalNewCheck() {
 }
 function FinalTotal(){
     var todayTotal=parseFloat($('.ptotal_taka').val());
+    var dsrCashTk=parseFloat($('.cash').val());
+    var dsrSalary=parseFloat($('.dsr_salary').val());
     var returnTotal=parseFloat($('.return_total_taka').val());
     var oldDue=parseFloat($('.o_due_tk').val());
     console.log(oldDue)
     var newDue=parseFloat($('.n_due_tk').val());
     var newRec=parseFloat($('.n_receive_tk').val());
     var newCheck=parseFloat($('.c_shop_tk').val());
+    console.log(newCheck);
     var expenses=parseFloat($('.expenses_tk').val());
     var comission=parseFloat($('.commission_tk').val());
 
@@ -540,8 +548,10 @@ function FinalTotal(){
     if(newCheck)newCheck=newCheck; else newCheck=0;
     if(expenses)expenses=expenses; else expenses=0;
     if(comission)comission=comission; else comission=0;
+    if(dsrCashTk)dsrCashTk=dsrCashTk; else dsrCashTk=0;
+    if(dsrSalary)dsrSalary=dsrSalary; else dsrSalary=0;
 
-    var total= ((todayTotal+oldDue)-(returnTotal+newDue+expenses+comission));
+    var total= ((todayTotal+oldDue+dsrCashTk)-(returnTotal+newDue+expenses+comission+newCheck+dsrSalary));
     //var total= (todayTotal-(returnTotal+expenses+comission));
     $('.final_total_tk').val(total.toFixed(2));
 }
@@ -680,7 +690,7 @@ function newCheck(){
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck()" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -782,8 +792,11 @@ function getCoinNote(e){
     $('.fivehundredtakaCalculate').text(upfiveHundredTaka);
     $('.onethousandtakaCalculate').text(uponeThousanddTaka);
     let allcoinNot=uponeTaka+uptwoTaka+upfiveTaka+uptenTaka+uptwentyTaka+upfiftyTaka+uponeHundredTaka+uptwoHundredTaka+upfiveHundredTaka+uponeThousanddTaka;
-    $('.allConinUpdate').text(allcoinNot);
-    $('.cash').val(allcoinNot);
+    var finalTotalTaka=parseFloat($('.final_total_tk').val());
+    $('.allConinUpdate').text(finalTotalTaka-allcoinNot);
+    //$('.allConinUpdate').text(allcoinNot);
+    //$('.cash').val(allcoinNot);
+
     console.log(allcoinNot);
 }
 </script>
