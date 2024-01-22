@@ -260,7 +260,7 @@ function productData(e) {
 function total_calculate() {
     var subtotal = 0;
     $('.subtotal_price').each(function() {
-        subtotal += parseFloat($(this).val());
+        subtotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
     });
     $('.total').text(parseFloat(subtotal).toFixed(2));
     $('.total_p').val(parseFloat(subtotal).toFixed(2));
