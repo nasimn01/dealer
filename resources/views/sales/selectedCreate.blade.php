@@ -74,6 +74,7 @@
                                                 <th scope="col">{{__('CTN Price')}}</th>
                                                 <th scope="col">{{__('PCS Price')}}</th>
                                                 <th scope="col">{{__('Sub-Total')}}</th>
+                                                <th scope="col">{{__('Stock(QTY)')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
@@ -102,6 +103,7 @@
                                                     <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
                                                     <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
                                                 </td>
+                                                <td class="show_stock"></td>
                                                 <td>
                                                     <span onClick='addRow();' class="add-row text-primary ms-3"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
@@ -109,15 +111,15 @@
                                         </tbody>
                                     </table>
                                     <div class="row mb-1">
-                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-3"></div>
                                         <div class="col-lg-5 mt-2 text-end">
                                             <label for="" class="form-group"><h4>Total</h4></label>
                                         </div>
-                                        <div class="col-lg-2 mt-2 text-end">
+                                        <div class="col-lg-2 mt-2 text-end" style="margin-left: 3rem!important;">
                                             <label for="" class="form-group"><h5 class="total">0.00</h5></label>
                                             <input type="hidden" name="total" class="total_p">
                                         </div>
-                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +138,7 @@
 <script>
     function addRow(){
 
-var row=`
+    var row=`
     <tr>
         <td>
             <select class="choices form-select product_id" id="product_id" name="product_id[]">
@@ -161,6 +163,7 @@ var row=`
             <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
             <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
         </td>
+        <td class="show_stock"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
             {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
@@ -185,23 +188,24 @@ function productData(e) {
     var ctn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
     var pcs = $(e).closest('tr').find('.pcs').val() ? parseFloat($(e).closest('tr').find('.pcs').val()) : 0;
     $.ajax({
-        url: "{{route(currentUser().'.unit_data_get')}}",
+        url: "{{route(currentUser().'.sales_unit_data_get')}}",
         type: "GET",
         dataType: "json",
         data: { product_id: productId },
         success: function (data) {
             // this function have doController UnitDataGet return qty
-            //console.log(data)
-            let totalqty=((data*ctn)+pcs);
+            console.log(data)
+            let totalqty=((data.unit*ctn)+pcs);
             $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
-            if(data){
-                //let pcstp=parseFloat(tp / data).toFixed(2);
-                let ctnTp=parseFloat(tp * data).toFixed(2);
-                //let pcstpFree=parseFloat(tpFree / data).toFixed(2);
-                let ctntpFree=parseFloat(tpFree * data).toFixed(2);
+            $(e).closest('tr').find('.show_stock').text(data.showqty);
+            if(data.unit){
+                //let pcstp=parseFloat(tp / data.unit).toFixed(2);
+                let ctnTp=parseFloat(tp * data.unit).toFixed(2);
+                //let pcstpFree=parseFloat(tpFree / data.unit).toFixed(2);
+                let ctntpFree=parseFloat(tpFree * data.unit).toFixed(2);
                 let tpCtnPrice = parseFloat(ctnTp * ctn);
                 let tpPcsPrice = parseFloat(tp * pcs);
-                let tpFreeCtnPrice = parseFloat((tpFree * data) * ctn);
+                let tpFreeCtnPrice = parseFloat((tpFree * data.unit) * ctn);
                 let tpFreePcsPrice = parseFloat(tpFree * pcs);
                 var TpSubtotal = parseFloat(tpCtnPrice + tpPcsPrice).toFixed(2);
                 var TpFreeSubtotal = parseFloat(tpFreeCtnPrice+ tpFreePcsPrice).toFixed(2);

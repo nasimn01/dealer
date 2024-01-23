@@ -17,6 +17,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
 use \App\Models\Product\Product;
+use App\Models\Settings\Unit;
 use Carbon\Carbon;
 use Exception;
 
@@ -509,11 +510,30 @@ class SalesController extends Controller
         $dsr=User::where('role_id',4)->get();
         return response()->json($dsr,200);
     }
+    // public function SupplierProduct(Request $request)
+    // {
+    //     $product=Product::where('distributor_id',$request->supplier_id)->get();
+    //     $showqty =\App\Models\Stock\Stock::whereIn('status', [1, 3])->where('product_id',$product->id)->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 4, 5])->where('product_id',$product->id)->sum('totalquantity_pcs');
+    //     return response()->json($product,200);
+    // }
     public function SupplierProduct(Request $request)
     {
-        $product=Product::where('distributor_id',$request->supplier_id)->get();
-        return response()->json($product,200);
+        $products = Product::where('distributor_id', $request->supplier_id)->get();
+        $response = [];
+
+        foreach ($products as $product) {
+            $showqty = \App\Models\Stock\Stock::whereIn('status', [1, 3])->where('product_id', $product->id)->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 2, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
+
+            // Include product and showqty in the response
+            $response[] = [
+                'product' => $product,
+                'showqty' => $showqty,
+            ];
+        }
+
+        return response()->json($response, 200);
     }
+
     public function salesClosing(Request $request)
     {
         $sales = TemporarySales::all();
@@ -546,4 +566,39 @@ class SalesController extends Controller
             return redirect()->back();
         }
     }
+    // public function UnitDataGet(Request $request)
+    // {
+    //     $productId=$request->product_id;
+    //     $unitStyleId=Product::where('id', $productId)->where('status',0)->pluck('unit_style_id');
+    //     $unit=Unit::whereIn('unit_style_id', $unitStyleId)->pluck('qty');
+    //     $showqty = \App\Models\Stock\Stock::whereIn('status', [1, 3])->where('product_id', $product->id)->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
+    //     return response()->json($unit,200);
+    // }
+    public function UnitDataGet(Request $request)
+    {
+        $productId = $request->product_id;
+        // Retrieve a single product based on the provided $productId
+        $product = Product::where('id', $productId)->where('status', 0)->first();
+
+        // Check if a product is found
+        if ($product) {
+            $unitStyleId = $product->unit_style_id;
+            $unit = Unit::where('unit_style_id', $unitStyleId)->pluck('qty');
+
+            $showqty = \App\Models\Stock\Stock::whereIn('status', [1, 3])
+                ->where('product_id', $product->id)
+                ->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 2, 4, 5])
+                ->where('product_id', $product->id)
+                ->sum('totalquantity_pcs');
+
+            return response()->json([
+                'unit' => $unit,
+                'showqty' => $showqty,
+            ], 200);
+        } else {
+            // Handle the case where no product is found
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+    }
+
 }

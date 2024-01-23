@@ -74,22 +74,26 @@
                                                 <th scope="col">{{__('CTN Price')}}</th>
                                                 <th scope="col">{{__('PCS Price')}}</th>
                                                 <th scope="col">{{__('Sub-Total')}}</th>
+                                                <th scope="col">{{__('Stock(QTY)')}}</th>
                                                 {{--  <th class="white-space-nowrap">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                         </thead>
+                                        {{--  @php
+                                            $showqty =\App\Models\Stock\Stock::whereIn('status', [1, 2, 3])->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 4, 5])->sum('totalquantity_pcs');
+                                        @endphp  --}}
                                         <tbody id="sales_repeat" class="sales_repeat">
                                         </tbody>
                                     </table>
                                     <div class="row mb-1">
-                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-3"></div>
                                         <div class="col-lg-5 mt-2 text-end">
                                             <label for="" class="form-group"><h4>Total</h4></label>
                                         </div>
-                                        <div class="col-lg-2 mt-2 text-end">
+                                        <div class="col-lg-2 mt-2 text-end" style="margin-left: 3rem!important;">
                                             <label for="" class="form-group"><h5 class="total">0.00</h5></label>
                                             <input type="hidden" name="total" class="total_p">
                                         </div>
-                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -122,10 +126,10 @@
                         selectElement.append(
                             `<tr>
                                 <td>
-                                    <input readonly class="form-control" type="text" value="${value.product_name}" placeholder="">
-                                    <input readonly class="form-control product_id" type="hidden" name="product_id[]" value="${value.id}">
-                                    <input readonly class="form-control tp_price" type="hidden" value="${value.tp_price}">
-                                    <input readonly class="form-control tp_free" type="hidden" value="${value.tp_free}">
+                                    <input readonly class="form-control" type="text" value="${value.product.product_name}" placeholder="">
+                                    <input readonly class="form-control product_id" type="hidden" name="product_id[]" value="${value.product.id}">
+                                    <input readonly class="form-control tp_price" type="hidden" value="${value.product.tp_price}">
+                                    <input readonly class="form-control tp_free" type="hidden" value="${value.product.tp_free}">
                                     {{--  <select class="choices form-select product_id" id="product_id" name="product_id[]">
                                         <option value="">Select Product</option>
                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
@@ -148,6 +152,7 @@
                                     <input class="form-control subtotal_price" type="text" name="subtotal_price[]" value="" placeholder="Sub-Total">
                                     <input class="form-control totalquantity_pcs" type="hidden" name="totalquantity_pcs[]" value="">
                                 </td>
+                                <td>${value.showqty}</td>
                                 {{--  <td>
                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
