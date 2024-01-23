@@ -290,6 +290,7 @@ class DOController extends Controller
                                 // $stock->adjust=$request->adjust[$key];
                                 // $stock->remark=$request->remark[$key];
                                 $stock->status=1;
+                                $stock->status_history=3;
                                 $stock->company_id=company()['company_id'];
                                 $stock->created_by= currentUserId();
                                 if($stock->save()){

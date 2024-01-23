@@ -522,7 +522,7 @@ class SalesController extends Controller
         $response = [];
 
         foreach ($products as $product) {
-            $showqty = \App\Models\Stock\Stock::whereIn('status', [1, 3])->where('product_id', $product->id)->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 2, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
+            $showqty = \App\Models\Stock\Stock::whereIn('status_history', [1, 3])->where('product_id', $product->id)->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status_history', [0, 2, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
 
             // Include product and showqty in the response
             $response[] = [
@@ -585,9 +585,9 @@ class SalesController extends Controller
             $unitStyleId = $product->unit_style_id;
             $unit = Unit::where('unit_style_id', $unitStyleId)->pluck('qty');
 
-            $showqty = \App\Models\Stock\Stock::whereIn('status', [1, 3])
+            $showqty = \App\Models\Stock\Stock::whereIn('status_history', [1, 3])
                 ->where('product_id', $product->id)
-                ->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status', [0, 2, 4, 5])
+                ->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status_history', [0, 2, 4, 5])
                 ->where('product_id', $product->id)
                 ->sum('totalquantity_pcs');
 
