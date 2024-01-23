@@ -591,11 +591,10 @@ class SalesController extends Controller
                 $stockout=Stock::whereIn('status_history', [0, 2, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
                 $totalFree=Stock::where('product_id', $product->id)->sum('quantity_free');
                 $showqty =  (($stockIn+$totalFree)- $stockout);
-
-            return response()->json([
-                'unit' => $unit,
-                'showqty' => $showqty,
-            ], 200);
+                return response()->json([
+                    'unit' => $unit,
+                    'showqty' => $showqty,
+                ], 200);
         } else {
             // Handle the case where no product is found
             return response()->json(['error' => 'Product not found'], 404);
