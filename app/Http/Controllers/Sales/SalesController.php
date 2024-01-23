@@ -522,7 +522,10 @@ class SalesController extends Controller
         $response = [];
 
         foreach ($products as $product) {
-            $showqty = \App\Models\Stock\Stock::whereIn('status_history', [1, 3])->where('product_id', $product->id)->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status_history', [0, 2, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
+            $stockIn=Stock::whereIn('status_history', [1, 3])->where('product_id', $product->id)->sum('totalquantity_pcs');
+            $stockout=Stock::whereIn('status_history', [0, 2, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
+            $totalFree=Stock::where('product_id', $product->id)->sum('quantity_free');
+            $showqty =  (($stockIn+$totalFree)- $stockout);
 
             // Include product and showqty in the response
             $response[] = [
@@ -584,12 +587,10 @@ class SalesController extends Controller
         if ($product) {
             $unitStyleId = $product->unit_style_id;
             $unit = Unit::where('unit_style_id', $unitStyleId)->pluck('qty');
-
-            $showqty = \App\Models\Stock\Stock::whereIn('status_history', [1, 3])
-                ->where('product_id', $product->id)
-                ->sum('totalquantity_pcs') - \App\Models\Stock\Stock::whereIn('status_history', [0, 2, 4, 5])
-                ->where('product_id', $product->id)
-                ->sum('totalquantity_pcs');
+                $stockIn=Stock::whereIn('status_history', [1, 3])->where('product_id', $product->id)->sum('totalquantity_pcs');
+                $stockout=Stock::whereIn('status_history', [0, 2, 4, 5])->where('product_id', $product->id)->sum('totalquantity_pcs');
+                $totalFree=Stock::where('product_id', $product->id)->sum('quantity_free');
+                $showqty =  (($stockIn+$totalFree)- $stockout);
 
             return response()->json([
                 'unit' => $unit,
