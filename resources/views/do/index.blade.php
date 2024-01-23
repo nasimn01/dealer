@@ -34,9 +34,9 @@
                                     <td>{{$p->total_amount}}</td>
                                     <td>{{$p->name}}</td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route(currentUser().'.docontroll.edit',encryptor('encrypt',$p->id))}}">
+                                        {{--  <a href="{{route(currentUser().'.docontroll.edit',encryptor('encrypt',$p->id))}}">
                                        <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                        </a>  --}}
                                         <a href="{{route(currentUser().'.doreceive',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-cart-fill"></i>
                                         </a>
