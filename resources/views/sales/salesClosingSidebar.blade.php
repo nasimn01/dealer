@@ -291,6 +291,11 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-2 col-md-3 col-sm-6">
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" value="{{ old('new_due_date')}}" name="new_due_date[]" placeholder="Date">
+                                        </div>
+                                    </div>
+                                      <div class="col-lg-1 col-md-3 col-sm-6">
                                           <div class="form-group text-primary" style="font-size:1.5rem">
                                                <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>
                                           </div>
@@ -618,6 +623,11 @@ function newDue(){
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group">
+                <input type="date" class="form-control" value="{{ old('new_due_date')}}" name="new_due_date[]" placeholder="Date">
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-3 col-sm-6">
             <div class="form-group text-primary" style="font-size:1.5rem">
                 <span onClick='removeNewDue(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                  {{--  <span onClick='newDue();'><i class="bi bi-plus-square-fill"></i></span>  --}}
