@@ -462,7 +462,7 @@
                     </select>
                 </td>  --}}
                 <td>
-                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this);FinalTotal();" name="old_pcs_price[]" value="" placeholder="PCS Price">
+                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this);" name="old_pcs_price[]" value="" placeholder="PCS Price">
                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
                     <input class="form-control old_total_damage_pcs" type="hidden" name="old_total_damage_pcs[]" value="">
                 </td>
@@ -537,7 +537,7 @@ function FinalTotal(){
     var dsrSalary=parseFloat($('.dsr_salary').val());
     var returnTotal=parseFloat($('.return_total_taka').val());
     var oldDue=parseFloat($('.o_due_tk').val());
-    console.log(oldDue)
+    console.log(returnTotal);
     var newDue=parseFloat($('.n_due_tk').val());
     var newRec=parseFloat($('.n_receive_tk').val());
     var newCheck=parseFloat($('.c_shop_tk').val());
@@ -580,7 +580,7 @@ function oldDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(),FinalTotal()" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -619,7 +619,7 @@ function newDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue(),FinalTotal()" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -664,7 +664,7 @@ function newReceive(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive(),FinalTotal()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive();FinalTotal();" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -767,6 +767,7 @@ function getCtnQty(e){
             $(e).closest('tr').find('.old_total_damage_pcs').val(oldSubDmgPcs);
             $(e).closest('tr').find('.return_subtotal_price').val(oldSubtotalPrice);
             return_total_calculate();
+            FinalTotal();
         },
     });
 }
@@ -807,7 +808,7 @@ function getCoinNote(e){
     //$('.allConinUpdate').text(allcoinNot);
     //$('.cash').val(allcoinNot);
 
-    console.log(allcoinNot);
+    //console.log(allcoinNot);
 }
 </script>
 @endpush
