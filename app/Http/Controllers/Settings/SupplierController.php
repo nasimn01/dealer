@@ -130,9 +130,10 @@ class SupplierController extends Controller
      * @param  \App\Models\Settings\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show($id)
     {
-        //
+        $suplier=Supplier_balance::where('supplier_id',encryptor('decrypt',$id))->get();
+        return view('settings.supplier.show',compact('suplier'));
     }
 
     /**

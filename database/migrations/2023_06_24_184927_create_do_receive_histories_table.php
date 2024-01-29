@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('do_id')->nullable();
             $table->string('chalan_no')->nullable();
-            $table->string('stock_date')->nullable();
+            $table->date('stock_date')->nullable();
             $table->string('product_id')->nullable();
             $table->string('batch_id')->nullable();
             $table->integer('ctn')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->decimal('tp_price',14,2)->nullable();
             $table->decimal('tp_free',14,2)->nullable();
             $table->decimal('mrp_price',14,2)->nullable();
-            $table->string('ex_date')->nullable();
+            $table->date('ex_date')->nullable();
             $table->string('unit_style_id')->nullable();
             $table->string('adjust')->nullable();
             $table->string('remark')->nullable();

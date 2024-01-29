@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('password');
             $table->integer('distributor_id')->nullable();
+            $table->integer('sr_id')->nullable();
             $table->string('language')->default('en');
             $table->unsignedBigInteger('company_id')->nullable()->index();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

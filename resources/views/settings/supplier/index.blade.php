@@ -64,6 +64,9 @@
                                 <td>{{$balance}}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">
+                                    <a class="ms-2" href="{{route(currentUser().'.supplier.show',encryptor('encrypt',$data->id))}}">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
                                     <a href="{{route(currentUser().'.supplier.edit',encryptor('encrypt',$data->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('select_shop_dsr')->nullable();
             $table->string('shop_id')->nullable();
             $table->string('dsr_id')->nullable();
-            $table->string('sales_date')->nullable();
+            $table->date('sales_date')->nullable();
             $table->decimal('total',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();

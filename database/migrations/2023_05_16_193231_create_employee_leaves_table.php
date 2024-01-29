@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->bigInteger('employee_id');
-            $table->string('leave_date_start')->nullable();
-            $table->string('leave_date_end')->nullable();
+            $table->date('leave_date_start')->nullable();
+            $table->date('leave_date_end')->nullable();
             $table->string('leave_reason')->nullable();
             $table->text('application_details')->nullable();
             $table->string('application_image')->nullable();

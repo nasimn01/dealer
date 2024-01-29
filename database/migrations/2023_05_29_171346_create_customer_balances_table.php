@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->string('customer_id')->nullable();
-            $table->string('balance_date')->nullable();
+            $table->date('balance_date')->nullable();
             $table->decimal('balance_amount',10,2)->nullable();
             $table->string('status')->comment('0=>in 1=>out')->nullable();
             $table->timestamps();
