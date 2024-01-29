@@ -4,7 +4,6 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
-  <!-- // Basic multiple Column Form section start -->
     <section id="multiple-column-form">
         <div class="row match-height">
             <div class="col-12">
@@ -17,7 +16,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="role_id">{{__('Role')}}<span class="text-danger">*</span></label>
-                                            <select class="form-control" name="role_id" id="role_id">
+                                            <select class="form-control role_id" name="role_id" id="role_id" onchange="checkDSR()">
                                                 <option value="">Select Role</option>
                                                 @forelse($roles as $r)
                                                     <option value="{{$r->id}}" {{ old('role_id')==$r->id?"selected":""}}> {{ $r->type}}</option>
@@ -30,6 +29,22 @@
                                             @endif
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12 d-none show_sr" id="show_sr">
+                                        <div class="form-group">
+                                            <label for="sr_id">{{__('SR')}}</label>
+                                            <select class="form-control" name="sr_id" id="sr_id">
+                                                <option value="">Select Role</option>
+                                                @forelse($roles as $r)
+                                                    <option value="{{$r->id}}" {{ old('sr_id')==$r->id?"selected":""}}> {{ $r->type}}</option>
+                                                @empty
+                                                    <option value="">No Role found</option>
+                                                @endforelse
+                                            </select>
+                                            @if($errors->has('sr_id'))
+                                                <span class="text-danger"> {{ $errors->first('sr_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="userName">{{__('Name')}}<span class="text-danger">*</span></label>
@@ -39,7 +54,6 @@
                                             @endif
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="userEmail">{{__('Email')}}</label>
@@ -112,7 +126,6 @@
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">{{__('Save')}}</button>
-
                                     </div>
                                 </div>
                             </form>
@@ -123,3 +136,15 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+<script>
+    function checkDSR() {
+        var selectedValue = document.getElementById("role_id").value;
+        if (selectedValue == 4) {
+            $('.show_sr').removeClass('d-none');
+        }else{
+            $('.show_sr').addClass('d-none');
+        }
+    }
+</script>
+@endpush
