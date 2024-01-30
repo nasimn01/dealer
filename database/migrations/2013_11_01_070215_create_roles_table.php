@@ -41,8 +41,8 @@ return new class extends Migration
                 'created_at' => Carbon::now()
             ],
             [
-                'type' => 'JSO',
-                'identity' => 'JSO',
+                'type' => 'SR',
+                'identity' => 'SR',
                 'created_at' => Carbon::now()
             ],
             [

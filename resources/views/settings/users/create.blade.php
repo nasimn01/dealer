@@ -34,8 +34,8 @@
                                             <label for="sr_id">{{__('SR')}}</label>
                                             <select class="form-control" name="sr_id" id="sr_id">
                                                 <option value="">Select Role</option>
-                                                @forelse($roles as $r)
-                                                    <option value="{{$r->id}}" {{ old('sr_id')==$r->id?"selected":""}}> {{ $r->type}}</option>
+                                                @forelse($srData as $r)
+                                                    <option value="{{$r->id}}" {{ old('sr_id')==$r->id?"selected":""}}> {{ $r->name}}</option>
                                                 @empty
                                                     <option value="">No Role found</option>
                                                 @endforelse

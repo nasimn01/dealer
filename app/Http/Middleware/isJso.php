@@ -27,7 +27,7 @@ class isJso
             app()->setLocale($user->language); // language
             if(!$user){
                 return redirect()->route('logOut');
-            }else if(currentUser() != 'JSO'){
+            }else if(currentUser() != 'SR'){
                 return redirect()->back()->with($this->resMessageHtml(false,'error','Access Denied'));
             }else{
                 return $next($request);

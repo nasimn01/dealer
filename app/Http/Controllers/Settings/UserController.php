@@ -25,8 +25,8 @@ class UserController extends Controller
     public function index()
     {
         $users=User::where(company())->whereIn('role_id',[3,4,5,6])->get();
-        $srData=User::where(company())->where('role_id',5)->get();
-        return view('settings.users.index',compact('users','srData'));
+
+        return view('settings.users.index',compact('users'));
     }
 
 
@@ -44,8 +44,8 @@ class UserController extends Controller
             $branches=Branch::where(company())->get();
             $roles=Role::where('id',4)->get();
         }
-
-        return view('settings.users.create',compact('roles','branches'));
+        $srData=User::where(company())->where('role_id',5)->get();
+        return view('settings.users.create',compact('roles','branches','srData'));
     }
 
     /**

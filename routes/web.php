@@ -193,8 +193,8 @@ Route::group(['middleware'=>isManager::class],function(){
 });
 
 Route::group(['middleware'=>isJso::class],function(){
-    Route::prefix('JSO')->group(function(){
-        Route::get('/dashboard', [dash::class,'jsoDashboard'])->name('JSO.dashboard');
+    Route::prefix('SR')->group(function(){
+        Route::get('/dashboard', [dash::class,'jsoDashboard'])->name('SR.dashboard');
 
     });
 });
