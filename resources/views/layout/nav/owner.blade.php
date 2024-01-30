@@ -6,33 +6,6 @@
         </a>
     </li>
 
-    <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'>
-            <i class="bi bi-gear-fill"></i>
-            <span>{{__('Settings')}}</span>
-        </a>
-        <ul class="submenu">
-            <li class="py-1"><a href="{{route(currentUser().'.company.index')}}">{{__('Company Details')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.supplier.index')}}">{{__('Distributor')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.users.index')}}">{{__('Users')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.werehouse.index')}}">{{__('Werehouse')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.bill.index')}}">{{__('Bill Term')}}</a></li>
-            {{--  <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>  --}}
-            <li class="py-1"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
-
-            {{--  <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
-                <ul class="submenu">
-                    <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
-                    <li class="py-1"><a href="{{route(currentUser().'.unit.index')}}">{{__('Unit')}}</a></li>
-                </ul>
-            </li>  --}}
-
-		</ul>
-
-    </li>
-
-
     {{-- <li class="sidebar-item has-sub">
         <a href="#" class='sidebar-link'><i class="bi bi-calculator"></i><span>{{__('Accounts')}}</span>
         </a>
@@ -63,18 +36,6 @@
             <li class="py-1"><a href="{{route(currentUser().'.emLeave.index')}}" >{{__('Employee Leave list')}}</a></li>
 		</ul>
     </li>  --}}
-
-    <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Products')}}</span>
-        </a>
-        <ul class="submenu">
-            {{--  <li class="py-1"><a href="{{route(currentUser().'.category.index')}}" >{{__('Category')}}</a></li>  --}}
-            <li class="py-1"><a href="{{route(currentUser().'.group.index')}}" >{{__('Group')}}</a></li>
-            {{--  <li class="py-1"><a href="{{route(currentUser().'.batch.index')}}" >{{__('Batch')}}</a></li>  --}}
-            <li class="py-1"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product')}}</a></li>
-            <li class="py-1"><a href="{{route(currentUser().'.returnproduct.index')}}" >{{__('Return Product')}}</a></li>
-		</ul>
-    </li>
     <li class="sidebar-item has-sub">
         <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('DO')}}</span>
         </a>
@@ -103,6 +64,41 @@
             {{-- <li class="py-1"><a href="{{route(currentUser().'.preport')}}" >{{__('Purchase Report')}}</a></li> --}}
             <li class="py-1"><a href="{{route(currentUser().'.sreport')}}" >{{__('Stock Report')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.shopdue')}}" >{{__('Shop Due Report')}}</a></li>
+		</ul>
+    </li>
+    <li class="sidebar-item has-sub">
+        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Products')}}</span>
+        </a>
+        <ul class="submenu">
+            {{--  <li class="py-1"><a href="{{route(currentUser().'.category.index')}}" >{{__('Category')}}</a></li>  --}}
+            <li class="py-1"><a href="{{route(currentUser().'.group.index')}}" >{{__('Group')}}</a></li>
+            {{--  <li class="py-1"><a href="{{route(currentUser().'.batch.index')}}" >{{__('Batch')}}</a></li>  --}}
+            <li class="py-1"><a href="{{route(currentUser().'.product.index')}}" >{{__('Product')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.returnproduct.index')}}" >{{__('Return Product')}}</a></li>
+		</ul>
+    </li>
+    <li class="sidebar-item has-sub">
+        <a href="#" class='sidebar-link'>
+            <i class="bi bi-gear-fill"></i>
+            <span>{{__('Settings')}}</span>
+        </a>
+        <ul class="submenu">
+            <li class="py-1"><a href="{{route(currentUser().'.company.index')}}">{{__('Company Details')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.supplier.index')}}">{{__('Distributor')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.users.index')}}">{{__('Users')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.werehouse.index')}}">{{__('Werehouse')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.bill.index')}}">{{__('Bill Term')}}</a></li>
+            {{--  <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>  --}}
+            <li class="py-1"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
+
+            {{--  <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
+                <ul class="submenu">
+                    <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
+                    <li class="py-1"><a href="{{route(currentUser().'.unit.index')}}">{{__('Unit')}}</a></li>
+                </ul>
+            </li>  --}}
+
 		</ul>
     </li>
 
