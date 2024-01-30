@@ -62,6 +62,7 @@ class UserController extends Controller
             $user->distributor_id=$request->distributor_id;
             $user->contact_no=$request->contactNumber;
             $user->email=$request->userEmail;
+            $user->sr_id=$request->sr_id;
             $user->password=Hash::make($request->password);
             $user->company_id=company()['company_id'];
             $user->branch_id=$request->branch_id;
@@ -106,8 +107,8 @@ class UserController extends Controller
             $roles=Role::whereIn('id',[4])->get();
         }
         $user=User::findOrFail(encryptor('decrypt',$id));
-
-        return view('settings.users.edit',compact('roles','branches','user'));
+        $srData=User::where(company())->where('role_id',5)->get();
+        return view('settings.users.edit',compact('roles','branches','user','srData'));
     }
 
     /**

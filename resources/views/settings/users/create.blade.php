@@ -33,11 +33,11 @@
                                         <div class="form-group">
                                             <label for="sr_id">{{__('SR')}}</label>
                                             <select class="form-control" name="sr_id" id="sr_id">
-                                                <option value="">Select Role</option>
+                                                <option value="0">Select SR</option>
                                                 @forelse($srData as $r)
                                                     <option value="{{$r->id}}" {{ old('sr_id')==$r->id?"selected":""}}> {{ $r->name}}</option>
                                                 @empty
-                                                    <option value="">No Role found</option>
+                                                    <option value="">No SR found</option>
                                                 @endforelse
                                             </select>
                                             @if($errors->has('sr_id'))

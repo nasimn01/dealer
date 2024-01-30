@@ -22,7 +22,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="role_id">{{__('Role')}}<span class="text-danger">*</span></label>
-                                            <select class="form-control" name="role_id" id="role_id">
+                                            <select class="form-control" name="role_id" id="role_id" onchange="checkDSR()">
                                                 <option value="">Select Role</option>
                                                 @forelse($roles as $r)
                                                     <option value="{{$r->id}}" {{ old('role_id',$user->role_id)==$r->id?"selected":""}}> {{ $r->type}}</option>
@@ -32,6 +32,22 @@
                                             </select>
                                             @if($errors->has('role_id'))
                                                 <span class="text-danger"> {{ $errors->first('role_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12 @if(!$user->sr_id) d-none @endif  show_sr" id="show_sr">
+                                        <div class="form-group">
+                                            <label for="sr_id">{{__('SR')}}</label>
+                                            <select class="form-control" name="sr_id" id="sr_id">
+                                                <option value="0">Select SR</option>
+                                                @forelse($srData as $r)
+                                                    <option value="{{$r->id}}" {{ $user->sr_id==$r->id?"selected":""}}> {{ $r->name}}</option>
+                                                @empty
+                                                    <option value="">No SR found</option>
+                                                @endforelse
+                                            </select>
+                                            @if($errors->has('sr_id'))
+                                                <span class="text-danger"> {{ $errors->first('sr_id') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -129,3 +145,15 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+<script>
+    function checkDSR() {
+        var selectedValue = document.getElementById("role_id").value;
+        if (selectedValue == 4) {
+            $('.show_sr').removeClass('d-none');
+        }else{
+            $('.show_sr').addClass('d-none');
+        }
+    }
+</script>
+@endpush
