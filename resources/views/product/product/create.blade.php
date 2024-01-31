@@ -72,7 +72,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="unit_style_id">{{__('Unit Style')}}</label>
-                                            <select onchange="tpFree(this)" name="unit_style_id" class="form-control form-select unit_style_id">
+                                            <select onchange="tpFree(this)" name="unit_style_id" class="form-control form-select unit_style_id" required>
                                                 <option value="">Select</option>
                                                 @forelse($unit_style as $d)
                                                     <option value="{{$d->id}}" {{ old('unit_style_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
@@ -203,8 +203,8 @@
     function tpFree(e){
         let unitStyleId=$('.unit_style_id').find(":selected").val();
         let freeRatio=parseFloat($('.free_ratio').val());
-        let freePcs=$('.free_pcs').val();
-        let tpPrice=$('.tp_price').val()?parseFloat($('.tp_price').val()):0;;
+        let freePcs=parseFloat($('.free_pcs').val());
+        let tpPrice=parseFloat($('.tp_price').val())?parseFloat($('.tp_price').val()):0;;
         //console.log(tpPrice)
         $.ajax({
             url: "{{route(currentUser().'.unit_pcs_get')}}",
@@ -214,9 +214,9 @@
             success: function(data) {
             //console.log(data);
             if(tpPrice){
-                let total=((data/freeRatio)*freePcs);
-                let tpfreeCal=(parseInt(total)+parseInt(data));
-                let tpfree=(parseInt(tpPrice*data)/parseInt(tpfreeCal))?(parseInt(tpPrice*data)/parseInt(tpfreeCal)):0;
+                let total=(parseFloat((data/freeRatio)*freePcs).toFixed(2));
+                let tpfreeCal=(parseFloat(total)+parseFloat(data));
+                let tpfree=(parseFloat(tpPrice*data)/parseFloat(tpfreeCal))?(parseFloat(tpPrice*data)/parseFloat(tpfreeCal)):0;
                 $('.tp_free').val(parseFloat(tpfree).toFixed(2));
                 $('.tp_free_up').val(tpfree);
             }
