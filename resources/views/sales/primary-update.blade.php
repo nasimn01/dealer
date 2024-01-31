@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Sales Date</b></label>
-                                    <input type="text" id="datepicker" class="form-control" value="{{ date('d F Y', strtotime($sales->sales_date)) }}"  name="sales_date" placeholder="mm-dd-yyyy">
+                                    <input type="text" id="datepicker" class="form-control" value="{{ $sales->sales_date }}"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
                             </div>
                             <!-- table bordered -->

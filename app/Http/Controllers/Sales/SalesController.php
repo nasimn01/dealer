@@ -297,7 +297,7 @@ class SalesController extends Controller
                 $sales =new Sales;
                 $sales->shop_id = $request->shop_id;
                 $sales->dsr_id = $request->dsr_id;
-                $sales->sales_date = $request->sales_date;
+                $sales->sales_date = date('Y-m-d', strtotime($request->sales_date));
 
                 $sales->daily_total_taka = $request->daily_total_taka;
                 $sales->return_total_taka = $request->return_total_taka;

@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Sales Date</b></label>
-                                    <input type="text" id="datepicker" class="form-control" value="<?php print(date("d-m-Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
+                                    <input type="text" id="datepicker" class="form-control" value="<?php print(date("m/d/Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
                                 <div class="col-lg-3 mt-4">
                                     <button type="button" class="btn btn-primary">GO</button>
