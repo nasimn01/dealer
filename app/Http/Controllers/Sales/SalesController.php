@@ -49,7 +49,7 @@ class SalesController extends Controller
             $data->select_shop_dsr = $request->select_shop_dsr;
             $data->shop_id = $request->shop_id;
             $data->dsr_id = $request->dsr_id;
-            $data->sales_date = $request->sales_date;
+            $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             $data->total = $request->total;
             $data->status = 0;
             $data->company_id=company()['company_id'];
@@ -126,7 +126,7 @@ class SalesController extends Controller
             $data->select_shop_dsr = $request->select_shop_dsr;
             $data->shop_id = $request->shop_id;
             $data->dsr_id = $request->dsr_id;
-            $data->sales_date = $request->sales_date;
+            $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             $data->total = $request->total;
             $data->status = 0;
             $data->company_id=company()['company_id'];
@@ -194,7 +194,7 @@ class SalesController extends Controller
         //     $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
         //     $sales->shop_id = $request->shop_id;
         //     $sales->dsr_id = $request->dsr_id;
-        //     $sales->sales_date = $request->sales_date;
+        //     $sales->sales_date = date('Y-m-d', strtotime($request->sales_date));
 
         //     $sales->expenses = $request->expenses;
         //     $sales->commission = $request->commission;
@@ -289,7 +289,7 @@ class SalesController extends Controller
         return view('sales.salesClosing',compact('sales','shops','dsr','product'));
     }
     public function salesReceive(Request $request)
-    {  dd($request->all());
+    {  //dd($request->all());
         try{
             $tmsales=TemporarySales::where('id',$request->sales_id)->first();
             $tmsales->status=1;

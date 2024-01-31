@@ -277,7 +277,7 @@ class DOController extends Controller
                                 $stock=new Stock;
                                 $stock->do_id=$request->do_id[$key];
                                 $stock->chalan_no=$request->chalan_no;
-                                $stock->stock_date=$request->stock_date;
+                                $stock->stock_date=date('Y-m-d', strtotime($request->stock_date));
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->batch_id=$batch_id;
                                 $stock->totalquantity_pcs=$request->receive[$key];
@@ -300,7 +300,7 @@ class DOController extends Controller
                                 $history=new DoReceiveHistory;
                                 $history->do_id=$request->do_id[$key];
                                 $history->chalan_no=$request->chalan_no;
-                                $history->stock_date=$request->stock_date;
+                                $history->stock_date=date('Y-m-d', strtotime($request->stock_date));
                                 $history->product_id=$request->product_id[$key];
                                 $history->batch_id=$batch_id;
                                 $history->ctn=$request->ctn[$key];

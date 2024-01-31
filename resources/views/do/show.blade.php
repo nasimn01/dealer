@@ -38,9 +38,10 @@
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Product')}}</th>
-                                {{--  <th scope="col">{{__('Contact')}}</th>  --}}
-                                <th scope="col">{{__('Balance Date')}}</th>
-                                <th scope="col">{{__('Add Balance')}}</th>
+                                <th scope="col">{{__('QTY(CTN)')}}</th>
+                                <th scope="col">{{__('Free Qty(PCS)')}}</th>
+                                <th scope="col">{{__('DP')}}</th>
+                                <th scope="col">{{__('Subtotal')}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,21 +49,18 @@
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$data->product?->product_name}}</td>
-                                {{--  <td>{{$data->supplier?->contact}}</td>  --}}
-                                @if($doData?->do_date)
-                                <td>{{ \Carbon\Carbon::parse($doData?->do_date)->format('d/m/Y') }}</td>
-                                @else
-                                <td>No Date Found</td>
-                                @endif
-                                <td>{{$data->balance_amount}}</td>
+                                <td>{{$data->qty}}</td>
+                                <td>{{$data->free}}</td>
+                                <td>{{$data->dp}}</td>
+                                <td>{{$data->sub_total}}</td>
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="4" class="text-center">No Data Found</th>
+                                <th colspan="6" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                             <tr>
-                                <td colspan="2"></td>
+                                <td colspan="4"></td>
                                 <td class="text-end"><b>Total:</b> </td>
                                 <td>{{ $doData->total_amount }}</td>
                             </tr>
