@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('d_os', function (Blueprint $table) {
             $table->id();
             $table->integer('supplier_id')->nullable();
-            $table->string('do_date')->nullable();
+            $table->date('do_date')->nullable();
             $table->integer('bill_id')->nullable();
             $table->string('reference_num')->nullable();
             $table->integer('total_qty')->nullable();

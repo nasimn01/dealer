@@ -133,7 +133,8 @@ class SupplierController extends Controller
     public function show($id)
     {
         $suplier=Supplier_balance::where('supplier_id',encryptor('decrypt',$id))->get();
-        return view('settings.supplier.show',compact('suplier'));
+        $supplierman=Supplier_balance::where('supplier_id',encryptor('decrypt',$id))->groupBy('supplier_id')->first();
+        return view('settings.supplier.show',compact('suplier','supplierman'));
     }
 
     /**

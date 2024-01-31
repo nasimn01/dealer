@@ -52,11 +52,11 @@ class DOController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+         //dd($request->all());
         try{
             $data=new D_o;
             $data->supplier_id = $request->supplier_id;
-            $data->do_date = $request->do_date;
+            $data->do_date = date('Y-m-d', strtotime($request->do_date));
             $data->bill_id = $request->bill_id;
             $data->reference_num = $request->reference_num;
             $data->total_qty = $request->total_qty;
@@ -125,9 +125,11 @@ class DOController extends Controller
      * @param  \App\Models\Do\D_o  $d_o
      * @return \Illuminate\Http\Response
      */
-    public function show(D_o $d_o)
+    public function show($id)
     {
-        //
+        $doData=D_o::findOrFail(encryptor('decrypt',$id));
+        //return $doData;
+        return view('do.show',compact('doData'));
     }
 
     /**

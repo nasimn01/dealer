@@ -37,6 +37,9 @@
                                         {{--  <a href="{{route(currentUser().'.docontroll.edit',encryptor('encrypt',$p->id))}}">
                                        <i class="bi bi-pencil-square"></i>
                                         </a>  --}}
+                                        <a class="ms-2" href="{{route(currentUser().'.docontroll.show',encryptor('encrypt',$p->id))}}">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
                                         <a href="{{route(currentUser().'.doreceive',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-cart-fill"></i>
                                         </a>
@@ -44,7 +47,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <th colspan="7" class="text-center">No Data Found</th>
+                                    <th colspan="8" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
                             </tbody>

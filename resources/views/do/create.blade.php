@@ -54,7 +54,7 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Do Date')}}<span class="text-danger">*</span></label>
-                                                <input required type="text" class="form-control" value="<?php print(date("d-m-Y")); ?>" id="datepicker" name="do_date" placeholder="Day-Month-Year">
+                                                <input required type="text" class="form-control" value="<?php print(date("m/d/Y")); ?>" id="datepicker" name="do_date" placeholder="Day-Month-Year">
                                             </div>
                                         </div>
 
