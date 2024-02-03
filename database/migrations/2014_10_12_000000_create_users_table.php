@@ -37,16 +37,17 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        DB::table('users')->insert([
-            [
-                'name' => 'Admin',
-                'email' => 'admin@email.com',
-                'contact_no' => '16247',
-                'password' => Hash::make('superadmin16247'),
-                'role_id' => 2,
-                'created_at' => Carbon::now()
-            ]
-        ]);
+        // DB::table('users')->insert([
+        //     [
+        //         'name' => 'Admin',
+        //         'email' => 'admin@email.com',
+        //         'contact_no' => '16247',
+        //         'password' => Hash::make('superadmin16247'),
+        //         'role_id' => 2,
+        //         'company_id' => 1,
+        //         'created_at' => Carbon::now()
+        //     ]
+        // ]);
     }
 
     /**
