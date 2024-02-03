@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Settings\Shop;
 use App\Models\Settings\ShopBalance;
+use App\Models\Product\Group;
+use App\Models\Settings\Supplier;
+use App\Models\Product\Product;
 use DB;
 use Carbon\Carbon;
 
@@ -13,10 +16,16 @@ class ReportController extends Controller
 {
     public function stockreport(Request $request)
     {
+        $groups = Group::where(company())->select('id','name')->get();
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        $products = Product::where(company())->select('id','product_name')->get();
+
         $stockQuery = DB::table('stocks')
         ->join('products', 'products.id', '=', 'stocks.product_id')
+        ->join('groups', 'groups.id', '=', 'products.group_id')
+        ->join('suppliers', 'suppliers.id', '=', 'products.distributor_id')
         ->select(
-            'products.product_name',
+            'products.product_name','groups.name as group_name','suppliers.name as supplier_name',
             'stocks.*',
             DB::raw('SUM(CASE WHEN stocks.status = 0 THEN stocks.totalquantity_pcs ELSE 0 END) as outs'),
             DB::raw('SUM(CASE WHEN stocks.status = 1 THEN stocks.totalquantity_pcs ELSE 0 END) as ins')
@@ -26,12 +35,17 @@ class ReportController extends Controller
             $tdate = $request->tdate ?: $request->fdate;
             $stockQuery->whereBetween(DB::raw('date(stocks.created_at)'), [$request->fdate, $tdate]);
         }
+        if ($request->group_id)
+            $stockQuery->where('products.group_id',$request->group_id);
+        if ($request->distributor_id)
+            $stockQuery->where('products.distributor_id',$request->distributor_id);
+
 
         $stock = $stockQuery
-            ->groupBy('stocks.product_id', 'products.product_name')
+            ->groupBy('products.group_id','products.distributor_id','products.product_name')
             ->get();
 
-        return view('reports.stockReport', compact('stock'));
+        return view('reports.stockReport', compact('stock','groups','products','distributors'));
 
 
         // $stock= DB::select("SELECT products.product_name,stocks.*,sum(stocks.totalquantity_pcs) as qty FROM `stocks` join products on products.id=stocks.product_id $where GROUP BY stocks.product_id");
