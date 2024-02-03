@@ -1,8 +1,11 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -34,6 +37,17 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::table('users')->insert([
+            [
+                'name' => 'Admin',
+                'email' => 'admin@email.com',
+                'contact_no' => '16247',
+                'password' => Hash::make('superadmin16247'),
+                'role_id' => 2,
+                'created_at' => Carbon::now()
+            ]
+        ]);
     }
 
     /**
