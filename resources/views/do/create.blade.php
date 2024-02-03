@@ -333,8 +333,8 @@
 
         if(total>supBalance){
             alert('You can not create do more then '+supBalance);
-            $('.do_save').prop('disabled',true)
-            $('.do_save_message').text('You can not create do more then '+supBalance)
+           // $('.do_save').prop('disabled',true)
+           // $('.do_save_message').text('You can not create do more then '+supBalance)
         }else{
             $('.do_save').prop('disabled',false)
             $('.do_save_message').text('')
