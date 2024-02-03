@@ -38,7 +38,7 @@
                                 <td>{{$p->name}}</td>
                                 <td>{{$p->email}}</td>
                                 <td>{{$p->contact_no}}</td>
-                                <td><img width="40px" height="55px" class="float-first" src="{{asset('images/users/'.company()['company_id'].'/'.$p->image)}}" alt=""></td>
+                                <td><img width="55px" height="55px" class="float-first" src="{{asset('images/users/'.company()['company_id'].'/'.$p->image)}}" alt=""></td>
                                 <!-- <td>@if($p->status == 1) {{__('Active') }} @else {{__('Inactive') }} @endif</td> -->
                                 <!-- or <td>{{ $p->status == 1?"Active":"Inactive" }}</td>-->
                                 <td>{{$p->role?->type}}</td>
