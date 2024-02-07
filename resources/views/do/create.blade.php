@@ -207,6 +207,7 @@
                     //console.log(freeQty);
                     var freeCount = (data / freeRatio) * freeQty;
                     var freeQtyCount = Math.floor(qty * freeCount);
+                    freeQtyCount = isNaN(freeQtyCount) ? 0 : freeQtyCount;
 
                     if (productName  && qty) {
                         let totalCtnTk=(dp*unitQty);
