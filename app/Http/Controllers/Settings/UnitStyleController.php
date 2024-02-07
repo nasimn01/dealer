@@ -24,7 +24,7 @@ class UnitStyleController extends Controller
         if($request->name)
             $unitstyles=$unitstyles->where('name','like','%'.$request->name.'%');
 
-        $unitstyles=$unitstyles->paginate(12);
+        $unitstyles=$unitstyles->paginate(25);
         return view('settings.unitstyle.index',compact('unitstyles'));
     }
 

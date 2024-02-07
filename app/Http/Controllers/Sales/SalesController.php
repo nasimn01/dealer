@@ -550,9 +550,9 @@ class SalesController extends Controller
     public function getSalesClosingData(Request $request)
     { //dd($request->all());
         if($request->sales_date && $request->dsr_id || $request->shop_id){
-            $requestdDate = Carbon::createFromFormat('m/d/Y', $request->sales_date)->format('d-m-Y');
+            // $requestdDate = Carbon::createFromFormat('m/d/Y', $request->sales_date)->format('m/d/Y');
             $sales = TemporarySales::orderBy('id', 'asc')
-            ->where('sales_date',$requestdDate)
+            ->where('sales_date',date('Y-m-d', strtotime($request->sales_date)))
             ->where(function ($query) use ($request) {
             $query->where('dsr_id', $request->dsr_id)
             ->orWhere('shop_id', $request->shop_id);

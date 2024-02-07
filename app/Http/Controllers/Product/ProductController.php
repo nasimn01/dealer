@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product=Product::where(company())->paginate(10);
+        $product=Product::where(company())->paginate(25);
         return view('product.product.index',compact('product'));
     }
 
