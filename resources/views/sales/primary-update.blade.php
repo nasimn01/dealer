@@ -176,30 +176,38 @@ function productData(e) {
     var ctn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
     var pcs = $(e).closest('tr').find('.pcs').val() ? parseFloat($(e).closest('tr').find('.pcs').val()) : 0;
     $.ajax({
-        url: "{{route(currentUser().'.unit_data_get')}}",
+        url: "{{route(currentUser().'.sales_unit_data_get')}}",
         type: "GET",
         dataType: "json",
         data: { product_id: productId },
         success: function (data) {
             // this function have doController UnitDataGet return qty
-            //console.log(data)
+            console.log(data)
             let totalqty=((data*ctn)+pcs);
             $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
             if(data){
-                let pcstp=parseFloat(tp / data).toFixed(2);
-                let pcstpFree=parseFloat(tpFree / data).toFixed(2);
-                let tpPcsPrice = parseFloat((tp / data) * pcs);
-                let tpFreePcsPrice = parseFloat((tpFree / data) * pcs);
-                var TpSubtotal = parseFloat((ctn * tp) + tpPcsPrice).toFixed(2);
-                var TpFreeSubtotal = parseFloat((ctn * tpFree) + tpFreePcsPrice).toFixed(2);
+                //let pcstp=parseFloat(tp / data).toFixed(2);
+                let ctnTp=parseFloat(tp * data.unit).toFixed(2);
+                //let pcstpFree=parseFloat(tpFree / data).toFixed(2);
+                let ctntpFree=parseFloat(tpFree * data.unit).toFixed(2);
+                let tpCtnPrice = parseFloat(ctnTp * ctn);
+                let tpPcsPrice = parseFloat(tp * pcs);
+                let tpFreeCtnPrice = parseFloat((tpFree * data.unit) * ctn);
+                let tpFreePcsPrice = parseFloat(tpFree * pcs);
+                var TpSubtotal = parseFloat(tpCtnPrice + tpPcsPrice).toFixed(2);
+                var TpFreeSubtotal = parseFloat(tpFreeCtnPrice+ tpFreePcsPrice).toFixed(2);
+                //let tpPcsPrice = parseFloat((tp / data) * pcs);
+                //let tpFreePcsPrice = parseFloat((tpFree / data) * pcs);
+                //var TpSubtotal = parseFloat((ctn * tp) + tpPcsPrice).toFixed(2);
+                //var TpFreeSubtotal = parseFloat((ctn * tpFree) + tpFreePcsPrice).toFixed(2);
 
                 if (selectedOption === 1) {
-                    $(e).closest('tr').find('.ctn_price').val(tp);
-                    $(e).closest('tr').find('.per_pcs_price').val(pcstp);
+                    $(e).closest('tr').find('.ctn_price').val(ctnTp);
+                    $(e).closest('tr').find('.per_pcs_price').val(tp);
                     $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
                 } else if (selectedOption === 2) {
-                    $(e).closest('tr').find('.ctn_price').val(tpFree);
-                    $(e).closest('tr').find('.per_pcs_price').val(pcstpFree);
+                    $(e).closest('tr').find('.ctn_price').val(ctntpFree);
+                    $(e).closest('tr').find('.per_pcs_price').val(tpFree);
                     $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
                 } else {
                     $(e).closest('tr').find('.ctn_price').val("");

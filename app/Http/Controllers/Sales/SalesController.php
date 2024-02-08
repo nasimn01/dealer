@@ -497,6 +497,8 @@ class SalesController extends Controller
     public function destroy($id)
     {
         $data= TemporarySales::findOrFail(encryptor('decrypt',$id));
+        $tdl=TemporarySalesDetails::where('sales_id',$data->id)->delete();
+        //$sdl=Stock::where('sales_id',$data->id)->delete();
         $data->delete();
         Toastr::error('Opps!! You Delete Permanently!!');
         return redirect()->back();
