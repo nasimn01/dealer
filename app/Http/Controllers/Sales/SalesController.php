@@ -24,10 +24,11 @@ use Exception;
 class SalesController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $sales=TemporarySales::where(company())->paginate(10);
-        return view('sales.index',compact('sales'));
+        $userSr=User::where(company())->where('role_id',5)->get();
+        return view('sales.index',compact('sales','userSr'));
     }
 
 
@@ -498,7 +499,7 @@ class SalesController extends Controller
     {
         $data= TemporarySales::findOrFail(encryptor('decrypt',$id));
         $tdl=TemporarySalesDetails::where('sales_id',$data->id)->delete();
-        //$sdl=Stock::where('sales_id',$data->id)->delete();
+        $sdl=Stock::where('sales_id',$data->id)->delete();
         $data->delete();
         Toastr::error('Opps!! You Delete Permanently!!');
         return redirect()->back();

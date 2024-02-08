@@ -9,10 +9,36 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
+                    <div class="row pb-1">
+                        <div class="col-10">
+                            <form action="" method="get">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <select name="sr_id" class="choices form-select">
+                                            <option value="">Select</option>
+                                            @forelse ($userSr as $p)
+                                                <option value="{{$p->id}}" {{ request('sr_id')==$p->id?"selected":""}}>{{$p->name}}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                    <div class="col-2 col-sm-4 ps-0 text-start">
+                                        <button class="btn btn-sm btn-info" type="submit">Search</button>
+                                        <a class="btn btn-sm btn-warning " href="{{route(currentUser().'.supplier.index')}}" title="Clear">Clear</a>
+                                    </div>
+                                    <div class="col-2 p-0 m-0">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-2">
+                            <a class="float-end" href="{{route(currentUser().'.sales.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                        </div>
+                    </div>
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0 table-striped">
-                            <a class="float-end" href="{{route(currentUser().'.sales.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>

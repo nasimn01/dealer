@@ -162,8 +162,8 @@ var row=`
 
 function removeRow(e){
     if (confirm("Are you sure you want to remove this row?")) {
+        $(e).closest('tr').remove();
         total_calculate();
-    $(e).closest('tr').remove();
     }
 }
 

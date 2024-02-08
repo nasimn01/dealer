@@ -28,7 +28,7 @@
                                 </div>
 
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Chalan NO</b></label>
+                                    <label for=""><b>Chalan NO<span class="text-danger">*</span></b></label>
                                     <input type="text" id="" required class="form-control"  name="chalan_no" placeholder="Chalan NO">
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                                 <th scope="col">{{__('PCS')}}</th>
                                                 <th scope="col">{{__('Free')}}</th>
                                                 <th scope="col">{{__('receive')}}</th>
-                                                <th scope="col">{{__('Dp(CTN)')}}</th>
+                                                <th scope="col">{{__('Dp(CTN)')}} <span class="text-danger">*</span></th>
                                                 <th scope="col">{{__('Dp(PCS)')}}</th>
                                                 <th scope="col">{{__('SubTotal-Dp')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -74,7 +74,7 @@
                                                 <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
                                                 <td><input class="form-control free_pcs" type="text" name="free[]" onkeyup="getCtnQty(this)" value="" placeholder="free"></td>
                                                 <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
-                                                <td><input class="form-control dp" type="text" onkeyup="getCtnQty(this)" name="dp[]" value="" placeholder="dp"></td>
+                                                <td><input required class="form-control dp" type="text" onkeyup="getCtnQty(this)" name="dp[]" value="" placeholder="dp"></td>
                                                 <td><input readonly class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS"></td>
                                                 <td><input class="form-control subtotal_dp_pcs" type="text" name="subtotal_dp_pcs[]" value="" placeholder="total-dp-price"></td>
                                                 <td>
@@ -123,7 +123,7 @@ var row=`<tr>
     <td><input class="form-control pcs" type="text" name="pcs[]" onkeyup="getCtnQty(this)" value="" placeholder="pcs"></td>
     <td><input class="form-control free_pcs" type="text" name="free[]" onkeyup="getCtnQty(this)" value="" placeholder="free"></td>
     <td><input class="form-control receive" type="text" name="receive[]" value="" placeholder="receive"></td>
-    <td><input class="form-control dp" type="text" onkeyup="getCtnQty(this)" name="dp[]" value="" placeholder="dp"></td>
+    <td><input required class="form-control dp" type="text" onkeyup="getCtnQty(this)" name="dp[]" value="" placeholder="dp"></td>
     <td><input readonly class="form-control dp_pcs" type="text" name="dp_pcs[]" value="" placeholder="dp PCS"></td>
     <td><input class="form-control subtotal_dp_pcs" type="text" name="subtotal_dp_pcs[]" value="" placeholder="total-dp-price"></td>
     <td>
