@@ -126,6 +126,7 @@ class UserController extends Controller
             $user->contact_no=$request->contactNumber;
             $user->distributor_id=$request->distributor_id;
             $user->email=$request->userEmail;
+            $user->sr_id=$request->sr_id;
             if($request->has('password') && $request->password)
                 $user->password=Hash::make($request->password);
 
