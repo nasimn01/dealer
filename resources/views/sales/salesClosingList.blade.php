@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Sales List'))
+@section('pageTitle',trans('Sales Closing List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card">
                     <div class="row pb-1">
-                        {{--  <div class="col-10">
+                        <div class="col-10">
                             <form action="" method="get">
                                 <div class="row">
                                     <div class="col-4">
@@ -31,13 +31,13 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>  --}}
+                        </div>
                         <div class="col-2">
+                            {{--  <a class="float-end" href="{{route(currentUser().'.sales.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>  --}}
                         </div>
                     </div>
                     <!-- table bordered -->
                     <div class="table-responsive">
-                        <a class="float-end" href="{{route(currentUser().'.sales.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                         <table class="table table-bordered mb-0 table-striped">
                             <thead>
                                 <tr>
@@ -62,13 +62,13 @@
                                     <td>{{$p->sales_date}}</td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">
-                                        <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
+                                        {{--  <a class="ms-2" href="{{route(currentUser().'.sales.receiveScreen',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-receipt-cutoff"></i>
-                                        </a>
-                                        <a class="ms-2" href="{{route(currentUser().'.sales.show',encryptor('encrypt',$p->id))}}">
+                                        </a>  --}}
+                                        <a class="ms-2" href="{{route(currentUser().'.sales.printpage',encryptor('encrypt',$p->id))}}">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        @if($p->status==0)
+                                        {{--  @if($p->status==0)
                                             <a class="ms-2" href="javascript:void()" onclick="showConfirmation({{$p->id}})">
                                                 <i class="bi bi-trash" style='color:red'></i>
                                             </a>
@@ -79,7 +79,7 @@
                                         <form id="form{{$p->id}}" action="{{route(currentUser().'.sales.destroy', encryptor('encrypt', $p->id))}}" method="post">
                                             @csrf
                                             @method('delete')
-                                        </form>
+                                        </form>  --}}
                                     </td>
                                 </tr>
                                 @empty

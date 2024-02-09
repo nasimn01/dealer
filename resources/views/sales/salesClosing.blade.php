@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <form method="post" action="{{route(currentUser().'.sales.receive')}}">
                             @csrf
-                            <input type="hidden" value="{{ $sales?->id }}" name="sales_id">
+                            <input type="hidden" value="{{ $sales?->id }}" name="tem_sales_id">
                             <div class="row p-2 mt-4">
                                 {{--  <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
                                     <label for=""><b>Shop/Dsr</b></label>

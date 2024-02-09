@@ -87,42 +87,44 @@
                                         </tr>
                                     </tbody>
                                     <tfoot id="tfootSection">
-                                        <tr class="text-center">
-                                            <th rowspan="2" colspan="3">{{__('Product Name')}}</th>
-                                            {{--  <th rowspan="2">{{__('CTN')}}</th>  --}}
-                                            {{--  <th rowspan="2">{{__('PCS')}}</th>  --}}
-                                            <th colspan="2">{{ __('Return') }}</th>
-                                            <th colspan="2" class="text-danger">{{ __('Damage') }}</th>
-                                            <th rowspan="2" colspan="2">{{__('PCS(Price)')}}</th>
-                                            <th rowspan="2">{{__('Sub-Total(Price)')}}</th>
-                                        </tr>
-                                        <tr>
-                                            <th>CTN</th>
-                                            <th>PCS</th>
-                                            <th class="text-danger">CTN</th>
-                                            <th class="text-danger">PCS</th>
-                                        </tr>
-                                        @if ($sales->sales_details)
-                                        @foreach ($sales->sales_details as $salesdetails)
-                                        @if ($salesdetails->status==1)
-                                        <tr  class="text-center">
-                                            <td colspan="3">{{ $salesdetails->product?->product_name }}</td>
-                                            <td>{{ $salesdetails->ctn_return }}</td>
-                                            <td>{{ $salesdetails->pcs_return }}</td>
-                                            <td>{{ $salesdetails->ctn_damage }}</td>
-                                            <td>{{ $salesdetails->pcs_damage }}</td>
-                                            <td colspan="2">{{ $salesdetails->tp_price }}</td>
-                                            {{--  <td>{{ $salesdetails->tp_price }}</td>  --}}
-                                            <td>{{ $salesdetails->subtotal_price }}</td>
-                                        </tr>
-                                        @endif
-                                        @endforeach
-                                        @endif
-                                        @if ($salesdetails->status==1)
-                                        <tr>
-                                            <td class="text-end" colspan="9"><h6 for="return_total">{{__('Return Total Taka')}}</h6></td>
-                                            <td  class="text-center" colspan="10">{{ $sales->return_total_taka }} </td>
-                                        </tr>
+                                        @if ($sales->sales_details->contains('status', 1))
+                                            <tr class="text-center">
+                                                <th rowspan="2" colspan="3">{{__('Product Name')}}</th>
+                                                {{--  <th rowspan="2">{{__('CTN')}}</th>  --}}
+                                                {{--  <th rowspan="2">{{__('PCS')}}</th>  --}}
+                                                <th colspan="2">{{ __('Return') }}</th>
+                                                <th colspan="2" class="text-danger">{{ __('Damage') }}</th>
+                                                <th rowspan="2" colspan="2">{{__('PCS(Price)')}}</th>
+                                                <th rowspan="2">{{__('Sub-Total(Price)')}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th>CTN</th>
+                                                <th>PCS</th>
+                                                <th class="text-danger">CTN</th>
+                                                <th class="text-danger">PCS</th>
+                                            </tr>
+                                            @if ($sales->sales_details)
+                                            @foreach ($sales->sales_details as $salesdetails)
+                                            @if ($salesdetails->status==1)
+                                            <tr  class="text-center">
+                                                <td colspan="3">{{ $salesdetails->product?->product_name }}</td>
+                                                <td>{{ $salesdetails->ctn_return }}</td>
+                                                <td>{{ $salesdetails->pcs_return }}</td>
+                                                <td>{{ $salesdetails->ctn_damage }}</td>
+                                                <td>{{ $salesdetails->pcs_damage }}</td>
+                                                <td colspan="2">{{ $salesdetails->tp_price }}</td>
+                                                {{--  <td>{{ $salesdetails->tp_price }}</td>  --}}
+                                                <td>{{ $salesdetails->subtotal_price }}</td>
+                                            </tr>
+                                            @endif
+                                            @endforeach
+                                            @endif
+                                            @if ($salesdetails->status==1)
+                                            <tr>
+                                                <td class="text-end" colspan="9"><h6 for="return_total">{{__('Return Total Taka')}}</h6></td>
+                                                <td  class="text-center" colspan="10">{{ $sales->return_total_taka }} </td>
+                                            </tr>
+                                            @endif
                                         @endif
                                     </tfoot>
                                 </table>
@@ -132,7 +134,7 @@
                         <div class="col-4"></div>
                         <div class="col-8">
                             <table class="table table-bordered mb-0 table-striped">
-                                @if($sales->shop_balance)
+                                @if($sales->shop_balance->contains('status', 0))
                                 <tr>
                                     <td class="text-center" colspan="3"><h6>Old Due</h6></td>
                                 </tr>
@@ -150,7 +152,7 @@
                                 @endforeach
                                 @endif
 
-                                @if($sales->shop_balance)
+                                @if($sales->shop_balance->contains('status', 1))
                                 <tr>
                                     <td class="text-center" colspan="3"><h6>New Due</h6></td>
                                 </tr>
@@ -168,7 +170,7 @@
                                 @endforeach
                                 @endif
 
-                                @if($sales->sales_payment)
+                                {{--  @if($sales->sales_payment)
                                 <tr>
                                     <td class="text-center" colspan="3"><h6>New Receive</h6></td>
                                 </tr>
@@ -184,9 +186,9 @@
                                 </tr>
                                 @endif
                                 @endforeach
-                                @endif
+                                @endif  --}}
 
-                                @if($sales->sales_payment)
+                                @if($sales->sales_payment->contains('cash_type', 0))
                                 <tr>
                                     <td class="text-center" colspan="3"><h6>Check</h6></td>
                                 </tr>
@@ -206,18 +208,24 @@
                                 @endforeach
                                 @endif
 
+                                @if($sales->expenses)
                                 <tr class="text-center">
                                     <td  colspan="2"><h6>{{__('Expenses')}}</h6></td>
                                     <td>{{ $sales->expenses}}</td>
                                 </tr>
+                                @endif
+                                @if($sales->commission)
                                 <tr class="text-center">
                                     <td  colspan="2"><h6>{{__('Commission')}}</h6></td>
                                     <td>{{ $sales->commission}}</td>
                                 </tr>
+                                @endif
+                                @if($sales->final_total != $sales->daily_total_taka)
                                 <tr class="text-center">
                                     <td  colspan="2"><h6>{{__('Final Total')}}</h6></td>
                                     <td><b>{{ $sales->final_total}}</b></td>
                                 </tr>
+                                @endif
                             </table>
                         </div>
                         </div>

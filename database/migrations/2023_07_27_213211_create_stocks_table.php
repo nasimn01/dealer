@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('do_id')->nullable();
             $table->string('sales_id')->nullable();
+            $table->integer('tem_sales_id')->nullable();
             $table->integer('chalan_no')->nullable();
             $table->date('stock_date')->nullable();
             $table->string('product_id')->nullable();

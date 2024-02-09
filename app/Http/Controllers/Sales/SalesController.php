@@ -30,6 +30,12 @@ class SalesController extends Controller
         $userSr=User::where(company())->where('role_id',5)->get();
         return view('sales.index',compact('sales','userSr'));
     }
+    public function salesClosingList(Request $request)
+    {
+        $sales=Sales::where(company())->paginate(10);
+        $userSr=User::where(company())->where('role_id',5)->get();
+        return view('sales.salesClosingList',compact('sales','userSr'));
+    }
 
 
     public function create()
@@ -60,7 +66,7 @@ class SalesController extends Controller
                     foreach($request->subtotal_price as $key => $value){
                         if($value){
                             $details = new TemporarySalesDetails;
-                            $details->sales_id=$data->id;
+                            $details->tem_sales_id=$data->id;
                             $details->product_id=$request->product_id[$key];
                             $details->ctn=$request->ctn[$key];
                             $details->pcs=$request->pcs[$key];
@@ -73,7 +79,7 @@ class SalesController extends Controller
                             $details->created_by= currentUserId();
                             if($details->save()){
                                 $stock=new Stock;
-                                $stock->sales_id=$data->id;
+                                $stock->tem_sales_id=$data->id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
                                 $stock->status_history=0;
@@ -134,12 +140,12 @@ class SalesController extends Controller
             $data->updated_by= currentUserId();
             if($data->save()){
                 if($request->product_id){
-                    $dl=TemporarySalesDetails::where('sales_id',$data->id)->delete();
-                    $dlstock=Stock::where('sales_id',$data->id)->delete();
+                    $dl=TemporarySalesDetails::where('tem_sales_id',$data->id)->delete();
+                    $dlstock=Stock::where('tem_sales_id',$data->id)->delete();
                     foreach($request->product_id as $key => $value){
                         if($value){
                             $details = new TemporarySalesDetails;
-                            $details->sales_id=$data->id;
+                            $details->tem_sales_id=$data->id;
                             $details->product_id=$request->product_id[$key];
                             $details->ctn=$request->ctn[$key];
                             $details->pcs=$request->pcs[$key];
@@ -152,7 +158,7 @@ class SalesController extends Controller
                             $details->updated_by= currentUserId();
                             if($details->save()){
                                 $stock=new Stock;
-                                $stock->sales_id=$data->id;
+                                $stock->tem_sales_id=$data->id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
                                 $stock->status_history=0;
@@ -209,7 +215,7 @@ class SalesController extends Controller
         //             foreach($request->product_id as $key => $value){
         //                 if($value){
         //                     $details = new TemporarySalesDetails;
-        //                     $details->sales_id=$sales->id;
+        //                     $details->tem_sales_id=$sales->id;
         //                     $details->product_id=$request->product_id[$key];
         //                     $details->ctn=$request->ctn[$key];
         //                     $details->pcs=$request->pcs[$key];
@@ -292,12 +298,13 @@ class SalesController extends Controller
     public function salesReceive(Request $request)
     {  //dd($request->all());
         try{
-            $tmsales=TemporarySales::where('id',$request->sales_id)->first();
+            $tmsales=TemporarySales::where('id',$request->tem_sales_id)->first();
             $tmsales->status=1;
             if($tmsales->save()){
                 $sales =new Sales;
                 $sales->shop_id = $request->shop_id;
                 $sales->dsr_id = $request->dsr_id;
+                $sales->tem_sales_id = $request->tem_sales_id;
                 $sales->sales_date = date('Y-m-d', strtotime($request->sales_date));
 
                 $sales->daily_total_taka = $request->daily_total_taka;
@@ -447,18 +454,18 @@ class SalesController extends Controller
                         }
                     }
                 }
-                if($request->new_receive_shop_id){
-                    foreach($request->new_receive_shop_id as $i=>$new_receive_shop_id){
-                        if($new_receive_shop_id){
-                            $payment=new SalesPayment;
-                            $payment->sales_id=$sales->id;
-                            $payment->shop_id=$new_receive_shop_id;
-                            $payment->amount=$request->new_receive_tk[$i];
-                            $payment->cash_type=1;
-                            $payment->save();
-                        }
-                    }
-                }
+                // if($request->new_receive_shop_id){
+                //     foreach($request->new_receive_shop_id as $i=>$new_receive_shop_id){
+                //         if($new_receive_shop_id){
+                //             $payment=new SalesPayment;
+                //             $payment->sales_id=$sales->id;
+                //             $payment->shop_id=$new_receive_shop_id;
+                //             $payment->amount=$request->new_receive_tk[$i];
+                //             $payment->cash_type=1;
+                //             $payment->save();
+                //         }
+                //     }
+                // }
                 if($request->check_shop_id){
                     foreach($request->check_shop_id as $i=>$check_shop_id){
                         if($check_shop_id){
@@ -488,18 +495,19 @@ class SalesController extends Controller
     {
         // $sales = Sales::findOrFail($id);
         $sales = Sales::findOrFail(encryptor('decrypt',$id));
-        $shops=Shop::all();
-        $dsr=User::where('role_id',4)->get();
-        $product=Product::where(company())->get();
-        return view('sales.printSalesClosing',compact('sales','shops','dsr','product'));
+        // $shops=Shop::all();
+        // $dsr=User::where('role_id',4)->get();
+        // $product=Product::where(company())->get();
+       // return view('sales.printSalesClosing',compact('sales','shops','dsr','product'));
+        return view('sales.printSalesClosing',compact('sales'));
     }
 
 
     public function destroy($id)
     {
         $data= TemporarySales::findOrFail(encryptor('decrypt',$id));
-        $tdl=TemporarySalesDetails::where('sales_id',$data->id)->delete();
-        $sdl=Stock::where('sales_id',$data->id)->delete();
+        $tdl=TemporarySalesDetails::where('tem_sales_id',$data->id)->delete();
+        $sdl=Stock::where('tem_sales_id',$data->id)->delete();
         $data->delete();
         Toastr::error('Opps!! You Delete Permanently!!');
         return redirect()->back();

@@ -123,6 +123,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('dsr-data-get',[sales::class,'DsrDataGet'])->name('owner.get_dsr');
         Route::get('supplier-product-data-get',[sales::class,'SupplierProduct'])->name('owner.get_supplier_product');
         Route::get('salesclosing-screen',[sales::class,'salesClosing'])->name('owner.salesClosing');
+        Route::get('salesClosing-list',[sales::class,'salesClosingList'])->name('owner.salesClosingList');
         Route::post('salesclosing-data-get',[sales::class,'getSalesClosingData'])->name('owner.getSalesClosingData');
 
         // employee settings

@@ -18,7 +18,7 @@ class TemporarySales extends Model
        }
 
        public function temporary_sales_details(){
-        return $this->hasMany(TemporarySalesDetails::class,'sales_id','id');
+        return $this->hasMany(TemporarySalesDetails::class,'tem_sales_id','id');
     }
 
 }
