@@ -83,14 +83,12 @@
 @push("scripts")
 <script>
     total_calculate();
-
     function total_calculate() {
         var finalTotal = 0;
         $('.final_total').each(function() {
             finalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
         $('.total_dp').text(parseFloat(finalTotal).toFixed(2));
-
     }
 </script>
 @endpush

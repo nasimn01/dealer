@@ -122,9 +122,9 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="border bg-info w-bold text-white">
                                         <div class="form-group p-3">
-                                            <p>Distributor balance: <span class="supbalance"> </span></p>
-                                            <p>Do Amount: <span class="doamount"></span><input class="doamount_data" type="hidden" name="balance"></p>
-                                            <p>R: <span class="subRemaining"></span></p>
+                                            <p>Distributor balance:&nbsp;&nbsp;&nbsp;<span class="supbalance" style="font-weight: bold;"> </span></p>
+                                            <p>Do Amount: &nbsp;&nbsp;&nbsp;<span class="doamount" style="font-weight: bold;"></span><input class="doamount_data" type="hidden" name="balance"></p>
+                                            <p>R: &nbsp;&nbsp;&nbsp;<span class="subRemaining" style="font-weight: bold;"></span></p>
                                         </div>
                                     </div>
                                 </div>

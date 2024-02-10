@@ -94,7 +94,6 @@
                                     <th>
                                         <span class="sumFinalTotal"></span>
                                         {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
-
                                     </th>
                                 </tr>
                             </tbody>
@@ -108,7 +107,6 @@
     </div>
 </section>
 <!-- Bordered table end -->
-
 <script>
     function showConfirmation(salesId) {
         if (confirm("Are you sure you want to delete this sales?")) {
@@ -129,7 +127,6 @@
         });
         $('.sumFinalTotal').text(parseFloat(finalTotal).toFixed(2));
         $('.sumFinalTotal_f').val(parseFloat(subtotal).toFixed(2));
-
     }
 </script>
 @endpush
