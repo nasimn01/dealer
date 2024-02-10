@@ -57,10 +57,17 @@
                                             <td>{{ $data->totalquantity_pcs }}</td>
                                             <td>{{ $data->dp_price }}</td>
                                             <td>{{ $data->dp_pcs }}</td>
-                                            <td>{{ $data->subtotal_dp_pcs }}</td>
+                                            <td>{{ $data->subtotal_dp_pcs }}
+                                                <input type="hidden" value="{{ $data->subtotal_dp_pcs }}" class="final_total">
+                                            </td>
                                         </tr>
-
                                         @endforeach
+                                        <tr>
+                                            <th colspan="8" class="text-end">Total</th>
+                                            <th class="text-center">
+                                                <span class="total_dp"></span>
+                                            </th>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -73,6 +80,20 @@
 </section>
 <button type="button" class="btn btn-info" onclick="printDiv('result_show')">Print</button>
 @endsection
+@push("scripts")
+<script>
+    total_calculate();
+
+    function total_calculate() {
+        var finalTotal = 0;
+        $('.final_total').each(function() {
+            finalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_dp').text(parseFloat(finalTotal).toFixed(2));
+
+    }
+</script>
+@endpush
 {{--  @push('scripts')
 <script>
     function printDiv(divName) {
