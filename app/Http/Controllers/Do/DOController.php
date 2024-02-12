@@ -262,12 +262,13 @@ class DOController extends Controller
                     if($value){
                         $dodetail=D_o_detail::find($request->dodetail_id[$key]);
                         $dodetail->dp=$request->dp[$key];
+                        $dodetail->dp_pcs=$request->dp_pcs[$key];
                         $dodetail->sub_total=($dodetail->qty*$request->dp[$key]);
                         $dodetail->receive_qty=($dodetail->receive_qty + $request->receive[$key]);
                         $dodetail->receive_free_qty=($dodetail->receive_free_qty + $request->free[$key]);
                         if($dodetail->save()){
                             $productDp=Product::find($request->product_id[$key]);
-                            $productDp->dp_price=$request->dp[$key];
+                            $productDp->dp_price=$request->dp_pcs[$key];
                             if($productDp->save()){
                                 $check_batch=Stock::where('product_id',$request->product_id[$key])->where('dp_price',$request->dp[$key])->orderBy('id','DESC')->pluck('batch_id');
                                 if(count($check_batch) > 0){
