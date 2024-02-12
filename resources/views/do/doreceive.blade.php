@@ -187,6 +187,7 @@ function RemoveRow(e) {
 
                 selectElement.trigger('change'); // Initialize the input field
                 total_calculate();
+                getCtnQty(e);
             },
         });
     }

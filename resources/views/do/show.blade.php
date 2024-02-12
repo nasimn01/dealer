@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Distributor All Transfer')
+@section('pageTitle','ALL DO Show')
 @section('pageSubTitle','List')
 
 @section('content')
@@ -40,7 +40,7 @@
                                 <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('QTY(CTN)')}}</th>
                                 <th scope="col">{{__('Free Qty(PCS)')}}</th>
-                                <th scope="col">{{__('DP')}}</th>
+                                <th scope="col">{{__('DP(CTN)')}}</th>
                                 <th scope="col">{{__('Subtotal')}}</th>
                             </tr>
                         </thead>

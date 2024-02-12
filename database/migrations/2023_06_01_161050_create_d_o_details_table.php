@@ -19,7 +19,8 @@ return new class extends Migration
             $table->integer('product_id')->nullable();
             $table->decimal('qty',14,2)->nullable();
             $table->decimal('qty_pcs',14,2)->nullable();
-            $table->decimal('dp',14,2)->nullable();
+            $table->decimal('dp',14,2)->comment('ctnDp')->nullable();
+            $table->decimal('dp_pcs',14,2)->nullable();
             $table->decimal('sub_total',14,2)->nullable();
             $table->decimal('receive_qty',14,2)->nullable();
             $table->decimal('receive_free_qty',14,2)->nullable();

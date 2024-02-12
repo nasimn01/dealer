@@ -87,6 +87,7 @@ class DOController extends Controller
                                     $details->qty=$request->qty[$key];
                                     $details->free=$request->free_qty[$key];
                                     $details->dp=$request->dp[$key];
+                                    $details->dp_pcs=$request->dp_pcs[$key];
                                     $details->sub_total=$request->sub_total[$key];
                                     //$details->receive_qty=$request->qty[$key];
                                     //$details->receive_free_qty=$request->free[$key];

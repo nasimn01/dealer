@@ -267,7 +267,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,6 +281,7 @@
                                 </td>
                                 <td class="dp_price${counter}"><span>${totalCtnTk}</span>
                                     <input type="hidden" name="dp[]" value="${totalCtnTk}">
+                                    <input class="dp_pcs" type="hidden" name="dp_pcs[]" value="${dp}">
                                 </td>
                                 <td class="sub_total${counter}"><span>${total}</span>
                                     <input type="hidden" class="sub_total" name="sub_total[]" value="${total}">
@@ -378,12 +379,16 @@
             dataType: "json",
             data: { product_id: product_id },
             success: function (data) {
-                var freeCount = (data.unit_qty / data.free_ratio) * (data.free);
+                console.log(data);
+                var freeCount = parseFloat((data.unit_qty / data.free_ratio) * (data.free));
+                console.log(freeCount);
                 var Qty=$(e).parents('.product_detail_tr'+c).find('.qty'+c+' span').text();
-                let totalsubAmount= (data.dp_price * Qty);
+                let totalsubAmount= (data.unit_qty*data.dp_price * Qty);
                 freeQty=Math.floor(Qty*freeCount);
-                $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' span').text(data.dp_price);
-                $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' input').val(data.dp_price);
+                freeQty = isNaN(freeQty) ? 0 : freeQty;
+                $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' span').text(data.dp_price*data.unit_qty);
+                $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' input').val(data.dp_price*data.unit_qty);
+                $(e).parents('.product_detail_tr'+c).find('.dp_price'+c+' .dp_pcs').val(data.dp_price);
                 $(e).parents('.product_detail_tr'+c).find('.free_qty'+c+' span').text(freeQty);
                 $(e).parents('.product_detail_tr'+c).find('.free_qty'+c+' input').val(freeQty);
                 $(e).parents('.product_detail_tr'+c).find('.sub_total'+c+' span').text(totalsubAmount);
