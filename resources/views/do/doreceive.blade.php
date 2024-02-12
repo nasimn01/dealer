@@ -83,6 +83,15 @@
                                                 </td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="8" class="text-end">Total</th>
+                                                <th class="text-center">
+                                                    <span class="total_dp"></span>
+                                                </th>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -137,6 +146,7 @@ var row=`<tr>
 function RemoveRow(e) {
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('tr').remove();
+        total_calculate();
     }
 }
 
@@ -146,7 +156,7 @@ function RemoveRow(e) {
         let product_id = $(e).closest('tr').find('.product_id').val();
         let cn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
         let dp=$(e).find('option:selected').data('dp');
-        $(e).closest('tr').find('.dp').val(dp);
+        $(e).closest('tr').find('.dp_pcs').val(dp);
         let tpPrice = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
         $(e).closest('tr').find('.tp_price').val(tpPrice);
         let tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
@@ -176,6 +186,7 @@ function RemoveRow(e) {
                 });
 
                 selectElement.trigger('change'); // Initialize the input field
+                total_calculate();
             },
         });
     }
@@ -211,7 +222,7 @@ function RemoveRow(e) {
         let cn=$(e).closest('tr').find('.ctn').val()?parseFloat($(e).closest('tr').find('.ctn').val()):0;
         let pcs=$(e).closest('tr').find('.pcs').val()?parseFloat($(e).closest('tr').find('.pcs').val()):0;
         let freePcs=$(e).closest('tr').find('.free_pcs').val()?parseFloat($(e).closest('tr').find('.free_pcs').val()):0;
-        let dpPrice=$(e).closest('tr').find('.dp').val()?parseFloat($(e).closest('tr').find('.dp').val()):0;
+        let dpPrice=$(e).closest('tr').find('.dp_pcs').val()?parseFloat($(e).closest('tr').find('.dp_pcs').val()):0;
         $(e).closest('tr').find('.receive').val(pcs);
         $.ajax({
             url: "{{route(currentUser().'.unit_data_get')}}",
@@ -220,14 +231,22 @@ function RemoveRow(e) {
             data: { product_id:product_id },
             success: function(data) {
                 console.log(data);
-                let dpPcs=parseFloat(dpPrice/data).toFixed(2);
+                let dpCtn=parseFloat(dpPrice*data).toFixed(2);
                 let total=(cn*data)+pcs;
                 totalReceive=(total+freePcs);
-                let subTotal=parseFloat(total*dpPcs).toFixed(2);
-                $(e).closest('tr').find('.dp_pcs').val(dpPcs);
+                let subTotal=parseFloat(total*dpPrice).toFixed(2);
+                $(e).closest('tr').find('.dp').val(dpCtn);
                 $(e).closest('tr').find('.subtotal_dp_pcs').val(subTotal);
                 $(e).closest('tr').find('.receive').val(totalReceive);
+                //let dpPcs=parseFloat(dpPrice/data).toFixed(2);
+                //let total=(cn*data)+pcs;
+                //totalReceive=(total+freePcs);
+                //let subTotal=parseFloat(total*dpPcs).toFixed(2);
+                //$(e).closest('tr').find('.dp_pcs').val(dpPcs);
+                //$(e).closest('tr').find('.subtotal_dp_pcs').val(subTotal);
+                //$(e).closest('tr').find('.receive').val(totalReceive);
                // changeDp(e,total);
+               total_calculate();
 
             },
         });
@@ -237,6 +256,16 @@ function RemoveRow(e) {
         csubtotal = cdp * total;
         $(e).closest('tr').find('.subtotal_dp_pcs').val(csubtotal);
     }  --}}
+
+    total_calculate();
+    function total_calculate() {
+        var finalTotal = 0;
+        $('.subtotal_dp_pcs').each(function() {
+            finalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        console.log(finalTotal);
+        $('.total_dp').text(parseFloat(finalTotal).toFixed(2));
+    }
 
 </script>
 
