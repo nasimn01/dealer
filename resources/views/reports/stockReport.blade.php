@@ -87,6 +87,7 @@
                                         <th class="p-2" data-title="Product Name">{{__('Group')}}</th>
                                         <th class="p-2" data-title="Product Name">{{__('Distributor')}}</th>
                                         <th class="p-2" data-title="Product Name">{{__('Product')}}</th>
+                                        <th class="p-2" data-title="Product Price">{{__('Total Price')}}</th>
                                         <th class="p-2" data-title="Qty(PCS)">{{__('Qty(PCS)')}}</th>
                                         {{--  <th class="p-2" data-title="Total Amount">{{__('Total Amount')}}</th>  --}}
                                     </tr>
@@ -98,6 +99,7 @@
                                         <td>{{$s->group_name}}</td>
                                         <td>{{$s->supplier_name}}</td>
                                         <td>{{$s->product_name}}</td>
+                                        <td>{{$s->insprice - $s->outsprice}}</td>
                                         <td>{{ $s->ins - $s->outs }}</td>
                                         {{--  <td>{{$s->qty}}</td>  --}}
                                     @empty

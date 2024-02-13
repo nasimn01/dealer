@@ -27,8 +27,8 @@ class ReportController extends Controller
         ->select(
             'products.product_name','groups.name as group_name','suppliers.name as supplier_name',
             'stocks.*',
-            DB::raw('SUM(CASE WHEN stocks.status = 0 THEN stocks.totalquantity_pcs ELSE 0 END) as outs'),
-            DB::raw('SUM(CASE WHEN stocks.status = 1 THEN stocks.totalquantity_pcs ELSE 0 END) as ins')
+            DB::raw('SUM(CASE WHEN stocks.status = 0 THEN stocks.totalquantity_pcs ELSE 0 END) as outs, SUM(CASE WHEN stocks.status = 0 THEN stocks.totalquantity_pcs*stocks.dp_pcs ELSE 0 END) as outsprice'),
+            DB::raw('SUM(CASE WHEN stocks.status = 1 THEN stocks.totalquantity_pcs ELSE 0 END) as ins, SUM(CASE WHEN stocks.status = 1 THEN stocks.totalquantity_pcs*stocks.dp_pcs ELSE 0 END) as insprice')
         );
 
         if ($request->fdate) {
@@ -40,13 +40,10 @@ class ReportController extends Controller
         if ($request->distributor_id)
             $stockQuery->where('products.distributor_id',$request->distributor_id);
 
-
         $stock = $stockQuery
             ->groupBy('products.group_id','products.distributor_id','products.product_name')
             ->get();
-
         return view('reports.stockReport', compact('stock','groups','products','distributors'));
-
 
         // $stock= DB::select("SELECT products.product_name,stocks.*,sum(stocks.totalquantity_pcs) as qty FROM `stocks` join products on products.id=stocks.product_id $where GROUP BY stocks.product_id");
         // return view('reports.stockReport',compact('stock'));
@@ -55,7 +52,6 @@ class ReportController extends Controller
     public function ShopDue(Request $request)
     {
         $shop = Shop::where(company())->get();
-
         $query = ShopBalance::join('shops', 'shops.id', '=', 'shop_balances.shop_id')
         ->groupBy('shop_balances.shop_id')
         ->select('shops.*', 'shop_balances.*',
