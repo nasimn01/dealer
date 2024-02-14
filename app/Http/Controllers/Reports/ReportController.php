@@ -9,6 +9,9 @@ use App\Models\Settings\ShopBalance;
 use App\Models\Product\Group;
 use App\Models\Settings\Supplier;
 use App\Models\Product\Product;
+use App\Models\Do\D_o;
+use App\Models\Do\D_o_detail;
+use App\Models\Do\DoReceiveHistory;
 use DB;
 use Carbon\Carbon;
 
@@ -64,5 +67,31 @@ class ReportController extends Controller
             }
         $data = $query->get();
         return view('reports.shopdue', compact('shop','data'));
+    }
+
+    public function undeliverdProduct(Request $request)
+    {
+        $do_reference = false;
+        if ($request->reference_num) {
+            $do_reference = D_o::where('reference_num',$request->reference_num)->pluck('id');
+            $dodetails= D_o_detail::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
+            $histotry = DoReceiveHistory::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
+            return $histotry;
+            // $commonProductIds = array_intersect($dodetails->pluck('product_id')->toArray(), $history->pluck('product_id')->toArray());
+
+            // $do_reference = DoReceiveHistory::where(function($query) use ($histotry,$dodetails){
+            //     if($dodetails){
+            //         $query->orWhere(function($query) use ($dodetails){
+            //             $query->whereIn('do_id',$dodetails);
+            //         });
+            //     }
+            //     if($histotry){
+            //         $query->orWhere(function($query) use ($histotry){
+            //             $query->whereIn('do_id',$histotry);
+            //         });
+            //     }
+            // })->get();
+        }
+        return view('do.undeliverd-list', compact('do_reference'));
     }
 }

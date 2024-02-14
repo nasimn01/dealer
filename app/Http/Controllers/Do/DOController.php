@@ -333,7 +333,7 @@ class DOController extends Controller
             // return $history->chalan_no;
             return redirect(route(currentUser().'.do.receivelist'));
         }catch(Exception $e){
-            dd($e);
+            //dd($e);
             return redirect()->back()->withInput();
         }
     }
@@ -344,6 +344,7 @@ class DOController extends Controller
         // return $data;
         return view('do.receive-list',compact('data'));
     }
+
     public function showDoReceive($chalan_no)
     {
         $print_data=DoReceiveHistory::where('chalan_no',$chalan_no)->get();

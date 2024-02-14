@@ -1,0 +1,71 @@
+@extends('layout.app')
+@section('pageTitle',trans('Undeliverd List'))
+@section('pageSubTitle',trans('List'))
+
+@section('content')
+<section class="section">
+    <div class="row" id="table-bordered">
+        <div class="col-12">
+            <div class="card">
+                <div class="row pb-1">
+                    <div class="col-10">
+                        <form action="" method="get">
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="text" name="reference_num" value="{{isset($_GET['reference_num'])?$_GET['reference_num']:''}}" placeholder="Reference Number" class="form-control">
+                                </div>
+                                <div class="col-2 col-sm-4 ps-0 text-start">
+                                    <button class="btn btn-sm btn-info" type="submit">Search</button>
+                                    <a class="btn btn-sm btn-warning " href="{{route(currentUser().'.undeliverd')}}" title="Clear">Clear</a>
+                                </div>
+                                <div class="col-2 p-0 m-0">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                </div>
+                    <!-- table bordered -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0 table-striped">
+                            {{--  <a class="float-end" href="{{route(currentUser().'.docontroll.create')}}" style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>  --}}
+                            <thead>
+                                <tr>
+                                    <th scope="col">{{__('#SL')}}</th>
+                                    <th scope="col">{{__('Product Name')}}</th>
+                                    <th scope="col">{{__('Product Qty(CTN)')}}</th>
+                                    <th scope="col">{{__('Product Qty(PCS)')}}</th>
+                                    <th scope="col">{{__('Product Qty(Free)')}}</th>
+                                    <th scope="col">{{__('DP')}}</th>
+                                    <th scope="col">{{__('SubTotal')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{--  @forelse($dodetails as $p)
+                                <tr>
+                                <th scope="row">{{ ++$loop->index }}</th>
+                                    <td>{{$p->chalan_no}}</td>
+                                    <td>{{$p->stock_date}}</td>
+                                    <td class="white-space-nowrap">
+                                        <a href="{{route(currentUser().'.showDoReceive',$p->chalan_no)}}">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <th colspan="7" class="text-center">No Data Found</th>
+                                </tr>
+                                @endforelse  --}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="my-3">
+                        {{--  {!! $data->links()!!}  --}}
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>
+@endsection

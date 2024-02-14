@@ -44,6 +44,7 @@
             <li class="py-1"><a href="{{route(currentUser().'.docontroll.index')}}" >{{__('Do List')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.doreceive')}}" >{{__('Do Receive')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.do.receivelist')}}" >{{__('Do Receive List')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.undeliverd')}}" >{{__('Undeliverd')}}</a></li>
 		</ul>
     </li>
     <li class="sidebar-item has-sub">
