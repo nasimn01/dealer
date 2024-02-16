@@ -46,6 +46,17 @@
                                     <label for=""><b>Sales Date</b></label>
                                     <input type="text" id="datepicker" class="form-control" value="{{ $sales->sales_date }}"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>SR</b></label>
+                                    <select name="sr_id" class="choices form-select">
+                                        <option value="">Select</option>
+                                        @forelse ($userSr as $p)
+                                            <option value="{{$p->id}}" {{ $sales->sr_id==$p->id?"selected":""}}>{{$p->name}}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
@@ -106,7 +117,7 @@
                                         </div>
                                         <div class="col-lg-2 mt-2 text-end">
                                             <label for="" class="form-group"><h5 class="total">{{ $sales->total }} TK</h5></label>
-                                            <input type="hidden" name="total" class="form-control total_p">
+                                            <input type="hidden" name="total" value="{{ $sales->total }}" class="form-control total_p">
                                         </div>
                                         <div class="col-lg-2"></div>
                                     </div>

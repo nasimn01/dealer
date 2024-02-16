@@ -16,6 +16,9 @@ class TemporarySales extends Model
     public function dsr(){
         return $this->belongsTo(User::class,'dsr_id','id');
        }
+    public function sr(){
+        return $this->belongsTo(User::class,'sr_id','id');
+       }
 
        public function temporary_sales_details(){
         return $this->hasMany(TemporarySalesDetails::class,'tem_sales_id','id');

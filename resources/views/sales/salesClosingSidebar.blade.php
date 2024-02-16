@@ -58,6 +58,11 @@
                                     <label for=""><b>Sales Date</b></label>
                                     <input type="text" id="datepicker" class="form-control" value="{{ $sales?->sales_date }}"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 mt-2">
+                                    <label for=""><b>SR Name</b></label>
+                                    <input readonly type="text" id="" class="form-control" value="{{ $sales->sr?->name }}"  name="sr_id">
+                                    <input class="form-control" type="hidden"  name="sr_id" value="{{ $sales->sr_id }}" placeholder="">
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">

@@ -39,6 +39,17 @@
                                     <label for=""><b>Sales Date</b></label>
                                     <input type="text" id="datepicker" class="form-control" value="<?php print(date("m/d/Y")); ?>"  name="sales_date" placeholder="mm-dd-yyyy">
                                 </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>SR</b></label>
+                                    <select name="sr_id" class="choices form-select">
+                                        <option value="">Select</option>
+                                        @forelse ($userSr as $p)
+                                            <option value="{{$p->id}}" {{ request('sr_id')==$p->id?"selected":""}}>{{$p->name}}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
+                                </div>
                                 {{--  <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
                                     <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
                                     @if($user)

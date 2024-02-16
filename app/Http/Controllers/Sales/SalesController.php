@@ -46,12 +46,14 @@ class SalesController extends Controller
     public function create()
     {
         $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
-        return view('sales.create',compact('user'));
+        $userSr=User::where(company())->where('role_id',5)->get();
+        return view('sales.create',compact('user','userSr'));
     }
     public function selectedCreate()
     {
         $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
-        return view('sales.selectedCreate',compact('user'));
+        $userSr=User::where(company())->where('role_id',5)->get();
+        return view('sales.selectedCreate',compact('user','userSr'));
     }
 
     public function store(Request $request)
@@ -61,6 +63,7 @@ class SalesController extends Controller
             $data->select_shop_dsr = $request->select_shop_dsr;
             $data->shop_id = $request->shop_id;
             $data->dsr_id = $request->dsr_id;
+            $data->sr_id = $request->sr_id;
             $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             $data->total = $request->total;
             $data->status = 0;
@@ -128,7 +131,8 @@ class SalesController extends Controller
         $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
         $shops=Shop::all();
         $dsr=User::where('role_id',4)->get();
-        return view('sales.primary-update',compact('sales','shops','dsr'));
+        $userSr=User::where(company())->where('role_id',5)->get();
+        return view('sales.primary-update',compact('sales','shops','dsr','userSr'));
     }
 
     public function primaryStore(Request $request, $id)
@@ -138,6 +142,7 @@ class SalesController extends Controller
             $data->select_shop_dsr = $request->select_shop_dsr;
             $data->shop_id = $request->shop_id;
             $data->dsr_id = $request->dsr_id;
+            $data->sr_id = $request->sr_id;
             $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             $data->total = $request->total;
             $data->status = 0;
@@ -309,6 +314,7 @@ class SalesController extends Controller
                 $sales =new Sales;
                 $sales->shop_id = $request->shop_id;
                 $sales->dsr_id = $request->dsr_id;
+                $sales->sr_id = $request->sr_id;
                 $sales->tem_sales_id = $request->tem_sales_id;
                 $sales->sales_date = date('Y-m-d', strtotime($request->sales_date));
 
@@ -577,9 +583,10 @@ class SalesController extends Controller
             //return $sales;
             $shops=Shop::all();
             $dsr=User::where('role_id',4)->get();
+            $userSr=User::where(company())->where('role_id',5)->get();
             $product=Product::where(company())->get();
             if($sales){
-                return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product'));
+                return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product','userSr'));
             }else {
                 return view('sales.nodata');
             }

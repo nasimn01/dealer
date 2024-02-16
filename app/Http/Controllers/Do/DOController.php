@@ -133,12 +133,7 @@ class DOController extends Controller
         return view('do.show',compact('doData'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Do\D_o  $d_o
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(D_o $d_o)
     {
         //
