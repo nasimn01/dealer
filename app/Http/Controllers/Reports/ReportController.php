@@ -51,6 +51,10 @@ class ReportController extends Controller
         // $stock= DB::select("SELECT products.product_name,stocks.*,sum(stocks.totalquantity_pcs) as qty FROM `stocks` join products on products.id=stocks.product_id $where GROUP BY stocks.product_id");
         // return view('reports.stockReport',compact('stock'));
     }
+    public function SRreport(Request $request)
+    {
+        return view('reports.srReport');
+    }
 
     public function ShopDue(Request $request)
     {
