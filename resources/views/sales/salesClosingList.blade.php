@@ -43,8 +43,8 @@
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Shop/DSR Name')}}</th>
-                                    <th scope="col">{{__('sales_date')}}</th>
-                                    <th scope="col">{{__('total')}}</th>
+                                    <th scope="col">{{__('Sales Date')}}</th>
+                                    <th scope="col">{{__('Total')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>

@@ -12,6 +12,9 @@ use App\Models\Product\Product;
 use App\Models\Do\D_o;
 use App\Models\Do\D_o_detail;
 use App\Models\Do\DoReceiveHistory;
+use App\Models\Sales\Sales;
+use App\Models\Sales\SalesDetails;
+use App\Models\User;
 use DB;
 use Carbon\Carbon;
 
@@ -53,7 +56,13 @@ class ReportController extends Controller
     }
     public function SRreport(Request $request)
     {
-        return view('reports.srReport');
+        $sales = Sales::join('users', 'users.id', '=', 'sales.dsr_id')->where('sales.company_id', company())->select('sales.*', 'users.id', 'users.sr_id');
+        $userSr=User::where(company())->where('role_id',5)->get();
+        if ($request->sr_id)
+        $sales->where('users.sr_id',$request->sr_id);
+
+        $sales = $sales->paginate(25);
+        return view('reports.srReport',compact('sales','userSr'));
     }
 
     public function ShopDue(Request $request)
