@@ -59,7 +59,7 @@ class ReportController extends Controller
         $sales = Sales::join('users', 'users.id', '=', 'sales.dsr_id')->where('sales.company_id', company())->select('sales.*', 'users.id', 'users.sr_id');
         $userSr=User::where(company())->where('role_id',5)->get();
         if ($request->sr_id)
-        $sales->where('users.sr_id',$request->sr_id);
+        $sales->where('sales.sr_id',$request->sr_id);
 
         $sales = $sales->paginate(25);
         return view('reports.srReport',compact('sales','userSr'));

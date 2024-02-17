@@ -25,7 +25,7 @@
                                     </div>
                                     <div class="col-2 col-sm-4 ps-0 text-start">
                                         <button class="btn btn-sm btn-info" type="submit">Search</button>
-                                        <a class="btn btn-sm btn-warning " href="{{route(currentUser().'.salesClosingList')}}" title="Clear">Clear</a>
+                                        <a class="btn btn-sm btn-warning " href="{{route(currentUser().'.srreport')}}" title="Clear">Clear</a>
                                     </div>
                                     <div class="col-2 p-0 m-0">
                                     </div>
