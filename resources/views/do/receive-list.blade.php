@@ -22,7 +22,7 @@
                             <tbody>
                                 @forelse($data as $p)
                                 <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
+                                    <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$p->chalan_no}}</td>
                                     <td>{{$p->stock_date}}</td>
                                     <td class="white-space-nowrap">

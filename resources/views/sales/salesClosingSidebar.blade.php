@@ -758,7 +758,7 @@ function getCtnQty(e){
             let totalSalesQty=oldTotalQty-(totalReturn+totalDamage);
             let totalReceive=totalReturn+totalDamage;
             let subTotalPrice=(pcsPrice*oldTotalQty)-(pcsPrice*totalReceive);
-            $(e).closest('tr').find('.subtotal_price').val(subTotalPrice);
+            $(e).closest('tr').find('.subtotal_price').val(parseFloat(subTotalPrice).toFixed(2));
             $(e).closest('tr').find('.total_return_pcs').val(totalReturn);
             $(e).closest('tr').find('.total_damage_pcs').val(totalDamage);
             $(e).closest('tr').find('.total_sales_pcs').val(totalSalesQty);

@@ -99,15 +99,28 @@
                                         <td>{{$s->group_name}}</td>
                                         <td>{{$s->supplier_name}}</td>
                                         <td>{{$s->product_name}}</td>
-                                        <td>{{$s->insprice - $s->outsprice}}</td>
+                                        <td>
+                                            {{$s->insprice - $s->outsprice}}
+                                            <input type="hidden" class="subtotal_dp_price" value="{{$s->insprice - $s->outsprice}}">
+                                        </td>
                                         <td>{{ $s->ins - $s->outs }}</td>
                                         {{--  <td>{{$s->qty}}</td>  --}}
+                                    </tr>
                                     @empty
                                     <tr>
                                         <th colspan="9" class="text-center">No data Found</th>
                                     </tr>
                                     @endforelse
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4" class="text-end">Total</th>
+                                        <th class="text-center">
+                                            <span class="total_dp"></span> Tk
+                                        </th>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </form>
                     </div>
@@ -117,3 +130,17 @@
     </div>
 </section>
 @endsection
+@push("scripts")
+    <script>
+        total_calculate();
+        function total_calculate() {
+            var finalTotal = 0;
+            $('.subtotal_dp_price').each(function() {
+                finalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            });
+            //console.log(finalTotal);
+            $('.total_dp').text(parseFloat(finalTotal).toFixed(2));
+        }
+    </script>
+
+@endpush
