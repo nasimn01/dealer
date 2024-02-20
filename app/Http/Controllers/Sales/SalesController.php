@@ -39,6 +39,7 @@ class SalesController extends Controller
 
         $sales = $sales->paginate(25);
 
+
         return view('sales.salesClosingList',compact('sales','userSr'));
     }
 
