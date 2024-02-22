@@ -63,14 +63,14 @@
                                     <td>{{$p->sales_date}}</td>
                                     <td>
                                         @if($p->sales_details)
-                                            @foreach($p->sales_details as $key => $value)
-                                                <table>
+                                            <table>
+                                                @foreach($p->sales_details as $key => $value)
                                                     <tr>
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
-                                                </table>
-                                            @endforeach
+                                                @endforeach
+                                            </table>
                                         @endif
                                     </td>
                                     <td>{{$p->final_total}}
