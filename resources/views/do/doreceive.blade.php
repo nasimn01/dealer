@@ -54,7 +54,7 @@
                                         <tbody id="product">
                                             <tr>
                                                 <td>
-                                                    <select class="form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
+                                                    <select class="select2 product_id" id="product_id" onchange="doData(this);" name="product_id[]">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -108,11 +108,11 @@
 @endsection
 @push("scripts")
 <script>
+    let counter = 0;
     function addRow(){
-
 var row=`<tr>
     <td>
-        <select class="form-select product_id" id="product_id" onchange="doData(this);" name="product_id[]">
+        <select class="select2 product_id" id="product_id_${counter}" onchange="doData(this);" name="product_id[]">
             <option value="">Select Product</option>
             @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
             <option data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -141,6 +141,9 @@ var row=`<tr>
     </td>
 </tr>`;
     $('#product').append(row);
+    $(`#product_id_${counter}`).select2();
+    counter++;
+    //console.log(counter)
 }
 
 function RemoveRow(e) {

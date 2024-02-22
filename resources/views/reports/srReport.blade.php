@@ -13,8 +13,17 @@
                         <div class="col-10">
                             <form action="" method="get">
                                 <div class="row">
-                                    <div class="col-4">
-                                        <select name="sr_id" class="choices form-select">
+                                    <div class="col-4 py-1">
+                                        <label for="fdate">{{__('From Date')}}</label>
+                                        <input type="date" id="fdate" class="form-control" value="{{ old('fdate')}}" name="fdate">
+                                    </div>
+                                    <div class="col-4 py-1">
+                                        <label for="fdate">{{__('To Date')}}</label>
+                                        <input type="date" id="tdate" class="form-control" value="{{ old('tdate')}}" name="tdate">
+                                    </div>
+                                    <div class="col-4 py-1">
+                                        <label for="sr">{{__('SR')}}</label>
+                                        <select name="sr_id" class="select2 form-select">
                                             <option value="">Select</option>
                                             @forelse ($userSr as $p)
                                                 <option value="{{$p->id}}" {{ request('sr_id')==$p->id?"selected":""}}>{{$p->name}}</option>
@@ -23,11 +32,9 @@
                                             @endforelse
                                         </select>
                                     </div>
-                                    <div class="col-2 col-sm-4 ps-0 text-start">
+                                    <div class="col-12 col-sm-12 ps-0 text-center py-2">
                                         <button class="btn btn-sm btn-info" type="submit">Search</button>
                                         <a class="btn btn-sm btn-warning " href="{{route(currentUser().'.srreport')}}" title="Clear">Clear</a>
-                                    </div>
-                                    <div class="col-2 p-0 m-0">
                                     </div>
                                 </div>
                             </form>
@@ -43,6 +50,7 @@
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('DSR Name')}}</th>
                                     <th scope="col">{{__('Sales Date')}}</th>
+                                    <th scope="col">{{__('Product')}}</th>
                                     <th scope="col">{{__('Total')}}</th>
                                     {{--  <th class="white-space-nowrap">{{__('ACTION')}}</th>  --}}
                                 </tr>
@@ -53,6 +61,18 @@
                                     <th scope="row">{{ ++$loop->index }}</th>
                                     <td> {{ $p->dsr?->name }} </td>
                                     <td>{{$p->sales_date}}</td>
+                                    <td>
+                                        @if($p->sales_details)
+                                            @foreach($p->sales_details as $key => $value)
+                                                <table>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            @endforeach
+                                        @endif
+                                    </td>
                                     <td>{{$p->final_total}}
                                         <input type="hidden" value="{{$p->final_total}}" class="final_total">
                                     </td>
@@ -78,7 +98,7 @@
                         </table>
                     </div>
                     <div class="my-3">
-                        {!! $sales->links()!!}
+                        {{--  {!! $sales->links()!!}  --}}
                     </div>
                 </div>
             </div>

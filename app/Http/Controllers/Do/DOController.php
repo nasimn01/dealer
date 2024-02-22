@@ -84,6 +84,7 @@ class DOController extends Controller
                                     $details = new D_o_detail;
                                     $details->do_id=$data->id;
                                     $details->product_id=$request->product_id[$key];
+                                    $details->qty_pcs=$request->qty_pcs[$key];
                                     $details->qty=$request->qty[$key];
                                     $details->free=$request->free_qty[$key];
                                     $details->dp=$request->dp[$key];
@@ -172,8 +173,15 @@ class DOController extends Controller
     public function doDataGet(Request $request)
     {
         $product_id = $request->product_id;
-        $dodetails = D_o_detail::where('product_id', $product_id)->pluck('do_id', 'id');
-        $dos = D_o::whereIn('id', $dodetails->values())->pluck('reference_num', 'id')->toArray();
+        $ref_ids =array();
+        $dodetails = D_o_detail::select( DB::raw('SUM(d_o_details.qty_pcs) as totaldoPCS'),DB::raw('SUM(d_o_details.receive_qty) as totalrecPCS'),'do_id')->where('product_id', $product_id)->gropuBy('do_id')->get();
+        foreach($dodetails as $ddt){
+            if($ddt->totaldoPCS  >  $ddt->totalrecPCS){
+                array_push($ddt->do_id,$ref_ids);
+            }
+        }
+
+        $dos = D_o::whereIn('id', $ref_ids)->pluck('reference_num', 'id')->toArray();
 
         $response = [];
 

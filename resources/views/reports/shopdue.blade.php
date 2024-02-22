@@ -34,7 +34,7 @@
                                         <label for="supplierName" class="float-end"><h6>{{__('Shop Name/OWner Name')}}</h6></label>
                                     </div>
                                     <div class="col-md-4 mt-4">
-                                        <select class="form-control form-select" name="shop_name" id="shop_name">
+                                        <select class="select2 form-control" name="shop_name" id="shop_name">
                                             <option value="">Select Party</option>
                                             @forelse($shop as $c)
                                                 <option value="{{$c->id}}" {{isset($_GET['shop_name'])&& $_GET['shop_name']==$c->id?'selected':''}}> {{ $c->shop_name}}</option>

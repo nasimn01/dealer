@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-4 py-1">
                                     <label for="groups">{{__('Group')}}</label>
-                                    <select name="group_id" class="choices form-select">
+                                    <select name="group_id" class="select2 form-select">
                                         <option value="">Select</option>
                                         @forelse ($groups as $cat)
                                             <option value="{{$cat->id}}" {{ request('group_id')==$cat->id?"selected":""}}>{{$cat->name}}</option>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-4 py-1">
                                     <label for="lcNo">{{__('Distributor')}}</label>
-                                    <select name="distributor_id" class="choices form-select">
+                                    <select name="distributor_id" class="select2 form-select">
                                         <option value="">Select</option>
                                         @forelse ($distributors as $d)
                                             <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>

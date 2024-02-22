@@ -447,7 +447,7 @@
         var row=`
             <tr>
                 <td colspan="3">
-                    <select class="choices form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
+                    <select class="select2 form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
                         <option value="">Select Product</option>
                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                         <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>

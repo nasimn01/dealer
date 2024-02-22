@@ -222,8 +222,8 @@
                                 @endif
                                 @if($sales->final_total != $sales->daily_total_taka)
                                 <tr class="text-center">
-                                    <td  colspan="2"><h6>{{__('Final Total')}}</h6></td>
-                                    <td><b>{{ $sales->final_total}}</b></td>
+                                    <td class="text-end" colspan="2"><h6>{{__('Final Total')}}</h6></td>
+                                    <td class="text-center"><b>{{ $sales->final_total}}</b></td>
                                 </tr>
                                 @endif
                             </table>

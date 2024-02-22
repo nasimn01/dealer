@@ -82,7 +82,7 @@
                                                 <label class="py-2" for="product">{{__('Product')}}<span class="text-danger">*</span></label>
                                                 @if($user)
                                                     {{--  <select class=" choices form-select" id="product_id" onchange="getBalance()">  --}}
-                                                    <select class="form-select" id="product_id" onchange="getBalance()">
+                                                    <select class="select2 form-select" id="product_id" onchange="getBalance()">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->where('distributor_id',$user->distributor_id)->get(); as $pro)
                                                         <option data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -203,7 +203,7 @@
                 dataType: "json",
                 data: { product_id:ProductId },
                 success: function(data) {
-                    //console.log(data);
+                    console.log(data);
                     //console.log(freeQty);
                     var freeCount = (data / freeRatio) * freeQty;
                     var freeQtyCount = Math.floor(qty * freeCount);
@@ -212,11 +212,13 @@
                     if (productName  && qty) {
                         let totalCtnTk=(dp*unitQty);
                         let total= (totalCtnTk * qty);
+                        let totalQtyPcs=(data*qty);
                         let newRow = `
                             <tr class="text-center product_detail_tr${counter}">
                                 <td>${counter + 1}</td>
                                 <td>${productName}
                                     <input type="hidden" name="product_id[]" value="${ProductId}">
+                                    <input type="hidden" name="qty_pcs[]" value="${totalQtyPcs}">
                                     <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#modal${counter}">Click</button>
                                     <div class="modal fade" id="modal${counter}" tabindex="-1" role="dialog" aria-labelledby="modal${counter}Title" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -244,7 +246,6 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <div id="productFormContainer">
-
                                                                                     <input type="hidden" name="product_id" value="${ProductId}">
                                                                                     <tr>
                                                                                         <td>Free Ratio</td>
