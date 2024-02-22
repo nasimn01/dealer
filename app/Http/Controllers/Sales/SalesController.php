@@ -32,7 +32,8 @@ class SalesController extends Controller
     }
     public function salesClosingList(Request $request)
     {
-        $sales = Sales::join('users', 'users.id', '=', 'sales.dsr_id')->where('sales.company_id', company())->select('sales.*', 'users.id', 'users.sr_id');
+        $sales = Sales::orderBy('id','DESC');
+        // $sales = Sales::join('users', 'users.id', '=', 'sales.dsr_id')->where('sales.company_id', company())->select('sales.*', 'users.id', 'users.sr_id');
         $userSr=User::where(company())->where('role_id',5)->get();
         if ($request->sr_id)
         $sales->where('users.sr_id',$request->sr_id);

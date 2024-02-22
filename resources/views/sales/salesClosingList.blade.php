@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card">
                     <div class="row pb-1">
-                        <div class="col-10">
+                        {{--  <div class="col-10">
                             <form action="" method="get">
                                 <div class="row">
                                     <div class="col-4">
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div>  --}}
                         <div class="col-2">
                             {{--  <a class="float-end" href="{{route(currentUser().'.sales.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>  --}}
                         </div>
