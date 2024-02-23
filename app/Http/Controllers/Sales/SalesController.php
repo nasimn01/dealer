@@ -308,7 +308,7 @@ class SalesController extends Controller
         return view('sales.salesClosing',compact('sales','shops','dsr','product'));
     }
     public function salesReceive(Request $request)
-    {  dd($request->all());
+    {  //dd($request->all());
         try{
             $tmsales=TemporarySales::where('id',$request->tem_sales_id)->first();
             $tmsales->status=1;
