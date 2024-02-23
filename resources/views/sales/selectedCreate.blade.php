@@ -92,7 +92,7 @@
                                         <tbody id="sales_repeat">
                                             <tr>
                                                 <td>
-                                                    <select class="select2 product_id" id="product_id" name="product_id[]">
+                                                    <select class="select2 product_id" id="product_id" onchange="productData(this);" name="product_id[]">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                                                         <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -153,7 +153,7 @@
     var row=`
     <tr>
         <td>
-            <select class="select2 product_id" id="product_id_${counter}" name="product_id[]">
+            <select class="select2 product_id" id="product_id_${counter}" name="product_id[]" onchange="productData(this);">
                 <option value="">Select Product</option>
                 @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                 <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
