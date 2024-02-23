@@ -225,6 +225,18 @@
                                     <td>{{ $sales->commission}}</td>
                                 </tr>
                                 @endif
+                                @if($sales->dsr_cash)
+                                <tr class="text-center">
+                                    <td  colspan="2"><h6>{{__('Dsr Cash Receive')}}</h6></td>
+                                    <td>{{ $sales->dsr_cash}}</td>
+                                </tr>
+                                @endif
+                                @if($sales->dsr_salary)
+                                <tr class="text-center">
+                                    <td  colspan="2"><h6>{{__('DSR Salary')}}</h6></td>
+                                    <td>{{ $sales->dsr_salary}}</td>
+                                </tr>
+                                @endif
                                 @if($sales->final_total != $sales->daily_total_taka)
                                 <tr class="text-center">
                                     <td class="text-end" colspan="2"><h6>{{__('Final Total')}}</h6></td>
