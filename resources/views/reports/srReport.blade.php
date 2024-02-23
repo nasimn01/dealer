@@ -58,23 +58,35 @@
                             <tbody>
                                 @forelse($sales as $p)
                                 <tr>
-                                    <th scope="row">{{ ++$loop->index }}</th>
+                                    <td>{{ ++$loop->index }}</td>
                                     <td> {{ $p->dsr?->name }} </td>
                                     <td>{{$p->sales_date}}</td>
                                     <td>
                                         @if($p->sales_details)
-                                            <table>
-                                                @foreach($p->sales_details as $key => $value)
+                                            <table class="table table-bordered mb-0 table-striped">
+                                                <tr>
+                                                    <td>Product</td>
+                                                    <td>Sales(PCS)</td>
+                                                    <td>PCS Price</td>
+                                                    <td>Subtotal</td>
+                                                </tr>
+                                                @foreach($p->sales_details as $detail)
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>{{ $detail->product?->product_name }}</td>
+                                                        <td>{{ $detail->total_sales_pcs}}</td>
+                                                        <td>@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
+                                                        <td>{{ $detail->subtotal_price }}</td>
                                                     </tr>
                                                 @endforeach
+                                                {{--  <tr class="text-center">
+                                                    <td class="text-end" colspan="9"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
+                                                    <td colspan="10">{{ $p->daily_total_taka }}</td>
+                                                </tr>  --}}
                                             </table>
                                         @endif
                                     </td>
-                                    <td>{{$p->final_total}}
-                                        <input type="hidden" value="{{$p->final_total}}" class="final_total">
+                                    <td style="vertical-align: bottom;">{{$p->daily_total_taka}}
+                                        <input type="hidden" value="{{$p->daily_total_taka}}" class="final_total">
                                     </td>
                                     {{--  <td>
                                         <a class="ms-2" href="{{route(currentUser().'.sales.printpage',encryptor('encrypt',$p->id))}}">
@@ -88,7 +100,7 @@
                                 </tr>
                                 @endforelse
                                 <tr>
-                                    <th colspan="3" class="text-center">Total</th>
+                                    <th colspan="4" class="text-end">Total</th>
                                     <th>
                                         <span class="sumFinalTotal"></span>
                                         {{--  <input type="text" value="" class="sumFinalTotal_f">  --}}
