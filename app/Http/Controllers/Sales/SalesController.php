@@ -578,7 +578,7 @@ class SalesController extends Controller
     { //dd($request->all());
         if($request->sales_date && $request->dsr_id || $request->shop_id){
             // $requestdDate = Carbon::createFromFormat('m/d/Y', $request->sales_date)->format('m/d/Y');
-            $sales = TemporarySales::orderBy('id', 'asc')
+            $sales = TemporarySales::where('status',0)->where(company())->orderBy('id', 'asc')
             ->where('sales_date',date('Y-m-d', strtotime($request->sales_date)))
             ->where(function ($query) use ($request) {
             $query->where('dsr_id', $request->dsr_id)
