@@ -29,6 +29,8 @@ return new class extends Migration
             $table->decimal('return_total_taka',14,2)->nullable();
             $table->decimal('expenses',14,2)->nullable();
             $table->decimal('commission',14,2)->nullable();
+            $table->decimal('dsr_cash',14,2)->nullable();
+            $table->decimal('dsr_salary',14,2)->nullable();
             $table->decimal('final_total',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();

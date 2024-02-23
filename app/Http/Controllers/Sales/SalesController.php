@@ -308,7 +308,7 @@ class SalesController extends Controller
         return view('sales.salesClosing',compact('sales','shops','dsr','product'));
     }
     public function salesReceive(Request $request)
-    {  //dd($request->all());
+    {  dd($request->all());
         try{
             $tmsales=TemporarySales::where('id',$request->tem_sales_id)->first();
             $tmsales->status=1;
@@ -324,6 +324,8 @@ class SalesController extends Controller
                 $sales->return_total_taka = $request->return_total_taka;
                 $sales->expenses = $request->expenses;
                 $sales->commission = $request->commission;
+                $sales->dsr_cash = $request->cash;
+                $sales->dsr_salary = $request->dsr_salary;
                 $sales->final_total = $request->final_total;
                 //$sales->total = $request->total;
                 $sales->status = 1;
@@ -508,6 +510,7 @@ class SalesController extends Controller
     {
         // $sales = Sales::findOrFail($id);
         $sales = Sales::findOrFail(encryptor('decrypt',$id));
+        //return $sales;
         // $shops=Shop::all();
         // $dsr=User::where('role_id',4)->get();
         // $product=Product::where(company())->get();

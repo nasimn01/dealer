@@ -32,6 +32,11 @@
                             </tr>
                             @endif
                             <tr>
+                                <td style="width: 15%"><b>SR</b></td>
+                                <td style="width: 2%">:</td>
+                                <td style="width: 83%">{{ $sales->sr?->name }}</td>
+                            </tr>
+                            <tr>
                                 <td style="width: 15%"><b>Sales Date</b></td>
                                 <td style="width: 2%">:</td>
                                 <td style="width: 83%">{{ $sales->sales_date }}</td>

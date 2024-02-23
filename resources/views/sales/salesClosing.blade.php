@@ -128,7 +128,7 @@
 
                                                             <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
                                                             <input class="form-control total_damage_pcs" type="hidden" name="total_damage_pcs[]" value="">
-                                                            <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
+                                                            <input class="form-control total_sales_pcs" type="text" name="total_sales_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
                                                         </td>
                                                         {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
                                                         <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>
@@ -485,12 +485,13 @@ function removeRow(e){
     if (confirm("Are you sure you want to remove this row?")) {
     $(e).closest('tr').remove();
     return_total_calculate();
+    FinalTotal();
     }
 }
 function return_total_calculate() {
     var subtotal = 0;
     $('.return_subtotal_price').each(function() {
-        subtotal += parseFloat($(this).val());
+        subtotal += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
     });
     // $('.total').text(parseFloat(subtotal).toFixed(2));
     $('.return_total_taka').val(parseFloat(subtotal).toFixed(2));
@@ -499,7 +500,7 @@ function return_total_calculate() {
 function primarySubTotal() {
     var psubtotal = 0;
     $('.subtotal_price').each(function() {
-        psubtotal += parseFloat($(this).val());
+        psubtotal += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
     });
     $('.ptotal_taka').val(parseFloat(psubtotal).toFixed(2));
 
@@ -507,15 +508,17 @@ function primarySubTotal() {
 function totalOldDue() {
     var tolddue = 0;
     $('.old_due_tk').each(function() {
-        tolddue += parseFloat($(this).val());
+        tolddue += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
+        //console.log(parseFloat($(this).val()))
     });
+
     $('.o_due_tk').val(parseFloat(tolddue).toFixed(2));
 
 }
 function totalNewDue() {
     var toNwdue = 0;
     $('.new_due_tk').each(function() {
-        toNwdue += parseFloat($(this).val());
+        toNwdue += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
     });
     $('.n_due_tk').val(parseFloat(toNwdue).toFixed(2));
 
@@ -523,7 +526,7 @@ function totalNewDue() {
 function totalNewReceive() {
     var toNwRec = 0;
     $('.new_receive_tk').each(function() {
-        toNwRec += parseFloat($(this).val());
+        toNwRec += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
     });
     $('.n_receive_tk').val(parseFloat(toNwRec).toFixed(2));
 
@@ -531,7 +534,7 @@ function totalNewReceive() {
 function totalNewCheck() {
     var toNwCk = 0;
     $('.check_shop_tk').each(function() {
-        toNwCk += parseFloat($(this).val());
+        toNwCk += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
     });
     $('.c_shop_tk').val(parseFloat(toNwCk).toFixed(2));
 
@@ -563,7 +566,7 @@ function FinalTotal(){
 
     var total= ((todayTotal+oldDue+dsrCashTk)-(returnTotal+newDue+expenses+comission+newCheck+dsrSalary));
     //var total= (todayTotal-(returnTotal+expenses+comission));
-    $('.final_total_tk').val(total.toFixed(2));
+    $('.final_total_tk').val(parseFloat(total).toFixed(2));
 }
 
 function oldDue(){
@@ -603,6 +606,7 @@ function removeOld(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
         totalOldDue();
+        FinalTotal();
     }
 }
 function newDue(){
@@ -647,6 +651,7 @@ function removeNewDue(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
         totalNewDue();
+        FinalTotal();
     }
 }
 
@@ -685,6 +690,7 @@ function removeNewRec(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
         totalNewReceive();
+        FinalTotal();
     }
 }
 function newCheck(){
@@ -727,6 +733,7 @@ function removeNewCheck(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('.row').remove();
         totalNewCheck();
+        FinalTotal();
     }
 }
 function getCtnQty(e){
