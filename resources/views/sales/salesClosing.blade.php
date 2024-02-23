@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route(currentUser().'.sales.receive')}}">
+                        <form method="post" action="{{route(currentUser().'.sales.receive')}}" onsubmit="return confirm('are you sure Can not receive later?')">
                             @csrf
                             <input type="hidden" value="{{ $sales?->id }}" name="tem_sales_id">
                             <div class="row p-2 mt-4">

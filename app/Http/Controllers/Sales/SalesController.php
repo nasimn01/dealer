@@ -26,7 +26,7 @@ class SalesController extends Controller
 
     public function index(Request $request)
     {
-        $sales=TemporarySales::where(company())->paginate(10);
+        $sales=TemporarySales::where('status',0)->where(company())->paginate(10);
         $userSr=User::where(company())->where('role_id',5)->get();
         return view('sales.index',compact('sales','userSr'));
     }
