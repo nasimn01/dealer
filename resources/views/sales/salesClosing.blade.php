@@ -128,7 +128,7 @@
 
                                                             <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
                                                             <input class="form-control total_damage_pcs" type="hidden" name="total_damage_pcs[]" value="">
-                                                            <input class="form-control total_sales_pcs" type="text" name="total_sales_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
+                                                            <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
                                                         </td>
                                                         {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="{{ old('ctn_price',$salesdetails->ctn_price) }}" placeholder="Ctn Price"></td>  --}}
                                                         <td><input readonly class="form-control subtotal_price" type="text" name="subtotal_price[]" value="{{ old('subtotal_price',$salesdetails->subtotal_price) }}" placeholder="Sub total"></td>

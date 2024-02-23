@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>SR</b></label>
-                                    <select name="sr_id" class="choices form-select">
+                                    <select name="sr_id" class="select2 form-select">
                                         <option value="">Select</option>
                                         @forelse ($userSr as $p)
                                             <option value="{{$p->id}}" {{ request('sr_id')==$p->id?"selected":""}}>{{$p->name}}</option>
@@ -147,12 +147,13 @@
 @endsection
 @push("scripts")
 <script>
+    let counter = 0;
     function addRow(){
 
     var row=`
     <tr>
         <td>
-            <select class="select2 product_id" id="product_id" name="product_id[]">
+            <select class="select2 product_id" id="product_id_${counter}" name="product_id[]">
                 <option value="">Select Product</option>
                 @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                 <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -181,6 +182,8 @@
         </td>
     </tr>`;
     $('#sales_repeat').append(row);
+    $(`#product_id_${counter}`).select2();
+    counter++;
 }
 
 function removeRow(e){
