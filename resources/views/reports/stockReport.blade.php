@@ -99,9 +99,9 @@
                                         <td>{{$s->group_name}}</td>
                                         <td>{{$s->supplier_name}}</td>
                                         <td>{{$s->product_name}}</td>
-                                        <td>
-                                            {{$s->insprice - $s->outsprice}}
-                                            <input type="hidden" class="subtotal_dp_price" value="{{$s->insprice - $s->outsprice}}">
+                                        <td>{{ ($s->ins - $s->outs )*($s->product_dp) }}
+
+                                            <input type="hidden" class="subtotal_dp_price" value="{{($s->ins - $s->outs )*($s->product_dp)}}">
                                         </td>
                                         <td>{{ $s->ins - $s->outs }}</td>
                                         {{--  <td>{{$s->qty}}</td>  --}}

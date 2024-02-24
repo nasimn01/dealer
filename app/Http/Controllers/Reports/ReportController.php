@@ -31,10 +31,10 @@ class ReportController extends Controller
         ->join('groups', 'groups.id', '=', 'products.group_id')
         ->join('suppliers', 'suppliers.id', '=', 'products.distributor_id')
         ->select(
-            'products.product_name','groups.name as group_name','suppliers.name as supplier_name',
+            'products.product_name','products.dp_price as product_dp','groups.name as group_name','suppliers.name as supplier_name',
             'stocks.*',
-            DB::raw('SUM(CASE WHEN stocks.status = 0 THEN stocks.totalquantity_pcs ELSE 0 END) as outs, SUM(CASE WHEN stocks.status = 0 THEN stocks.totalquantity_pcs*stocks.dp_pcs ELSE 0 END) as outsprice'),
-            DB::raw('SUM(CASE WHEN stocks.status = 1 THEN stocks.totalquantity_pcs ELSE 0 END) as ins, SUM(CASE WHEN stocks.status = 1 THEN stocks.totalquantity_pcs*stocks.dp_pcs ELSE 0 END) as insprice')
+            DB::raw('SUM(CASE WHEN stocks.status = 0 THEN stocks.totalquantity_pcs ELSE 0 END) as outs'),
+            DB::raw('SUM(CASE WHEN stocks.status = 1 THEN stocks.totalquantity_pcs ELSE 0 END) as ins')
         );
 
         if ($request->fdate) {
@@ -49,6 +49,7 @@ class ReportController extends Controller
         $stock = $stockQuery
             ->groupBy('products.group_id','products.distributor_id','products.product_name')
             ->get();
+           // return $stock;
         return view('reports.stockReport', compact('stock','groups','products','distributors'));
 
         // $stock= DB::select("SELECT products.product_name,stocks.*,sum(stocks.totalquantity_pcs) as qty FROM `stocks` join products on products.id=stocks.product_id $where GROUP BY stocks.product_id");
