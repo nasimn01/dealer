@@ -86,7 +86,6 @@ class ReportController extends Controller
 
     public function undeliverdProduct(Request $request)
     {
-        $dodetails = false;
         if ($request->reference_num) {
             $do_reference = D_o::where('reference_num',$request->reference_num)->pluck('id');
             $dodetails= D_o_detail::whereIn('do_id',$do_reference)->groupBy('product_id')->get();

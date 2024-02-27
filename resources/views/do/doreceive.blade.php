@@ -172,7 +172,7 @@ function RemoveRow(e) {
             dataType: "json",
             data: { product_id: product_id },
             success: function (dodata) {
-                //console.log(dodata);
+                console.log(dodata);
                 let selectElement = $(e).closest('tr').find('.referance_number');
                 let dodetailIdInput = $(e).closest('tr').find('.dodetail_id');
 

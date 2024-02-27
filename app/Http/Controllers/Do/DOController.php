@@ -174,17 +174,18 @@ class DOController extends Controller
     {
         $product_id = $request->product_id;
         $ref_ids =array();
-        $dodetails = D_o_detail::select( DB::raw('SUM(d_o_details.qty_pcs) as totaldoPCS'),DB::raw('SUM(d_o_details.receive_qty) as totalrecPCS'),'do_id')->where('product_id', $product_id)->gropuBy('do_id')->get();
+        $dodetails = D_o_detail::select( DB::raw('SUM(d_o_details.qty_pcs) as totaldoPCS'),DB::raw('SUM(d_o_details.receive_qty) as totalrecPCS'),'do_id')->where('product_id', $product_id)->groupBy('do_id')->get();
         foreach($dodetails as $ddt){
             if($ddt->totaldoPCS  >  $ddt->totalrecPCS){
-                array_push($ddt->do_id,$ref_ids);
+                //array_push($ddt->do_id,$ref_ids);
+                array_push($ref_ids, $ddt->do_id);
             }
         }
 
         $dos = D_o::whereIn('id', $ref_ids)->pluck('reference_num', 'id')->toArray();
 
         $response = [];
-
+        $dodetails = D_o_detail::where('product_id', $product_id)->pluck('do_id', 'id');
         foreach ($dos as $do_id => $reference_num) {
             $dodetail_id = $dodetails->search($do_id);
             if ($dodetail_id !== false) {

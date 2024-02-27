@@ -52,9 +52,9 @@
                                     <td>{{(($p->qty_pcs-$p->receive_qty)*($p->dp_pcs))+(($p->free-$p->receive_free_qty)*($p->dp_pcs))}}</td>
                                 </tr>
                             @empty
-                            <tr>
-                                <th colspan="7" class="text-center">No Data Found</th>
-                            </tr>
+                                <tr>
+                                    <th colspan="7" class="text-center">No Data Found</th>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>
