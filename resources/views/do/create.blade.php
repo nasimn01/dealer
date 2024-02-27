@@ -4,7 +4,7 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
-@if ($errors->any())
+{{--  @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -12,7 +12,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif  --}}
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -75,6 +75,9 @@
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Reference Number')}}<span class="text-danger">*</span></label>
                                                 <input required type="text" class="form-control" name="reference_num" placeholder="reference Number">
+                                                @if($errors->has('reference_num'))
+                                                <span class="text-danger"> {{ $errors->first('reference_num') }}</span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">

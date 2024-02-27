@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Settings\Unit;
+use App\Http\Requests\Do\AddRequest;
 use App\Models\User;
 use Exception;
 use DB;
