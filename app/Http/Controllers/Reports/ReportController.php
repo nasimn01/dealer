@@ -86,12 +86,12 @@ class ReportController extends Controller
 
     public function undeliverdProduct(Request $request)
     {
-        $do_reference = false;
+        $dodetails = false;
         if ($request->reference_num) {
             $do_reference = D_o::where('reference_num',$request->reference_num)->pluck('id');
             $dodetails= D_o_detail::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
-            $histotry = DoReceiveHistory::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
-            return $histotry;
+            // $histotry = DoReceiveHistory::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
+             //return $dodetails;
             // $commonProductIds = array_intersect($dodetails->pluck('product_id')->toArray(), $history->pluck('product_id')->toArray());
 
             // $do_reference = DoReceiveHistory::where(function($query) use ($histotry,$dodetails){
@@ -106,7 +106,9 @@ class ReportController extends Controller
             //         });
             //     }
             // })->get();
+        }else {
+            $dodetails = collect();
         }
-        return view('do.undeliverd-list', compact('do_reference'));
+        return view('do.undeliverd-list', compact('dodetails'));
     }
 }

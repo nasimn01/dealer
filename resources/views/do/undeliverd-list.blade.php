@@ -26,46 +26,44 @@
                     <div class="col-2">
                     </div>
                 </div>
-                    <!-- table bordered -->
-                    <div class="table-responsive">
-                        <table class="table table-bordered mb-0 table-striped">
-                            {{--  <a class="float-end" href="{{route(currentUser().'.docontroll.create')}}" style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>  --}}
-                            <thead>
+                <!-- table bordered -->
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0 table-striped">
+                        {{--  <a class="float-end" href="{{route(currentUser().'.docontroll.create')}}" style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>  --}}
+                        <thead>
+                            <tr>
+                                <th scope="col">{{__('#SL')}}</th>
+                                <th scope="col">{{__('Product Name')}}</th>
+                                {{--  <th scope="col">{{__('Product Qty(CTN)')}}</th>  --}}
+                                <th scope="col">{{__('Product Qty(PCS)')}}</th>
+                                <th scope="col">{{__('Product Qty(Free)')}}</th>
+                                <th scope="col">{{__('DP')}}</th>
+                                <th scope="col">{{__('SubTotal')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($dodetails as $p)
                                 <tr>
-                                    <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('Product Name')}}</th>
-                                    <th scope="col">{{__('Product Qty(CTN)')}}</th>
-                                    <th scope="col">{{__('Product Qty(PCS)')}}</th>
-                                    <th scope="col">{{__('Product Qty(Free)')}}</th>
-                                    <th scope="col">{{__('DP')}}</th>
-                                    <th scope="col">{{__('SubTotal')}}</th>
+                                    <th scope="row">{{ ++$loop->index }}</th>
+                                    <td>{{$p->product?->product_name}}</td>
+                                    <td>{{$p->qty_pcs-$p->receive_qty}}</td>
+                                    <td>{{$p->free-$p->receive_free_qty}}</td>
+                                    <td>{{$p->dp_pcs}}</td>
+                                    <td>{{(($p->qty_pcs-$p->receive_qty)*($p->dp_pcs))+(($p->free-$p->receive_free_qty)*($p->dp_pcs))}}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {{--  @forelse($dodetails as $p)
-                                <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
-                                    <td>{{$p->chalan_no}}</td>
-                                    <td>{{$p->stock_date}}</td>
-                                    <td class="white-space-nowrap">
-                                        <a href="{{route(currentUser().'.showDoReceive',$p->chalan_no)}}">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <th colspan="7" class="text-center">No Data Found</th>
-                                </tr>
-                                @endforelse  --}}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="my-3">
-                        {{--  {!! $data->links()!!}  --}}
-                    </div>
+                            @empty
+                            <tr>
+                                <th colspan="7" class="text-center">No Data Found</th>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="my-3">
+                    {{--  {!! $data->links()!!}  --}}
                 </div>
             </div>
+        </div>
     </div>
 </section>
 @endsection
