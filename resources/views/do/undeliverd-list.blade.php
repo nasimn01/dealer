@@ -43,14 +43,16 @@
                         </thead>
                         <tbody>
                             @forelse($dodetails as $p)
-                                <tr>
-                                    <th scope="row">{{ ++$loop->index }}</th>
-                                    <td>{{$p->product?->product_name}}</td>
-                                    <td>{{$p->qty_pcs-$p->receive_qty}}</td>
-                                    <td>{{$p->free-$p->receive_free_qty}}</td>
-                                    <td>{{$p->dp_pcs}}</td>
-                                    <td>{{(($p->qty_pcs-$p->receive_qty)*($p->dp_pcs))+(($p->free-$p->receive_free_qty)*($p->dp_pcs))}}</td>
-                                </tr>
+                            @if($p->qty_pcs>$p->receive_qty || $p->free>$p->receive_free_qty)
+                            <tr>
+                                <th scope="row">{{ ++$loop->index }}</th>
+                                <td>{{$p->product?->product_name}}</td>
+                                <td>{{$p->qty_pcs-$p->receive_qty}}</td>
+                                <td>{{$p->free-$p->receive_free_qty}}</td>
+                                <td>{{$p->dp_pcs}}</td>
+                                <td>{{(($p->qty_pcs-$p->receive_qty)*($p->dp_pcs))+(($p->free-$p->receive_free_qty)*($p->dp_pcs))}}</td>
+                            </tr>
+                            @endif
                             @empty
                                 <tr>
                                     <th colspan="7" class="text-center">No Data Found</th>
