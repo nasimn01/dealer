@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product\Product;
 use Illuminate\Http\Request;
 use App\Models\Product\Group;
+use App\Models\Settings\Supplier;
 use App\Models\Product\Category;
 use App\Models\Settings\Unit_style;
 use App\Models\Settings\Unit;
@@ -23,10 +24,19 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product=Product::where(company())->paginate(25);
-        return view('product.product.index',compact('product'));
+        $groups = Group::where(company())->select('id','name')->get();
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        $product=Product::orderBy('id','DESC');
+
+        if ($request->group_id)
+        $product->where('products.group_id',$request->group_id);
+        if ($request->distributor_id)
+        $product->where('products.distributor_id',$request->distributor_id);
+
+        $product = $product->paginate(25);
+        return view('product.product.index',compact('product','groups','distributors'));
     }
 
     /**
