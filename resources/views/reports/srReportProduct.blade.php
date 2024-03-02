@@ -15,11 +15,11 @@
                                 <div class="row">
                                     <div class="col-4 py-1">
                                         <label for="fdate">{{__('From Date')}}</label>
-                                        <input type="date" id="fdate" class="form-control" value="{{ old('fdate')}}" name="fdate">
+                                        <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
                                     </div>
                                     <div class="col-4 py-1">
                                         <label for="fdate">{{__('To Date')}}</label>
-                                        <input type="date" id="tdate" class="form-control" value="{{ old('tdate')}}" name="tdate">
+                                        <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                                     </div>
                                     <div class="col-4 py-1">
                                         <label for="sr">{{__('SR')}}</label>
