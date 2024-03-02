@@ -4,6 +4,8 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
+
+
   <!-- // Basic multiple Column Form section start -->
     <section id="multiple-column-form">
         <div class="row match-height">
@@ -104,7 +106,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="tp_price">{{__('TP Price(PCS)')}}</label>
-                                            <input type="number" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
+                                            <input type="number" placeholder="Tp Price Pcs" min="0" step="0.01" onkeyup="tpFree(this)" class="form-control tp_price" value="{{ old('tp_price')}}" name="tp_price">
 
                                         </div>
                                     </div>

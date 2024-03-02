@@ -21,14 +21,12 @@
                                         <input type="date" id="fdate" class="form-control" value="{{isset($_GET['fdate'])?$_GET['fdate']:''}}" name="fdate">
                                     </div>
 
-
                                     <div class="col-md-2 mt-2">
                                         <label for="tdate" class="float-end"><h6>{{__('To Date')}}</h6></label>
                                     </div>
                                     <div class="col-md-4">
                                         <input type="date" id="tdate" class="form-control" value="{{isset($_GET['tdate'])?$_GET['tdate']:''}}" name="tdate">
                                     </div>  --}}
-
 
                                     <div class="col-md-2 mt-4">
                                         <label for="supplierName" class="float-end"><h6>{{__('Shop Name/OWner Name')}}</h6></label>

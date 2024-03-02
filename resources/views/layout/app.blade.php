@@ -27,7 +27,15 @@
   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
   crossorigin="anonymous"></script>
 </head>
-
+<style>
+    input,
+    select {
+        background-color: rgba(240, 233, 233, 0.76) !important;
+    }
+    ::placeholder{
+        color:black !important;
+    }
+</style>
 <body>
     <div id="app">
     <div id="sidebar" class="active">
