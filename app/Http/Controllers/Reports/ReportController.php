@@ -66,6 +66,17 @@ class ReportController extends Controller
         $userSr=User::where(company())->where('role_id',5)->get();
         return view('reports.srReport',compact('sales','userSr'));
     }
+    public function srreportProduct(Request $request)
+    {
+        $sales = Sales::orderBy('id','DESC')->where('sales.sr_id',$request->sr_id);
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
+        }
+        $sales = $sales->get();
+        $userSr=User::where(company())->where('role_id',5)->get();
+        return view('reports.srReportProduct',compact('sales','userSr'));
+    }
 
     public function ShopDue(Request $request)
     {

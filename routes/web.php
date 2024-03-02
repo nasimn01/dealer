@@ -155,6 +155,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('/shop-due-report',[report::class,'ShopDue'])->name('owner.shopdue');
         Route::get('undeliverd-report', [report::class,'undeliverdProduct'])->name('owner.undeliverd');
         Route::get('/sr-report',[report::class,'SRreport'])->name('owner.srreport');
+        Route::get('/sr-report-product',[report::class,'srreportProduct'])->name('owner.srreportProduct');
 
 
         //Accounts
