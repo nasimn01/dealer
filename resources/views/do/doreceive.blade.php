@@ -29,7 +29,7 @@
 
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Chalan NO<span class="text-danger">*</span></b></label>
-                                    <input type="text" id="" required class="form-control"  name="chalan_no" placeholder="Chalan NO">
+                                    <input onkeyup="removeCharacter(this)" type="text" id="" required class="form-control"  name="chalan_no" placeholder="Chalan NO">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -270,7 +270,10 @@ function RemoveRow(e) {
         console.log(finalTotal);
         $('.total_dp').text(parseFloat(finalTotal).toFixed(2));
     }
-
+    function removeCharacter(e) {
+        newString = e.value.replace(/[^a-zA-Z0-9]/g, '');
+        e.value= newString;
+    }
 </script>
 
 @endpush

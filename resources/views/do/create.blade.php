@@ -74,7 +74,7 @@
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="py-2" for="cat">{{__('Reference Number')}}<span class="text-danger">*</span></label>
-                                                <input required type="text" class="form-control" name="reference_num" placeholder="reference Number">
+                                                <input required onkeyup="removeCharacter(this)" type="text" class="form-control" name="reference_num" placeholder="reference Number">
                                                 @if($errors->has('reference_num'))
                                                 <span class="text-danger"> {{ $errors->first('reference_num') }}</span>
                                                 @endif
@@ -409,6 +409,11 @@
                 console.error("Error fetching data from the server.");
             },
         });
+    }
+
+    function removeCharacter(e) {
+        newString = e.value.replace(/[^a-zA-Z0-9]/g, '');
+        e.value= newString;
     }
 </script>
 <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
