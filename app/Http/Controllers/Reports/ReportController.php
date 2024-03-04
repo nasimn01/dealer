@@ -73,6 +73,9 @@ class ReportController extends Controller
             $tdate = $request->tdate ?: $request->fdate;
             $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
         }
+        // if ($request->group_id)
+        //     $sales->where('products.group_id',$request->group_id);
+
         $sales = $sales->get();
         $userSr=User::where(company())->where('role_id',5)->get();
         return view('reports.srReportProduct',compact('sales','userSr'));
