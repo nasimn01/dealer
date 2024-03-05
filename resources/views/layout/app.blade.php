@@ -33,7 +33,7 @@
         background-color: rgba(240, 233, 233, 0.76) !important;
     }
     ::placeholder{
-        color:black !important;
+        color:rgb(122, 117, 117) !important;
     }
 </style>
 <body>

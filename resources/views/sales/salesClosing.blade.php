@@ -141,7 +141,7 @@
                                                 <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
                                                 <td class="text-end" colspan="9">
                                                     <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="daily_total_taka">
-                                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                    <span onClick='previousProduct();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -253,7 +253,7 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                          <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
+                                          <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -281,7 +281,7 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                          <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
+                                          <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -341,7 +341,7 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                          <select class="form-select check_shop_id" name="check_shop_id[]">
+                                          <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach (\App\Models\Settings\Shop::all(); as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -441,13 +441,13 @@
 @push("scripts")
 <script>
     FinalTotal();
-    function addRow(){
+    function previousProduct(){
         var tfootSection = document.getElementById('tfootSection');
         tfootSection.style.display = 'table-row-group';
-        var row=`
+        var previousProduct=`
             <tr>
                 <td colspan="3">
-                    <select class="select2 form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
+                    <select class="form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
                         <option value="">Select Product</option>
                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                         <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -475,10 +475,11 @@
                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                    {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+                    {{--  <span onClick='previousProduct();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
                 </td>
             </tr>`;
-            $('#sales_repeat').append(row);
+            $('#sales_repeat').append(previousProduct);
+            $('.select2').select2();
         }
 
 function removeRow(e){
@@ -578,7 +579,7 @@ function oldDue(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
+            <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -601,6 +602,7 @@ function oldDue(){
     `;
 
     $('.olddue').append(oldDue);
+    $('.select2').select2();
 }
 function removeOld(e){
     if (confirm("Are you sure you want to remove this row?")) {
@@ -618,7 +620,7 @@ function newDue(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
+            <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -646,6 +648,7 @@ function newDue(){
     `;
 
     $('.newdue').append(newDue);
+    $('.select2').select2();
 }
 function removeNewDue(e){
     if (confirm("Are you sure you want to remove this row?")) {
@@ -702,7 +705,7 @@ function newCheck(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select check_shop_id" name="check_shop_id[]">
+            <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                 <option value="">Select</option>
                 @foreach (\App\Models\Settings\Shop::all(); as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
@@ -728,6 +731,7 @@ function newCheck(){
     </div>`;
 
     $('.check_no').append(newCheck);
+    $('.select2').select2();
 }
 function removeNewCheck(e){
     if (confirm("Are you sure you want to remove this row?")) {
