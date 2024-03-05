@@ -260,10 +260,9 @@
                                               @endforeach
                                           </select>
                                       </div>
-
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(this);FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control o_due_tk" value="0">
                                           </div>
                                       </div>
@@ -506,15 +505,14 @@ function primarySubTotal() {
     $('.ptotal_taka').val(parseFloat(psubtotal).toFixed(2));
 
 }
-function totalOldDue() {
+function totalOldDue(e) {
     var tolddue = 0;
     $('.old_due_tk').each(function() {
         tolddue += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
-        //console.log(parseFloat($(this).val()))
+        console.log(parseFloat($(this).val()))
     });
 
-    $('.o_due_tk').val(parseFloat(tolddue).toFixed(2));
-
+    $('.old_due_tk').val(parseFloat(tolddue).toFixed(2));
 }
 function totalNewDue() {
     var toNwdue = 0;
@@ -589,7 +587,7 @@ function oldDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue(this);FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -600,7 +598,6 @@ function oldDue(){
         </div>
     </div>
     `;
-
     $('.olddue').append(oldDue);
     $('.select2').select2();
 }
@@ -627,7 +624,6 @@ function newDue(){
                 @endforeach
             </select>
         </div>
-
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
                 <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
@@ -646,7 +642,6 @@ function newDue(){
         </div>
     </div>
     `;
-
     $('.newdue').append(newDue);
     $('.select2').select2();
 }
@@ -674,7 +669,6 @@ function newReceive(){
                 @endforeach
             </select>
         </div>
-
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
                 <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive();FinalTotal();" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
@@ -729,7 +723,6 @@ function newCheck(){
             </div>
         </div>
     </div>`;
-
     $('.check_no').append(newCheck);
     $('.select2').select2();
 }
