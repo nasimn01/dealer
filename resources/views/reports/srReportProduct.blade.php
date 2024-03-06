@@ -61,50 +61,70 @@
                                     <th rowspan="2" scope="col">{{__('#SL')}}</th>
                                     <th rowspan="2" scope="col">{{__('DSR Name')}}</th>
                                     <th rowspan="2" scope="col">{{__('Sales Date')}}</th>
-                                    <th colspan="4"  class="text-center">{{__('Product')}}</th>
-                                    {{--  <th rowspan="2" scope="col">{{__('Total')}}</th>  --}}
+                                    <th colspan="3"  class="text-center">{{__('Product')}}</th>
+                                    {{--  <th scope="col">{{__('Total')}}</th>  --}}
                                 </tr>
                                 <tr>
-                                    <td>Product</td>
+                                    {{--  <td>Product</td>  --}}
                                     <td>Sales(PCS)</td>
                                     <td>PCS Price</td>
-                                    <td>Subtotal</td>
+                                    <td class="text-end">Subtotal</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($sales as $p)
+                                @php $hasSalesQty = false; @endphp
+
+                                @foreach($p->sales_details as $de)
+                                    @if($de->total_sales_pcs > 0)
+                                        @php $hasSalesQty = true;  @endphp
+                                    @elseif($de->total_sales_pcs <= 0)
+                                        @php $hasSalesQty = false; @endphp
+                                    @endif
+                                @endforeach
+                                @if($hasSalesQty)
                                 <tr>
                                     <td>{{ ++$loop->index }}</td>
                                     <td> {{ $p->dsr?->name }} </td>
                                     <td>{{$p->sales_date}}</td>
+                                    <td colspan="3">
                                         @if($p->sales_details)
+                                            <table class="table table-bordered mb-0 table-striped">
                                                 @foreach($p->sales_details as $detail)
                                                     @if(request('product_id'))
                                                         @if(request('product_id')==$detail->product_id)
-                                                            <td>{{ $detail->product?->product_name }}</td>
+                                                        {{--  @if($detail->total_sales_pcs>0)  --}}
+                                                        <tr>
+                                                            {{--  <td>{{ $detail->product?->product_name }}</td>  --}}
                                                             <td>{{ $detail->total_sales_pcs}}</td>
                                                             <td>@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
-                                                            <td>{{ $detail->subtotal_price }}</td>
+                                                            <td class="text-end">{{ $detail->subtotal_price }}
+                                                                <input type="hidden" class="final_total" value="{{ $detail->subtotal_price }}">
+                                                            </td>
+                                                        </tr>
+                                                        {{--  @endif  --}}
                                                         @endif
                                                     @endif
                                                 @endforeach
+                                            </table>
                                         @endif
-                                    {{--  <td style="vertical-align: bottom;">{{$p->daily_total_taka}}
-                                        <input type="hidden" value="{{$p->daily_total_taka}}" class="final_total">
-                                    </td>  --}}
+                                    </td>
                                 </tr>
+                                @endif
                                 @empty
                                 <tr>
-                                    <th colspan="7" class="text-center">No Data Found</th>
+                                    <th colspan="4" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
+                            </tbody>
+                            <tfoot>
                                 <tr>
-                                    <th colspan="6" class="text-end">Total</th>
-                                    <th>
+                                    <th colspan="5" class="text-end">Total</th>
+                                    <th class="text-end">
                                         <span class="sumFinalTotal"></span>
                                     </th>
                                 </tr>
-                            </tbody>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="my-3">
