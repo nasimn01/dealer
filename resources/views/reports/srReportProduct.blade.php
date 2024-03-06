@@ -68,7 +68,7 @@
                                     {{--  <td>Product</td>  --}}
                                     <td>Sales(PCS)</td>
                                     <td>PCS Price</td>
-                                    <td class="text-end">Subtotal</td>
+                                    <td class="text-center">Subtotal</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,16 +89,16 @@
                                     <td>{{$p->sales_date}}</td>
                                     <td colspan="3">
                                         @if($p->sales_details)
-                                            <table class="table table-bordered mb-0 table-striped">
+                                            <table class="table mb-0 table-striped">
                                                 @foreach($p->sales_details as $detail)
                                                     @if(request('product_id'))
                                                         @if(request('product_id')==$detail->product_id)
                                                         {{--  @if($detail->total_sales_pcs>0)  --}}
                                                         <tr>
                                                             {{--  <td>{{ $detail->product?->product_name }}</td>  --}}
-                                                            <td>{{ $detail->total_sales_pcs}}</td>
-                                                            <td>@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
-                                                            <td class="text-end">{{ $detail->subtotal_price }}
+                                                            <td width="35%">{{ $detail->total_sales_pcs}}</td>
+                                                            <td  width="32%">@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
+                                                            <td  width="33%" class="text-center">{{ $detail->subtotal_price }}
                                                                 <input type="hidden" class="final_total" value="{{ $detail->subtotal_price }}">
                                                             </td>
                                                         </tr>
@@ -120,7 +120,7 @@
                             <tfoot>
                                 <tr>
                                     <th colspan="5" class="text-end">Total</th>
-                                    <th class="text-end">
+                                    <th class="text-center">
                                         <span class="sumFinalTotal"></span>
                                     </th>
                                 </tr>
