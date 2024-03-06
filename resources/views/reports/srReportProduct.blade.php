@@ -13,20 +13,31 @@
                         <div class="col-10">
                             <form action="" method="get">
                                 <div class="row">
-                                    <div class="col-4 py-1">
+                                    <div class="col-3 py-1">
                                         <label for="fdate">{{__('From Date')}}</label>
                                         <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
                                     </div>
-                                    <div class="col-4 py-1">
+                                    <div class="col-3 py-1">
                                         <label for="fdate">{{__('To Date')}}</label>
                                         <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                                     </div>
-                                    <div class="col-4 py-1">
+                                    <div class="col-3 py-1">
                                         <label for="sr">{{__('SR')}}</label>
                                         <select name="sr_id" class="select2 form-select">
                                             <option value="">Select</option>
                                             @forelse ($userSr as $p)
                                                 <option value="{{$p->id}}" {{ request('sr_id')==$p->id?"selected":""}}>{{$p->name}}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                    <div class="col-3 py-1">
+                                        <label for="Product">{{__('Product')}}</label>
+                                        <select name="product_id" class="select2 form-select">
+                                            <option value="">Select</option>
+                                            @forelse ($products as $p)
+                                                <option value="{{$p->id}}" {{ request('product_id')==$p->id?"selected":""}}>{{$p->product_name}}</option>
                                             @empty
                                                 <option value="">No Data Found</option>
                                             @endforelse
@@ -46,55 +57,53 @@
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0 table-striped">
                             <thead>
-                                {{--  <tr>
-                                    <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('DSR Name')}}</th>
-                                    <th scope="col">{{__('Sales Date')}}</th>
-                                    <th scope="col">{{__('Product')}}</th>
-                                    <th scope="col">{{__('Total')}}</th>
-                                </tr>  --}}
+                                <tr>
+                                    <th rowspan="2" scope="col">{{__('#SL')}}</th>
+                                    <th rowspan="2" scope="col">{{__('DSR Name')}}</th>
+                                    <th rowspan="2" scope="col">{{__('Sales Date')}}</th>
+                                    <th colspan="4"  class="text-center">{{__('Product')}}</th>
+                                    {{--  <th rowspan="2" scope="col">{{__('Total')}}</th>  --}}
+                                </tr>
+                                <tr>
+                                    <td>Product</td>
+                                    <td>Sales(PCS)</td>
+                                    <td>PCS Price</td>
+                                    <td>Subtotal</td>
+                                </tr>
                             </thead>
                             <tbody>
-                                {{--  @forelse($sales as $p)
+                                @forelse($sales as $p)
                                 <tr>
                                     <td>{{ ++$loop->index }}</td>
                                     <td> {{ $p->dsr?->name }} </td>
                                     <td>{{$p->sales_date}}</td>
-                                    <td>
                                         @if($p->sales_details)
-                                            <table class="table table-bordered mb-0 table-striped">
-                                                <tr>
-                                                    <td>Product</td>
-                                                    <td>Sales(PCS)</td>
-                                                    <td>PCS Price</td>
-                                                    <td>Subtotal</td>
-                                                </tr>
                                                 @foreach($p->sales_details as $detail)
-                                                    <tr>
-                                                        <td>{{ $detail->product?->product_name }}</td>
-                                                        <td>{{ $detail->total_sales_pcs}}</td>
-                                                        <td>@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
-                                                        <td>{{ $detail->subtotal_price }}</td>
-                                                    </tr>
+                                                    @if(request('product_id'))
+                                                        @if(request('product_id')==$detail->product_id)
+                                                            <td>{{ $detail->product?->product_name }}</td>
+                                                            <td>{{ $detail->total_sales_pcs}}</td>
+                                                            <td>@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
+                                                            <td>{{ $detail->subtotal_price }}</td>
+                                                        @endif
+                                                    @endif
                                                 @endforeach
-                                            </table>
                                         @endif
-                                    </td>
-                                    <td style="vertical-align: bottom;">{{$p->daily_total_taka}}
+                                    {{--  <td style="vertical-align: bottom;">{{$p->daily_total_taka}}
                                         <input type="hidden" value="{{$p->daily_total_taka}}" class="final_total">
-                                    </td>
+                                    </td>  --}}
                                 </tr>
                                 @empty
                                 <tr>
-                                    <th colspan="5" class="text-center">No Data Found</th>
+                                    <th colspan="7" class="text-center">No Data Found</th>
                                 </tr>
                                 @endforelse
                                 <tr>
-                                    <th colspan="4" class="text-end">Total</th>
+                                    <th colspan="6" class="text-end">Total</th>
                                     <th>
                                         <span class="sumFinalTotal"></span>
                                     </th>
-                                </tr>  --}}
+                                </tr>
                             </tbody>
                         </table>
                     </div>

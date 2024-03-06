@@ -68,17 +68,22 @@ class ReportController extends Controller
     }
     public function srreportProduct(Request $request)
     {
-        $sales = Sales::orderBy('id','DESC')->where('sales.sr_id',$request->sr_id);
-        if ($request->fdate) {
+        $products = Product::where(company())->select('id','product_name')->get();
+        $userSr=User::where(company())->where('role_id',5)->get();
+        $sales = Sales::with('sales_details')->where(company())->where('sales.sr_id',$request->sr_id);
+        if($request->product_id){
+            $productId=$request->product_id;
+            $sales=$sales->whereHas('sales_details',function($q) use ($productId){
+                $q->where('product_id', $productId);
+            });
+        }
+        if ($request->fdate){
             $tdate = $request->tdate ?: $request->fdate;
             $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
         }
-        // if ($request->group_id)
-        //     $sales->where('products.group_id',$request->group_id);
-
-        $sales = $sales->get();
-        $userSr=User::where(company())->where('role_id',5)->get();
-        return view('reports.srReportProduct',compact('sales','userSr'));
+        $sales=$sales->orderBy('id', 'DESC')->get();
+        // return $sales;
+        return view('reports.srReportProduct',compact('sales','products','userSr'));
     }
 
     public function ShopDue(Request $request)

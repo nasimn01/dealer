@@ -22,7 +22,6 @@
                                         <option value="dsr">DSR</option>
                                     </select>
                                 </div>  --}}
-
                                 @if (!empty($sales->shop_id))
                                 <div class="col-lg-3 col-md-3 col-sm-6 mt-2 shopNameContainer">
                                     <label for=""><b>Shop Name</b></label>
