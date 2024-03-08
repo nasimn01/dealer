@@ -68,6 +68,7 @@
             <li class="py-1"><a href="{{route(currentUser().'.shopdue')}}" >{{__('Shop Due Report')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.srreport')}}" >{{__('SR Report')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.srreportProduct')}}" >{{__('SR Report(Product)')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.cashCollection')}}" >{{__('Cash Collection')}}</a></li>
 		</ul>
     </li>
     <li class="sidebar-item has-sub">

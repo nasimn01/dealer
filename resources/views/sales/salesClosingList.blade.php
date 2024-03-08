@@ -58,7 +58,6 @@
                                         @elseif(!empty($p->dsr_id))
                                         <span class="text-warning">DSR :</span> {{ $p->dsr?->name }}
                                         @else
-
                                         @endif
                                         {{--  @if (!empty($p->shop->shop_name))
                                         <span class="text-warning">Shop :</span> {{ $p->shop?->shop_name }}
