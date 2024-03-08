@@ -222,7 +222,9 @@
                                     <tr>
                                       <td class="text-white px-3 text-center"></td>
                                       <th>Total</th>
-                                      <th class="ps-1"> = </th>
+                                      <th class="ps-1"> =
+                                        <input type="hidden" class="today_final_cash" value="" name="today_final_cash">
+                                      </th>
                                       <th class="allConinUpdate">0</th>
                                     </tr>
                                     <tr>
@@ -811,10 +813,11 @@ function getCoinNote(e){
     $('.fivehundredtakaCalculate').text(upfiveHundredTaka);
     $('.onethousandtakaCalculate').text(uponeThousanddTaka);
     let allcoinNot=uponeTaka+uptwoTaka+upfiveTaka+uptenTaka+uptwentyTaka+upfiftyTaka+uponeHundredTaka+uptwoHundredTaka+upfiveHundredTaka+uponeThousanddTaka;
+    console.log(allcoinNot);
     var finalTotalTaka=parseFloat($('.final_total_tk').val());
     $('.allConinUpdate').text(parseFloat(finalTotalTaka-allcoinNot).toFixed(2));
+    $('.today_final_cash').val(allcoinNot);
     //$('.allConinUpdate').text(allcoinNot);
-    //$('.cash').val(allcoinNot);
 
     //console.log(allcoinNot);
 }

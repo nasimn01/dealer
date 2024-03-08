@@ -32,6 +32,7 @@ return new class extends Migration
             $table->decimal('dsr_cash',14,2)->nullable();
             $table->decimal('dsr_salary',14,2)->nullable();
             $table->decimal('final_total',14,2)->nullable();
+            $table->decimal('today_final_cash',14,2)->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

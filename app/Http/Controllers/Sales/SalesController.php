@@ -327,6 +327,7 @@ class SalesController extends Controller
                 $sales->dsr_cash = $request->cash;
                 $sales->dsr_salary = $request->dsr_salary;
                 $sales->final_total = $request->final_total;
+                $sales->today_final_cash = $request->today_final_cash;
                 //$sales->total = $request->total;
                 $sales->status = 1;
                 $sales->company_id=company()['company_id'];
