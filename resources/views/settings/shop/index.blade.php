@@ -44,13 +44,14 @@
                                 <th scope="col">{{__('Contact')}}</th>
                                 <th scope="col">{{__('DSR')}}</th>
                                 <th scope="col">{{__('Area Name')}}</th>
-                                <th scope="col">{{__('Balance')}}</th>
+                                <th scope="col">{{__('Receivable')}}</th>
                                 <th scope="col">{{__('Address')}}</th>
                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($shop as $data)
+                            @php $shopbalance=$data->shopBalances?->where('status',0)->sum('balance_amount') - $data->shopBalances?->where('status',1)->sum('balance_amount') @endphp
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$data->shop_name}}</td>
@@ -58,7 +59,7 @@
                                 <td>{{$data->contact}}</td>
                                 <td>{{$data->dsr?->name}}</td>
                                 <td>{{$data->area_name}}</td>
-                                <td>{{$data->balance}}</td>
+                                <td>{{ $shopbalance }}</td>
                                 <td>{{$data->address}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.shop.edit',encryptor('encrypt',$data->id))}}">

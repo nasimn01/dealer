@@ -11,6 +11,7 @@ use App\Http\Controllers\Settings\UnitController as unit;
 use App\Http\Controllers\Settings\SupplierController as supplier;
 use App\Http\Controllers\Settings\CustomerController as customer;
 use App\Http\Controllers\Settings\ShopController as shop;
+use App\Http\Controllers\Settings\ShopBalanceController as shopbalance;
 use App\Http\Controllers\Settings\UserController as user;
 use App\Http\Controllers\Settings\AdminUserController as admin;
 use App\Http\Controllers\Settings\Location\CountryController as country;
@@ -108,6 +109,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('supplier',supplier::class,['as'=>'owner']);
         Route::resource('customer',customer::class,['as'=>'owner']);
         Route::resource('shop',shop::class,['as'=>'owner']);
+        Route::resource('shopbalance',shopbalance::class,['as'=>'owner']);
         Route::post('/customer/balance', [customer::class, 'customerBalance'])->name('owner.customer.balance');
         Route::post('/supplier/balance', [supplier::class, 'supplierBalance'])->name('owner.supplier.balance');
 
