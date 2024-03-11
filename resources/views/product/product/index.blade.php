@@ -50,7 +50,7 @@
                     <table class="table table-bordered mb-0 table-striped">
                         <a class="float-end" href="{{route(currentUser().'.product.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Group')}}</th>
                                 {{--  <th scope="col">{{__('Category')}}</th>  --}}

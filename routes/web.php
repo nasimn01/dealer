@@ -159,6 +159,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('/sr-report',[report::class,'SRreport'])->name('owner.srreport');
         Route::get('/sr-report-product',[report::class,'srreportProduct'])->name('owner.srreportProduct');
         Route::get('/cash-collection-report',[report::class,'cashCollection'])->name('owner.cashCollection');
+        Route::get('/damage-product-list',[report::class,'damageProductList'])->name('owner.damageProductList');
 
 
         //Accounts

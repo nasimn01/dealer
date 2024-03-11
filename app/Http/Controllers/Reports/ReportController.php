@@ -78,6 +78,37 @@ class ReportController extends Controller
         $userSr=User::where(company())->where('role_id',5)->get();
         return view('reports.cashCollection',compact('sales','userSr'));
     }
+
+    public function damageProductList(Request $request)
+    {
+        $groups = Group::where(company())->select('id','name')->get();
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        $products = Product::where(company())->select('id','product_name')->get();
+
+        $stockQuery = DB::table('stocks')
+        ->join('products', 'products.id', '=', 'stocks.product_id')
+        ->join('groups', 'groups.id', '=', 'products.group_id')
+        ->join('suppliers', 'suppliers.id', '=', 'products.distributor_id')
+        ->where('stocks.status_history', '=', 2)
+        ->select(
+            'products.product_name','products.dp_price as product_dp','groups.name as group_name','suppliers.name as supplier_name',
+            'stocks.*',);
+
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $stockQuery->whereBetween(DB::raw('date(stocks.created_at)'), [$request->fdate, $tdate]);
+        }
+        if ($request->group_id)
+            $stockQuery->where('products.group_id',$request->group_id);
+        if ($request->distributor_id)
+            $stockQuery->where('products.distributor_id',$request->distributor_id);
+
+        $stock = $stockQuery
+            ->groupBy('products.group_id','products.distributor_id','products.product_name')
+            ->get();
+        return view('reports.damageProductList', compact('stock','groups','products','distributors'));
+    }
+
     public function srreportProduct(Request $request)
     {
         $products = Product::where(company())->select('id','product_name')->get();
