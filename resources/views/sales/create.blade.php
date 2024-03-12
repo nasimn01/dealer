@@ -149,8 +149,8 @@
                                         @endforelse
                                     </select>  --}}
                                 </td>
-                                <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
-                                <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
+                                <td><input class="form-control ctn" onkeyup="productData(this);" onblur="productData(this);" onchange="productData(this);"  type="text" name="ctn[]" value="" placeholder="ctn"></td>
+                                <td><input class="form-control pcs" onkeyup="productData(this);" onblur="productData(this);" onchange="productData(this);"  type="text" name="pcs[]"value="" placeholder="pcs"></td>
                                 <td>
                                     <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
                                         <option value="1">TP</option>
@@ -189,8 +189,8 @@
                 @endforelse
             </select>
         </td>
-        <td><input class="form-control ctn" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
-        <td><input class="form-control pcs" onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
+        <td><input class="form-control ctn"  onblur="productData(this);" onchange="productData(this);" onkeyup="productData(this);" type="text" name="ctn[]" value="" placeholder="ctn"></td>
+        <td><input class="form-control pcs"  onblur="productData(this);" onchange="productData(this);"  onkeyup="productData(this);" type="text" name="pcs[]"value="" placeholder="pcs"></td>
         <td>
             <select class="form-select select_tp_tpfree" name="select_tp_tpfree[]" onchange="productData(this);">
                 <option value="1">TP</option>
@@ -236,8 +236,9 @@ function productData(e) {
         data: { product_id: productId },
         success: function (data) {
             // this function have doController UnitDataGet return qty
-            console.log(data)
+            console.log(data);
             let totalqty=((data*ctn)+pcs);
+            console.log(totalqty);
             $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
             if(data){
                 let ctnTp=parseFloat(tp * data).toFixed(2);

@@ -125,7 +125,6 @@
                                                                 <input class="form-control" type="hidden" name="price_type[]" value="2">
                                                             @endif
                                                             <input class="form-control" type="hidden" name="tp_price[]" value="{{ old('tp_price',$salesdetails->pcs_price) }}">
-
                                                             <input class="form-control total_return_pcs" type="hidden" name="total_return_pcs[]" value="">
                                                             <input class="form-control total_damage_pcs" type="hidden" name="total_damage_pcs[]" value="">
                                                             <input class="form-control total_sales_pcs" type="hidden" name="total_sales_pcs[]" value="{{ $salesdetails->totalquantity_pcs }}">
