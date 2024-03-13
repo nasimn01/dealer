@@ -110,6 +110,7 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('customer',customer::class,['as'=>'owner']);
         Route::resource('shop',shop::class,['as'=>'owner']);
         Route::resource('shopbalance',shopbalance::class,['as'=>'owner']);
+        // Route::resource('checkCollection',shopbalance::class,['as'=>'owner']);
         Route::post('/customer/balance', [customer::class, 'customerBalance'])->name('owner.customer.balance');
         Route::post('/supplier/balance', [supplier::class, 'supplierBalance'])->name('owner.supplier.balance');
 
