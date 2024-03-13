@@ -97,6 +97,7 @@
             {{--  <li class="py-1"><a href="{{route(currentUser().'.customer.index')}}">{{__('Customers')}}</a></li>  --}}
             <li class="py-1"><a href="{{route(currentUser().'.shop.index')}}">{{__('Shop')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.shopbalance.index')}}">{{__('Collect Shop(due)')}}</a></li>
+            <li class="py-1"><a href="{{route(currentUser().'.shopbalance.index')}}">{{__('Collect Check')}}</a></li>
             <li class="py-1"><a href="{{route(currentUser().'.unitstyle.index')}}">{{__('Unit Style')}}</a></li>
 
             {{--  <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('Unit')}}</a>
