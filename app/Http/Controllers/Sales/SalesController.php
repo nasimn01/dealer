@@ -493,6 +493,7 @@ class SalesController extends Controller
                             $pay->amount=$request->check_shop_tk[$i];
                             $pay->check_date=$request->check_date[$i];
                             $pay->cash_type=0;
+                            $pay->status=0;
                             $pay->save();
                         }
                     }
