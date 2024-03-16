@@ -75,13 +75,13 @@
                                 @forelse($sales as $p)
                                 @php $hasSalesQty = false; @endphp
 
-                                @foreach($p->sales_details as $de)
-                                    @if($de->total_sales_pcs > 0)
+
+                                    @if($p->sales_details->sum('total_sales_pcs') > 0)
                                         @php $hasSalesQty = true;  @endphp
-                                    @elseif($de->total_sales_pcs <= 0)
+                                    @else
                                         @php $hasSalesQty = false; @endphp
                                     @endif
-                                @endforeach
+
                                 @if($hasSalesQty)
                                 <tr>
                                     <td>{{ ++$loop->index }}</td>

@@ -72,10 +72,10 @@
                                                 </tr>
                                                 @foreach($p->sales_details as $detail)
                                                     <tr>
-                                                        <td>{{ $detail->product?->product_name }}</td>
-                                                        <td>{{ $detail->total_sales_pcs}}</td>
-                                                        <td>@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
-                                                        <td>{{ $detail->subtotal_price }}</td>
+                                                        <td width="40%">{{ $detail->product?->product_name }}</td>
+                                                        <td width="20%">{{ $detail->total_sales_pcs}}</td>
+                                                        <td width="20%">@if($detail->tp_price) {{ $detail->tp_price }}@else {{ $detail->tp_free }} @endif</td>
+                                                        <td width="20%">{{ $detail->subtotal_price }}</td>
                                                     </tr>
                                                 @endforeach
                                                 {{--  <tr class="text-center">

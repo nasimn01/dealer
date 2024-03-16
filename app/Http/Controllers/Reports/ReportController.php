@@ -55,17 +55,7 @@ class ReportController extends Controller
         // $stock= DB::select("SELECT products.product_name,stocks.*,sum(stocks.totalquantity_pcs) as qty FROM `stocks` join products on products.id=stocks.product_id $where GROUP BY stocks.product_id");
         // return view('reports.stockReport',compact('stock'));
     }
-    public function SRreport(Request $request)
-    {
-        $sales = Sales::orderBy('id','DESC')->where('sales.sr_id',$request->sr_id);
-        if ($request->fdate) {
-            $tdate = $request->tdate ?: $request->fdate;
-            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
-        }
-        $sales = $sales->get();
-        $userSr=User::where(company())->where('role_id',5)->get();
-        return view('reports.srReport',compact('sales','userSr'));
-    }
+
     public function cashCollection(Request $request)
     {
         $sales = Sales::orderBy('id','DESC');
@@ -96,7 +86,7 @@ class ReportController extends Controller
 
         if ($request->fdate) {
             $tdate = $request->tdate ?: $request->fdate;
-            $stockQuery->whereBetween(DB::raw('date(stocks.created_at)'), [$request->fdate, $tdate]);
+            $stockQuery->whereBetween(DB::raw('date(stocks.stock_date)'), [$request->fdate, $tdate]);
         }
         if ($request->group_id)
             $stockQuery->where('products.group_id',$request->group_id);
@@ -108,22 +98,34 @@ class ReportController extends Controller
             ->get();
         return view('reports.damageProductList', compact('stock','groups','products','distributors'));
     }
+    public function SRreport(Request $request)
+    {
+        $sales = Sales::orderBy('id','DESC')->where(company())->where('sales.sr_id',$request->sr_id);
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
+        }
+        $sales = $sales->get();
+        $userSr=User::where(company())->where('role_id',5)->get();
+        return view('reports.srReport',compact('sales','userSr'));
+    }
 
     public function srreportProduct(Request $request)
     {
         $products = Product::where(company())->select('id','product_name')->get();
         $userSr=User::where(company())->where('role_id',5)->get();
         $sales = Sales::with('sales_details')->where(company())->where('sales.sr_id',$request->sr_id);
+        if ($request->fdate){
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
+        }
         if($request->product_id){
             $productId=$request->product_id;
             $sales=$sales->whereHas('sales_details',function($q) use ($productId){
                 $q->where('product_id', $productId);
             });
         }
-        if ($request->fdate){
-            $tdate = $request->tdate ?: $request->fdate;
-            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
-        }
+
         $sales=$sales->orderBy('id', 'DESC')->get();
         // return $sales;
         return view('reports.srReportProduct',compact('sales','products','userSr'));
