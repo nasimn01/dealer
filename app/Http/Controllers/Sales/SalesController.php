@@ -92,6 +92,7 @@ class SalesController extends Controller
                                 $stock->tem_sales_id=$data->id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
                                 $stock->status_history=0;
                                 $stock->status=0;
                                 if($request->select_tp_tpfree[$key]==1){
@@ -173,6 +174,7 @@ class SalesController extends Controller
                                 $stock->tem_sales_id=$data->id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->totalquantity_pcs=$request->totalquantity_pcs[$key];
+                                $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
                                 $stock->status_history=0;
                                 $stock->status=0;
                                 if($request->select_tp_tpfree[$key]==1){
@@ -366,6 +368,7 @@ class SalesController extends Controller
                                         $stock->sales_id=$sales->id;
                                         $stock->product_id=$request->product_id[$key];
                                         $stock->totalquantity_pcs=$request->total_return_pcs[$key];
+                                        $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
                                         $stock->status_history=1;
                                         $stock->status=1;
                                         if($request->price_type[$key]=="1"){
@@ -380,6 +383,7 @@ class SalesController extends Controller
                                         $stock->sales_id=$sales->id;
                                         $stock->product_id=$request->product_id[$key];
                                         $stock->totalquantity_pcs=$request->total_damage_pcs[$key];
+                                        $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
                                         $stock->status_history=2;
                                         $stock->status=1;
                                         if($request->price_type[$key]=="1"){
@@ -417,6 +421,7 @@ class SalesController extends Controller
                                     $stock->product_id=$request->return_product_id[$i];
                                     $stock->totalquantity_pcs=$request->old_total_return_pcs[$i];
                                     $stock->tp_price=$request->old_pcs_price[$i];
+                                    $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
                                     $stock->status_history=1;
                                     $stock->status=1;
                                     // if($request->select_tp_tpfree[$i]==1){
@@ -432,6 +437,7 @@ class SalesController extends Controller
                                     $stock->product_id=$request->return_product_id[$i];
                                     $stock->totalquantity_pcs=$request->old_total_damage_pcs[$i];
                                     $stock->tp_price=$request->old_pcs_price[$i];
+                                    $stock->stock_date=date('Y-m-d', strtotime($request->sales_date));
                                     $stock->status_history=2;
                                     $stock->status=1;
                                     // if($request->select_tp_tpfree[$i]==1){
