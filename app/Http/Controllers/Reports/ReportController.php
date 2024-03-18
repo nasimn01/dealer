@@ -14,6 +14,7 @@ use App\Models\Do\D_o_detail;
 use App\Models\Do\DoReceiveHistory;
 use App\Models\Sales\Sales;
 use App\Models\Sales\SalesDetails;
+use App\Models\Stock\Stock;
 use App\Models\User;
 use DB;
 use Carbon\Carbon;
@@ -54,6 +55,17 @@ class ReportController extends Controller
 
         // $stock= DB::select("SELECT products.product_name,stocks.*,sum(stocks.totalquantity_pcs) as qty FROM `stocks` join products on products.id=stocks.product_id $where GROUP BY stocks.product_id");
         // return view('reports.stockReport',compact('stock'));
+    }
+
+    public function stockindividual($id)
+    {
+        $company = company()['company_id'];
+        $where = '';
+        // $salesItem = SalesDetails::where('product_id', $id)->where('company_id', $company)->get();
+        $stock = Stock::where('product_id',$id)->get();
+        $product = Product::where('id',$id)->first();
+
+        return view('reports.stockReportIndividual', compact('stock','product'));
     }
 
     public function cashCollection(Request $request)

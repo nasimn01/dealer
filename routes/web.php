@@ -155,13 +155,13 @@ Route::group(['middleware'=>isOwner::class],function(){
 
         //report
         Route::get('/stock-report',[report::class,'stockreport'])->name('owner.sreport');
+        Route::get('/stock-report-individual/{id}',[report::class,'stockindividual'])->name('owner.stock.individual');
         Route::get('/shop-due-report',[report::class,'ShopDue'])->name('owner.shopdue');
         Route::get('undeliverd-report', [report::class,'undeliverdProduct'])->name('owner.undeliverd');
         Route::get('/sr-report',[report::class,'SRreport'])->name('owner.srreport');
         Route::get('/sr-report-product',[report::class,'srreportProduct'])->name('owner.srreportProduct');
         Route::get('/cash-collection-report',[report::class,'cashCollection'])->name('owner.cashCollection');
         Route::get('/damage-product-list',[report::class,'damageProductList'])->name('owner.damageProductList');
-
 
         //Accounts
         Route::resource('master',master::class,['as'=>'owner']);

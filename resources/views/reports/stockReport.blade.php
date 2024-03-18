@@ -98,7 +98,7 @@
                                         <th scope="row">{{ ++$loop->index }}</th>
                                         <td>{{$s->group_name}}</td>
                                         <td>{{$s->supplier_name}}</td>
-                                        <td>{{$s->product_name}}</td>
+                                        <td><a href="{{route(currentUser().'.stock.individual',$s->product_id)}}">{{$s->product_name}}</a></td>
                                         <td>{{ ($s->ins - $s->outs )*($s->product_dp) }}
 
                                             <input type="hidden" class="subtotal_dp_price" value="{{($s->ins - $s->outs )*($s->product_dp)}}">

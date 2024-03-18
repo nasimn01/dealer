@@ -13,8 +13,8 @@
                     <div class="card-body">
                         <div class="row text-center">
                             <h3> {{ $settings->name }}</h3>
-                            <p class="mb-1">Contact: {{ $settings->contact }}</p>
                             <p>Address :{{ $settings->address }}</p>
+                            <p class="mb-1">Contact: {{ $settings->contact }}</p>
                         </div>
                         <table style="width: 100%">
                             @if (!empty($sales->shop_id))
