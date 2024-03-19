@@ -92,15 +92,15 @@
                                         @endphp
                                         @elseif($s->status_history =='2')
                                         <td class="tbl_border" style="text-align: center; padding: 5px;">{{$s->totalquantity_pcs}}</td>
-                                        <td class="tbl_border" style="text-align: center; padding: 5px;">Tp- {{$s->dp_pcs}}</td>
-                                        <td class="tbl_border" style="text-align: center; padding: 5px;">{{$s->subtotal_dp_pcs}}</td>
+                                        <td class="tbl_border" style="text-align: center; padding: 5px;">Tp- {{$s->tp_price}}</td>
+                                        <td class="tbl_border" style="text-align: center; padding: 5px;">Sub-Total:{{$s->totalquantity_pcs*$s->tp_price}}</td>
                                         <td class="tbl_border" style="text-align: center; padding: 5px;"></td>
                                         <td class="tbl_border" style="text-align: center; padding: 5px;"></td>
                                         <td class="tbl_border" style="text-align: center; padding: 5px;"></td>
                                         @php
                                             $actualQtyTotalIn += $s->totalquantity_pcs;
                                             $totalPcsIns += $s->totalquantity_pcs;
-                                            $totalAmountIns += $s->subtotal_dp_pcs;
+                                            $totalAmountIns +=(($s->totalquantity_pcs)*($s->tp_price));
                                         @endphp
                                         @elseif($s->status_history =='3')
                                         <td class="tbl_border" style="text-align: center; padding: 5px;">{{$s->totalquantity_pcs}}</td>
