@@ -236,6 +236,7 @@ function productData(e) {
         data: { product_id: productId },
         success: function (data) {
             // this function have doController UnitDataGet return qty
+            //UPDATE `temporary_sales_details` SET `totalquantity_pcs`=(`subtotal_price`/`pcs_price`) WHERE `totalquantity_pcs`=0 AND subtotal_price>0
             console.log(data);
             let totalqty=((data*ctn)+pcs);
             console.log(totalqty);

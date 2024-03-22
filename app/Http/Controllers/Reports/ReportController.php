@@ -59,8 +59,8 @@ class ReportController extends Controller
 
     public function stockindividual($id)
     {
-        $company = company()['company_id'];
-        $where = '';
+        // $company = company()['company_id'];
+        // $where = '';
         // $salesItem = SalesDetails::where('product_id', $id)->where('company_id', $company)->get();
         $stock = Stock::where('product_id',$id)->get();
         $product = Product::where('id',$id)->first();
