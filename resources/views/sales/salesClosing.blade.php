@@ -263,7 +263,7 @@
                                       </div>
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" onblur="totalOldDue();FinalTotal();" onchange="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control o_due_tk" value="0">
                                           </div>
                                       </div>
@@ -291,7 +291,7 @@
 
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" onblur="totalNewDue();FinalTotal();" onchange="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control n_due_tk" value="0">
                                           </div>
                                       </div>
@@ -324,7 +324,7 @@
 
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive(),FinalTotal()" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive();FinalTotal();" onblur="totalNewReceive();FinalTotal();" onchange="totalNewReceive();FinalTotal();" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control n_receive_tk" value="0">
                                           </div>
                                       </div>
@@ -350,7 +350,7 @@
                                       </div>
                                       <div class="col-lg-3 col-md-3 col-sm-6">
                                           <div class="form-group">
-                                              <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                                              <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" onblur="totalNewCheck();FinalTotal();" onchange="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
                                               <input type="hidden" class="form-control c_shop_tk" value="0">
                                           </div>
                                       </div>
@@ -373,7 +373,7 @@
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
                                           <div class="form-group">
-                                              <input type="text" class="form-control expenses_tk" onkeyup="FinalTotal()" value="{{ old('expenses')}}" name="expenses">
+                                              <input type="text" class="form-control expenses_tk" onkeyup="FinalTotal()" onblur="FinalTotal()" onchange="FinalTotal()" value="{{ old('expenses')}}" name="expenses">
                                           </div>
                                       </div>
                                   </div>
@@ -385,7 +385,7 @@
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
                                           <div class="form-group">
-                                              <input type="text" class="form-control commission_tk" onkeyup="FinalTotal()" value="{{ old('commission')}}" name="commission">
+                                              <input type="text" class="form-control commission_tk" onkeyup="FinalTotal()" onblur="FinalTotal()" onchange="FinalTotal()" value="{{ old('commission')}}" name="commission">
                                           </div>
                                       </div>
                                   </div>
@@ -397,7 +397,7 @@
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
                                           <div class="form-group">
-                                              <input type="text" class="form-control cash" onkeyup="FinalTotal()" value="{{ old('cash')}}" name="cash">
+                                              <input type="text" class="form-control cash" onkeyup="FinalTotal()" onblur="FinalTotal()" onchange="FinalTotal()" value="{{ old('cash')}}" name="cash">
                                           </div>
                                       </div>
                                   </div>
@@ -409,7 +409,7 @@
                                       </div>
                                       <div class="col-lg-7 col-md-9 col-sm-8">
                                           <div class="form-group">
-                                              <input type="text" class="form-control dsr_salary" onkeyup="FinalTotal()" value="{{ old('dsr_salary')}}" name="dsr_salary">
+                                              <input type="text" class="form-control dsr_salary" onkeyup="FinalTotal()" onblur="FinalTotal()" onchange="FinalTotal()" value="{{ old('dsr_salary')}}" name="dsr_salary">
                                           </div>
                                       </div>
                                   </div>
@@ -455,10 +455,10 @@
                         @endforelse
                     </select>
                 </td>
-                <td><input class="form-control old_ctn" type="text" onkeyup="getCtnQty(this)" name="old_ctn_return[]" value="" placeholder="ctn return"></td>
-                <td><input class="form-control old_pcs" type="text" onkeyup="getCtnQty(this)" name="old_pcs_return[]" value="" placeholder="pcs return"></td>
-                <td><input class="form-control old_ctn_damage" type="text" onkeyup="getCtnQty(this)" name="old_ctn_damage[]" value="" placeholder="ctn damage"></td>
-                <td><input class="form-control old_pcs_damage" type="text" onkeyup="getCtnQty(this)" name="old_pcs_damage[]" value="" placeholder="pcs damage"></td>
+                <td><input class="form-control old_ctn" type="text" onkeyup="getCtnQty(this)" onblur="getCtnQty(this)" onchange="getCtnQty(this)" name="old_ctn_return[]" value="" placeholder="ctn return"></td>
+                <td><input class="form-control old_pcs" type="text" onkeyup="getCtnQty(this)" onblur="getCtnQty(this)" onchange="getCtnQty(this)" name="old_pcs_return[]" value="" placeholder="pcs return"></td>
+                <td><input class="form-control old_ctn_damage" type="text" onkeyup="getCtnQty(this)" onblur="getCtnQty(this)" onchange="getCtnQty(this)" name="old_ctn_damage[]" value="" placeholder="ctn damage"></td>
+                <td><input class="form-control old_pcs_damage" type="text" onkeyup="getCtnQty(this)" onblur="getCtnQty(this)" onchange="getCtnQty(this)" name="old_pcs_damage[]" value="" placeholder="pcs damage"></td>
                 {{--  <td>
                     <select class="form-select" name="select_tp_tpfree">
                         <option value="">Select</option>
@@ -467,12 +467,12 @@
                     </select>
                 </td>  --}}
                 <td>
-                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this);" name="old_pcs_price[]" value="" placeholder="PCS Price">
+                    <input class="form-control old_pcs_price" type="text" onkeyup="getCtnQty(this);" onblur="getCtnQty(this)" onchange="getCtnQty(this)" name="old_pcs_price[]" value="" placeholder="PCS Price">
                     <input class="form-control old_total_return_pcs" type="hidden" name="old_total_return_pcs[]" value="">
                     <input class="form-control old_total_damage_pcs" type="hidden" name="old_total_damage_pcs[]" value="">
                 </td>
                 {{--  <td><input class="form-control" type="text" name="ctn_price[]" value="" placeholder="Ctn Price"></td>  --}}
-                <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
+                <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" onblur="return_total_calculate();" onchange="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                     {{--  <span onClick='previousProduct();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
@@ -587,7 +587,7 @@ function oldDue(){
 
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control old_due_tk" onkeyup="totalOldDue();FinalTotal();" onblur="totalOldDue();FinalTotal();" onchange="totalOldDue();FinalTotal();" value="{{ old('old_due_tk')}}" name="old_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -626,7 +626,7 @@ function newDue(){
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_due_tk" onkeyup="totalNewDue();FinalTotal();" onblur="totalNewDue();FinalTotal();" onchange="totalNewDue();FinalTotal();" value="{{ old('new_due_tk')}}" name="new_due_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -671,7 +671,7 @@ function newReceive(){
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive();FinalTotal();" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
+                <input type="text" class="form-control new_receive_tk" onkeyup="totalNewReceive();FinalTotal();" onblur="totalNewReceive();FinalTotal();" onchange="totalNewReceive();FinalTotal();" value="{{ old('new_receive_tk')}}" name="new_receive_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -708,7 +708,7 @@ function newCheck(){
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="form-group">
-                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
+                <input type="text" class="form-control check_shop_tk" onkeyup="totalNewCheck();FinalTotal();" onblur="totalNewCheck();FinalTotal();" onchange="totalNewCheck();FinalTotal();" value="{{ old('check_shop_tk')}}" name="check_shop_tk[]" placeholder="Tk">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6">
