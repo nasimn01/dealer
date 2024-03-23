@@ -25,7 +25,7 @@ class ShopController extends Controller
         if($request->owner_name)
             $shop=$shop->where('owner_name','like','%'.$request->owner_name.'%');
 
-        $shop=$shop->paginate(12);
+        $shop=$shop->paginate(20);
 
         return view('settings.shop.index',compact('shop'));
     }

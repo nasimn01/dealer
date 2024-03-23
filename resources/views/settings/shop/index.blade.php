@@ -82,6 +82,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="my-3">
+                    {!! $shop->links()!!}
+                </div>
             </div>
         </div>
     </div>
