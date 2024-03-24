@@ -15,6 +15,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Settings\Unit;
 use App\Http\Requests\Do\AddRequest;
+use App\Models\Settings\Supplier;
 use App\Models\User;
 use Exception;
 use DB;
@@ -27,10 +28,19 @@ class DOController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data=D_o::all();
-        return view('do.index',compact('data'));
+        $data=D_o::orderBy('id', 'DESC');
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $data->whereBetween(DB::raw('date(d_os.do_date)'), [$request->fdate, $tdate]);
+        }
+        if ($request->distributor_id)
+            $data->where('d_os.supplier_id',$request->distributor_id);
+
+            $data = $data->get();
+        return view('do.index',compact('data','distributors'));
         // return view('product.group.purchase');
     }
 
