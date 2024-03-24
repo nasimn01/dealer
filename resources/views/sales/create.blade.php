@@ -4,6 +4,13 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
+<style>
+    @media (min-width: 1192px){
+        .select2{
+            width: 260px !important;
+        }
+    }
+</style>
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -24,14 +31,14 @@
 
                                 <div class="col-lg-3 mt-2" id="shopNameContainer" style="display: none;">
                                     <label for=""><b>Shop Name</b></label>
-                                    <select class="form-select shop_id" name="shop_id">
+                                    <select class="form-select shop_id select2" name="shop_id">
                                         <option value="">Select</option>
                                     </select>
                                 </div>
 
                                 <div class="col-lg-3 mt-2" id="dsrNameContainer" style="display: none;">
                                     <label for=""><b>DSR Name</b></label>
-                                    <select class="form-select dsr_id" name="dsr_id">
+                                    <select class="form-select dsr_id select2" name="dsr_id">
                                         <option value="">Select</option>
                                     </select>
                                 </div>
