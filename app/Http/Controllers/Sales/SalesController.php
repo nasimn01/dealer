@@ -459,6 +459,7 @@ class SalesController extends Controller
                             $olddue->shop_id=$old_due_shop_id;
                             $olddue->balance_amount=$request->old_due_tk[$i];
                             $olddue->company_id=company()['company_id'];
+                            $olddue->sr_id = $request->sr_id;
                             $olddue->status=1;
                             $olddue->save();
                         }
@@ -473,6 +474,7 @@ class SalesController extends Controller
                             $newdue->balance_amount=$request->new_due_tk[$i];
                             $newdue->new_due_date=$request->new_due_date[$i];
                             $newdue->company_id=company()['company_id'];
+                            $newdue->sr_id = $request->sr_id;
                             $newdue->status=0;
                             $newdue->save();
                         }
