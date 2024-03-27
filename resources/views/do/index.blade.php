@@ -52,7 +52,7 @@
                                     <th scope="col">{{__('Reference Number')}}</th>
                                     <th scope="col">{{__('Total Qty')}}</th>
                                     <th scope="col">{{__('Total Amount')}}</th>
-                                    <th scope="col">{{__('Status')}}</th>
+                                    {{--  <th scope="col">{{__('Status')}}</th>  --}}
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
@@ -64,8 +64,10 @@
                                     <td>{{\Carbon\Carbon::parse($p->do_date)->format('d-m-Y')}}</td>
                                     <td>{{$p->reference_num}}</td>
                                     <td>{{$p->total_qty}}</td>
-                                    <td>{{$p->total_amount}}</td>
-                                    <td>{{$p->name}}</td>
+                                    <td>{{$p->total_amount}}
+                                        <input type="hidden" value="{{$p->total_amount}}" class="final_total">
+                                    </td>
+                                    {{--  <td>{{$p->name}}</td>  --}}
                                     <td class="white-space-nowrap">
                                         {{--  <a href="{{route(currentUser().'.docontroll.edit',encryptor('encrypt',$p->id))}}">
                                        <i class="bi bi-pencil-square"></i>
@@ -84,6 +86,13 @@
                                 </tr>
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-end">Total</td>
+                                    <td><span class="sumFinalTotal"></span></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="my-3">
@@ -94,3 +103,16 @@
     </div>
 </section>
 @endsection
+@push("scripts")
+<script>
+    total_calculate();
+
+    function total_calculate() {
+        var finalTotal = 0;
+        $('.final_total').each(function() {
+            finalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.sumFinalTotal').text(parseFloat(finalTotal).toFixed(2));
+    }
+</script>
+@endpush
