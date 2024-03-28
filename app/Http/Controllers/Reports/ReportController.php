@@ -40,7 +40,7 @@ class ReportController extends Controller
 
         if ($request->fdate) {
             $tdate = $request->tdate ?: $request->fdate;
-            $stockQuery->whereBetween(DB::raw('date(stocks.created_at)'), [$request->fdate, $tdate]);
+            $stockQuery->whereBetween(DB::raw('date(stocks.stock_date)'), [$request->fdate, $tdate]);
         }
         if ($request->group_id)
             $stockQuery->where('products.group_id',$request->group_id);
