@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('tem_sales_id')->nullable();
             $table->integer('chalan_no')->nullable();
             $table->date('stock_date')->nullable();
+            $table->integer('distributor_id')->nullable();
             $table->string('product_id')->nullable();
             $table->string('batch_id')->nullable();
             $table->integer('totalquantity_pcs')->nullable();

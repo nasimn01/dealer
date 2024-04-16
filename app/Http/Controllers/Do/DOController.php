@@ -18,7 +18,7 @@ use App\Http\Requests\Do\AddRequest;
 use App\Models\Settings\Supplier;
 use App\Models\User;
 use Exception;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class DOController extends Controller
@@ -178,7 +178,8 @@ class DOController extends Controller
     {
         // $data=D_o::findOrFail(encryptor('decrypt',$id));
         // return $data;
-        return view('do.doreceive');
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        return view('do.doreceive',compact('distributors'));
     }
 
     public function doDataGet(Request $request)
@@ -295,6 +296,7 @@ class DOController extends Controller
                                 $stock->do_id=$request->do_id[$key];
                                 $stock->chalan_no=$request->chalan_no;
                                 $stock->stock_date=date('Y-m-d', strtotime($request->stock_date));
+                                $stock->distributor_id=$request->distributor_id;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->batch_id=$batch_id;
                                 $stock->totalquantity_pcs=$request->receive[$key];
@@ -318,6 +320,7 @@ class DOController extends Controller
                                 $history->do_id=$request->do_id[$key];
                                 $history->chalan_no=$request->chalan_no;
                                 $history->stock_date=date('Y-m-d', strtotime($request->stock_date));
+                                $history->distributor_id=$request->distributor_id;
                                 $history->product_id=$request->product_id[$key];
                                 $history->batch_id=$batch_id;
                                 $history->ctn=$request->ctn[$key];
@@ -353,11 +356,19 @@ class DOController extends Controller
         }
     }
 
-    public function doReceiveList()
+    public function doReceiveList(Request $request)
     {
-        $data=DoReceiveHistory::groupBy('do_receive_histories.chalan_no')->get();
-        // return $data;
-        return view('do.receive-list',compact('data'));
+        $data=DoReceiveHistory::groupBy('do_receive_histories.chalan_no');
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $data->whereBetween(DB::raw('date(do_receive_histories.stock_date)'), [$request->fdate, $tdate]);
+        }
+        if ($request->distributor_id)
+            $data->where('do_receive_histories.distributor_id',$request->distributor_id);
+
+            $data = $data->get();
+        return view('do.receive-list',compact('data','distributors'));
     }
 
     public function showDoReceive($chalan_no)

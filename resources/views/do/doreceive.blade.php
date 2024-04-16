@@ -31,6 +31,18 @@
                                     <label for=""><b>Chalan NO<span class="text-danger">*</span></b></label>
                                     <input onkeyup="removeCharacter(this)" type="text" id="" required class="form-control"  name="chalan_no" placeholder="Chalan NO">
                                 </div>
+
+                                <div class="col-lg-3 mt-2">
+                                    <label for="lcNo"><b>Distributor<span class="text-danger">*</span></b></label>
+                                    <select name="distributor_id" class="select2 form-select" required>
+                                        <option value="">Select</option>
+                                        @forelse ($distributors as $d)
+                                            <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('do_id')->nullable();
             $table->string('chalan_no')->nullable();
             $table->date('stock_date')->nullable();
+            $table->integer('distributor_id')->nullable();
             $table->string('product_id')->nullable();
             $table->string('batch_id')->nullable();
             $table->integer('ctn')->nullable();

@@ -136,6 +136,57 @@
         $(".datepicker").datepicker();
     });
 </script>
+{{-- //nav active code --}}
+<script>
+    function searchMenu() {
+        var searchValue = document.getElementById("menuSearch").value.toLowerCase();
+        var submenuItems = document.querySelectorAll(".submenu-item");
+        var suggestionsContainer = document.getElementById("searchSuggestions");
+        suggestionsContainer.innerHTML = "";
+
+        submenuItems.forEach(function (item) {
+            var menuItemText = item.textContent.toLowerCase();
+
+            // Check if the anchor's href is not equal to #
+            var menuItemLink = item.querySelector('a');
+            if (menuItemLink && menuItemLink.getAttribute('href') !== '#') {
+                if (menuItemText.includes(searchValue)) {
+                    var suggestion = document.createElement("div");
+                    suggestion.textContent = item.textContent;
+                    suggestion.className = "suggestion-item";
+                    suggestion.onclick = function () {
+                        if (menuItemLink) {
+                            menuItemLink.click();
+                        }
+                    };
+                    suggestionsContainer.appendChild(suggestion);
+                }
+            }
+        });
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        // Get the current page URL
+        var currentPageUrl = window.location.href;
+
+        // Loop through each anchor in submenu items
+        $('.submenu-item a').each(function() {
+            var anchorUrl = $(this).attr('href');
+
+            // Check if the current page URL matches the anchor's URL
+            if (currentPageUrl === anchorUrl) {
+                // Add "active" class and style to the closest ul with class "submenu"
+                $(this).closest('.submenu-item').addClass('active');
+                $(this).closest('ul.submenu').addClass('active').css('display', 'block');
+                
+                // Add "active" class and style to the parent ul with class "submenu"
+                $(this).closest('ul.submenu').parents('ul.submenu').addClass('active').css('display', 'block');
+            }
+        });
+    });
+</script>
+{{-- //nav active code --}}
 <script>
     function printDiv(divName) {
         var prtContent = document.getElementById(divName);
