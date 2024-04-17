@@ -8,6 +8,7 @@ use App\Models\Settings\Shop;
 use App\Models\User;
 use App\Models\Sales\SalesPayment;
 use App\Models\Settings\ShopBalance;
+use App\Models\Settings\Supplier;
 
 class Sales extends Model
 {

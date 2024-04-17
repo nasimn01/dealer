@@ -5,6 +5,7 @@ namespace App\Models\Sales;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Settings\Shop;
+use App\Models\Settings\Supplier;
 use App\Models\User;
 
 class TemporarySales extends Model
@@ -19,6 +20,10 @@ class TemporarySales extends Model
     public function sr(){
         return $this->belongsTo(User::class,'sr_id','id');
        }
+
+    public function distributor(){
+        return $this->belongsTo(Supplier::class,'distributor_id','id');
+    }
 
        public function temporary_sales_details(){
         return $this->hasMany(TemporarySalesDetails::class,'tem_sales_id','id');

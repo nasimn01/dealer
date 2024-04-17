@@ -29,13 +29,37 @@
                                         <input type="text" value="{{old('owner_name',$shop->owner_name)}}" class="form-control border border-primary" name="owner_name" placeholder="Owner Name" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="col-lg-4 col-md-6 col-sm-6 d-none">
                                     <div class="form-group">
                                         <label for="dsr_id">DSR <span class="text-danger">*</span></label>
                                         <select class="form-select border border-primary" name="dsr_id">
                                             <option value="">Select Product</option>
                                             @forelse (\App\Models\User::where(company())->where('role_id',4)->get(); as $dsr)
                                             <option value="{{ $dsr->id }}"{{ $shop->dsr_id==$dsr->id?'selected':'' }}>{{ $dsr->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="sr_id">SR <span class="text-danger">*</span></label>
+                                        <select class="form-select border border-primary" name="sr_id">
+                                            <option value="">Select</option>
+                                            @forelse (\App\Models\User::where(company())->where('role_id',5)->get(); as $sr)
+                                                <option value="{{ $sr->id }}" {{ $shop->sr_id==$sr->id?'selected':'' }}>{{ $sr->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="sup_id">Distributor<span class="text-danger">*</span></label>
+                                        <select class="form-select border border-primary" name="sup_id">
+                                            <option value="">Select</option>
+                                            @forelse (App\Models\Settings\Supplier::where(company())->get(); as $sup)
+                                                <option value="{{ $sup->id }}" {{ $shop->sup_id==$sup->id?'selected':'' }}>{{ $sup->name }}</option>
                                             @empty
                                             @endforelse
                                         </select>
@@ -67,7 +91,7 @@
                                 </div>
 
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
+                                    <button type="submit" class="btn btn-info me-1 mb-1">Update</button>
                                 </div>
                             </div>
                         </form>

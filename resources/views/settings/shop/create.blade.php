@@ -26,13 +26,37 @@
                                         <input type="text" value="{{old('owner_name')}}" class="form-control border border-primary" name="owner_name" placeholder="Owner Name" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="col-lg-4 col-md-6 col-sm-6 d-none">
                                     <div class="form-group">
                                         <label for="dsr_id">DSR <span class="text-danger">*</span></label>
                                         <select class="form-select border border-primary" name="dsr_id">
-                                            <option value="">Select Product</option>
+                                            <option value="">Select</option>
                                             @forelse (\App\Models\User::where(company())->where('role_id',4)->get(); as $dsr)
-                                            <option value="{{ $dsr->id }}">{{ $dsr->name }}</option>
+                                                <option value="{{ $dsr->id }}">{{ $dsr->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="sr_id">SR <span class="text-danger">*</span></label>
+                                        <select class="form-select border border-primary" name="sr_id">
+                                            <option value="">Select</option>
+                                            @forelse (\App\Models\User::where(company())->where('role_id',5)->get(); as $sr)
+                                                <option value="{{ $sr->id }}">{{ $sr->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="sup_id">Distributor<span class="text-danger">*</span></label>
+                                        <select class="form-select border border-primary" name="sup_id">
+                                            <option value="">Select</option>
+                                            @forelse (App\Models\Settings\Supplier::where(company())->get(); as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                             @empty
                                             @endforelse
                                         </select>

@@ -57,6 +57,17 @@
                                         @endforelse
                                     </select>
                                 </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                                    <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
+                                    <select class="form-select supplier_id" name="distributor_id">
+                                        <option value="">Select Distributor</option>
+                                        @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                            <option value="{{ $sup->id }}" {{ $sales->distributor_id==$sup->id?"selected":""}}>{{ $sup->name }}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">

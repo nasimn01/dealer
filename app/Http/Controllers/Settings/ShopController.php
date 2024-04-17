@@ -54,6 +54,8 @@ class ShopController extends Controller
             $shop->owner_name = $request->owner_name;
             $shop->area_name = $request->area_name;
             $shop->dsr_id = $request->dsr_id;
+            $shop->sr_id = $request->sr_id;
+            $shop->sup_id = $request->sup_id;
             $shop->contact = $request->contact;
             $shop->address = $request->address;
             $shop->balance = $request->balance;
@@ -109,6 +111,8 @@ class ShopController extends Controller
             $shop->owner_name = $request->owner_name;
             $shop->area_name = $request->area_name;
             $shop->dsr_id = $request->dsr_id;
+            $shop->sr_id = $request->sr_id;
+            $shop->sup_id = $request->sup_id;
             $shop->contact = $request->contact;
             $shop->address = $request->address;
             $shop->balance = $request->balance;

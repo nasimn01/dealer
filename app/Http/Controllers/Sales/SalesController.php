@@ -66,6 +66,7 @@ class SalesController extends Controller
             $data->shop_id = $request->shop_id;
             $data->dsr_id = $request->dsr_id;
             $data->sr_id = $request->sr_id;
+            $data->distributor_id = $request->distributor_id;
             $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             $data->total = $request->total;
             $data->status = 0;
@@ -146,6 +147,7 @@ class SalesController extends Controller
             $data->shop_id = $request->shop_id;
             $data->dsr_id = $request->dsr_id;
             $data->sr_id = $request->sr_id;
+            $data->distributor_id = $request->distributor_id;
             $data->sales_date = date('Y-m-d', strtotime($request->sales_date));
             $data->total = $request->total;
             $data->status = 0;
@@ -304,7 +306,7 @@ class SalesController extends Controller
     public function salesReceiveScreen($id)
     {
         $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
-        $shops=Shop::all();
+        $shops=Shop::where('sup_id',$sales->distributor_id)->get();
         $dsr=User::where('role_id',4)->get();
         $product=Product::where(company())->get();
         return view('sales.salesClosing',compact('sales','shops','dsr','product'));

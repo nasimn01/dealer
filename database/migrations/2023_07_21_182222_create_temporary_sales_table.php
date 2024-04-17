@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('shop_id')->nullable();
             $table->string('dsr_id')->nullable();
             $table->integer('sr_id')->nullable();
+            $table->integer('distributor_id')->nullable();
             $table->date('sales_date')->nullable();
             $table->decimal('total',14,2)->nullable();
             $table->string('status')->default(0);

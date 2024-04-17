@@ -62,6 +62,13 @@
                                     <input readonly type="text" id="" class="form-control" value="{{ $sales->sr?->name }}">
                                     <input class="form-control" type="hidden"  name="sr_id" value="{{ $sales->sr_id }}" placeholder="">
                                 </div>
+                                @if (!empty($sales->distributor_id))
+                                    <div class="col-lg-3 col-md-3 col-sm-6 mt-2 dsrNameContainer">
+                                        <label for=""><b>Distributor Name</b></label>
+                                        <input readonly class="form-control" type="text" value="{{ $sales->distributor?->name }}" placeholder="">
+                                        <input class="form-control" type="hidden" name="distributor_id" value="{{ old('distributor_id',$sales->distributor_id) }}" placeholder="">
+                                    </div>
+                                @endif
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
@@ -256,7 +263,7 @@
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
                                           <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                                               <option value="">Select</option>
-                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              @foreach ($shops as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                                               @endforeach
                                           </select>
@@ -283,7 +290,7 @@
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
                                           <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                                               <option value="">Select</option>
-                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              @foreach ($shops as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                                               @endforeach
                                           </select>
@@ -343,7 +350,7 @@
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
                                           <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                                               <option value="">Select</option>
-                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              @foreach ($shops as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                                               @endforeach
                                           </select>
@@ -579,7 +586,7 @@ function oldDue(){
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
             <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>
@@ -619,7 +626,7 @@ function newDue(){
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
             <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>
@@ -664,7 +671,7 @@ function newReceive(){
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
             <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>
@@ -701,7 +708,7 @@ function newCheck(){
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
             <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>

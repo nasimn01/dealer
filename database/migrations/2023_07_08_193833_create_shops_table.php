@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('owner_name')->nullable();
             $table->string('area_name')->nullable();
             $table->string('dsr_id')->nullable();
+            $table->string('sr_id')->nullable();
+            $table->string('sup_id')->nullable();
             $table->string('contact')->nullable();
             $table->string('address')->nullable();
             $table->decimal('balance',14,2)->nullable();
