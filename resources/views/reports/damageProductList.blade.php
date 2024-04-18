@@ -55,6 +55,17 @@
                                         @endforelse
                                     </select>
                                 </div>
+                                <div class="col-4 py-1">
+                                    <label for="lcNo">{{__('SR')}}</label>
+                                    <select name="sr_id" class="select2 form-select">
+                                        <option value="">Select</option>
+                                        @forelse ($sr as $d)
+                                            <option value="{{$d->id}}" {{ request('sr_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
+                                </div>
                             </div>
                             <div class="row m-4">
                                 <div class="col-6 d-flex justify-content-end">
@@ -70,6 +81,7 @@
                                         <th class="p-2">{{__('#SL')}}</th>
                                         <th class="p-2" data-title="Product Name">{{__('Group')}}</th>
                                         <th class="p-2" data-title="Product Name">{{__('Distributor')}}</th>
+                                        <th class="p-2" data-title="Product Name">{{__('SR')}}</th>
                                         <th class="p-2" data-title="Product Name">{{__('Product')}}</th>
                                         <th class="p-2" data-title="Product Price">{{__('Total Price')}}</th>
                                         <th class="p-2" data-title="Qty(PCS)">{{__('Qty(PCS)')}}</th>
@@ -82,6 +94,11 @@
                                         <th scope="row">{{ ++$loop->index }}</th>
                                         <td>{{$s->group_name}}</td>
                                         <td>{{$s->supplier_name}}</td>
+                                        <td>
+                                            @foreach (App\Models\User::where(company())->where('id',$s->sr)->get() as $sr)
+                                                {{$sr->name}}
+                                            @endforeach
+                                        </td>
                                         <td>{{$s->product_name}}</td>
                                         <td>{{ ($s->totalquantity_pcs )*($s->product_dp) }}
 

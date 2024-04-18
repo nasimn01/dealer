@@ -85,15 +85,17 @@ class ReportController extends Controller
     {
         $groups = Group::where(company())->select('id','name')->get();
         $distributors = Supplier::where(company())->select('id','name')->get();
+        $sr = User::where(company())->where('role_id',5)->select('id','name')->get();
         $products = Product::where(company())->select('id','product_name')->get();
 
         $stockQuery = DB::table('stocks')
         ->join('products', 'products.id', '=', 'stocks.product_id')
         ->join('groups', 'groups.id', '=', 'products.group_id')
+        ->join('sales', 'sales.id', '=', 'stocks.sales_id')
         ->join('suppliers', 'suppliers.id', '=', 'products.distributor_id')
         ->where('stocks.status_history', '=', 2)
         ->select(
-            'products.product_name','products.dp_price as product_dp','groups.name as group_name','suppliers.name as supplier_name',
+            'products.product_name','products.dp_price as product_dp','groups.name as group_name','sales.sr_id as sr','suppliers.name as supplier_name',
             'stocks.*',);
 
         if ($request->fdate) {
@@ -105,10 +107,13 @@ class ReportController extends Controller
         if ($request->distributor_id)
             $stockQuery->where('products.distributor_id',$request->distributor_id);
 
+        if ($request->sr_id)
+            $stockQuery->where('sales.sr_id',$request->sr_id);
+
         $stock = $stockQuery
             ->groupBy('products.group_id','products.distributor_id','products.product_name')
             ->get();
-        return view('reports.damageProductList', compact('stock','groups','products','distributors'));
+        return view('reports.damageProductList', compact('stock','groups','products','distributors','sr'));
     }
     public function SRreport(Request $request)
     {
