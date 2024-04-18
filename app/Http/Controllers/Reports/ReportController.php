@@ -16,7 +16,7 @@ use App\Models\Sales\Sales;
 use App\Models\Sales\SalesDetails;
 use App\Models\Stock\Stock;
 use App\Models\User;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class ReportController extends Controller
@@ -162,8 +162,8 @@ class ReportController extends Controller
 
     public function undeliverdProduct(Request $request)
     {
-        if ($request->reference_num) {
-            $do_reference = D_o::where('reference_num',$request->reference_num)->pluck('id');
+        if ($request->supplier_id) {
+            $do_reference = D_o::where('supplier_id',$request->supplier_id)->pluck('id');
             $dodetails= D_o_detail::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
             // $histotry = DoReceiveHistory::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
              //return $dodetails;

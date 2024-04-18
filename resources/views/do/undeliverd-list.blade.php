@@ -12,7 +12,15 @@
                         <form action="" method="get">
                             <div class="row">
                                 <div class="col-4">
-                                    <input type="text" name="reference_num" value="{{isset($_GET['reference_num'])?$_GET['reference_num']:''}}" placeholder="Reference Number" class="form-control">
+                                    {{-- <input type="text" name="reference_num" value="{{isset($_GET['reference_num'])?$_GET['reference_num']:''}}" placeholder="Reference Number" class="form-control"> --}}
+                                    <select class="form-select" name="supplier_id" required>
+                                        <option value="">Select Distributor</option>
+                                        @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
+                                            <option value="{{ $sup->id }}" {{ (request('supplier_id') == $sup->id ? 'selected' : '') }}>{{ $sup->name }}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
                                 </div>
                                 <div class="col-2 col-sm-4 ps-0 text-start">
                                     <button class="btn btn-sm btn-info" type="submit">Search</button>
@@ -33,8 +41,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
+                                <th scope="col">{{__('Referenc Numeber')}}</th> 
                                 <th scope="col">{{__('Product Name')}}</th>
-                                {{--  <th scope="col">{{__('Product Qty(CTN)')}}</th>  --}}
                                 <th scope="col">{{__('Product Qty(PCS)')}}</th>
                                 <th scope="col">{{__('Product Qty(Free)')}}</th>
                                 <th scope="col">{{__('DP')}}</th>
@@ -46,6 +54,7 @@
                             @if($p->qty_pcs>$p->receive_qty || $p->free>$p->receive_free_qty)
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
+                                <td>{{$p->doReference?->reference_num}}</td>
                                 <td>{{$p->product?->product_name}}</td>
                                 <td>{{$p->qty_pcs-$p->receive_qty}}</td>
                                 <td>{{$p->free-$p->receive_free_qty}}</td>
