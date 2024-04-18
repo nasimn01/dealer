@@ -106,7 +106,6 @@ class ReportController extends Controller
             $stockQuery->where('products.group_id',$request->group_id);
         if ($request->distributor_id)
             $stockQuery->where('products.distributor_id',$request->distributor_id);
-
         if ($request->sr_id)
             $stockQuery->where('sales.sr_id',$request->sr_id);
 
