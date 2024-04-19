@@ -115,7 +115,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="4" class="text-end">Total</th>
+                                        <th colspan="5" class="text-end">Total</th>
                                         <th class="text-center">
                                             <span class="total_dp"></span> Tk
                                         </th>
