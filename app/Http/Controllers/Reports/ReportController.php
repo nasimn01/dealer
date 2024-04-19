@@ -110,7 +110,7 @@ class ReportController extends Controller
             $stockQuery->where('sales.sr_id',$request->sr_id);
 
         $stock = $stockQuery
-            ->groupBy('products.group_id','products.distributor_id','products.product_name','sales.sr_id')
+            ->groupBy('products.group_id','products.distributor_id','products.product_name')
             ->get();
         return view('reports.damageProductList', compact('stock','groups','products','distributors','sr'));
     }
