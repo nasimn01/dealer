@@ -520,6 +520,11 @@ class SalesController extends Controller
         }
     }
 
+    public function getCheckList(){
+        $data = SalesPayment::where('status',0)->get();
+        return view('Check.index',compact('data'));
+    }
+
     public function printSalesClosing($id)
     {
         // $sales = Sales::findOrFail($id);
