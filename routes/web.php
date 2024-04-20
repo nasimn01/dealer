@@ -128,6 +128,13 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('salesclosing-screen',[sales::class,'salesClosing'])->name('owner.salesClosing');
         Route::get('salesClosing-list',[sales::class,'salesClosingList'])->name('owner.salesClosingList');
         Route::post('salesclosing-data-get',[sales::class,'getSalesClosingData'])->name('owner.getSalesClosingData');
+        
+        //checklist
+        Route::get('check-list',[sales::class,'getCheckList'])->name('owner.check_list');
+        Route::get('check-list-bank',[sales::class,'getCheckBankList'])->name('owner.check_list_bank');
+        Route::get('check-list-cash',[sales::class,'getCheckCashList'])->name('owner.check_list_cash');
+        Route::get('check-list-due',[sales::class,'getCheckDueList'])->name('owner.check_list_due');
+        Route::post('check-list-update',[sales::class,'checkStatusUpdate'])->name('owner.check_list_update');
 
         // employee settings
         Route::resource('designation',designation::class,['as'=>'owner']);

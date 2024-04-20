@@ -521,8 +521,33 @@ class SalesController extends Controller
     }
 
     public function getCheckList(){
-        $data = SalesPayment::where('status',0)->get();
-        return view('Check.index',compact('data'));
+        $data = SalesPayment::where('cash_type',0)->get();
+        return view('check.index',compact('data'));
+    }
+    public function checkStatusUpdate(Request $request){
+        try{
+            $check= SalesPayment::findOrFail($request->checkId);
+            $check->cash_type=$request->check_type;
+            if($check->save())
+                Toastr::success('Check Updated Successfully');
+                return back()->withInput();
+        }catch(Exception $e){
+            dd($e);
+            Toastr::error('Please try again!');
+            return back()->withInput();
+        }
+    }
+    public function getCheckBankList(){
+        $data = SalesPayment::where('cash_type',1)->get();
+        return view('check.bank',compact('data'));
+    }
+    public function getCheckCashList(){
+        $data = SalesPayment::where('cash_type',2)->get();
+        return view('check.cash',compact('data'));
+    }
+    public function getCheckDueList(){
+        $data = SalesPayment::where('cash_type',3)->get();
+        return view('check.due',compact('data'));
     }
 
     public function printSalesClosing($id)
