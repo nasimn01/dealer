@@ -8,6 +8,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
+                    @php
+                        $totalAmount = 0;   
+                    @endphp
                     <table class="table table-bordered mb-0"><thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
@@ -39,12 +42,22 @@
                                 </button>
                                 </td>
                             </tr>
+                            @php
+                                $totalAmount += $d->amount;
+                            @endphp
                             @empty
                             <tr>
                                 <th colspan="5" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-center">Total</th>
+                                <th>{{$totalAmount}}</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="modal fade" id="balance" tabindex="-1" role="dialog"

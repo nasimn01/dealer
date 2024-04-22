@@ -60,7 +60,7 @@
 		</ul>
     </li>
     <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'><i class="bi bi-boxes"></i><span>{{__('Check')}}</span>
+        <a href="#" class='sidebar-link'><i class="bi bi-card-checklist"></i><span>{{__('Check')}}</span>
         </a>
         <ul class="submenu">
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.check_list')}}" >{{__('Check list')}}</a></li>

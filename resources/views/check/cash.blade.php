@@ -8,6 +8,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
+                    @php
+                        $totalAmount = 0;   
+                    @endphp
                     <table class="table table-bordered mb-0"><thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
@@ -24,12 +27,21 @@
                                 <td>{{$d->check_date}}</td>
                                 <td>{{$d->amount}}</td>
                             </tr>
+                            @php
+                                $totalAmount += $d->amount;
+                            @endphp
                             @empty
                             <tr>
                                 <th colspan="4" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-center">Total</th>
+                                <th>{{$totalAmount}}</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
