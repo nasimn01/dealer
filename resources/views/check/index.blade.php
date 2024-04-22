@@ -123,10 +123,6 @@
             modal.find('#check_id').val(checkId);
             modal.find('#name').text(shopName);
             modal.find('#totalAmount').text(shopAmount);
-
-            // var checkUpdate = modal.find('#checkUpdate');
-            // var newHref = button.data('check-update');
-            // checkUpdate.attr('action', newHref);
         });
     });
 </script>
