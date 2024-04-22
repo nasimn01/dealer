@@ -33,7 +33,7 @@
                                         <i class="bi bi-pencil-square"></i>
                                     </a> --}}
                                 <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
-                                    data-bs-toggle="modal" data-bs-target="#balance"
+                                    data-bs-toggle="modal" data-bs-target="#checkList"
                                     data-check-id="{{$d->id}}"
                                     data-shop-name="{{$d->shop?->shop_name}}"
                                     data-shop-amount="{{$d->amount}}"
@@ -60,7 +60,7 @@
                         </tfoot>
                     </table>
                 </div>
-                <div class="modal fade" id="balance" tabindex="-1" role="dialog"
+                <div class="modal fade" id="checkList" tabindex="-1" role="dialog"
                     aria-labelledby="balanceTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <form method="post" id="checkUpdate"  action="{{route(currentUser().'.check_list_update')}}">
@@ -113,7 +113,7 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('#balance').on('show.bs.modal', function (event) {
+        $('#checkList').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var checkId = button.data('check-id');
             var shopName = button.data('shop-name');
