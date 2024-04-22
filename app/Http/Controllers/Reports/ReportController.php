@@ -96,7 +96,7 @@ class ReportController extends Controller
         ->where('stocks.status_history', '=', 2)
         ->select(
             'products.product_name','products.dp_price as product_dp','groups.name as group_name','sales.sr_id as sr','suppliers.name as supplier_name',
-            'stocks.*',);
+            'stocks.*',DB::raw('SUM(stocks.totalquantity_pcs) as totalquantity_pcs'));
 
         if ($request->fdate) {
             $tdate = $request->tdate ?: $request->fdate;
@@ -110,7 +110,7 @@ class ReportController extends Controller
             $stockQuery->where('sales.sr_id',$request->sr_id);
 
         $stock = $stockQuery
-            ->groupBy('stocks.id')
+            ->groupBy('stocks.product_id')
             ->get();
         return view('reports.damageProductList', compact('stock','groups','products','distributors','sr'));
     }
