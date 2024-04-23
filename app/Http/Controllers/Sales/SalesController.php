@@ -20,6 +20,7 @@ use \App\Models\Product\Product;
 use App\Models\Settings\Unit;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
@@ -60,6 +61,7 @@ class SalesController extends Controller
 
     public function store(Request $request)
     { //dd($request->all());
+        DB::beginTransaction();
         try{
             $data=new TemporarySales;
             $data->select_shop_dsr = $request->select_shop_dsr;
@@ -75,7 +77,7 @@ class SalesController extends Controller
             if($data->save()){
                 if($request->subtotal_price){
                     foreach($request->subtotal_price as $key => $value){
-                        if($value){
+                        if($request->subtotal_price[$key] > 0){
                             $details = new TemporarySalesDetails;
                             $details->tem_sales_id=$data->id;
                             $details->product_id=$request->product_id[$key];
@@ -106,6 +108,7 @@ class SalesController extends Controller
                         }
                     }
                 }
+                DB::commit();
             Toastr::success('Create Successfully!');
             return redirect()->route(currentUser().'.sales.index');
             } else{
@@ -115,7 +118,8 @@ class SalesController extends Controller
 
         }
         catch (Exception $e){
-            dd($e);
+            //dd($e);
+            DB::rollback();
             return back()->withInput();
 
         }
@@ -141,6 +145,7 @@ class SalesController extends Controller
 
     public function primaryStore(Request $request, $id)
     {
+        DB::beginTransaction();
         try{
             $data=TemporarySales::findOrFail(encryptor('decrypt',$id));
             $data->select_shop_dsr = $request->select_shop_dsr;
@@ -158,7 +163,7 @@ class SalesController extends Controller
                     $dl=TemporarySalesDetails::where('tem_sales_id',$data->id)->delete();
                     $dlstock=Stock::where('tem_sales_id',$data->id)->delete();
                     foreach($request->product_id as $key => $value){
-                        if($value){
+                        if($request->subtotal_price[$key] > 0){
                             $details = new TemporarySalesDetails;
                             $details->tem_sales_id=$data->id;
                             $details->product_id=$request->product_id[$key];
@@ -189,6 +194,7 @@ class SalesController extends Controller
                         }
                     }
                 }
+                DB::commit();
             Toastr::success('Update Successfully!');
             return redirect()->route(currentUser().'.sales.index');
             } else{
@@ -197,6 +203,7 @@ class SalesController extends Controller
             }
         }
         catch (Exception $e){
+            DB::rollback();
             dd($e);
             return back()->withInput();
 

@@ -95,7 +95,8 @@ class DOController extends Controller
                                     $details = new D_o_detail;
                                     $details->do_id=$data->id;
                                     $details->product_id=$request->product_id[$key];
-                                    $details->qty_pcs=$request->qty_pcs[$key];
+                                    $details->qty_pcs=$request->qty_pcs[$key] + $request->qtyPc[$key];
+                                    $details->add_qty_pcs=$request->qtyPc[$key];
                                     $details->qty=$request->qty[$key];
                                     $details->free=$request->free_qty[$key];
                                     $details->dp=$request->dp[$key];

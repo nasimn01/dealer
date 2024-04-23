@@ -50,10 +50,10 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                {{--  <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
                                     <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
                                     @if($user)
-                                        <select class="form-select supplier_id" onchange="getProduct();">
+                                        <select class="form-select supplier_id" name="distributor_id" onchange="getProduct();">
                                             @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
                                                 <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                             @empty
@@ -61,7 +61,7 @@
                                             @endforelse
                                         </select>
                                     @else
-                                        <select class="form-select supplier_id">
+                                        <select class="form-select supplier_id" name="distributor_id" onchange="getProduct();">
                                             <option value="">Select Distributor</option>
                                             @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                 <option value="{{ $sup->id }}">{{ $sup->name }}</option>
@@ -70,7 +70,7 @@
                                             @endforelse
                                         </select>
                                     @endif
-                                </div>  --}}
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">

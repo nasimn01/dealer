@@ -103,10 +103,16 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="col-lg-2 col-md-3 col-sm-6">
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="q">{{__('Quantity(CTN)')}}<span class="text-danger">*</span></label>
                                                 <input type="number" class="form-control" id="qty">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-3 col-sm-6">
+                                            <div class="form-group mb-3">
+                                                <label class="py-2" for="qpc">{{__('Quantity(PCS)')}}<span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" id="qtyPcs">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12 mt-4">
@@ -138,6 +144,7 @@
                                             <th scope="col">{{__('#SL')}}</th>
                                             <th scope="col">{{__('Product Name')}}</th>
                                             <th scope="col">{{__('Qty(CTN)')}}</th>
+                                            <th scope="col">{{__('Qty(PCS)')}}</th>
                                             <th scope="col">{{__('Free Qty(PCS)')}}</th>
                                             <th scope="col">{{__('DP(CTN)')}}</th>
                                             <th scope="col">{{__('Amount')}}</th>
@@ -199,6 +206,7 @@
             //let product_id= $('#product_id').find(":selected").data('value');
             //console.log(productName);
             let qty = $('#qty').val();
+            let qtyPc = $('#qtyPcs').val();
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",
                 type: "GET",
@@ -279,6 +287,9 @@
                                 <td class="qty${counter}"><span>${qty}</span>
                                     <input type="hidden" class="qty_sum" name="qty[]" value="${qty}">
                                 </td>
+                                <td class="qtyPc${counter}"><span>${qtyPc}</span>
+                                    <input type="hidden" class="qtyPc_sum" name="qtyPc[]" value="${qtyPc}">
+                                </td>
                                 <td class="free_qty${counter}"><span>${freeQtyCount}</span>
                                     <input type="hidden" class="freeqty_sum" name="free_qty[]" value="${freeQtyCount}">
                                 </td>
@@ -306,6 +317,7 @@
                         // Clear input fields
                         $('#product_id').val('');
                         $('#qty').val('');
+                        $('#qtyPcs').val('');
                         totalAmount();     //calculate total do amount
                     }else{
                         const setTime=document.getElementById('warning_message');
