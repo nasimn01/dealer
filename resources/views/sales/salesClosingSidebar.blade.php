@@ -63,6 +63,13 @@
                                     <input readonly type="text" id="" class="form-control" value="{{ $sales->sr?->name }}"  name="sr_id">
                                     <input class="form-control" type="hidden"  name="sr_id" value="{{ $sales->sr_id }}" placeholder="">
                                 </div>
+                                @if (!empty($sales->distributor_id))
+                                    <div class="col-lg-3 col-md-3 col-sm-6 mt-2 dsrNameContainer">
+                                        <label for=""><b>Distributor Name</b></label>
+                                        <input readonly class="form-control" type="text" value="{{ $sales->distributor?->name }}" placeholder="">
+                                        <input class="form-control" type="hidden" name="distributor_id" value="{{ old('distributor_id',$sales->distributor_id) }}" placeholder="">
+                                    </div>
+                                @endif
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">

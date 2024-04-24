@@ -9,32 +9,48 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
-                    <div class="row pb-1">
-                        {{--  <div class="col-10">
-                            <form action="" method="get">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <select name="sr_id" class="choices form-select">
-                                            <option value="">Select</option>
-                                            @forelse ($userSr as $p)
-                                                <option value="{{$p->id}}" {{ request('sr_id')==$p->id?"selected":""}}>{{$p->name}}</option>
-                                            @empty
-                                                <option value="">No Data Found</option>
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                    <div class="col-2 col-sm-4 ps-0 text-start">
-                                        <button class="btn btn-sm btn-info" type="submit">Search</button>
-                                        <a class="btn btn-sm btn-warning " href="{{route(currentUser().'.supplier.index')}}" title="Clear">Clear</a>
-                                    </div>
-                                    <div class="col-2 p-0 m-0">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>  --}}
-                        <div class="col-2">
+                    <form action="">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                                <label for="fdate">{{__('From Date')}}</label>
+                                <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                                <label for="fdate">{{__('To Date')}}</label>
+                                <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                                <label for="lcNo">{{__('Distributor')}}</label>
+                                <select name="distributor_id" class="select2 form-select">
+                                    <option value="">Select</option>
+                                    @forelse ($distributors as $d)
+                                        <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                    @empty
+                                        <option value="">No Data Found</option>
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                                <label for="lcNo">{{__('SR')}}</label>
+                                <select name="sr_id" class="select2 form-select">
+                                    <option value="">Select</option>
+                                    @forelse ($sr as $d)
+                                        <option value="{{$d->id}}" {{ request('sr_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                    @empty
+                                        <option value="">No Data Found</option>
+                                    @endforelse
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row mt-4">
+                            <div class="col-6 d-flex justify-content-end">
+                                <button type="#" class="btn btn-sm btn-success me-1 mb-1 ps-5 pe-5">{{__('Show')}}</button>
+                            </div>
+                            <div class="col-6 d-flex justify-content-Start">
+                                <a href="{{route(currentUser().'.sales.index')}}" class="btn pbtn btn-sm btn-warning me-1 mb-1 ps-5 pe-5">{{__('Clear')}}</a>
+                            </div>
+                        </div>
+                    </form>
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <a class="float-end" href="{{route(currentUser().'.sales.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
@@ -43,6 +59,8 @@
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Shop/DSR Name')}}</th>
+                                    <th scope="col">{{__('SR')}}</th>
+                                    <th scope="col">{{__('Distributor')}}</th>
                                     <th scope="col">{{__('sales_date')}}</th>
                                     <th scope="col">{{__('total')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -59,6 +77,8 @@
                                         <span class="text-warning">DSR :</span> {{ $p->dsr?->name }}
                                         @endif
                                     </td>
+                                    <td>{{$p->sr?->name}}</td>
+                                    <td>{{$p->distributor?->name}}</td>
                                     <td>{{$p->sales_date}}</td>
                                     <td>{{$p->total}}</td>
                                     <td class="white-space-nowrap">

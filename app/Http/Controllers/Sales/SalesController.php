@@ -17,6 +17,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
 use \App\Models\Product\Product;
+use App\Models\Settings\Supplier;
 use App\Models\Settings\Unit;
 use Carbon\Carbon;
 use Exception;
@@ -27,22 +28,45 @@ class SalesController extends Controller
 
     public function index(Request $request)
     {
-        $sales=TemporarySales::where('status',0)->where(company())->paginate(10);
+        $sales=TemporarySales::where('status',0)->where(company());
         $userSr=User::where(company())->where('role_id',5)->get();
-        return view('sales.index',compact('sales','userSr'));
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        $sr = User::where(company())->where('role_id',5)->select('id','name')->get();
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(temporary_sales.sales_date)'), [$request->fdate, $tdate]);
+        }
+        if ($request->distributor_id)
+            $sales->where('distributor_id',$request->distributor_id);
+        if ($request->sr_id)
+            $sales->where('sr_id',$request->sr_id);
+
+        $sales = $sales->paginate(20);
+        return view('sales.index',compact('sales','userSr','sr','distributors'));
     }
     public function salesClosingList(Request $request)
     {
+        $distributors = Supplier::where(company())->select('id','name')->get();
+        $sr = User::where(company())->where('role_id',5)->select('id','name')->get();
         $sales = Sales::orderBy('id','DESC');
         // $sales = Sales::join('users', 'users.id', '=', 'sales.dsr_id')->where('sales.company_id', company())->select('sales.*', 'users.id', 'users.sr_id');
         $userSr=User::where(company())->where('role_id',5)->get();
+        // if ($request->sr_id)
+        // $sales->where('users.sr_id',$request->sr_id);
+
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
+        }
+        if ($request->distributor_id)
+            $sales->where('distributor_id',$request->distributor_id);
         if ($request->sr_id)
-        $sales->where('users.sr_id',$request->sr_id);
+            $sales->where('sr_id',$request->sr_id);
 
         $sales = $sales->paginate(25);
 
 
-        return view('sales.salesClosingList',compact('sales','userSr'));
+        return view('sales.salesClosingList',compact('sales','userSr','distributors','sr'));
     }
 
 
@@ -328,6 +352,7 @@ class SalesController extends Controller
                 $sales->shop_id = $request->shop_id;
                 $sales->dsr_id = $request->dsr_id;
                 $sales->sr_id = $request->sr_id;
+                $sales->distributor_id = $request->distributor_id;
                 $sales->tem_sales_id = $request->tem_sales_id;
                 $sales->sales_date = date('Y-m-d', strtotime($request->sales_date));
 

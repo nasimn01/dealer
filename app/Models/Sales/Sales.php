@@ -22,6 +22,9 @@ class Sales extends Model
     public function sr(){
         return $this->belongsTo(User::class,'sr_id','id');
     }
+    public function distributor(){
+        return $this->belongsTo(Supplier::class,'distributor_id','id');
+    }
     public function sales_payment(){
         return $this->hasMany(SalesPayment::class,'sales_id','id');
     }
