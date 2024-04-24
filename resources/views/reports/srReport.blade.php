@@ -85,8 +85,8 @@
                                             </table>
                                         @endif
                                     </td>
-                                    <td style="vertical-align: bottom;">{{$p->daily_total_taka}}
-                                        <input type="hidden" value="{{$p->daily_total_taka}}" class="final_total">
+                                    <td style="vertical-align: bottom;">{{$p->final_total}}
+                                        <input type="hidden" value="{{$p->final_total}}" class="final_total">
                                     </td>
                                     {{--  <td>
                                         <a class="ms-2" href="{{route(currentUser().'.sales.printpage',encryptor('encrypt',$p->id))}}">
