@@ -167,7 +167,7 @@ class ReportController extends Controller
         $userSr=User::where(company())->where('role_id',5)->get();
         $userDsr=User::where(company())->where('role_id',4)->get();
         $sales = Sales::where(company());
-        
+
         if ($request->fdate){
             $tdate = $request->tdate ?: $request->fdate;
             $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
@@ -188,6 +188,7 @@ class ReportController extends Controller
         $userSr=User::where(company())->where('role_id',5)->get();
         $userDsr=User::where(company())->where('role_id',4)->get();
         $sales = Sales::where(company());
+        
         if ($request->fdate){
             $tdate = $request->tdate ?: $request->fdate;
             $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
