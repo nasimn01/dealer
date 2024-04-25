@@ -16,4 +16,11 @@ class Shop extends Model
     public function shopBalances(){
         return $this->hasMany(ShopBalance::class,'shop_id','id');
     }
+
+    public function sr(){
+        return $this->belongsTo(User::class,'sr_id','id');
+    }
+    public function distributor(){
+        return $this->belongsTo(Supplier::class,'sup_id','id');
+    }
 }

@@ -80,6 +80,9 @@
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.srreportProduct')}}" >{{__('SR Report(Product)')}}</a></li>
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.cashCollection')}}" >{{__('Cash Collection')}}</a></li>
             <li class="py-1 submenu-item"><a href="{{route(currentUser().'.damageProductList')}}" >{{__('Damage Product')}}</a></li>
+            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales_expense')}}" >{{__('Sales Expense')}}</a></li>
+            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.sales_commission')}}" >{{__('Sales Commission')}}</a></li>
+            <li class="py-1 submenu-item"><a href="{{route(currentUser().'.dsr_salary')}}" >{{__('DSR Salary')}}</a></li>
 		</ul>
     </li>
     <li class="sidebar-item has-sub">

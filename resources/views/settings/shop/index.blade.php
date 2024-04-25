@@ -11,11 +11,31 @@
                     <div class="col-10">
                         <form action="" method="get">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-2">
                                     <input type="text" name="shop_name" value="{{isset($_GET['shop_name'])?$_GET['shop_name']:''}}" placeholder="Shop Name" class="form-control">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-2">
                                     <input type="text" name="owner_name" value="{{isset($_GET['owner_name'])?$_GET['owner_name']:''}}" placeholder="Owner Name" class="form-control">
+                                </div>
+                                <div class="col-2">
+                                    <select name="distributor_id" class="select2 form-select">
+                                        <option value="">Select Distributor</option>
+                                        @forelse ($distributor as $d)
+                                            <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <select name="sr_id" class="select2 form-select">
+                                        <option value="">Select SR</option>
+                                        @forelse ($userSr as $d)
+                                            <option value="{{$d->id}}" {{ request('sr_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                        @empty
+                                            <option value="">No Data Found</option>
+                                        @endforelse
+                                    </select>
                                 </div>
 
                                 <div class="col-2 ps-0">
@@ -40,6 +60,8 @@
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Shop Name')}}</th>
+                                <th scope="col">{{__('Distributor')}}</th>
+                                <th scope="col">{{__('SR')}}</th>
                                 <th scope="col">{{__('Owner Name')}}</th>
                                 <th scope="col">{{__('Contact')}}</th>
                                 <th scope="col">{{__('DSR')}}</th>
@@ -55,6 +77,8 @@
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$data->shop_name}}</td>
+                                <td>{{$data->distributor?->name}}</td>
+                                <td>{{$data->sr?->name}}</td>
                                 <td>{{$data->owner_name}}</td>
                                 <td>{{$data->contact}}</td>
                                 <td>{{$data->dsr?->name}}</td>

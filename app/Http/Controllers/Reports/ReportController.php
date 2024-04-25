@@ -147,6 +147,61 @@ class ReportController extends Controller
         return view('reports.srReportProduct',compact('sales','products','userSr'));
     }
 
+    public function dsrsalary(Request $request)
+    {
+        $userDsr=User::where(company())->where('role_id',4)->get();
+        $sales = Sales::where(company());
+        if ($request->fdate){
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
+        }
+        if ($request->dsr_id)
+            $sales->where('sales.dsr_id',$request->dsr_id);
+
+        $sales=$sales->orderBy('id', 'DESC')->get();
+        return view('reports.dsrsalary',compact('sales','userDsr'));
+    }
+    public function expense(Request $request)
+    {
+        $distributor = Supplier::where(company())->get();
+        $userSr=User::where(company())->where('role_id',5)->get();
+        $userDsr=User::where(company())->where('role_id',4)->get();
+        $sales = Sales::where(company());
+        if ($request->fdate){
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
+        }
+        if ($request->distributor_id)
+            $sales->where('sales.distributor_id',$request->distributor_id);
+        if ($request->sr_id)
+            $sales->where('sales.sr_id',$request->sr_id);
+        if ($request->dsr_id)
+            $sales->where('sales.dsr_id',$request->dsr_id);
+
+        $sales=$sales->orderBy('id', 'DESC')->get();
+        return view('reports.expense',compact('sales','distributor','userSr','userDsr'));
+    }
+    public function salesCommission(Request $request)
+    {
+        $distributor = Supplier::where(company())->get();
+        $userSr=User::where(company())->where('role_id',5)->get();
+        $userDsr=User::where(company())->where('role_id',4)->get();
+        $sales = Sales::where(company());
+        if ($request->fdate){
+            $tdate = $request->tdate ?: $request->fdate;
+            $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
+        }
+        if ($request->distributor_id)
+            $sales->where('sales.distributor_id',$request->distributor_id);
+        if ($request->sr_id)
+            $sales->where('sales.sr_id',$request->sr_id);
+        if ($request->dsr_id)
+            $sales->where('sales.dsr_id',$request->dsr_id);
+
+        $sales=$sales->orderBy('id', 'DESC')->get();
+        return view('reports.commission',compact('sales','distributor','userSr','userDsr'));
+    }
+
     public function ShopDue(Request $request)
     {
         $shop = Shop::where(company())->get();

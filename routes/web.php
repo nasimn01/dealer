@@ -169,6 +169,9 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::get('/sr-report-product',[report::class,'srreportProduct'])->name('owner.srreportProduct');
         Route::get('/cash-collection-report',[report::class,'cashCollection'])->name('owner.cashCollection');
         Route::get('/damage-product-list',[report::class,'damageProductList'])->name('owner.damageProductList');
+        Route::get('/dsr-salary',[report::class,'dsrsalary'])->name('owner.dsr_salary');
+        Route::get('/sales-expense',[report::class,'expense'])->name('owner.sales_expense');
+        Route::get('/sales-commission',[report::class,'salesCommission'])->name('owner.sales_commission');
 
         //Accounts
         Route::resource('master',master::class,['as'=>'owner']);
