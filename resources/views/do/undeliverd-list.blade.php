@@ -35,6 +35,12 @@
                     </div>
                 </div>
                 <!-- table bordered -->
+                @php
+                    $totalProductQty = 0;
+                    $totalFreeQty = 0;
+                    $totalDpPcs = 0;
+                    $totalAmount = 0;
+                @endphp
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0 table-striped">
                         {{--  <a class="float-end" href="{{route(currentUser().'.docontroll.create')}}" style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>  --}}
@@ -61,6 +67,12 @@
                                 <td>{{$p->dp_pcs}}</td>
                                 <td>{{(($p->qty_pcs-$p->receive_qty)*($p->dp_pcs))+(($p->free-$p->receive_free_qty)*($p->dp_pcs))}}</td>
                             </tr>
+                            @php
+                                $totalProductQty += $p->qty_pcs-$p->receive_qty;
+                                $totalFreeQty += $p->free-$p->receive_free_qty;
+                                $totalDpPcs += $p->dp_pcs;
+                                $totalAmount += (($p->qty_pcs-$p->receive_qty)*($p->dp_pcs))+(($p->free-$p->receive_free_qty)*($p->dp_pcs));
+                            @endphp
                             @endif
                             @empty
                                 <tr>
@@ -68,6 +80,15 @@
                                 </tr>
                             @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr class="bg-secondary text-white">
+                                <th colspan="3" class="text-center">Total</th>
+                                <td>{{$totalProductQty}}</td>
+                                <td>{{$totalFreeQty}}</td>
+                                <td>{{$totalDpPcs}}</td>
+                                <td>{{$totalAmount}}</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="my-3">
