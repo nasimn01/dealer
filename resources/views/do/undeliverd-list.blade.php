@@ -81,7 +81,7 @@
                             @endforelse
                         </tbody>
                         <tfoot>
-                            <tr class="bg-secondary">
+                            <tr class="bg-secondary text-white">
                                 <th colspan="3" class="text-center">Total</th>
                                 <td>{{$totalProductQty}}</td>
                                 <td>{{$totalFreeQty}}</td>
