@@ -39,6 +39,7 @@
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('QTY(CTN)')}}</th>
+                                <th scope="col">{{__('QTY(PCS)')}}</th>
                                 <th scope="col">{{__('Free Qty(PCS)')}}</th>
                                 <th scope="col">{{__('DP(CTN)')}}</th>
                                 <th scope="col">{{__('Subtotal')}}</th>
@@ -50,6 +51,7 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$data->product?->product_name}}</td>
                                 <td>{{$data->qty}}</td>
+                                <td>{{$data->qty_pcs}}</td>
                                 <td>{{$data->free}}</td>
                                 <td>{{$data->dp}}</td>
                                 <td>{{$data->sub_total}}</td>
