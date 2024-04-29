@@ -58,11 +58,11 @@
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="6" class="text-center">No Data Found</th>
+                                <th colspan="7" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                             <tr>
-                                <td colspan="4"></td>
+                                <td colspan="5"></td>
                                 <td class="text-end"><b>Total:</b> </td>
                                 <td>{{ $doData->total_amount }}</td>
                             </tr>
