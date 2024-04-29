@@ -42,6 +42,7 @@
                                 <th scope="col">{{__('QTY(PCS)')}}</th>
                                 <th scope="col">{{__('Free Qty(PCS)')}}</th>
                                 <th scope="col">{{__('DP(CTN)')}}</th>
+                                <th scope="col">{{__('DP(PCS)')}}</th>
                                 <th scope="col">{{__('Subtotal')}}</th>
                             </tr>
                         </thead>
@@ -54,15 +55,16 @@
                                 <td>{{$data->qty_pcs}}</td>
                                 <td>{{$data->free}}</td>
                                 <td>{{$data->dp}}</td>
+                                <td>{{$data->dp_pcs}}</td>
                                 <td>{{$data->sub_total}}</td>
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="7" class="text-center">No Data Found</th>
+                                <th colspan="8" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                             <tr>
-                                <td colspan="5"></td>
+                                <td colspan="6"></td>
                                 <td class="text-end"><b>Total:</b> </td>
                                 <td>{{ $doData->total_amount }}</td>
                             </tr>

@@ -11,6 +11,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Settings\Supplier_balance;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
@@ -130,10 +131,15 @@ class SupplierController extends Controller
      * @param  \App\Models\Settings\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $suplier=Supplier_balance::where('supplier_id',encryptor('decrypt',$id))->get();
+        $suplier=Supplier_balance::where('supplier_id',encryptor('decrypt',$id));
         $supplierman=Supplier_balance::where('supplier_id',encryptor('decrypt',$id))->groupBy('supplier_id')->first();
+        if ($request->fdate){
+            $tdate = $request->tdate ?: $request->fdate;
+            $suplier->whereBetween(DB::raw('date(supplier_balances.balance_date)'), [$request->fdate, $tdate]);
+        }
+        $suplier=$suplier->get();
         return view('settings.supplier.show',compact('suplier','supplierman'));
     }
 
