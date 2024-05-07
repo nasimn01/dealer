@@ -65,9 +65,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($product as $p)
+                            @forelse($product as $key=>$p)
                             <tr>
-                            <th scope="row">{{ ++$loop->index }}</th>
+                            <th scope="row">{{ $product->firstItem() + $key }}</th>
                                 <td>{{$p->group?->name}}</td>
                                 {{--  <td>{{$p->category?->name}}</td>  --}}
                                 <td>{{$p->product_name}}</td>
@@ -99,7 +99,7 @@
                     </table>
                 </div>
                 <div class="my-3">
-                    {!! $product->links()!!}
+                    {!! $product->withQueryString()->links()!!}
                 </div>
             </div>
         </div>

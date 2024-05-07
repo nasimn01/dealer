@@ -63,7 +63,9 @@
                                         @forelse($data as $d)
                                         <tr class="text-center">
                                             <td>{{ ++$loop->index }}</td>
-                                            <td>{{ $d->shop_name }}</td>
+                                            <td>
+                                                <a href="{{route(currentUser().'.shop_balance_history',$d->shop_id)}}">{{ $d->shop_name }}</a>
+                                            </td>
                                             <td>{{ $d->balance_out-$d->balance_in }}</td>
                                         </tr>
                                         @empty

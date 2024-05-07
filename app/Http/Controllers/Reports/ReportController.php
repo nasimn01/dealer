@@ -70,15 +70,22 @@ class ReportController extends Controller
 
     public function cashCollection(Request $request)
     {
-        $sales = Sales::orderBy('id','DESC');
+        $sales = Sales::whereNotNull('today_final_cash')->orderBy('id','DESC');
+        $userDsr = User::where('role_id',4)->get();
+        $shop = Shop::all();
         if ($request->fdate) {
             $tdate = $request->tdate ?: $request->fdate;
             $sales->whereBetween(DB::raw('date(sales.sales_date)'), [$request->fdate, $tdate]);
         }
-        $sales = $sales->get();
+        if ($request->dsr_id)
+            $sales->where('dsr_id',$request->dsr_id);
+        if ($request->shop_id)
+            $sales->where('shop_id',$request->shop_id);
+
+        $sales = $sales->paginate(25);
         //return $sales;
         $userSr=User::where(company())->where('role_id',5)->get();
-        return view('reports.cashCollection',compact('sales','userSr'));
+        return view('reports.cashCollection',compact('sales','userDsr','shop'));
     }
 
     public function damageProductList(Request $request)
@@ -219,6 +226,11 @@ class ReportController extends Controller
             }
         $data = $query->get();
         return view('reports.shopdue', compact('shop','data'));
+    }
+    public function ShopBalanceHistory($id){
+        $shop = Shop::where('id',$id)->first();
+        $data = ShopBalance::where('shop_id',$id)->get();
+        return view('reports.shopBalanceHistory',compact('shop','data'));
     }
 
     public function undeliverdProduct(Request $request)
