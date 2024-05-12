@@ -145,20 +145,18 @@
                                             @endif
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="totaltk">{{__('Total Taka')}}</h5></td>
-                                                <td class="text-end">
+                                                <td class="text-end" colspan="9">
                                                     <input type="text" class="form-control ptotal_taka" value="{{ $sales->total }}" name="daily_total_taka">
                                                     <span onClick='previousProduct();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
-                                                <td></td>
                                             </tr>
                                         </tbody>
                                         <tfoot id="tfootSection" style="display: none;">
                                             <tr>
                                                 <td class="text-end" colspan="8"><h5 for="return_total">{{__('Return Total Taka')}}</h5></td>
-                                                <td class="text-end">
+                                                <td class="text-end" colspan="9">
                                                     <input readonly type="text" class="form-control return_total_taka" value="0" name="return_total_taka">
                                                 </td>
-                                                <td></td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -456,7 +454,7 @@
         var previousProduct=`
             <tr>
                 <td colspan="3">
-                    <select class="select2 form-select product_id"  onchange="getCtnQty(this);" name="return_product_id[]">
+                    <select class="form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
                         <option value="">Select Product</option>
                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
                         <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
@@ -484,6 +482,7 @@
                 <td><input class="form-control return_subtotal_price" type="text" onkeyup="return_total_calculate();" onblur="return_total_calculate();" onchange="return_total_calculate();" name="return_subtotal_price[]" value="" placeholder="Sub total"></td>
                 <td>
                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                    {{--  <span onClick='previousProduct();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
                 </td>
             </tr>`;
             $('#sales_repeat').append(previousProduct);
