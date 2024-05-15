@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route(currentUser().'.sales.store')}}">
+                        <form method="post" action="{{route(currentUser().'.sales.store')}}" onsubmit="return confirm('are you sure to Save?')">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 col-md-6 col-sm-12 mt-2">

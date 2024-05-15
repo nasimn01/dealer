@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('bill_id')->nullable();
             $table->string('reference_num')->nullable();
             $table->integer('total_qty')->nullable();
+            $table->integer('total_pcs_qty')->nullable();
             $table->decimal('total_amount',14,2)->nullable();
             // $table->decimal('vat_amount',10,2)->nullable();
             // $table->decimal('discount_amount',10,2)->nullable();

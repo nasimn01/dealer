@@ -29,7 +29,7 @@
                                             <div class="form-group mb-3">
                                                 <label class="py-2" for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
                                                 @if($user)
-                                                    <select class="form-select supplier_id" name="supplier_id" required >
+                                                    <select class="form-select supplier_id" name="supplier_id" required onchange="showProduct(this.value);">
                                                         @forelse (App\Models\Settings\Supplier::where(company())->where('id',$user->distributor_id)->get() as $sup)
                                                             @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
                                                             <option data-balance="{{ $balance }}" value="{{ $sup->id }}">{{ $sup->name }}</option>
@@ -38,7 +38,7 @@
                                                         @endforelse
                                                     </select>
                                                 @else
-                                                    <select class="form-select supplier_id" name="supplier_id" onchange="getBalance()" required>
+                                                    <select class="form-select supplier_id" name="supplier_id" onchange="getBalance(); showProduct(this.value);" required>
                                                         <option value="">Select Distributor</option>
                                                         @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
                                                             @php $balance=$sup->balances?->where('status',1)->sum('balance_amount') - $sup->balances?->where('status',0)->sum('balance_amount') @endphp
@@ -84,19 +84,19 @@
                                                 <label class="py-2" for="product">{{__('Product')}}<span class="text-danger">*</span></label>
                                                 @if($user)
                                                     {{--  <select class=" choices form-select" id="product_id" onchange="getBalance()">  --}}
-                                                    <select class="select2 form-select" id="product_id" onchange="getBalance()">
+                                                    <select class=" form-select" id="product_id" onchange="getBalance()">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->where('distributor_id',$user->distributor_id)->get(); as $pro)
-                                                        <option data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option class="selecet_hide selecet_hide{{$pro->distributor_id}}" data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
                                                 @else
-                                                    <select class="select2 form-select" id="product_id">
+                                                    <select class=" form-select" id="product_id">
                                                     {{--  <select class="form-select" id="product_id">  --}}
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option class="selecet_hide selecet_hide{{$pro->distributor_id}}" data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -157,17 +157,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <table class="table table-sm table-borderless ">
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-end"><h4>Total Qty</h4></td>
-                                                <td><input readonly type="number" class="form-control total_qty" name="total_qty" value=""></td>
-                                                <td class="text-end"><h4>Total Amount</h4></td>
-                                                <td><input readonly type="number" class="form-control total_amount" name="total_amount" value=""></td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-borderless ">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-end"><h6>Total CTN</h6></td>
+                                                    <td><input readonly type="number" class="form-control total_qty" name="total_qty" value=""><input type="hidden" class="totalPcsQty" value=""></td>
+                                                    <td class="text-end"><h6>Total PCS</h6></td>
+                                                    <td><input readonly type="number" class="form-control total_pcs_qty" name="total_pcs_qty" value=""></td>
+                                                    <td class="text-end"><h6>Total Amount</h6></td>
+                                                    <td><input readonly type="number" class="form-control total_amount" name="total_amount" value=""></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="col-lg-6 offset-3 d-flex justify-content-between">
@@ -186,6 +189,24 @@
 @endsection
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    /* call on load page */
+    $(document).ready(function(){
+       $('.selecet_hide').hide();
+   })
+   let old_supplier_id=0;
+   function showProduct(value){
+        let supplier = value;
+        console.log(supplier);
+         $('.selecet_hide').hide();
+         $('.selecet_hide'+supplier).show()
+         if(old_supplier_id!=supplier){
+            $('#product_id').prop('selectedIndex', 0);
+            $('.old_tr_remove').closest('tr').remove();
+             old_supplier_id=supplier;
+         }
+    }
+</script>
 <script>
     $(document).ready(function() {
 
@@ -208,6 +229,8 @@
             //console.log(productName);
             let qty = $('#qty').val();
             let qtyPc = $('#qtyPcs').val();
+            const qtyValue = qty ? qty : '0';
+            const qtyPcValue = qtyPc ? qtyPc : '0';
             $.ajax({
                 url: "{{route(currentUser().'.unit_data_get')}}",
                 type: "GET",
@@ -227,7 +250,7 @@
                         let totalQtyPcs=(data*qty);
                         let newRow = `
                             <tr class="text-center product_detail_tr${counter}">
-                                <td>${counter + 1}</td>
+                                <td class="old_tr_remove">${counter + 1}</td>
                                 <td>${productName}
                                     <input type="hidden" name="product_id[]" value="${ProductId}">
                                     <input type="hidden" name="qty_pcs[]" value="${totalQtyPcs}">
@@ -287,10 +310,10 @@
                                     </div>
                                 </td>
                                 <td class="qty${counter}"><span>${qty}</span>
-                                    <input type="hidden" class="qty_sum" name="qty[]" value="${qty}">
+                                    <input type="hidden" class="qty_sum" name="qty[]" value="${qtyValue}">
                                 </td>
                                 <td class="qtyPc${counter}"><span>${qtyPc}</span>
-                                    <input type="hidden" class="qtyPc_sum" name="qtyPc[]" value="${qtyPc}">
+                                    <input type="hidden" class="qtyPc_sum" name="qtyPc[]" value="${qtyPcValue}">
                                 </td>
                                 <td class="free_qty${counter}"><span>${freeQtyCount}</span>
                                     <input type="hidden" class="freeqty_sum" name="free_qty[]" value="${freeQtyCount}">
@@ -340,16 +363,22 @@
     function totalAmount(){
         var total=0;
         var totalQty=0;
+        var totalPcsQty=0;
         $('.sub_total').each(function(){
             total+=parseFloat($(this).val());
         });
         $('.qty_sum').each(function(){
             totalQty+=parseFloat($(this).val());
         });
+
+        $('.qtyPc_sum').each(function(){
+            totalPcsQty+=parseFloat($(this).val());
+        });
         $('.doamount').text(total);
         $('.doamount_data').val(total);
         $('.total_amount').val(total);
         $('.total_qty').val(totalQty);
+        $('.total_pcs_qty').val(totalPcsQty);
         supBalance=parseFloat($('.supbalance').text());
 
         if(total>supBalance){

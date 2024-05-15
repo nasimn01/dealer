@@ -50,7 +50,8 @@
                                     <th scope="col">{{__('Supplier')}}</th>
                                     <th scope="col">{{__('Do Date')}}</th>
                                     <th scope="col">{{__('Reference Number')}}</th>
-                                    <th scope="col">{{__('Total Qty')}}</th>
+                                    <th scope="col">{{__('Total Qty CTN')}}</th>
+                                    <th scope="col">{{__('Total Qty PCS')}}</th>
                                     <th scope="col">{{__('Total Amount')}}</th>
                                     {{--  <th scope="col">{{__('Status')}}</th>  --}}
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -64,6 +65,7 @@
                                     <td>{{\Carbon\Carbon::parse($p->do_date)->format('d-m-Y')}}</td>
                                     <td>{{$p->reference_num}}</td>
                                     <td>{{$p->total_qty}}</td>
+                                    <td>{{$p->total_pcs_qty}}</td>
                                     <td>{{$p->total_amount}}
                                         <input type="hidden" value="{{$p->total_amount}}" class="final_total">
                                     </td>

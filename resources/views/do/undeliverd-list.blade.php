@@ -57,7 +57,7 @@
                         </thead>
                         <tbody>
                             @forelse($dodetails as $p)
-                            @if($p->qty_pcs>$p->receive_qty || $p->free>$p->receive_free_qty)
+                            @if($p->qty_pcs > $p->receive_qty || $p->free > $p->receive_free_qty)
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$p->doReference?->reference_num}}</td>

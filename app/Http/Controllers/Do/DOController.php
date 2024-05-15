@@ -71,6 +71,7 @@ class DOController extends Controller
             $data->bill_id = $request->bill_id;
             $data->reference_num = $request->reference_num;
             $data->total_qty = $request->total_qty;
+            $data->total_pcs_qty = $request->total_pcs_qty;
             $data->total_amount = $request->total_amount;
             // $data->vat_amount = $request->vat_amount;
             // $data->discount_amount = $request->discount_amount;
