@@ -197,9 +197,8 @@
    let old_supplier_id=0;
    function showProduct(value){
         let supplier = value;
-        console.log(supplier);
          $('.selecet_hide').hide();
-         $('.selecet_hide'+supplier).show()
+         $('.selecet_hide'+supplier).show();
          if(old_supplier_id!=supplier){
             $('#product_id').prop('selectedIndex', 0);
             $('.old_tr_remove').closest('tr').remove();

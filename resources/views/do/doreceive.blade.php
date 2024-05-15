@@ -4,6 +4,16 @@
 @section('pageSubTitle',trans('Receive'))
 
 @section('content')
+<style>
+    .select2-container {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    width: 100% !important;
+}
+</style>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -34,7 +44,7 @@
 
                                 <div class="col-lg-3 mt-2">
                                     <label for="lcNo"><b>Distributor<span class="text-danger">*</span></b></label>
-                                    <select name="distributor_id" class="select2 form-select" required>
+                                    <select name="distributor_id" class="select2 form-select supplier_id" onchange="getDistProduct('product_id');" required>
                                         <option value="">Select</option>
                                         @forelse ($distributors as $d)
                                             <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>
@@ -50,7 +60,7 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col">{{__('Product Name')}}</th>
+                                                <th scope="col" width="30%">{{__('Product Name')}}</th>
                                                 {{--  <th scope="col">{{__('Lot Number')}}</th>  --}}
                                                 <th scope="col">{{__('Do Referance')}}</th>
                                                 <th scope="col">{{__('CTN')}}</th>
@@ -68,10 +78,6 @@
                                                 <td>
                                                     <select class="select2 product_id" id="product_id" onchange="doData(this);" name="product_id[]">
                                                         <option value="">Select Product</option>
-                                                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-                                                        @empty
-                                                        @endforelse
                                                     </select>
                                                     <input type="hidden" class="tp_price" name="tp_price[]">
                                                     <input type="hidden" class="tp_free" name="tp_free[]">
@@ -120,16 +126,46 @@
 @endsection
 @push("scripts")
 <script>
+    let old_supplier_id=0;
+    let opt="";
+    function getDistProduct(product_id) {
+        let supplier_id=$('.supplier_id').val();
+
+        if(old_supplier_id!=supplier_id){
+            $('.old_tr_remove').closest('tr').remove();
+            $.ajax({
+                url: "{{ route(currentUser().'.get_supplier_product') }}",
+                type: "GET",
+                dataType: "json",
+                data:{supplier_id:supplier_id},
+                success: function(data) {
+                    opt=`<option value="">Select Product</option>`;
+                    if(data.length > 0){
+                        for(d of data){
+                            opt+=`<option data-dp='${d?.product?.dp_price}' data-tp='${d?.product?.tp_price}' data-tp_free='${d?.product?.tp_free}' data-mrp='${d?.product?.mrp_price}' value="${d?.product?.id}">${d?.product?.product_name}</option>`;
+                        }
+                    }
+                    $('#'+product_id).html(opt)
+                },
+                error: function(xhr, status, error) {
+                    return data="";
+                }
+            });
+           
+            old_supplier_id=supplier_id;
+        }
+        
+        $('#'+product_id).html(opt)
+        
+    }
+
+
     let counter = 0;
     function addRow(){
 var row=`<tr>
     <td>
-        <select class="select2 product_id" id="product_id_${counter}" onchange="doData(this);" name="product_id[]">
+        <select class="select2 product_id old_tr_remove" id="product_id_${counter}" onchange="doData(this);" name="product_id[]">
             <option value="">Select Product</option>
-            @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-            <option data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
-            @empty
-            @endforelse
         </select>
         <input type="hidden" class="tp_price" name="tp_price[]">
         <input type="hidden" class="tp_free" name="tp_free[]">
@@ -153,6 +189,7 @@ var row=`<tr>
     </td>
 </tr>`;
     $('#product').append(row);
+    getDistProduct('product_id_'+counter);
     $(`#product_id_${counter}`).select2();
     counter++;
     //console.log(counter)
