@@ -259,9 +259,9 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                          <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
+                                          <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                                               <option value="">Select</option>
-                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              @foreach ($shops as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                                               @endforeach
                                           </select>
@@ -287,9 +287,9 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                          <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
+                                          <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                                               <option value="">Select</option>
-                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              @foreach ($shops as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                                               @endforeach
                                           </select>
@@ -347,9 +347,9 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-                                          <select class="form-select check_shop_id" name="check_shop_id[]">
+                                          <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                                               <option value="">Select</option>
-                                              @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                                              @foreach ($shops as $shop)
                                               <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                                               @endforeach
                                           </select>
@@ -455,7 +455,7 @@
                 <td colspan="3">
                     <select class="choices form-select product_id" id="product_id" onchange="getCtnQty(this);" name="return_product_id[]">
                         <option value="">Select Product</option>
-                        @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                        @forelse ($product as $pro)
                         <option data-dp='{{ $pro->dp_price }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                         @empty
                         @endforelse
@@ -581,9 +581,9 @@ function oldDue(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select old_due_shop_id" name="old_due_shop_id[]">
+            <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>
@@ -620,9 +620,9 @@ function newDue(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select new_due_shop_id" name="new_due_shop_id[]">
+            <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>
@@ -665,9 +665,9 @@ function newReceive(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
+            <select class="select2 form-select new_receive_shop_id" name="new_receive_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>
@@ -702,9 +702,9 @@ function newCheck(){
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-6 shopNameContainer">
-            <select class="form-select check_shop_id" name="check_shop_id[]">
+            <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                 <option value="">Select</option>
-                @foreach (\App\Models\Settings\Shop::all(); as $shop)
+                @foreach ($shops as $shop)
                 <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
                 @endforeach
             </select>

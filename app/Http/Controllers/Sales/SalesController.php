@@ -79,8 +79,10 @@ class SalesController extends Controller
     public function selectedCreate()
     {
         $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
+        $shops = Shop::all();
+        $userDsr=User::where(company())->where('role_id',4)->get();
         $userSr=User::where(company())->where('role_id',5)->get();
-        return view('sales.selectedCreate',compact('user','userSr'));
+        return view('sales.selectedCreate',compact('user','userSr','userDsr','shops'));
     }
 
     public function store(Request $request)
@@ -339,7 +341,7 @@ class SalesController extends Controller
         $sales = TemporarySales::findOrFail(encryptor('decrypt',$id));
         $shops=Shop::where('sup_id',$sales->distributor_id)->get();
         $dsr=User::where('role_id',4)->get();
-        $product=Product::where(company())->get();
+        $product=Product::where('distributor_id',$sales->distributor_id)->where(company())->get();
         return view('sales.salesClosing',compact('sales','shops','dsr','product'));
     }
     public function salesReceive(Request $request)
@@ -662,10 +664,10 @@ class SalesController extends Controller
             })
             ->first();
             //return $sales;
-            $shops=Shop::all();
+            $shops=Shop::where('sup_id',$sales->distributor_id)->get();
             $dsr=User::where('role_id',4)->get();
             $userSr=User::where(company())->where('role_id',5)->get();
-            $product=Product::where(company())->get();
+            $product=Product::where('distributor_id',$sales->distributor_id)->where(company())->get();
             if($sales){
                 return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product','userSr'));
             }else {
