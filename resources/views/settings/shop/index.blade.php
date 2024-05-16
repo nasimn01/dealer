@@ -3,6 +3,16 @@
 @section('pageSubTitle','List')
 
 @section('content')
+<style>
+    .select2-container {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    width: 100% !important;
+}
+</style>
 <section class="section">
     <div class="row" id="table-bordered">
         <div class="col-12">
@@ -11,39 +21,50 @@
                     <div class="col-10">
                         <form action="" method="get">
                             <div class="row">
-                                <div class="col-2">
-                                    <input type="text" name="shop_name" value="{{isset($_GET['shop_name'])?$_GET['shop_name']:''}}" placeholder="Shop Name" class="form-control">
+                                <div class="col-lg-2 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" name="shop_name" value="{{isset($_GET['shop_name'])?$_GET['shop_name']:''}}" placeholder="Shop Name" class="form-control">
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                    <input type="text" name="owner_name" value="{{isset($_GET['owner_name'])?$_GET['owner_name']:''}}" placeholder="Owner Name" class="form-control">
+                                
+                                <div class="col-lg-2 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" name="owner_name" value="{{isset($_GET['owner_name'])?$_GET['owner_name']:''}}" placeholder="Owner Name" class="form-control">
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                    <select name="distributor_id" class="select2 form-select">
-                                        <option value="">Select Distributor</option>
-                                        @forelse ($distributor as $d)
-                                            <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>
-                                        @empty
-                                            <option value="">No Data Found</option>
-                                        @endforelse
-                                    </select>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="form-group">
+                                        <select name="distributor_id" class="select2 form-select">
+                                            <option value="">Select Distributor</option>
+                                            @forelse ($distributor as $d)
+                                                <option value="{{$d->id}}" {{ request('distributor_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                    <select name="sr_id" class="select2 form-select">
-                                        <option value="">Select SR</option>
-                                        @forelse ($userSr as $d)
-                                            <option value="{{$d->id}}" {{ request('sr_id')==$d->id?"selected":""}}>{{$d->name}}</option>
-                                        @empty
-                                            <option value="">No Data Found</option>
-                                        @endforelse
-                                    </select>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="form-group">
+                                        <select name="sr_id" class="select2 form-select">
+                                            <option value="">Select SR</option>
+                                            @forelse ($userSr as $d)
+                                                <option value="{{$d->id}}" {{ request('sr_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                                            @empty
+                                                <option value="">No Data Found</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="col-2 ps-0">
-                                    <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
+                                <div class="col-lg-2 col-sm-6 ps-0 ">
+                                    <div class="form-group d-flex">
+                                        <button class="btn btn-sm btn-info float-end p-2" type="submit">Search</button>
+                                        <a class="btn btn-sm btn-warning ms-2 p-2" href="{{route(currentUser().'.shop.index')}}" title="Clear">Clear</a>
+                                   </div>
                                 </div>
-                                <div class="col-2 p-0 m-0">
-                                    <a class="btn btn-sm btn-warning ms-2" href="{{route(currentUser().'.shop.index')}}" title="Clear">Clear</a>
-                                </div>
+                                {{-- <div class="col-2 p-0 m-0">
+                                </div> --}}
                             </div>
                         </form>
                     </div>
@@ -107,7 +128,7 @@
                     </table>
                 </div>
                 <div class="my-3">
-                    {!! $shop->links()!!}
+                    {!! $shop->withQueryString()->links()!!}
                 </div>
             </div>
         </div>

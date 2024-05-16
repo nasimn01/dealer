@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route(currentUser().'.sales.store')}}">
+                        <form method="post" action="{{route(currentUser().'.sales.store')}}" onsubmit="return confirm('Are you sure?')">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">

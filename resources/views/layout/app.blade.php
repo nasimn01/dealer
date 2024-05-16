@@ -84,7 +84,7 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-			<div class="content-wrapper container">
+			<div class="content-wrapper container container-body-height">
 				<div class="page-heading m-0">
                     <div class="row">
 					    <div class="page-title">

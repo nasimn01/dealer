@@ -13,12 +13,33 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
+                                        <label for="sup_id">Distributor<span class="text-danger">*</span></label>
+                                        <select class="form-select border border-primary" name="sup_id" onchange="srShow(this.value);" required>
+                                            <option value="">Select</option>
+                                            @forelse (App\Models\Settings\Supplier::where(company())->get(); as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="sr_id">SR <span class="text-danger">*</span></label>
+                                        <select class="form-select border border-primary" name="sr_id" id="srUser_id">
+                                            <option value="">Select</option>
+                                            @forelse (\App\Models\User::where(company())->where('role_id',5)->get(); as $sr)
+                                                <option class="selecet_hide selecet_hide{{$sr->distributor_id}}" value="{{ $sr->id }}">{{ $sr->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="form-group">
                                         <label for="shop_name">Shop Name<span class="text-danger">*</span></label>
                                         <input type="text" value="{{old('shop_name')}}" class="form-control border border-primary" name="shop_name" placeholder="Shop Name" required>
                                     </div>
-                                    {{-- @if($errors->has('shop_name'))
-                                        <span class="text-danger"> {{ $errors->first('shop_name') }}</span>
-                                    @endif --}}
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
@@ -33,30 +54,6 @@
                                             <option value="">Select</option>
                                             @forelse (\App\Models\User::where(company())->where('role_id',4)->get(); as $dsr)
                                                 <option value="{{ $dsr->id }}">{{ $dsr->name }}</option>
-                                            @empty
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="sr_id">SR <span class="text-danger">*</span></label>
-                                        <select class="form-select border border-primary" name="sr_id">
-                                            <option value="">Select</option>
-                                            @forelse (\App\Models\User::where(company())->where('role_id',5)->get(); as $sr)
-                                                <option value="{{ $sr->id }}">{{ $sr->name }}</option>
-                                            @empty
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="sup_id">Distributor<span class="text-danger">*</span></label>
-                                        <select class="form-select border border-primary" name="sup_id">
-                                            <option value="">Select</option>
-                                            @forelse (App\Models\Settings\Supplier::where(company())->get(); as $sup)
-                                                <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                                             @empty
                                             @endforelse
                                         </select>
@@ -99,3 +96,21 @@
     </div>
 </section>
 @endsection
+@push('scripts')
+<script>
+    /* call on load page */
+    $(document).ready(function(){
+       $('.selecet_hide').hide();
+   })
+   let old_supplier_id=0;
+   function srShow(value){
+        let supplier = value;
+         $('.selecet_hide').hide();
+         $('.selecet_hide'+supplier).show();
+         if(old_supplier_id!=supplier){
+            $('#srUser_id').prop('selectedIndex', 0);
+             old_supplier_id=supplier;
+         }
+    }
+</script>
+@endpush

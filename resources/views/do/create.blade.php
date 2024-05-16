@@ -4,15 +4,6 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
-{{--  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif  --}}
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -20,7 +11,7 @@
                 <div class="card-content">
                     <div class="card-body">
                         {{--  <form class="form" action="#" enctype="multipart/form-data">  --}}
-                        <form class="form" method="post" action="{{route(currentUser().'.docontroll.store')}}" enctype="multipart/form-data">
+                        <form class="form" method="post" action="{{route(currentUser().'.docontroll.store')}}" enctype="multipart/form-data" onsubmit="return confirm('Are you sure?')">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-9 col-md-9 col-sm-9">
@@ -197,11 +188,15 @@
    let old_supplier_id=0;
    function showProduct(value){
         let supplier = value;
+        let defaultTotalValue = 0;
          $('.selecet_hide').hide();
          $('.selecet_hide'+supplier).show();
          if(old_supplier_id!=supplier){
             $('#product_id').prop('selectedIndex', 0);
             $('.old_tr_remove').closest('tr').remove();
+            $('.total_amount').val(defaultTotalValue);
+            $('.total_qty').val(defaultTotalValue);
+            $('.total_pcs_qty').val(defaultTotalValue);
              old_supplier_id=supplier;
          }
     }

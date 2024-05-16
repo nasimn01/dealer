@@ -4,9 +4,6 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
-
-
-  <!-- // Basic multiple Column Form section start -->
     <section id="multiple-column-form">
         <div class="row match-height">
             <div class="col-12">
@@ -48,7 +45,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="group_id">{{__('Group')}}<span class="text-danger">*</span></label>
-                                            <select required name="group_id" class="form-control form-select" >
+                                            <select required name="group_id" class="select2 form-control form-select" >
                                                 <option value="">Select</option>
                                                 @forelse($group as $d)
                                                     <option value="{{$d->id}}" {{ old('group_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
@@ -74,7 +71,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="unit_style_id">{{__('Unit Style')}}</label>
-                                            <select onchange="tpFree(this)" name="unit_style_id" class="form-control form-select unit_style_id" required>
+                                            <select onchange="tpFree(this)" name="unit_style_id" class="select2 form-control form-select unit_style_id" required>
                                                 <option value="">Select</option>
                                                 @forelse($unit_style as $d)
                                                     <option value="{{$d->id}}" {{ old('unit_style_id')==$d->id?"selected":""}}> {{ $d->name}}</option>

@@ -4,6 +4,16 @@
 @section('pageSubTitle',trans('Return'))
 
 @section('content')
+<style>
+    .select2-container {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    width: 100% !important;
+}
+</style>
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -76,7 +86,7 @@
                                     <table class="table table-bordered mb-0">
                                         <thead>
                                             <tr class="text-center">
-                                                <th rowspan="2">{{__('Product Name')}}</th>
+                                                <th rowspan="2" width="25%">{{__('Product Name')}}</th>
                                                 <th rowspan="2">{{__('CTN')}}</th>
                                                 <th rowspan="2">{{__('PCS')}}</th>
                                                 <th colspan="2">{{ __('Return') }}</th>

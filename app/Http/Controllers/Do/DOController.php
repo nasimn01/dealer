@@ -63,7 +63,7 @@ class DOController extends Controller
      */
     public function store(Request $request)
     {
-         //dd($request->all());
+        //dd($request->all());
         try{
             $data=new D_o;
             $data->supplier_id = $request->supplier_id;

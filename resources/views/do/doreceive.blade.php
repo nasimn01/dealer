@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route(currentUser().'.do.accept_do_edit')}}">
+                        <form method="post" action="{{route(currentUser().'.do.accept_do_edit')}}" onsubmit="return confirm('Are you sure?')">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
