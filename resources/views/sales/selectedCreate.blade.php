@@ -6,13 +6,13 @@
 @section('content')
 <style>
     .select2-container {
-    box-sizing: border-box;
-    display: inline-block;
-    margin: 0;
-    position: relative;
-    vertical-align: middle;
-    width: 100% !important;
-}
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        width: 100% !important;
+    }
 </style>
 <section id="multiple-column-form">
     <div class="row match-height">

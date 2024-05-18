@@ -164,76 +164,74 @@
                </a>
             </div>
        </div>
-       <div class="row">
-            <div class="col-6">
-                <div class="table-responsive">
-                    @php
-                    $todayCollection = \App\Models\Settings\ShopBalance::where('status', 0)->whereDate('new_due_date', now()->toDateString())->get();
-                    @endphp
-                    <h4 class="text-center bg-aqua text-white p-1">Today Due Collections</h3>
-                    <table class="table table-bordered mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">{{__('#SL')}}</th>
-                                <th scope="col">{{__('Shop Name')}}</th>
-                                <th scope="col">{{__('Owner Name')}}</th>
-                                <th scope="col">{{__('Collection Taka')}}</th>
-                                <th scope="col">{{__('Sales Date')}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($todayCollection as $data)
-                            <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
-                                <td>{{$data->shop?->shop_name}}</td>
-                                <td>{{$data->shop?->owner_name}}</td>
-                                <td>{{$data->balance_amount}}</td>
-                                <td>{{$data->created_at->format('d F Y')}}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <th colspan="5" class="text-center">No Data Found</th>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="table-responsive">
+                @php
+                $todayCollection = \App\Models\Settings\ShopBalance::where('status', 0)->whereDate('new_due_date', now()->toDateString())->get();
+                @endphp
+                <h4 class="text-center bg-aqua text-white p-1">Today Due Collections</h3>
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{__('#SL')}}</th>
+                            <th scope="col">{{__('Shop Name')}}</th>
+                            <th scope="col">{{__('Owner Name')}}</th>
+                            <th scope="col">{{__('Collection Taka')}}</th>
+                            <th scope="col">{{__('Sales Date')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($todayCollection as $data)
+                        <tr>
+                            <th scope="row">{{ ++$loop->index }}</th>
+                            <td>{{$data->shop?->shop_name}}</td>
+                            <td>{{$data->shop?->owner_name}}</td>
+                            <td>{{$data->balance_amount}}</td>
+                            <td>{{$data->created_at->format('d F Y')}}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <th colspan="5" class="text-center">No Data Found</th>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-            <div class="col-6">
-                <div class="table-responsive">
-                    @php
-                    $todayCheck = \App\Models\Sales\SalesPayment::where('cash_type', 0)->whereDate('check_date', now()->toDateString())->get();
-                    @endphp
-                    <h4 class="text-center bg-aqua text-white p-1">Today Check Collections</h3>
-                    <table class="table table-bordered mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">{{__('#SL')}}</th>
-                                <th scope="col">{{__('Shop Name')}}</th>
-                                <th scope="col">{{__('Owner Name')}}</th>
-                                <th scope="col">{{__('Collection Taka')}}</th>
-                                <th scope="col">{{__('Check Receive Date')}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($todayCheck as $c)
-                            <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
-                                <td>{{$c->shop?->shop_name}}</td>
-                                <td>{{$c->shop?->owner_name}}</td>
-                                <td>{{$c->amount}}</td>
-                                <td>{{$c->created_at->format('d F Y')}}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <th colspan="5" class="text-center">No Data Found</th>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="table-responsive">
+                @php
+                $todayCheck = \App\Models\Sales\SalesPayment::where('cash_type', 0)->whereDate('check_date', now()->toDateString())->get();
+                @endphp
+                <h4 class="text-center bg-aqua text-white p-1">Today Check Collections</h3>
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{__('#SL')}}</th>
+                            <th scope="col">{{__('Shop Name')}}</th>
+                            <th scope="col">{{__('Owner Name')}}</th>
+                            <th scope="col">{{__('Collection Taka')}}</th>
+                            <th scope="col">{{__('Check Receive Date')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($todayCheck as $c)
+                        <tr>
+                            <th scope="row">{{ ++$loop->index }}</th>
+                            <td>{{$c->shop?->shop_name}}</td>
+                            <td>{{$c->shop?->owner_name}}</td>
+                            <td>{{$c->amount}}</td>
+                            <td>{{$c->created_at->format('d F Y')}}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <th colspan="5" class="text-center">No Data Found</th>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-       </div>
+        </div>
     </section>
 </div>
 @endsection

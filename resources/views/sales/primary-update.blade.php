@@ -4,13 +4,23 @@
 @section('pageSubTitle',trans('Update'))
 
 @section('content')
+<style>
+    .select2-container {
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        width: 100% !important;
+    }
+</style>
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route(currentUser().'.sales.primaryStore',encryptor('encrypt',$sales->id))}}">
+                        <form method="post" action="{{route(currentUser().'.sales.primaryStore',encryptor('encrypt',$sales->id))}}" onsubmit="return confirm('Are you Sure to Update?')">
                             @csrf
                             @method('POST')
                             <div class="row p-2 mt-4">
@@ -27,8 +37,8 @@
                                     <label for=""><b>Shop Name</b></label>
                                     <select class="form-select" name="shop_id">
                                         <option value="">Select</option>
-                                        @foreach (\App\Models\Settings\Shop::all() as $sh)
-                                        <option value="{{ $sh->id }}" {{ $sales->shop_id==$sh->id?'selected':'' }}>{{ $sh->shop_name }}</option>
+                                        @foreach (\App\Models\Settings\Shop::where('sup_id',$sales->distributor_id)->get() as $sh)
+                                        <option value="{{ $sh->id }}" {{ $sales->shop_id==$sh->id?'selected':'' }}>{{ $sh->shop_name }}-{{$sh->area_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -37,7 +47,7 @@
                                     <label for=""><b>DSR Name</b></label>
                                     <select class="form-select" name="dsr_id">
                                         <option value="">Select</option>
-                                        @foreach (\App\Models\User::where('role_id',4)->get() as $d)
+                                        @foreach (\App\Models\User::where('distributor_id',$sales->distributor_id)->where('role_id',4)->get() as $d)
                                         <option value="{{ $d->id }}" {{ $sales->dsr_id==$d->id?'selected':'' }}>{{ $d->name }}</option>
                                         @endforeach
                                     </select>
@@ -50,7 +60,7 @@
                                     <label for=""><b>SR</b></label>
                                     <select name="sr_id" class="choices form-select">
                                         <option value="">Select</option>
-                                        @forelse ($userSr as $p)
+                                        @forelse (\App\Models\User::where('distributor_id',$sales->distributor_id)->where('role_id',5)->get() as $p)
                                             <option value="{{$p->id}}" {{ $sales->sr_id==$p->id?"selected":""}}>{{$p->name}}</option>
                                         @empty
                                             <option value="">No Data Found</option>
@@ -58,7 +68,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                                    <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
+                                    {{-- <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
                                     <select class="form-select supplier_id" name="distributor_id">
                                         <option value="">Select Distributor</option>
                                         @forelse (App\Models\Settings\Supplier::where(company())->get() as $sup)
@@ -66,7 +76,10 @@
                                         @empty
                                             <option value="">No Data Found</option>
                                         @endforelse
-                                    </select>
+                                    </select> --}}
+                                    <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{$sales->distributor?->name}}" readonly>
+                                    <input type="hidden" name="distributor_id" value="{{$sales->distributor?->name}}">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -75,7 +88,7 @@
                                     <table class="table table-bordered mb-0">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col">{{__('Product Name')}}</th>
+                                                <th scope="col" width="30%">{{__('Product Name')}}</th>
                                                 <th scope="col">{{__('CTN')}}</th>
                                                 <th scope="col">{{__('PCS')}}</th>
                                                 <th scope="col">{{__('Tp/Tpfree')}}</th>
@@ -92,7 +105,7 @@
                                                         <td>
                                                             <select class="choices form-select product_id" id="product_id" name="product_id[]">
                                                                 <option value="">Select Product</option>
-                                                                @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                                                                @forelse (\App\Models\Product\Product::where('distributor_id',$sales->distributor_id)->where(company())->get(); as $pro)
                                                                 <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}" {{ $salesdetails->product_id==$pro->id?'selected':'' }}>{{ $pro->product_name }}</option>
                                                                 @empty
                                                                 @endforelse
@@ -135,7 +148,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end my-2">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-info">Update</button>
                             </div>
                         </form>
                     </div>
@@ -154,7 +167,7 @@ var row=`
         <td>
             <select class="choices form-select product_id" id="product_id" name="product_id[]">
                 <option value="">Select Product</option>
-                @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
+                @forelse (\App\Models\Product\Product::where('distributor_id',$sales->distributor_id)->where(company())->get(); as $pro)
                 <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                 @empty
                 @endforelse
@@ -280,57 +293,57 @@ function total_calculate() {
             dsrNameContainer.style.display = "none";
         }
     }
-    function getShopData() {
-        $.ajax({
-            url: "{{ route(currentUser().'.get_shop') }}",
-            type: "GET",
-            dataType: "json",
-            success: function(data) {
-                populateShopOptions(data);
-            },
-            error: function(xhr, status, error) {
-                console.log("Error: " + error);
-            }
-        });
-    }
+    // function getShopData() {
+    //     $.ajax({
+    //         url: "{{ route(currentUser().'.get_shop') }}",
+    //         type: "GET",
+    //         dataType: "json",
+    //         success: function(data) {
+    //             populateShopOptions(data);
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.log("Error: " + error);
+    //         }
+    //     });
+    // }
 
-    function getDsrData() {
-        $.ajax({
-            url: "{{ route(currentUser().'.get_dsr') }}",
-            type: "GET",
-            dataType: "json",
-            success: function(data) {
-                populateDsrOptions(data);
-            },
-            error: function(xhr, status, error) {
-                console.log("Error: " + error);
-            }
-        });
-    }
+    // function getDsrData() {
+    //     $.ajax({
+    //         url: "{{ route(currentUser().'.get_dsr') }}",
+    //         type: "GET",
+    //         dataType: "json",
+    //         success: function(data) {
+    //             populateDsrOptions(data);
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.log("Error: " + error);
+    //         }
+    //     });
+    // }
 
-    function populateShopOptions(data) {
-        var selectElement = document.querySelector('select[name="shop_id"]');
-        selectElement.innerHTML = "";
+    // function populateShopOptions(data) {
+    //     var selectElement = document.querySelector('select[name="shop_id"]');
+    //     selectElement.innerHTML = "";
 
-        data.forEach(function(item) {
-            var option = document.createElement("option");
-            option.value = item.id;
-            option.textContent = item.shop_name;
-            selectElement.appendChild(option);
-        });
-    }
+    //     data.forEach(function(item) {
+    //         var option = document.createElement("option");
+    //         option.value = item.id;
+    //         option.textContent = item.shop_name;
+    //         selectElement.appendChild(option);
+    //     });
+    // }
 
-    function populateDsrOptions(data) {
-        var selectElement = document.querySelector('select[name="dsr_id"]');
-        selectElement.innerHTML = "";
+    // function populateDsrOptions(data) {
+    //     var selectElement = document.querySelector('select[name="dsr_id"]');
+    //     selectElement.innerHTML = "";
 
-        data.forEach(function(item) {
-            var option = document.createElement("option");
-            option.value = item.id;
-            option.textContent = item.name;
-            selectElement.appendChild(option);
-        });
-    }
+    //     data.forEach(function(item) {
+    //         var option = document.createElement("option");
+    //         option.value = item.id;
+    //         option.textContent = item.name;
+    //         selectElement.appendChild(option);
+    //     });
+    // }
 
 </script>
 

@@ -4,6 +4,16 @@
 @section('pageSubTitle',trans('Return'))
 
 @section('content')
+<style>
+    .select2-container {
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        width: 100% !important;
+    }
+</style>
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -77,7 +87,7 @@
                                     <table class="table table-bordered mb-0">
                                         <thead>
                                             <tr class="text-center">
-                                                <th rowspan="2">{{__('Product Name')}}</th>
+                                                <th rowspan="2" width="30%">{{__('Product Name')}}</th>
                                                 <th rowspan="2">{{__('CTN')}}</th>
                                                 <th rowspan="2">{{__('PCS')}}</th>
                                                 <th colspan="2">{{ __('Return') }}</th>
@@ -262,7 +272,7 @@
                                           <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach ($shops as $shop)
-                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                                               @endforeach
                                           </select>
                                       </div>
@@ -290,7 +300,7 @@
                                           <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach ($shops as $shop)
-                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                                               @endforeach
                                           </select>
                                       </div>
@@ -350,7 +360,7 @@
                                           <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach ($shops as $shop)
-                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                                               @endforeach
                                           </select>
                                       </div>
@@ -584,7 +594,7 @@ function oldDue(){
             <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>
@@ -623,7 +633,7 @@ function newDue(){
             <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>
@@ -668,7 +678,7 @@ function newReceive(){
             <select class="select2 form-select new_receive_shop_id" name="new_receive_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>
@@ -705,7 +715,7 @@ function newCheck(){
             <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>

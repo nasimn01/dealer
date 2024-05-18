@@ -74,7 +74,9 @@ class SalesController extends Controller
     {
         $user=User::where('id',currentUserId())->where('role_id',3)->select('distributor_id')->first();
         $userSr=User::where(company())->where('role_id',5)->get();
-        return view('sales.create',compact('user','userSr'));
+        $shops = Shop::all();
+        $userDsr=User::where(company())->where('role_id',4)->get();
+        return view('sales.create',compact('user','userSr','shops','userDsr'));
     }
     public function selectedCreate()
     {

@@ -276,7 +276,7 @@
                                           <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach ($shops as $shop)
-                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                                               @endforeach
                                           </select>
                                       </div>
@@ -303,7 +303,7 @@
                                           <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach ($shops as $shop)
-                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                                               @endforeach
                                           </select>
                                       </div>
@@ -363,7 +363,7 @@
                                           <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                                               <option value="">Select</option>
                                               @foreach ($shops as $shop)
-                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                                              <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                                               @endforeach
                                           </select>
                                       </div>
@@ -598,7 +598,7 @@ function oldDue(){
             <select class="select2 form-select old_due_shop_id" name="old_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>
@@ -638,7 +638,7 @@ function newDue(){
             <select class="select2 form-select new_due_shop_id" name="new_due_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>
@@ -683,7 +683,7 @@ function newReceive(){
             <select class="form-select new_receive_shop_id" name="new_receive_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>
@@ -720,7 +720,7 @@ function newCheck(){
             <select class="select2 form-select check_shop_id" name="check_shop_id[]">
                 <option value="">Select</option>
                 @foreach ($shops as $shop)
-                <option value="{{ $shop->id }}">{{ $shop->shop_name }}</option>
+                <option value="{{ $shop->id }}">{{ $shop->shop_name }}-{{$shop->area_name}}</option>
                 @endforeach
             </select>
         </div>

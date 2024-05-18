@@ -28,7 +28,7 @@
                                     <select class="form-select" name="shop_id">
                                         <option value="">Select</option>
                                         @forelse($shops as $sh)
-                                        <option value="{{$sh->id}}" {{ $sales->shop_id==$sh->id?"selected":""}}> {{ $sh->shop_name}}</option>
+                                        <option value="{{$sh->id}}" {{ $sales->shop_id==$sh->id?"selected":""}}> {{ $sh->shop_name}}-{{$sh->area_name}}</option>
                                         @empty
                                             <option value="">No data found</option>
                                         @endforelse
