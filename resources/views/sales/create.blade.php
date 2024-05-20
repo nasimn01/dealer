@@ -75,7 +75,7 @@
                                     <select class="form-select dsr_id" name="dsr_id" id="dsr_deselect">
                                         <option value="">Select</option>
                                         @forelse ($userDsr as $dsr)
-                                            <option class="selecet_hide selecet_hide{{$dsr->distributor_id}}" value="{{$dsr->id}}">{{$p->name}}</option>
+                                            <option class="selecet_hide selecet_hide{{$dsr->distributor_id}}" value="{{$dsr->id}}">{{$dsr->name}}</option>
                                         @empty
                                             
                                         @endforelse
