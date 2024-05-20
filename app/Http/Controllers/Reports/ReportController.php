@@ -237,7 +237,7 @@ class ReportController extends Controller
     {
         if ($request->supplier_id) {
             $do_reference = D_o::where('supplier_id',$request->supplier_id)->pluck('id');
-            $dodetails= D_o_detail::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
+            $dodetails= D_o_detail::whereIn('do_id',$do_reference)->get();
             // $histotry = DoReceiveHistory::whereIn('do_id',$do_reference)->groupBy('product_id')->get();
              //return $dodetails;
             // $commonProductIds = array_intersect($dodetails->pluck('product_id')->toArray(), $history->pluck('product_id')->toArray());
