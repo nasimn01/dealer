@@ -49,7 +49,7 @@ class ReportController extends Controller
 
         $stock = $stockQuery
             ->groupBy('products.group_id','products.distributor_id','products.product_name')
-            ->get();
+            ->paginate(25);
            // return $stock;
         return view('reports.stockReport', compact('stock','groups','products','distributors'));
 

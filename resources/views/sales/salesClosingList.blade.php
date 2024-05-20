@@ -57,7 +57,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('Shop/DSR Name')}}</th>
+                                    <th scope="col"><span class="text-info">DSR</span> / <span class="text-danger">Shop</span></th>
                                     <th scope="col">{{__('SR')}}</th>
                                     <th scope="col">{{__('Distributor')}}</th>
                                     <th scope="col">{{__('Sales Date')}}</th>
@@ -66,14 +66,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($sales as $p)
+                                @forelse($sales as $key=>$p)
                                 <tr>
-                                    <th scope="row">{{ ++$loop->index }}</th>
+                                    <th scope="row">{{ $sales->firstItem() + $key }}</th>
                                     <td>
                                         @if (!empty($p->shop_id))
-                                        <span class="text-warning">Shop :</span> {{ $p->shop?->shop_name }}
+                                        <span class="text-danger">Shop :</span> {{ $p->shop?->shop_name }}
                                         @elseif(!empty($p->dsr_id))
-                                        <span class="text-warning">DSR :</span> {{ $p->dsr?->name }}
+                                        <span class="text-info">DSR :</span> {{ $p->dsr?->name }}
                                         @else
                                         @endif
                                         {{--  @if (!empty($p->shop->shop_name))
@@ -125,7 +125,7 @@
                         </table>
                     </div>
                     <div class="my-3">
-                        {!! $sales->links()!!}
+                        {!! $sales->withQueryString()->links()!!}
                     </div>
                 </div>
             </div>

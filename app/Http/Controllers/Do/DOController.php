@@ -39,7 +39,7 @@ class DOController extends Controller
         if ($request->distributor_id)
             $data->where('d_os.supplier_id',$request->distributor_id);
 
-            $data = $data->get();
+            $data = $data->paginate(25);
         return view('do.index',compact('data','distributors'));
         // return view('product.group.purchase');
     }
@@ -367,7 +367,7 @@ class DOController extends Controller
         if ($request->distributor_id)
             $data->where('do_receive_histories.distributor_id',$request->distributor_id);
 
-            $data = $data->get();
+            $data = $data->paginate(25);
         return view('do.receive-list',compact('data','distributors'));
     }
 

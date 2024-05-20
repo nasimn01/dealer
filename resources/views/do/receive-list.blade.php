@@ -48,15 +48,17 @@
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Chalan No')}}</th>
+                                <th scope="col">{{__('Distributor')}}</th>
                                 <th scope="col">{{__('Stock Date')}}</th>
                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($data as $p)
+                            @forelse($data as $key=>$p)
                             <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
+                                <th scope="row">{{ $data->firstItem() + $key }}</th>
                                 <td>{{$p->chalan_no}}</td>
+                                <td>{{$p->supplier?->name}}</td>
                                 <td>{{$p->stock_date}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.showDoReceive',$p->chalan_no)}}">
@@ -66,14 +68,14 @@
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="7" class="text-center">No Data Found</th>
+                                <th colspan="5" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div class="my-3">
-                    {{--  {!! $data->links()!!}  --}}
+                    {!! $data->withQueryString()->links()!!}
                 </div>
             </div>
         </div>

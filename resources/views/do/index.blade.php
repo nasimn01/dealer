@@ -58,9 +58,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($data as $p)
+                                @forelse($data as $key=>$p)
                                 <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
+                                <th scope="row">{{ $data->firstItem() + $key }}</th>
                                     <td>{{$p->supplier?->name}}</td>
                                     <td>{{\Carbon\Carbon::parse($p->do_date)->format('d-m-Y')}}</td>
                                     <td>{{$p->reference_num}}</td>
@@ -90,15 +90,15 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="5" class="text-end">Total</td>
-                                    <td><span class="sumFinalTotal"></span></td>
-                                    <td></td>
+                                    <th colspan="6" class="text-end">Total</th>
+                                    <th><span class="sumFinalTotal"></span></th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                     <div class="my-3">
-                        {{--  {!! $data->links()!!}  --}}
+                        {!! $data->withQueryString()->links()!!}
                     </div>
                 </div>
             </div>

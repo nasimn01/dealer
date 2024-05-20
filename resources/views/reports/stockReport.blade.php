@@ -4,7 +4,6 @@
 @section('pageSubTitle',trans('Reports'))
 
 @section('content')
-  <!-- // Basic multiple Column Form section start -->
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -14,15 +13,15 @@
                     <div class="card-body">
                         <form class="form" method="get" action="">
                             <div class="row">
-                                <div class="col-4 py-1">
+                                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                                     <label for="fdate">{{__('From Date')}}</label>
                                     <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
                                 </div>
-                                <div class="col-4 py-1">
+                                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                                     <label for="fdate">{{__('To Date')}}</label>
                                     <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                                 </div>
-                                <div class="col-4 py-1">
+                                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                                     <label for="groups">{{__('Group')}}</label>
                                     <select name="group_id" class="select2 form-select">
                                         <option value="">Select</option>
@@ -33,7 +32,7 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="col-4 py-1 d-none">
+                                <div class="col-lg-3 col-md-6 col-sm-12 py-1 d-none">
                                     <label for="product">{{__('Product Name')}}</label>
                                     <select name="product_id" class="choices form-select">
                                         <option value="">Select</option>
@@ -44,7 +43,7 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="col-4 py-1">
+                                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                                     <label for="lcNo">{{__('Distributor')}}</label>
                                     <select name="distributor_id" class="select2 form-select">
                                         <option value="">Select</option>
@@ -93,9 +92,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($stock as $s)
+                                    @forelse($stock as $key=>$s)
                                     <tr class="text-center">
-                                        <th scope="row">{{ ++$loop->index }}</th>
+                                        <th scope="row">{{ $stock->firstItem() + $key }}</th>
                                         <td>{{$s->group_name}}</td>
                                         <td>{{$s->supplier_name}}</td>
                                         <td><a href="{{route(currentUser().'.stock.individual',$s->product_id)}}">{{$s->product_name}}</a></td>
@@ -123,6 +122,9 @@
                                 </tfoot>
                             </table>
                         </form>
+                        <div class="my-3">
+                            {!! $stock->withQueryString()->links()!!}
+                        </div>
                     </div>
                 </div>
             </div>
