@@ -660,30 +660,34 @@ class SalesController extends Controller
         return view('sales.getsalesClosing',compact('sales','shops','dsr','product'));
     }
     public function getSalesClosingData(Request $request)
-    { //dd($request->all());
-        if($request->sales_date && $request->dsr_id || $request->shop_id){
-            // $requestdDate = Carbon::createFromFormat('m/d/Y', $request->sales_date)->format('m/d/Y');
-            $sales = TemporarySales::where('status',0)->where(company())->orderBy('id', 'asc')
-            ->where('sales_date',date('Y-m-d', strtotime($request->sales_date)))
-            ->where(function ($query) use ($request) {
-            $query->where('dsr_id', $request->dsr_id)
-            ->orWhere('shop_id', $request->shop_id);
-            })
-            ->first();
-            //return $sales;
-            $shops=Shop::where('sup_id',$sales->distributor_id)->get();
-            $dsr=User::where('role_id',4)->get();
-            $userSr=User::where(company())->where('role_id',5)->get();
-            $product=Product::where('distributor_id',$sales->distributor_id)->where(company())->get();
-            if($sales){
-                return view('sales.salesClosingSidebar',compact('sales','shops','dsr','product','userSr'));
-            }else {
+    {
+        //dd($request->all());
+        if (($request->has('sales_date') && $request->has('dsr_id')) || ($request->has('sales_date') && $request->has('shop_id'))) {
+            $sales = TemporarySales::where('status', 0)
+                ->where(company())
+                ->where('sales_date', date('Y-m-d', strtotime($request->sales_date)))
+                ->where(function ($query) use ($request) {
+                    $query->where('dsr_id', $request->dsr_id)
+                        ->orWhere('shop_id', $request->shop_id);
+                })
+                ->orderBy('id', 'asc')
+                ->first();
+
+            if ($sales) {
+                $shops = Shop::where('sup_id', $sales->distributor_id)->get();
+                $dsr = User::where('role_id', 4)->get();
+                $userSr = User::where(company())->where('role_id', 5)->get();
+                $product = Product::where('distributor_id', $sales->distributor_id)->where(company())->get();
+
+                return view('sales.salesClosingSidebar', compact('sales', 'shops', 'dsr', 'product', 'userSr'));
+            } else {
                 return view('sales.nodata');
             }
-        }else {
+        } else {
             return redirect()->back();
         }
     }
+
     // public function UnitDataGet(Request $request)
     // {
     //     $productId=$request->product_id;

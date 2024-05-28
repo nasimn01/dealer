@@ -79,7 +79,7 @@
                                     </select> --}}
                                     <label for="cat">{{__('Distributor')}}<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" value="{{$sales->distributor?->name}}" readonly>
-                                    <input type="hidden" name="distributor_id" value="{{$sales->distributor?->name}}">
+                                    <input type="hidden" name="distributor_id" value="{{$sales->distributor_id}}">
                                 </div>
                             </div>
                             <!-- table bordered -->
