@@ -275,19 +275,19 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             <div id="productFormContainer">
-                                                                                    <input type="hidden" name="product_id" value="${ProductId}">
-                                                                                    <tr>
-                                                                                        <td>Free Ratio</td>
-                                                                                        <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
-                                                                                        <td>Dp Price</td>
-                                                                                        <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Free Qty</td>
-                                                                                        <td><input class="form-control" name="free" type="number" value="${freeQty}"></td>
-                                                                                        <td></td>
-                                                                                        <td><button onclick="saveData(this, '${ProductId}','${counter}')" type="button" class="btn btn-primary">Update</button></td>
-                                                                                    </tr>
+                                                                                <input type="hidden" name="product_id" value="${ProductId}">
+                                                                                <tr>
+                                                                                    <td>Free Ratio</td>
+                                                                                    <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
+                                                                                    <td>Dp Price</td>
+                                                                                    <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Free Qty</td>
+                                                                                    <td><input class="form-control" name="free" type="number" value="${freeQty}"></td>
+                                                                                    <td></td>
+                                                                                    <td><button onclick="saveData(this, '${ProductId}','${counter}')" type="button" class="btn btn-primary">Update</button></td>
+                                                                                </tr>
                                                                             </div>
                                                                         </tbody>
                                                                     </table>

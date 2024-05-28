@@ -4,15 +4,6 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
-{{--  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif  --}}
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -20,7 +11,7 @@
                 <div class="card-content">
                     <div class="card-body">
                         {{--  <form class="form" action="#" enctype="multipart/form-data">  --}}
-                        <form class="form" method="post" action="{{route(currentUser().'.docontroll.store')}}" enctype="multipart/form-data">
+                        <form class="form" method="post" action="{{route(currentUser().'.docontroll.store')}}" enctype="multipart/form-data" onsubmit="return confirm('Are you sure?')">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-9 col-md-9 col-sm-9">
@@ -87,7 +78,7 @@
                                                     <select class=" form-select" id="product_id" onchange="getBalance()">
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->where('distributor_id',$user->distributor_id)->get(); as $pro)
-                                                        <option class="selecet_hide selecet_hide{{$pro->distributor_id}}" data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option class="selecet_hide selecet_hide{{$pro->distributor_id}}" data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp-free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' data-adjust='{{ $pro->adjust }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -96,7 +87,7 @@
                                                     {{--  <select class="form-select" id="product_id">  --}}
                                                         <option value="">Select Product</option>
                                                         @forelse (\App\Models\Product\Product::where(company())->get(); as $pro)
-                                                        <option class="selecet_hide selecet_hide{{$pro->distributor_id}}" data-dp='{{ $pro->dp_price }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
+                                                        <option class="selecet_hide selecet_hide{{$pro->distributor_id}}" data-dp='{{ $pro->dp_price }}' data-tp='{{ $pro->tp_price }}' data-tp-free='{{ $pro->tp_free }}' data-mrp='{{ $pro->mrp_price }}' data-adjust='{{ $pro->adjust }}' data-unit='{{ $pro->unit_style?->unit?->qty }}' data-name='{{ $pro->product_name }}' data-ratio='{{ $pro->free_ratio }}' data-free='{{ $pro->free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -197,11 +188,15 @@
    let old_supplier_id=0;
    function showProduct(value){
         let supplier = value;
+        let defaultTotalValue = 0;
          $('.selecet_hide').hide();
          $('.selecet_hide'+supplier).show();
          if(old_supplier_id!=supplier){
             $('#product_id').prop('selectedIndex', 0);
             $('.old_tr_remove').closest('tr').remove();
+            $('.total_amount').val(defaultTotalValue);
+            $('.total_qty').val(defaultTotalValue);
+            $('.total_pcs_qty').val(defaultTotalValue);
              old_supplier_id=supplier;
          }
     }
@@ -219,6 +214,10 @@
                 return false;
             }
             let dp=$('#product_id').find(":selected").data('dp');
+            let tpPrice=$('#product_id').find(":selected").data('tp');
+            let tpFree=$('#product_id').find(":selected").data('tp-free');
+            let mrp=$('#product_id').find(":selected").data('mrp');
+            let adjust=$('#product_id').find(":selected").data('adjust');
             let unitQty=$('#product_id').find(":selected").data('unit');
             let productName=$('#product_id').find(":selected").data('name');
             let freeRatio=$('#product_id').find(":selected").data('ratio');
@@ -286,6 +285,18 @@
                                                                                         <td><input class="form-control" name="free_ratio" type="number" value="${freeRatio}"></td>
                                                                                         <td>Dp Price</td>
                                                                                         <td><input class="form-control" name="dp_price" type="number" value="${dp}"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Tp Price</td>
+                                                                                        <td><input class="form-control" name="tp_price" type="number" value="${tpPrice}"></td>
+                                                                                        <td>Tp Free</td>
+                                                                                        <td><input class="form-control" name="tp_free" type="number" value="${tpFree}"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>MRP</td>
+                                                                                        <td><input class="form-control" name="mrp_price" type="number" value="${mrp}"></td>
+                                                                                        <td>Adjust</td>
+                                                                                        <td><input class="form-control" name="adjust_price" type="number" value="${adjust}"></td>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td>Free Qty</td>
