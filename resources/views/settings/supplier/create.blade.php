@@ -41,7 +41,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="balance">Opening Balance</label>
-                                        <input type="number" value="{{old('balance')}}" class="form-control" name="balance">
+                                        <input type="number" value="0" class="form-control" name="balance" required>
                                     </div>
                                 </div>
                                 {{--  <div class="col-lg-4 col-md-6 col-sm-6">

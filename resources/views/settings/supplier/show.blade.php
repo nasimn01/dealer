@@ -47,47 +47,47 @@
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Reference')}}</th>
-                                <th scope="col">{{__('Add or Out')}}</th>
                                 <th scope="col">{{__('Balance Date')}}</th>
-                                <th scope="col">{{__('Add Balance')}}</th>
-                                {{--  <th class="white-space-nowrap">{{__('ACTION')}}</th>  --}}
+                                <th scope="col">{{__('IN')}}</th>
+                                <th scope="col">{{__('OUT')}}</th>
+                                <th scope="col">{{__('Total')}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($suplier as $data)
-                            <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
-                                <td>{{$data->reference_number}}</td>
-                                <td>@if($data->status == 1) {{__('Add') }} @else {{__('Cost') }} @endif</td>
-                                @if($data->balance_date)
-                                <td>{{ \Carbon\Carbon::parse($data->balance_date)->format('d/m/Y') }}</td>
-                                @else
-                                <td>No Date Found</td>
+                                @if ($data->balance_amount != 0)
+                                    <tr>
+                                        <th scope="row">{{ ++$loop->index }}</th>
+                                        <td>{{$data->reference_number}}</td>
+                                        @if($data->balance_date)
+                                            <td>{{ \Carbon\Carbon::parse($data->balance_date)->format('d/m/Y') }}</td>
+                                        @else
+                                            <td>No Date Found</td>
+                                        @endif
+                                        <td>
+                                            @if($data->status == 1) 
+                                                {{$data->balance_amount}} 
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($data->status == 0) 
+                                                {{$data->balance_amount}} 
+                                            @endif
+                                        </td>
+                                    </tr>
                                 @endif
-                                <td>@if($data->status == 0) -{{$data->balance_amount}} @else {{$data->balance_amount}} @endif</td>
-                                {{--  <td class="white-space-nowrap">
-                                    <a class="ms-2" href="{{route(currentUser().'.supplier.show',encryptor('encrypt',$data->id))}}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
-                                </td>  --}}
-                            </tr>
                             @empty
                             <tr>
-                                <th colspan="5" class="text-center">No Data Found</th>
+                                <th colspan="6" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                             <tr>
-                                <td colspan="3"></td>
+                                <td colspan="4"></td>
                                 <td class="text-end"><b>Total Balance:</b> </td>
                                 <td>{{ $suplier->where('status', 1)->sum('balance_amount') - $suplier->where('status', 0)->sum('balance_amount') }}</td>
-                                {{--  <td>{{ $suplier->sum('balance_amount') }}</td>  --}}
                             </tr>
                         </tbody>
                     </table>
-
-                    <div class="pt-2">
-                        {{--  {{$suplier->links()}}  --}}
-                    </div>
                 </div>
             </div>
         </div>
