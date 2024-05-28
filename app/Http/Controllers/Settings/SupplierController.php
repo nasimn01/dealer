@@ -65,7 +65,7 @@ class SupplierController extends Controller
             $data->created_by= currentUserId();
 
             if($data->save()){
-                if($request->balance > 0 ){
+                if($request->balance){
                     $supb= new Supplier_balance;
                     $supb->supplier_id = $data->id;
                     $supb->balance_date = now();
