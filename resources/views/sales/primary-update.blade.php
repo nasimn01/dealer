@@ -103,8 +103,8 @@
                                                 @foreach ($sales->temporary_sales_details as $salesdetails)
                                                     <tr>
                                                         <td>
-                                                            <select class="choices form-select product_id" id="product_id" name="product_id[]">
-                                                                <option value="">Select Product</option>
+                                                            <select class="choices form-select product_id" id="product_id" name="product_id[]" onchange="changeProduct(this)">
+                                                                <option value="0">Select Product</option>
                                                                 @forelse (\App\Models\Product\Product::where('distributor_id',$sales->distributor_id)->where(company())->get(); as $pro)
                                                                 <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}" {{ $salesdetails->product_id==$pro->id?'selected':'' }}>{{ $pro->product_name }}</option>
                                                                 @empty
@@ -165,8 +165,8 @@
 var row=`
     <tr>
         <td>
-            <select class="choices form-select product_id" id="product_id" name="product_id[]">
-                <option value="">Select Product</option>
+            <select class="choices form-select product_id" id="product_id" name="product_id[]" onchange="changeProduct(this);">
+                <option value="0">Select Product</option>
                 @forelse (\App\Models\Product\Product::where('distributor_id',$sales->distributor_id)->where(company())->get(); as $pro)
                 <option  data-tp='{{ $pro->tp_price }}' data-tp_free='{{ $pro->tp_free }}' value="{{ $pro->id }}">{{ $pro->product_name }}</option>
                 @empty
@@ -199,6 +199,20 @@ function removeRow(e){
     if (confirm("Are you sure you want to remove this row?")) {
         $(e).closest('tr').remove();
         total_calculate();
+    }
+}
+
+function changeProduct(e){
+    var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
+    console.log(productId);
+    if(productId == 0){
+        $(e).closest('tr').find('.ctn').val('');
+        $(e).closest('tr').find('.pcs').val('');
+        $(e).closest('tr').find('.ctn_price').val('');
+        $(e).closest('tr').find('.per_pcs_price').val('');
+        $(e).closest('tr').find('.subtotal_price').val('');
+    }else{
+        productData(e);
     }
 }
 

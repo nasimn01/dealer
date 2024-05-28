@@ -218,6 +218,7 @@
                 let tpfree=(parseFloat(tpPrice*data)/parseFloat(tpfreeCal))?(parseFloat(tpPrice*data)/parseFloat(tpfreeCal)):0;
                 $('.tp_free').val(parseFloat(tpfree).toFixed(2));
                 $('.tp_free_up').val(tpfree);
+                Adjust(e);
             }
 
             },
@@ -226,9 +227,9 @@
     function Adjust(e){
         let adjust=$('.adjust').val();
         let tpFreeValue=$('.tp_free_up').val();
-        let tpFreeUp=parseFloat(adjust)+parseFloat(tpFreeValue);
+        let tpFreeUp=(parseFloat(adjust)+parseFloat(tpFreeValue)).toFixed(2);
         console.log(adjust)
-        console.log(tpFreeValue)
+        console.log(tpFreeUp)
         $('.tp_free').val(tpFreeUp);
     }
 </script>

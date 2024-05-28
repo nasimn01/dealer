@@ -258,51 +258,59 @@ function productData(e) {
     //console.log(selectedOption)
     var tp = $(e).closest('tr').find('.product_id option:selected').attr('data-tp');
     var tpFree = $(e).closest('tr').find('.product_id option:selected').attr('data-tp_free');
-    var productId = parseInt($(e).closest('tr').find('.product_id option:selected').val());
+    var productId = $(e).closest('tr').find('.product_id option:selected').val() ? parseInt($(e).closest('tr').find('.product_id option:selected').val()) : 0;
     var ctn = $(e).closest('tr').find('.ctn').val() ? parseFloat($(e).closest('tr').find('.ctn').val()) : 0;
     var pcs = $(e).closest('tr').find('.pcs').val() ? parseFloat($(e).closest('tr').find('.pcs').val()) : 0;
-    $.ajax({
-        url: "{{route(currentUser().'.sales_unit_data_get')}}",
-        type: "GET",
-        dataType: "json",
-        data: { product_id: productId },
-        success: function (data) {
-            // this function have doController UnitDataGet return qty
-            console.log(data)
-            let totalqty=((data.unit*ctn)+pcs);
-            $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
-            $(e).closest('tr').find('.show_stock').text(data.showqty);
-            if(data.unit){
-                //let pcstp=parseFloat(tp / data.unit).toFixed(2);
-                let ctnTp=parseFloat(tp * data.unit).toFixed(2);
-                //let pcstpFree=parseFloat(tpFree / data.unit).toFixed(2);
-                let ctntpFree=parseFloat(tpFree * data.unit).toFixed(2);
-                let tpCtnPrice = parseFloat(ctnTp * ctn);
-                let tpPcsPrice = parseFloat(tp * pcs);
-                let tpFreeCtnPrice = parseFloat((tpFree * data.unit) * ctn);
-                let tpFreePcsPrice = parseFloat(tpFree * pcs);
-                var TpSubtotal = parseFloat(tpCtnPrice + tpPcsPrice).toFixed(2);
-                var TpFreeSubtotal = parseFloat(tpFreeCtnPrice+ tpFreePcsPrice).toFixed(2);
+    if(productId == 0){
+        $(e).closest('tr').find('.ctn').val('');
+        $(e).closest('tr').find('.pcs').val('');
+        $(e).closest('tr').find('.ctn_price').val('');
+        $(e).closest('tr').find('.per_pcs_price').val('');
+        $(e).closest('tr').find('.subtotal_price').val('');
+    }else{
+        $.ajax({
+            url: "{{route(currentUser().'.sales_unit_data_get')}}",
+            type: "GET",
+            dataType: "json",
+            data: { product_id: productId },
+            success: function (data) {
+                // this function have doController UnitDataGet return qty
+                console.log(data)
+                let totalqty=((data.unit*ctn)+pcs);
+                $(e).closest('tr').find('.totalquantity_pcs').val(totalqty);
+                $(e).closest('tr').find('.show_stock').text(data.showqty);
+                if(data.unit){
+                    //let pcstp=parseFloat(tp / data.unit).toFixed(2);
+                    let ctnTp=parseFloat(tp * data.unit).toFixed(2);
+                    //let pcstpFree=parseFloat(tpFree / data.unit).toFixed(2);
+                    let ctntpFree=parseFloat(tpFree * data.unit).toFixed(2);
+                    let tpCtnPrice = parseFloat(ctnTp * ctn);
+                    let tpPcsPrice = parseFloat(tp * pcs);
+                    let tpFreeCtnPrice = parseFloat((tpFree * data.unit) * ctn);
+                    let tpFreePcsPrice = parseFloat(tpFree * pcs);
+                    var TpSubtotal = parseFloat(tpCtnPrice + tpPcsPrice).toFixed(2);
+                    var TpFreeSubtotal = parseFloat(tpFreeCtnPrice+ tpFreePcsPrice).toFixed(2);
 
-                if (selectedOption === 1) {
-                    $(e).closest('tr').find('.ctn_price').val(ctnTp);
-                    $(e).closest('tr').find('.per_pcs_price').val(tp);
-                    $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
-                } else if (selectedOption === 2) {
-                    $(e).closest('tr').find('.ctn_price').val(ctntpFree);
-                    $(e).closest('tr').find('.per_pcs_price').val(tpFree);
-                    $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
-                } else {
-                    $(e).closest('tr').find('.ctn_price').val("");
-                    $(e).closest('tr').find('.subtotal_price').val("");
+                    if (selectedOption === 1) {
+                        $(e).closest('tr').find('.ctn_price').val(ctnTp);
+                        $(e).closest('tr').find('.per_pcs_price').val(tp);
+                        $(e).closest('tr').find('.subtotal_price').val(TpSubtotal);
+                    } else if (selectedOption === 2) {
+                        $(e).closest('tr').find('.ctn_price').val(ctntpFree);
+                        $(e).closest('tr').find('.per_pcs_price').val(tpFree);
+                        $(e).closest('tr').find('.subtotal_price').val(TpFreeSubtotal);
+                    } else {
+                        $(e).closest('tr').find('.ctn_price').val("");
+                        $(e).closest('tr').find('.subtotal_price').val("");
+                    }
+                    total_calculate();
                 }
-                total_calculate();
-            }
-        },
-        error: function () {
-            console.error("Error fetching data from the server.");
-        },
-    });
+            },
+            error: function () {
+                console.error("Error fetching data from the server.");
+            },
+        });
+    }
 
 }
 

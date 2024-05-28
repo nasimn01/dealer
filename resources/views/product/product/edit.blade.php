@@ -102,7 +102,8 @@
                                         <div class="form-group">
                                             <label for="tp_free">{{__('TP Free')}}</label>
                                             <input type="text" readonly class="form-control tp_free" value="{{ old('tp_free',$product->tp_free)}}" name="tp_free">
-                                            <input type="hidden" class="form-control tp_free_up" value="" name="">
+                                            <input type="hidden" class="form-control tp_free_up" value="{{$product->tp_free - $product->adjust}}" name="">
+                                            
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -121,7 +122,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="adjust">{{__('Adjust')}}</label>
-                                            <input type="text" onkeyup="Adjust(this)" class="form-control" value="{{ old('adjust',$product->adjust)}}" name="adjust">
+                                            <input type="text" onkeyup="Adjust(this)" class="form-control adjust" value="{{ old('adjust',$product->adjust)}}" name="adjust">
                                         </div>
                                     </div>
                                     {{--  <div class="col-lg-4 col-md-6 col-sm-12">
@@ -202,12 +203,11 @@
 </script>
 <script>
     function tpFree(e){
-        let unitStyleId=parseFloat($('.unit_style_id').find(":selected").val());
+        let unitStyleId=$('.unit_style_id').find(":selected").val();
         let freeRatio=parseFloat($('.free_ratio').val());
         let freePcs=parseFloat($('.free_pcs').val());
-        let tpPrice=parseFloat($('.tp_price').val())?parseFloat($('.tp_price').val()):0;
+        let tpPrice=parseFloat($('.tp_price').val())?parseFloat($('.tp_price').val()):0;;
         //console.log(tpPrice)
-        console.log(unitStyleId)
         $.ajax({
             url: "{{route(currentUser().'.unit_pcs_get')}}",
             type: "GET",
@@ -216,10 +216,12 @@
             success: function(data) {
             //console.log(data);
             if(tpPrice){
-                let total=parseFloat((data/freeRatio)*freePcs);
+                let total=(parseFloat((data/freeRatio)*freePcs).toFixed(2));
                 let tpfreeCal=(parseFloat(total)+parseFloat(data));
-                let tpfree=(parseFloat(tpPrice*data)/parseFloat(tpfreeCal)).toFixed(2);
-                $('.tp_free').val(tpfree);
+                let tpfree=(parseFloat(tpPrice*data)/parseFloat(tpfreeCal))?(parseFloat(tpPrice*data)/parseFloat(tpfreeCal)):0;
+                $('.tp_free').val(parseFloat(tpfree).toFixed(2));
+                $('.tp_free_up').val(tpfree);
+                Adjust(e);
             }
 
             },
@@ -228,9 +230,9 @@
     function Adjust(e){
         let adjust=$('.adjust').val();
         let tpFreeValue=$('.tp_free_up').val();
-        let tpFreeUp=parseFloat(adjust)+parseFloat(tpFreeValue);
+        let tpFreeUp=(parseFloat(adjust)+parseFloat(tpFreeValue)).toFixed(2);
         console.log(adjust)
-        console.log(tpFreeValue)
+        console.log(tpFreeUp)
         $('.tp_free').val(tpFreeUp);
     }
 </script>
