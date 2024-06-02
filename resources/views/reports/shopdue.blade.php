@@ -41,6 +41,19 @@
                                             @endforelse
                                         </select>
                                     </div>
+                                    <div class="col-md-2 mt-4">
+                                        <label for="supplierName" class="float-end"><h6>{{__('Distributor')}}</h6></label>
+                                    </div>
+                                    <div class="col-md-4 mt-4">
+                                        <select class="form-control" name="distributor_id" id="distributor_id">
+                                            <option value="">Select distributor</option>
+                                            @forelse($distributor as $c)
+                                                <option value="{{$c->id}}" {{isset($_GET['distributor_id'])&& $_GET['distributor_id']==$c->id?'selected':''}}> {{ $c->name}}</option>
+                                            @empty
+                                                <option value="">No data found</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row m-4">
                                     <div class="col-6 d-flex justify-content-end">
@@ -56,6 +69,7 @@
                                     <thead>
                                         <tr class="bg-primary text-white text-center">
                                             <th class="p-2">{{__('#SL')}}</th>
+                                            <th class="p-2" data-title="Party Name">{{__('Distributor')}}</th>
                                             <th class="p-2" data-title="Party Name">{{__('Shop Name')}}</th>
                                             <th class="p-2" data-title="Party Name">{{__('Amount')}}</th>
                                     </thead>
@@ -63,6 +77,7 @@
                                         @forelse($data as $d)
                                         <tr class="text-center">
                                             <td>{{ ++$loop->index }}</td>
+                                            <td>{{ $d->distributor_name }}</td>
                                             <td>
                                                 <a href="{{route(currentUser().'.shop_balance_history',$d->shop_id)}}">{{ $d->shop_name }}</a>
                                             </td>

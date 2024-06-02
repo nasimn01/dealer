@@ -48,8 +48,7 @@ class ReportController extends Controller
             $stockQuery->where('products.distributor_id',$request->distributor_id);
 
         $stock = $stockQuery
-            ->groupBy('products.group_id','products.distributor_id','products.product_name')
-            ->paginate(25);
+            ->groupBy('products.group_id','products.distributor_id','products.product_name')->get();
            // return $stock;
         return view('reports.stockReport', compact('stock','groups','products','distributors'));
 
@@ -214,9 +213,11 @@ class ReportController extends Controller
     public function ShopDue(Request $request)
     {
         $shop = Shop::where(company())->get();
+        $distributor = Supplier::where(company())->get();
         $query = ShopBalance::join('shops', 'shops.id', '=', 'shop_balances.shop_id')
+        ->leftJoin('suppliers','shops.sup_id','=','suppliers.id')
         ->groupBy('shop_balances.shop_id')
-        ->select('shops.*', 'shop_balances.*',
+        ->select('shops.*', 'shop_balances.*','suppliers.name as distributor_name',
             DB::raw('SUM(CASE WHEN shop_balances.status = 0 THEN shop_balances.balance_amount ELSE 0 END) as balance_out'),
             DB::raw('SUM(CASE WHEN shop_balances.status = 1 THEN shop_balances.balance_amount ELSE 0 END) as balance_in')
         );
@@ -224,8 +225,11 @@ class ReportController extends Controller
         if ($request->shop_name) {
             $query->where('shop_balances.shop_id', $request->shop_name);
             }
+        if ($request->distributor_id) {
+            $query->where('shops.sup_id', $request->distributor_id);
+            }
         $data = $query->get();
-        return view('reports.shopdue', compact('shop','data'));
+        return view('reports.shopdue', compact('shop','distributor','data'));
     }
     public function ShopBalanceHistory($id){
         $shop = Shop::where('id',$id)->first();

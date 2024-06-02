@@ -92,9 +92,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($stock as $key=>$s)
+                                    @forelse($stock as $s)
                                     <tr class="text-center">
-                                        <th scope="row">{{ $stock->firstItem() + $key }}</th>
+                                        <th scope="row">{{ ++$loop->index }}</th>
                                         <td>{{$s->group_name}}</td>
                                         <td>{{$s->supplier_name}}</td>
                                         <td><a href="{{route(currentUser().'.stock.individual',$s->product_id)}}">{{$s->product_name}}</a></td>
@@ -122,9 +122,9 @@
                                 </tfoot>
                             </table>
                         </form>
-                        <div class="my-3">
+                        {{-- <div class="my-3">
                             {!! $stock->withQueryString()->links()!!}
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
